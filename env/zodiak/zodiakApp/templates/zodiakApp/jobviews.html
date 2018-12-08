@@ -1,0 +1,98 @@
+
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+{% endblock morecss %}
+
+{% block contents %}
+<div class="data-table-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline13-list">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    <h1>{{title}} <span class="table-project-n"></span>Jobs</h1>
+                                </div>
+                            </div>
+                            <div class="sparkline13-graph">
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+                                    <div id="toolbar">
+                                        <select class="form-control dt-tb">
+                                            <option value="">Approve</option>
+                                            <option value="all">Approve All</option>
+                                            <option value="selected">Approve Selected</option>
+                                        </select>
+                                    </div>
+                                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
+                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                        <thead>
+                                            <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="id">Job ID</th>
+                                                <th data-field="name" data-editable="true">Owner</th>
+                                                <th data-field="email" data-editable="true">Amount (₦)</th>
+                                                <th data-field="phone" data-editable="true">Amount Paid (₦)</th>
+                                                <th data-field="complete">Balance (₦)</th>
+                                                <th data-field="date" data-editable="true">Date</th>
+                                                <th data-field="name" data-editable="true">Vessel Name</th>
+                                                <th data-field="action">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for job in all_jobs %}
+                                            <tr>
+                                                <td></td>
+                                                <td>{{job.job_id}}</td>
+                                                <td>{{job.job_user_acc.user.username}}</td>
+                                                <td>{{job.job_cost}}</td>
+                                                <td>{{job.job_amount_paid}}</td>
+                                                <td>{{job.job_amount_balance}}</td>
+                                                <td>{{job.job_start_date}}</td>
+                                                <td>{{job.job_vessel_name}}</td>
+                                                <td class="datatable-ct">
+                                                    <a href="{% url 'zodiakApp:job_view' job.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
+                                                    <a href="{% url 'zodiakApp:job_edit' job.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
+                                                    <a onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:job_delete' job.pk %}"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+{% endblock contents %}
+
+{% block specialscripts %}
+
+<script>
+    var
+</script>
+
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
+<!--  editable JS
+    ============================================ -->
+<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+{% endblock specialscripts %}

@@ -1,0 +1,9 @@
+Django==1.8.8
+django-admin-view-permission==1.8
+django-mssql==1.8
+django-widget-tweaks==1.4.3
+Pillow==5.3.0
+pypiwin32==223
+pywin32==224
+virtualenv==16.1.0
+wfastcgi==3.0.0

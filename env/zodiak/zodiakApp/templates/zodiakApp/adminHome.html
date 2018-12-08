@@ -1,0 +1,297 @@
+{% load staticfiles %}
+{% load custom_filters %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+{% block header %}
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Zodiak</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'zodiakApp/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.transitions.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/meanmenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/educate-custon-icon.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/morrisjs/morris.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/data-table/bootstrap-table.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/data-table/bootstrap-editable.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/scrollbar/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/metisMenu/metisMenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/metisMenu/metisMenu-vertical.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/calendar/fullcalendar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/calendar/fullcalendar.print.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/datapicker/datepicker3.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/form/themesaller-forms.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/select2/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/chosen/bootstrap-chosen.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/editor/x-editor-style.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="{% static 'zodiakApp/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+
+    {% block morecss %}
+    {% endblock morecss %}
+
+</head>
+{% endblock header %}
+
+<body>
+    
+    {% block sidebar %}
+    <div class="left-sidebar-pro">
+        <nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <a href="/"><img class="main-logo" src="{% static 'zodiakApp/img/logo/logo.png' %}" alt="" /></a>
+                <strong><a href="/"><img src="{% static 'zodiakApp/img/logo/logosn.png' %}" alt="" /></a></strong>
+            </div>
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        
+                        <li>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Jobs</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+
+                                <li><a title="New Job" href="{% url 'zodiakApp:add_job' %}"><span class="mini-sub-pro">Create Job</span></a></li>
+
+                                {% for status in statuses %}
+                                <li>
+                                    <a title="View {{status.name}}" href="{% url 'zodiakApp:view_jobs' status.name %}">
+                                        <span class="mini-sub-pro">{{status.name}} Jobs</span>
+                                        <span class="badge badge-primary">{% getJobCount request status.name %}</span>
+                                    </a>
+                                </li>
+                                {% endfor %}
+
+                            </ul>
+                        </li>
+
+                         <li>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"></span> <span class="mini-click-non">Messages</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Inbox" href="/"><span class="mini-sub-pro">New Message</span></a></li>
+                                <li><a title="View Mail" href="/"><span class="mini-sub-pro">Archived</span></a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-apps icon-wrap"></span> <span class="mini-click-non">User Access</span></a>
+                            <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
+                                <li><a title="Alerts" href="/"><span class="mini-sub-pro">Add user</span></a></li>
+                                <li><a title="Modals" href="/"><span class="mini-sub-pro">User Access</span></a></li>
+                                <li><a title="Buttons" href="/"><span class="mini-sub-pro">All Users</span></a></li>
+                            </ul>
+                        </li>
+                       
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+    {% endblock sidebar %}
+    <!-- End Left menu area -->
+    <!-- Start Welcome area -->
+    
+    <div class="all-content-wrapper">
+    
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="logo-pro">
+                        <a href="index.html"><img class="main-logo" src="{% static 'zodiakApp/img/logo/logo.png' %}" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-advance-area">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-top-wraper">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
+                                        <div class="menu-switcher-pro">
+                                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                                                    <i class="educate-icon educate-nav"></i>
+                                                </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
+                                       <!--  <div class="header-top-menu tabl-d-n">
+                                            <ul class="nav navbar-nav mai-top-nav">
+                                                <li class="nav-item"><a href="#" class="nav-link">Home</a>
+                                                </li>
+                                                <li class="nav-item"><a href="#" class="nav-link">About</a>
+                                                </li>
+                                                <li class="nav-item"><a href="#" class="nav-link">Services</a>
+                                                </li>
+                                                <li class="nav-item dropdown res-dis-nn">
+                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                                    <div role="menu" class="dropdown-menu animated zoomIn">
+                                                        <a href="#" class="dropdown-item">Documentation</a>
+                                                        <a href="#" class="dropdown-item">Expert Backend</a>
+                                                        <a href="#" class="dropdown-item">Expert FrontEnd</a>
+                                                        <a href="#" class="dropdown-item">Contact Support</a>
+                                                    </div>
+                                                </li>
+                                                <li class="nav-item"><a href="#" class="nav-link">Support</a>
+                                                </li>
+                                            </ul>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <div class="header-right-info">
+                                            <ul class="nav navbar-nav mai-top-nav header-right-menu">
+                                               
+                                                <li class="nav-item">
+                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                                            <img src="{% static 'zodiakApp/img/product/pro4.jpg' %}" alt="" />
+                                                            <span class="admin-name">Welcome {{request.user.username}}</span>
+                                                            <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
+                                                        </a>
+                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                                                        <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
+                                                        </li>
+                                                        <li><a href="#"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
+                                                        </li>
+                                                        <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
+                                                        </li>
+                                                        <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
+                                                        </li>
+                                                        <li><a href="{% url 'zodiakApp:logout' %}"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                              
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu start -->
+          
+            <!-- Mobile Menu end -->
+            {% block contents %}
+
+            <div class="breadcome-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="breadcome-list single-page-breadcome">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="breadcome-heading">
+                                            <form role="search" class="sr-input-func">
+                                                <input type="text" placeholder="Search..." class="search-int form-control">
+                                                <a href="#"><i class="fa fa-search"></i></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                       
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                         {% for message in messages %}
+                           <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {% endblock contents %}
+        </div>
+        
+        {% block footer %}
+        {% endblock footer %}
+
+    </div>
+
+
+    <!-- jquery
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <!-- bootstrap JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/bootstrap.min.js' %}"></script>
+    <!-- wow JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/wow.min.js' %}"></script>
+    <!-- price-slider JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/jquery-price-slider.js' %}"></script>
+    <!-- meanmenu JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/jquery.meanmenu.js' %}"></script>
+    <!-- owl.carousel JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/owl.carousel.min.js' %}"></script>
+    <!-- sticky JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/jquery.sticky.js' %}"></script>
+    <!-- scrollUp JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/jquery.scrollUp.min.js' %}"></script>
+    <!-- mCustomScrollbar JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/scrollbar/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'zodiakApp/js/scrollbar/mCustomScrollbar-active.js' %}"></script>
+    <!-- metisMenu JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/metisMenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'zodiakApp/js/metisMenu/metisMenu-active.js' %}"></script>
+    <!-- Charts JS
+    ============================================ -->
+    {% block specialscripts %}    
+    <script src="{% static 'zodiakApp/js/charts/Chart.js' %}"></script>
+    <script src="{% static 'zodiakApp/js/charts/bar-chart.js' %}"></script>
+    {% endblock specialscripts %}
+
+    <!-- Chart JS
+    ============================================ -->
+    <script src="js/chart/jquery.peity.min.js"></script>
+    <script src="js/peity/peity-active.js"></script>
+    <!-- tab JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/datapicker/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'zodiakApp/js/datapicker/datepicker-active.js' %}"></script>
+    <script src="{% static 'zodiakApp/js/tab.js' %}"></script>
+
+    <script src="{% static 'zodiakApp/js/chosen/chosen.jquery.js' %}"></script>
+    <script src="{% static 'zodiakApp/js/chosen/chosen-active.js' %}"></script>
+    <!-- plugins JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/plugins.js' %}"></script>
+    <!-- main JS
+    ============================================ -->
+    <script src="{% static 'zodiakApp/js/main.js' %}"></script>
+    <!-- tawk chat JS
+    ============================================ -->
+    <!--<script src=" static 'zodiakApp/js/tawk-chat.js' "></script>-->
+</body>
+
+</html>

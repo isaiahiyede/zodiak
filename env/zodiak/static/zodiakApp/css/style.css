@@ -42,7 +42,9 @@
 /*----------------------------------------*/
 /*  1. Common
 /*----------------------------------------*/
-html, body {height: 100%; font-family: 'Roboto', sans-serif;font-weight:400;background:#F6F8FA;}
+
+
+* html, body {height: 100%; font-family: 'Roboto', sans-serif;font-weight:400;background:#F6F8FA;margin:0;padding:0}
 .floatleft {float:left}
 .floatright {float:right}
 .alignleft {float:left;margin-right:15px;margin-bottom: 15px}
@@ -55,6 +57,7 @@ p {margin:0 0 15px;}
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 10px;
   font-weight:700;
+
 }
 a {transition: all 0.3s ease 0s;text-decoration:none;}
 a:hover{
@@ -2457,15 +2460,245 @@ ul.mailbox-list li a:first-child{
 .mailbox-pagination {
     text-align: right;
 }
-.table.table-mailbox>tbody>tr>td, .table.table-mailbox>tbody>tr>th, .table.table-mailbox>tfoot>tr>td, .table.table-mailbox>tfoot>tr>th, .table.table-mailbox>thead>tr>td, .table.table-mailbox>thead>tr>th {
-    padding: 0px;
-    vertical-align: middle;
-	white-space:nowrap;
+table {
+    border-collapse: collapse;
+    border-color: #ccc;
 }
-.table-mailbox tr.unread td a {
+
+td, th {
+    font-size: 11px;
+    line-height: 13px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    padding: 5px;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+thead th,
+tfoot td {
+    color: #666;
+    padding: 2px 5px;
+    font-size: 11px;
+    background: #e1e1e1 url(../img/nav-bg.gif) top left repeat-x;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+tfoot td {
+    border-bottom: none;
+    border-top: 1px solid #ddd;
+}
+
+thead th:first-child,
+tfoot td:first-child {
+    border-left: none !important;
+}
+
+thead th.optional {
+    font-weight: normal !important;
+}
+
+fieldset table {
+    border-right: 1px solid #eee;
+}
+
+tr.row-label td {
+    font-size: 9px;
+    padding-top: 2px;
+    padding-bottom: 0;
+    border-bottom: none;
+    color: #666;
+    margin-top: -1px;
+}
+
+tr.alt {
+    background: #f6f6f6;
+}
+
+.row1 {
+    background: #EDF3FE;
+}
+
+.row2 {
+    background: #fff;
+}
+
+/* SORTABLE TABLES */
+
+thead th {
+    padding: 2px 5px;
+    line-height: normal;
+}
+
+thead th a:link, thead th a:visited {
+    color: #666;
+}
+
+thead th.sorted {
+    background: #c5c5c5 url(../img/nav-bg-selected.gif) top left repeat-x;
+}
+
+thead th.sorted .text {
+    padding-right: 42px;
+}
+
+table thead th .text span {
+    padding: 2px 5px;
+    display:block;
+}
+
+table thead th .text a {
+    display: block;
+    cursor: pointer;
+    padding: 2px 5px;
+}
+
+table thead th.sortable:hover {
+    background: #fff url(../img/nav-bg-reverse.gif) 0 -5px repeat-x;
+}
+
+thead th.sorted a.sortremove {
+    visibility: hidden;
+}
+
+table thead th.sorted:hover a.sortremove {
+    visibility: visible;
+}
+
+table thead th.sorted .sortoptions {
+    display: block;
+    padding: 4px 5px 0 5px;
+    float: right;
+    text-align: right;
+}
+
+table thead th.sorted .sortpriority {
+    font-size: .8em;
+    min-width: 12px;
+    text-align: center;
+    vertical-align: top;
+}
+
+table thead th.sorted .sortoptions a {
+    width: 14px;
+    height: 12px;
+    display: inline-block;
+}
+
+table thead th.sorted .sortoptions a.sortremove {
+    background: url(../img/sorting-icons.gif) -4px -5px no-repeat;
+}
+
+table thead th.sorted .sortoptions a.sortremove:hover {
+    background: url(../img/sorting-icons.gif) -4px -27px no-repeat;
+}
+
+table thead th.sorted .sortoptions a.ascending {
+    background: url(../img/sorting-icons.gif) -5px -50px no-repeat;
+}
+
+table thead th.sorted .sortoptions a.ascending:hover {
+    background: url(../img/sorting-icons.gif) -5px -72px no-repeat;
+}
+
+table thead th.sorted .sortoptions a.descending {
+    background: url(../img/sorting-icons.gif) -5px -94px no-repeat;
+}
+
+table thead th.sorted .sortoptions a.descending:hover {
+    background: url(../img/sorting-icons.gif) -5px -115px no-repeat;
+}
+
+/* ORDERABLE TABLES */
+
+table.orderable tbody tr td:hover {
+    cursor: move;
+}
+
+table.orderable tbody tr td:first-child {
+    padding-left: 14px;
+    background-image: url(../img/nav-bg-grabber.gif);
+    background-repeat: repeat-y;
+}
+
+table.orderable-initalized .order-cell, body>tr>td.order-cell {
+    display: none;
+}
+
+/* FORM DEFAULTS */
+
+input, textarea, select, .form-row p, form .button {
+    margin: 2px 0;
+    padding: 2px 3px;
+    vertical-align: middle;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 11px;
+}
+
+textarea {
+    vertical-align: top !important;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url], input[type=number],
+textarea, select, .vTextField {
+    border: 1px solid #ccc;
+}
+
+/* FORM BUTTONS */
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #fff url(../img/nav-bg.gif) bottom repeat-x;
+    padding: 3px 5px;
+    color: black;
+    border: 1px solid #bbb;
+    border-color: #ddd #aaa #aaa #ddd;
+}
+
+a.button {
+    padding: 4px 5px;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active {
+    background-image: url(../img/nav-bg-reverse.gif);
+    background-position: top;
+}
+
+.button[disabled], input[type=submit][disabled], input[type=button][disabled] {
+    background-image: url(../img/nav-bg.gif);
+    background-position: bottom;
+    opacity: 0.4;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    border: 2px solid #5b80b2;
+    background: #7CA0C7 url(../img/default-bg.gif) bottom repeat-x;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+}
+
+.button.default:active, input[type=submit].default:active {
+    background-image: url(../img/default-bg-reverse.gif);
+    background-position: top;
+}
+
+.button[disabled].default, input[type=submit][disabled].default, input[type=button][disabled].default {
+    background-image: url(../img/default-bg.gif);
+    background-position: bottom;
+    opacity: 0.4;
+}
+
+/*.table-mailbox tr.unread td a {
     font-weight: 600;
     font-size: 14px;
-}
+}*/
 .panel-body a {
     font-size: 14px;
     color: #444;
@@ -2502,16 +2735,16 @@ ul.mailbox-list li a:first-child{
 .panel-heading.hbuilt.mailbox-hd{
 	padding: 20px 20px 0px 20px;
 }
-.table.table-hover.table-mailbox{
+/*.table.table-hover.table-mailbox{
 	margin-bottom:0px;
-}
+}*/
 .custom-address-mailbox {
     margin-bottom: 20px;
 }
-.file-body i.fa {
+/*.file-body i.fa {
     font-size: 40px;
 	padding:20px 0px;
-}
+}*/
 .incon-ctn-view{
 	text-align:center;
 }
@@ -2620,9 +2853,9 @@ li.multipleInput-email a{
     display: inline-block;
     padding: 0px 1px;
 }
-.form-horizontal .control-label{
+/*.form-horizontal .control-label{
 	padding-top: 10px;
-}
+}*/
 .panel-body .note-editor.note-frame.panel.panel-default{
 	margin-bottom: 0px;
 }
@@ -2650,9 +2883,9 @@ li.multipleInput-email a{
 .contact-panel-cs .contact-footer, .contact-panel-cs .panel-footer{
 	background:#006DF0;
 }
-.form-control.dt-tb{
+/*.form-control.dt-tb{
 	height:35px;
-}
+}*/
 .ft-pn{
 	background:#F6F8FA;
 }

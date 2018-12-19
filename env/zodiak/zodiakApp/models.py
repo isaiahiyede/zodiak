@@ -21,7 +21,10 @@ class UserAccount(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     user_passport = models.ImageField(upload_to="item_photo", null=True, blank=True)
     user_cac = models.ImageField(upload_to="item_photo", null=True, blank=True)
-
+    inputter = models.BooleanField(default=False)
+    authorizer = models.BooleanField(default=False)
+    reporter = models.BooleanField(default=False)
+    administrator = models.BooleanField(default=False)
 
 
     class Meta:

@@ -258,7 +258,7 @@ def register(request):
 def addUser(request):
     context = {}
     template_name = 'zodiakApp/adduser.html'
-    if request.method = 'POST':
+    if request.method == 'POST':
         userform = UserForm(request.POST)
         if userform.is_valid():
             userform.save()

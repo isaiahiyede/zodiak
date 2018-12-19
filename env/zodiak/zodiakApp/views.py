@@ -252,3 +252,22 @@ def register(request):
         context = {}
         response = render(request, 'zodiakApp/register.html', context)
         return response
+
+
+@login_required
+def addUser(request):
+    context = {}
+    template_name = 'zodiakApp/adduser.html'
+    if request.method = 'POST':
+        userform = UserForm(request.POST)
+        if userform.is_valid():
+            userform.save()
+            messages.success(request, "User was successful created.")
+        else:
+            print(userform.errors)
+            messages.success(request, "User was not successful created. Try again")
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+    else:
+        context['userform'] = UserForm()
+        return render(request,template_name,context)
+

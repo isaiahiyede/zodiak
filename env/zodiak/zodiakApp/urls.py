@@ -8,18 +8,27 @@ urlpatterns = [
 
 			# url(r'^$', views.homepage, name='homepage'),
 			# url(r'^index/$', views.index, name='index'),
+
 	  		url(r'^accounts/login/$', views.user_login,  name="login"),
 			url(r'^logout/$', views.user_logout, name='logout'),
 	  		url(r'^register/$', views.register,  name="register"),
 	  		url(r'^users/$', views.clientpage,  name="clientpage"),
+
 	        url(r'^viewjobs/(?P<jobtype>.+)$',views.view_jobs, name = "view_jobs"),
 	        url(r'^addjob/$',views.add_job, name = "add_job"),
-	        # url(r'^newmessage/$',views.newmessage, name = "newmessage"),
+	        
 	        url(r'^jobedit/(?P<pk>.+)/$',views.job_edit, name = "job_edit"),
 	        url(r'^jobview/(?P<pk>.+)/$',views.job_view, name = "job_view"),
 	        url(r'^jobdelete/(?P<pk>.+)/$',views.job_delete, name = "job_delete"),
-	        # url(r'^get-item/$',views.getItem, name = "get_item"),
-	        # url(r'^edit-item/$',views.edit_item, name = "edit_item"),
+
+	        url(r'^useredit/(?P<pk>.+)/$',views.user_edit, name = "user_edit"),
+	        url(r'^userview/(?P<pk>.+)/$',views.user_view, name = "user_view"),
+	        url(r'^userdelete/(?P<pk>.+)/$',views.user_delete, name = "user_delete"),
+
+	        url(r'^viewusers/$',views.viewusers, name = "viewusers"),
+	        url(r'^adduser/$',views.addUser, name = "add_user"),
+
+	        url(r'^edit-access$',views.user_access, name = "user_access"),
 	        # url(r'^shoppingCart/$',views.view_cart, name = "view_cart"),
 	        # url(r'^getPage/(?P<identifier>.+)$',views.get_page, name = "get_page"),
 	        # url(r'^newRecord/(?P<identifier>.+)$',views.add_record, name = "newrecord"),

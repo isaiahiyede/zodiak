@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-import views
+from . import views
 # from custom_functions import calculator,export_csv
 
 urlpatterns = [

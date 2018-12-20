@@ -111,7 +111,7 @@ def add_job(request):
             messages.success(request, 'Job was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         else:
-            print form.errors
+            print(form.errors)
             messages.warning(request, 'Job was not successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         return response
@@ -140,13 +140,13 @@ def job_edit(request,pk):
     if request.method == "POST":
         form = JobForm(request.POST,request.FILES,instance=job_obj)
         if form.is_valid:
-            print request.POST
-            print form.errors
+            print(request.POST)
+            print(form.errors)
             form.save()
             messages.success(request, 'Job was successfully edited')
             return redirect(reverse('zodiakApp:adminPage'))
         else:
-            print form.errors
+            print(form.errors)
             messages.warning(request, 'Job was not successfully edited')
             response = redirect(re.META['HTTP_REFERER'])
         return response

@@ -75,30 +75,30 @@ WSGI_APPLICATION = 'zodiak.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 LOGIN_REDIRECT_URL = '/accounts/login/'
 
 
-DATABASES = {
-    'default': {
-    'NAME': 'zodiak_db',
-    'ENGINE': 'sqlserver_ado',
-    'HOST': '127.0.0.1',
-    'PORT': '1433',
-    'USER': 'Assetdb',
-    'PASSWORD': '123456@gooGLE',
-    'OPTIONS': {
-            'provider': 'SQLOLEDB',
-            'use_legacy_date_fields': 'True'
-        }
-    }
-}
+# DATABASES = {
+#     'default': {
+#     'NAME': 'zodiak_db',
+#     'ENGINE': 'sqlserver_ado',
+#     'HOST': '127.0.0.1',
+#     'PORT': '1433',
+#     'USER': 'Assetdb',
+#     'PASSWORD': '123456@gooGLE',
+#     'OPTIONS': {
+#             'provider': 'SQLOLEDB',
+#             'use_legacy_date_fields': 'True'
+#         }
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from models import UserAccount, Status, Job, Address, Comments
+from zodiakApp.models import UserAccount, Status, Job, Address, Comments
 
 
 # Register your models here.

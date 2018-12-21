@@ -58,11 +58,22 @@
                                             <br>
                                             <div class="chosen-select-single">
                                                 <label>Access Right</label>
-                                                <select data-placeholder="Choose a Country..." id="acc" name="acc" class="chosen-select" multiple="" tabindex="-1" required>
+                                                <select data-placeholder="Choose access..." id="acc" name="acc" class="chosen-select" multiple="" tabindex="-1" required>
+                                                        <option value="">Select</option>
+                                                        <option value="inputter">    </option>
+                                                        <option value="administrator">administrator</option>
+                                                        <option value="reporter">reporter</option>
+                                                        <option value="authorizer">authorizer</option>
+                                                </select>
+                                            </div>
+                                            <br>
+                                            <div class="chosen-select-single">
+                                                <label>Access Right</label>
+                                                <select data-placeholder="Choose access..." id="acc" name="acc" class="chosen-select" multiple="" tabindex="-1" required>
                                                         <option value="">Select</option>
                                                         <option value="inputter">inputter</option>
                                                         <option value="administrator">administrator</option>
-                                                        <option value="authorizer">authorizer</option>
+                                                        <option value="reporter">reporter</option>
                                                         <option value="authorizer">authorizer</option>
                                                 </select>
                                             </div>

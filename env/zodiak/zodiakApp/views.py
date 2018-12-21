@@ -349,12 +349,21 @@ def user_access(request):
     user_obj = UserAccount.objects.filter(deleted=False)
     context['names'] = user_obj
     context['statuses'] = getStatuses()
-    rp = request.POST
-    print(rp)
     if request.method == "POST":
+        rp = request.POST
+        the_list = (rp.getlist('acc'))
         user_acc_obj = User.objects.get(username=rp['user_acc'])
-        print(rp)
-        messages.warning(request, 'Useraccount was not successfully edited')
+        if 'inputter' in the_list:
+            user_acc_obj.useraccount.inputter = True
+        if 'admininistrator' in the_list:
+            user_acc_obj.useraccount.administrator = True
+        if 'reporter' in the_list:
+            print('reporter found')
+            user_acc_obj.useraccount.reporter = True
+        if 'authorizer' in the_list:
+            user_acc_obj.useraccount.authorizer = True
+        user_acc_obj.useraccount.save()
+        messages.warning(request, 'Useraccount was successfully updated')
         response = redirect(request.META['HTTP_REFERER'])
         return response
     else:

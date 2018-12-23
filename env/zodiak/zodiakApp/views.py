@@ -269,7 +269,7 @@ def addUser(request):
                 context['form'] = form
                 return render(request,template_name,context)
             else:
-                user = User.objects.create(username=form.username, first_name=form.first_name,
+                user = User.objects.create(username=form.username, first_name=form.first_name,is_staff=True,
                                             last_name=form.last_name, email=form.email, password=form.password)
                 user.save()
                 useraccount = UserAccount.objects.create(user=user,phone_number=request.POST['phone_no'])
@@ -301,8 +301,20 @@ def viewusers(request):
 def user_view(request,pk):
     context={}
     user_obj = UserAccount.objects.get(pk=pk, deleted=False)
-    context['UserAccount'] = user_obj
-    context['names'] = User.objects.all()
+    context['useraccount'] = user_obj
+    context['statuses'] = getStatuses()
+    response = render(request, 'zodiakApp/viewuseraccount.html', context)
+    return response
+
+
+@login_required
+def user_view_home(request,username):
+    context={}
+    user_obj = User.objects.get(username=username)
+    try:
+        context['useraccount'] = UserAccount.objects.get(user=user_obj, deleted=False)
+    except:
+        context['useraccount'] = user_obj
     context['statuses'] = getStatuses()
     response = render(request, 'zodiakApp/viewuseraccount.html', context)
     return response
@@ -322,25 +334,46 @@ def user_edit(request,pk):
     context={}
     user_obj = UserAccount.objects.get(pk=pk, deleted=False)
     if request.method == "POST":
+        rp = request.POST
+        print(rp)
         form = UserAccountForm(request.POST,request.FILES,instance=user_obj)
         if form.is_valid:
-            print request.POST
-            print form.errors
-            form.save()
+            user_obj = User.objects.get(username=rp['username'])
+            userform = form.save(commit=False)
+            userform.user = user_obj
+            if 'inputter' in rp:
+                userform.inputter = True
+            else:
+                userform.inputter = False
+            if 'reporter' in rp:
+                userform.reporter = True
+            else:
+                userform.reporter = False
+            if 'authorizer' in rp:
+                userform.authorizer = True
+            else:
+                userform.authorizer = False
+            if 'administrator' in rp:
+                userform.administrator = True
+            else:
+                userform.administrator = False
+            if 'profile_updated' in rp:
+                userform.profile_updated = True
+            else:
+                userform.profile_updated = False
+            userform.save()
             messages.success(request, 'UserAccount was successfully edited')
-            return redirect(reverse('zodiakApp:adminPage'))
+            response = redirect(request.META['HTTP_REFERER'])
         else:
-            print form.errors
+            print(form.errors)
             messages.warning(request, 'Useraccount was not successfully edited')
-            response = redirect(re.META['HTTP_REFERER'])
+            response = redirect(request.META['HTTP_REFERER'])
         return response
     else:
-        context['UserAccount'] = user_obj
-        context['names'] = User.objects.all()
+        context['useraccount'] = user_obj
         context['statuses'] = getStatuses()
-        response = render(request, 'zodiakApp/editusercccount.html', context)
+        response = render(request, 'zodiakApp/edituseraccount.html', context)
         return response
-
 
 
 @login_required
@@ -350,20 +383,34 @@ def user_access(request):
     context['names'] = user_obj
     context['statuses'] = getStatuses()
     if request.method == "POST":
+        print('see me')
         rp = request.POST
         the_list = (rp.getlist('acc'))
         user_acc_obj = User.objects.get(username=rp['user_acc'])
-        if 'inputter' in the_list:
-            user_acc_obj.useraccount.inputter = True
-        if 'admininistrator' in the_list:
-            user_acc_obj.useraccount.administrator = True
-        if 'reporter' in the_list:
-            print('reporter found')
-            user_acc_obj.useraccount.reporter = True
-        if 'authorizer' in the_list:
-            user_acc_obj.useraccount.authorizer = True
+
+        if rp.get('acc_action') == 'Add':
+            if 'inputter' in the_list:
+                user_acc_obj.useraccount.inputter = True
+            if 'administrator' in the_list:
+                user_acc_obj.useraccount.administrator = True
+            if 'reporter' in the_list:
+                print('reporter found')
+                user_acc_obj.useraccount.reporter = True
+            if 'authorizer' in the_list:
+                user_acc_obj.useraccount.authorizer = True
+        else:
+            if 'inputter' in the_list:
+                user_acc_obj.useraccount.inputter = False
+            if 'administrator' in the_list:
+                user_acc_obj.useraccount.administrator = False
+            if 'reporter' in the_list:
+                print('reporter found')
+                user_acc_obj.useraccount.reporter = False
+            if 'authorizer' in the_list:
+                user_acc_obj.useraccount.authorizer = False
+
         user_acc_obj.useraccount.save()
-        messages.warning(request, 'Useraccount was successfully updated')
+        messages.success(request, 'Useraccount was successfully updated')
         response = redirect(request.META['HTTP_REFERER'])
         return response
     else:

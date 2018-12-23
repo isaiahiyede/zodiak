@@ -100,6 +100,17 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#     'NAME': 'zodiak_db',
+#     'ENGINE': 'django.db.backends.mysql',
+#     'HOST': '127.0.0.1',
+#     'PORT': '3306',
+#     'USER': 'root',
+#     'PASSWORD': 'root',
+#     }
+# }
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 

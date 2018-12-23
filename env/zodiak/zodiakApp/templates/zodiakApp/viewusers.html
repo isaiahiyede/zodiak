@@ -15,7 +15,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>All<span class="table-project-n"></span>Users</h1>
+                                    <h1>All <span class="table-project-n"></span>Users</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -36,6 +36,7 @@
                                                 <th data-field="email">Email</th>
                                                 <th data-field="firstname">First Name</th>
                                                 <th data-field="lastname">Last Name</th>
+                                                <th data-field="lastname">Profile Updated</th>
                                                 <th data-field="inputter">Inputter</th>
                                                 <th data-field="reporter">Reporter</th>
                                                 <th data-field="authorizer">Authorizer</th>
@@ -52,6 +53,16 @@
                                                 <td>{{user.user.email}}</td>
                                                 <td>{{user.user.first_name}}</td>
                                                 <td>{{user.user.last_name}}</td>
+
+                                                {% if user.profile_updated %}
+                                                <td>
+                                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                                </td>
+                                                {% else %}
+                                                <td>
+                                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                                </td>
+                                                {% endif %}
 
 
                                                 {% if user.inputter %}

@@ -1,0 +1,251 @@
+
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+{% endblock morecss %}
+
+{% block contents %}
+<div class="basic-form-area mg-b-15">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="sparkline12-list">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1>Edit User Account</h1>
+                        </div>
+
+                    </div>
+                    <div class="sparkline12-graph">
+                        <div class="basic-login-form-ad">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="all-form-element-inner">
+                                        <form action="{% url 'zodiakApp:user_edit' useraccount.pk %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+
+                                            {% for message in messages %}
+                                               <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                            {% endfor %}
+                                     
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Username</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input value="{{useraccount.user.username}}" id="username" name="username" type="text" class="form-control" 
+                                                        readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">First Name</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input value="{{useraccount.user.first_name}}" id="first_name" name="first_name" type="text" class="form-control" 
+                                                        readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Last name</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input value="{{useraccount.user.last_name}}"" id=last_name"" name="last_name" type="text" class="form-control" 
+                                                        readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Email</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input value="{{useraccount.user.email}}"" id="email" name="email" type="text" class="form-control" 
+                                                        readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Phone Number</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input value="{{useraccount.phone_number}}" 
+                                                        id="phone_number" name="phone_number" type="number" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                        <label class="login2 pull-right pull-right-pro">Profile Updated<span class="basic-ds-n"></span>
+                                                            </label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                        <div class="bt-df-checkbox pull-left">
+                                                            {% if useraccount.profile_updated %}
+                                                            <label>
+                                                                <input class="pull-left radio-checked" checked="" 
+                                                                name="profile_updated" value="{{useraccount.profile_updated}}"
+                                                                id="profile_updated" type="checkbox"></label>
+                                                            {% else %}
+                                                            <label>
+                                                                <input 
+                                                                name="profile_updated" value="False""
+                                                                id="profile_updated" class="pull-left radio-checked" type="checkbox"></label>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                        <label class="login2 pull-right pull-right-pro">Inputter<span class="basic-ds-n"></span>
+                                                            </label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                        <div class="bt-df-checkbox pull-left">
+                                                            {% if useraccount.inputter %}
+                                                            <label>
+                                                                <input 
+                                                                name="inputter" value="{{useraccount.inputter}}"
+                                                                id="inputter" class="pull-left radio-checked" checked="" type="checkbox"></label>
+                                                            {% else %}
+                                                            <label>
+                                                                <input name="inputter" value="False"
+                                                                id="inputter" class="pull-left radio-checked" type="checkbox"></label>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                        <label class="login2 pull-right pull-right-pro">Administrator<span class="basic-ds-n"></span>
+                                                            </label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                        <div class="bt-df-checkbox pull-left">
+                                                            {% if useraccount.administrator %}
+                                                            <label>
+                                                                <input 
+                                                                name="administrator" value="{{useraccount.administrator}}"
+                                                                id="administrator"
+                                                                class="pull-left radio-checked" checked="" type="checkbox"></label>
+                                                            {% else %}
+                                                            <label>
+                                                                <input name="administrator" value="False"
+                                                                id="administrator" class="pull-left radio-checked" type="checkbox"></label>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                        <label class="login2 pull-right pull-right-pro">Reporter<span class="basic-ds-n"></span>
+                                                            </label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                        <div class="bt-df-checkbox pull-left">
+                                                            {% if useraccount.reporter %}
+                                                            <label>
+                                                                <input name="reporter" value="{{useraccount.reporter}}"
+                                                                id="reporter" class="pull-left radio-checked" checked="" type="checkbox"></label>
+                                                            {% else %}
+                                                            <label>
+                                                                <input name="reporter" value="False"
+                                                                id="reporter" class="pull-left radio-checked" type="checkbox"></label>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                        <label class="login2 pull-right pull-right-pro">Authorizer<span class="basic-ds-n"></span>
+                                                            </label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                        <div class="bt-df-checkbox pull-left">
+                                                            {% if useraccount.authorizer %}
+                                                            <label>
+                                                                <input name="authorizer" value="{{useraccount.authorizer}}"
+                                                                id="authorizer"
+                                                                class="pull-left radio-checked" checked="" type="checkbox"></label>
+                                                            {% else %}
+                                                            <label>
+                                                                <input name="authorizer" value="False"
+                                                                id="authorizer" class="pull-left radio-checked" type="checkbox"></label>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+	                                        <div class="form-group-inner">
+	                                            <div class="login-btn-inner">
+	                                                <div class="row">
+	                                                    <div class="col-lg-3"></div>
+	                                                    <div class="col-lg-9">
+	                                                        <div class="login-horizental cancel-wp pull-left form-bc-ele">
+	                                                            <button class="btn btn-white" type="submit">Cancel</button>
+	                                                            <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Submit</button>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+
+{% block specialscripts %}
+
+<script src="{% static 'zodiakApp/js/icheck/icheck.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/icheck/icheck-active.js' %}"></script>
+
+{% endblock specialscripts %}
+

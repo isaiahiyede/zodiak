@@ -35,7 +35,7 @@
                                                 <th data-field="username">Username</th>
                                                 <th data-field="email">Email</th>
                                                 <th data-field="firstname">First Name</th>
-                                                <th data-field="lastname">Last Name</th>
+                                                
                                                 <th data-field="lastname">Profile Updated</th>
                                                 <th data-field="inputter">Inputter</th>
                                                 <th data-field="reporter">Reporter</th>
@@ -52,7 +52,7 @@
                                                 <td>{{user.user.username}}</td>
                                                 <td>{{user.user.email}}</td>
                                                 <td>{{user.user.first_name}}</td>
-                                                <td>{{user.user.last_name}}</td>
+                                                
 
                                                 {% if user.profile_updated %}
                                                 <td>
@@ -147,4 +147,6 @@
 <script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
 <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
 <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+
+
 {% endblock specialscripts %}

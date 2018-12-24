@@ -421,6 +421,7 @@ def user_access(request):
 @login_required
 def mails(request):
     context = {}
+    context['statuses'] = getStatuses()
     template_name = 'zodiakApp/adminmailbox.html'
     return render(request, template_name, context)
 

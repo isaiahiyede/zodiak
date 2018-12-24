@@ -37,12 +37,11 @@
     <link rel="stylesheet" href="{% static 'zodiakApp/css/form/themesaller-forms.css' %}">
     <link rel="stylesheet" href="{% static 'zodiakApp/css/select2/select2.min.css' %}">
     <link rel="stylesheet" href="{% static 'zodiakApp/css/chosen/bootstrap-chosen.css' %}">
+    <link rel="stylesheet" href="{% static 'zodiakApp/css/dropzone/dropzone.css' %}">
     <link rel="stylesheet" href="{% static 'zodiakApp/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'zodiakApp/css/responsive.css' %}">
     <link rel="stylesheet" href="{% static 'zodiakApp/css/editor/x-editor-style.css' %}">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
     <script src="{% static 'zodiakApp/js/vendor/modernizr-2.8.3.min.js' %}"></script>
 
     {% block morecss %}
@@ -93,9 +92,9 @@
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-apps icon-wrap"></span> <span class="mini-click-non">User Access</span></a>
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li><a title="Alerts" href="/"><span class="mini-sub-pro">Add user</span></a></li>
-                                <li><a title="Modals" href="/"><span class="mini-sub-pro">User Access</span></a></li>
-                                <li><a title="Buttons" href="/"><span class="mini-sub-pro">All Users</span></a></li>
+                                <li><a title="Alerts" href="{% url 'zodiakApp:add_user' %}"><span class="mini-sub-pro">Add user</span></a></li>
+                                <li><a title="Modals" href="{% url 'zodiakApp:user_access' %}"><span class="mini-sub-pro">User Access</span></a></li>
+                                <li><a title="Buttons" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">All Users</span></a></li>
                             </ul>
                         </li>
                        
@@ -163,14 +162,14 @@
                                                
                                                 <li class="nav-item">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                                                            <img src="{% static 'zodiakApp/img/product/pro4.jpg' %}" alt="" />
+                                                            <img src="{% static 'zodiakApp/img/product/pro4.png' %}" alt="" />
                                                             <span class="admin-name">Welcome {{request.user.username}}</span>
                                                             <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
                                                         </a>
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
                                                         <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
                                                         </li>
-                                                        <li><a href="#"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
+                                                        <li><a href="{% url 'zodiakApp:user_view_home' request.user.username %}"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
                                                         </li>
                                                         <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
                                                         </li>

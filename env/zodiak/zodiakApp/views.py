@@ -111,7 +111,7 @@ def add_job(request):
             messages.success(request, 'Job was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         else:
-            print form.errors
+            print(form.errors)
             messages.warning(request, 'Job was not successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         return response
@@ -140,13 +140,13 @@ def job_edit(request,pk):
     if request.method == "POST":
         form = JobForm(request.POST,request.FILES,instance=job_obj)
         if form.is_valid:
-            print request.POST
-            print form.errors
+            print(request.POST)
+            print(form.errors)
             form.save()
             messages.success(request, 'Job was successfully edited')
             return redirect(reverse('zodiakApp:adminPage'))
         else:
-            print form.errors
+            print(form.errors)
             messages.warning(request, 'Job was not successfully edited')
             response = redirect(re.META['HTTP_REFERER'])
         return response
@@ -252,3 +252,174 @@ def register(request):
         context = {}
         response = render(request, 'zodiakApp/register.html', context)
         return response
+
+
+@login_required
+def addUser(request):
+    context = {}
+    context['statuses'] = getStatuses()
+    template_name = 'zodiakApp/adduser.html'
+    if request.method == 'POST':
+        print(request.POST)
+        userform = UserForm(request.POST)
+        if userform.is_valid():
+            form = userform.save(commit=False)
+            if request.POST['password'] != request.POST['password2']:
+                messages.warning(request, "Password mismatch. Try again")
+                context['form'] = form
+                return render(request,template_name,context)
+            else:
+                user = User.objects.create(username=form.username, first_name=form.first_name,is_staff=True,
+                                            last_name=form.last_name, email=form.email, password=form.password)
+                user.save()
+                useraccount = UserAccount.objects.create(user=user,phone_number=request.POST['phone_no'])
+                useraccount.save()
+                messages.success(request, "User was successful created.")
+        else:
+            print(userform.errors)
+            context['form'] = userform
+            messages.warning(request, "User was not successful created. Try again")
+            return render(request,template_name,context)   
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+    else:
+        context['userform'] = UserForm()
+        return render(request,template_name,context)
+
+
+@login_required
+def viewusers(request):
+    context = {}
+    template_name = 'zodiakApp/viewusers.html'
+    useraccounts = UserAccount.objects.filter(deleted=False)
+    context['users'] = useraccounts
+    context['statuses'] = getStatuses()
+    response = render(request,template_name,context)
+    return response
+
+
+@login_required
+def user_view(request,pk):
+    context={}
+    user_obj = UserAccount.objects.get(pk=pk, deleted=False)
+    context['useraccount'] = user_obj
+    context['statuses'] = getStatuses()
+    response = render(request, 'zodiakApp/viewuseraccount.html', context)
+    return response
+
+
+@login_required
+def user_view_home(request,username):
+    context={}
+    user_obj = User.objects.get(username=username)
+    try:
+        context['useraccount'] = UserAccount.objects.get(user=user_obj, deleted=False)
+    except:
+        context['useraccount'] = user_obj
+    context['statuses'] = getStatuses()
+    response = render(request, 'zodiakApp/viewuseraccount.html', context)
+    return response
+
+
+@login_required
+def user_delete(request,pk):
+    user_obj = UserAccount.objects.get(pk=pk, deleted=False)
+    user_obj.deleted = True
+    user_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def user_edit(request,pk):
+    context={}
+    user_obj = UserAccount.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = UserAccountForm(request.POST,request.FILES,instance=user_obj)
+        if form.is_valid:
+            user_obj = User.objects.get(username=rp['username'])
+            userform = form.save(commit=False)
+            userform.user = user_obj
+            if 'inputter' in rp:
+                userform.inputter = True
+            else:
+                userform.inputter = False
+            if 'reporter' in rp:
+                userform.reporter = True
+            else:
+                userform.reporter = False
+            if 'authorizer' in rp:
+                userform.authorizer = True
+            else:
+                userform.authorizer = False
+            if 'administrator' in rp:
+                userform.administrator = True
+            else:
+                userform.administrator = False
+            if 'profile_updated' in rp:
+                userform.profile_updated = True
+            else:
+                userform.profile_updated = False
+            userform.save()
+            messages.success(request, 'UserAccount was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Useraccount was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['useraccount'] = user_obj
+        context['statuses'] = getStatuses()
+        response = render(request, 'zodiakApp/edituseraccount.html', context)
+        return response
+
+
+@login_required
+def user_access(request):
+    context={}
+    user_obj = UserAccount.objects.filter(deleted=False)
+    context['names'] = user_obj
+    context['statuses'] = getStatuses()
+    if request.method == "POST":
+        print('see me')
+        rp = request.POST
+        the_list = (rp.getlist('acc'))
+        user_acc_obj = User.objects.get(username=rp['user_acc'])
+
+        if rp.get('acc_action') == 'Add':
+            if 'inputter' in the_list:
+                user_acc_obj.useraccount.inputter = True
+            if 'administrator' in the_list:
+                user_acc_obj.useraccount.administrator = True
+            if 'reporter' in the_list:
+                print('reporter found')
+                user_acc_obj.useraccount.reporter = True
+            if 'authorizer' in the_list:
+                user_acc_obj.useraccount.authorizer = True
+        else:
+            if 'inputter' in the_list:
+                user_acc_obj.useraccount.inputter = False
+            if 'administrator' in the_list:
+                user_acc_obj.useraccount.administrator = False
+            if 'reporter' in the_list:
+                print('reporter found')
+                user_acc_obj.useraccount.reporter = False
+            if 'authorizer' in the_list:
+                user_acc_obj.useraccount.authorizer = False
+
+        user_acc_obj.useraccount.save()
+        messages.success(request, 'Useraccount was successfully updated')
+        response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        response = render(request, 'zodiakApp/useraccess.html', context)
+        return response
+
+
+
+
+
+
+

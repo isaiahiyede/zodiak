@@ -426,4 +426,12 @@ def mails(request):
     return render(request, template_name, context)
 
 
+@login_required
+def newmail(request):
+    context = {}
+    context['statuses'] = getStatuses()
+    template_name = 'zodiakApp/newmail.html'
+    return render(request, template_name, context)
+
+
 

@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^adduser/$', views.addUser, name="add_user"),
 
     url(r'^edit-access$', views.user_access, name="user_access"),
-    # url(r'^shoppingCart/$',views.view_cart, name = "view_cart"),
+    url(r'^mailbox/$',views.mails, name = "mails"),
     # url(r'^getPage/(?P<identifier>.+)$',views.get_page, name = "get_page"),
     # url(r'^newRecord/(?P<identifier>.+)$',views.add_record, name = "newrecord"),
     # # url(r'^categoryPassed/(?P<value>.+)$',views.getPassedCategory, name = "getPassedCategory"),

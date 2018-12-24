@@ -418,8 +418,11 @@ def user_access(request):
         return response
 
 
-
-
+@login_required
+def mails(request):
+    context = {}
+    template_name = 'zodiakApp/adminmailbox.html'
+    return render(request, template_name, context)
 
 
 

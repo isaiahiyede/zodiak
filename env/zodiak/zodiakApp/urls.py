@@ -32,6 +32,7 @@ urlpatterns = [
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),
+    url(r'^newmail/$',views.newmail, name = "newmail"),
     # url(r'^getPage/(?P<identifier>.+)$',views.get_page, name = "get_page"),
     # url(r'^newRecord/(?P<identifier>.+)$',views.add_record, name = "newrecord"),
     # # url(r'^categoryPassed/(?P<value>.+)$',views.getPassedCategory, name = "getPassedCategory"),

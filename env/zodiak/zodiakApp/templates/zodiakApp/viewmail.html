@@ -1,0 +1,204 @@
+
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/summernote/summernote.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+{% endblock morecss %}
+
+{% block contents %}
+<div class="breadcome-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcome-list single-page-breadcome">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcome-heading">
+                                <form role="search" class="sr-input-func">
+                                    <input type="text" placeholder="Search..." class="search-int form-control">
+                                    <a href="#"><i class="fa fa-search"></i></a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <ul class="breadcome-menu">
+                                <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                </li>
+                                <li><span class="bread-blod">View Mail</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="mailbox-view-area mg-b-15">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="hpanel shadow-inner responsive-mg-b-30">
+                <div class="panel-body">
+                    <a href="{% url 'zodiakApp:newmail' %}" class="btn btn-success compose-btn btn-block m-b-md">Compose</a>
+                    <ul class="mailbox-list">
+                        <li>
+                            <a href="#">
+									<span class="pull-right">12</span>
+									<i class="fa fa-envelope"></i> Inbox
+								</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-paper-plane"></i> Sent</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-pencil"></i> Draft</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-trash"></i> Trash</a>
+                        </li>
+                    </ul>
+   <!--                  <hr> -->
+
+<!--                     <ul class="mailbox-list">
+                        <li>
+                            <a href="#"><i class="fa fa-gears"></i> Settings</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-info-circle"></i> Support</a>
+                        </li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-md-9 col-sm-9 col-xs-12">
+            <div class="hpanel email-compose mailbox-view">
+                <div class="panel-heading hbuilt">
+
+                    <div class="p-xs h4">
+                        <small class="pull-right view-hd-ml">
+								08:26 PM (16 hours ago)
+							</small> Email view
+
+                    </div>
+                </div>
+                <div class="border-top border-left border-right bg-light">
+                    <div class="p-m custom-address-mailbox">
+
+                        <div>
+                            <span class="font-extra-bold">Subject: </span> Lorem Ipsum has been the industry's standard dummy text ever
+                        </div>
+                        <div>
+                            <span class="font-extra-bold">From: </span>
+                            <a href="#">example.@email.com</a>
+                        </div>
+                        <div>
+                            <span class="font-extra-bold">Date: </span> 14.10.2016
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body panel-csm">
+                    <div>
+                        <h4>Hello Jonathan! </h4>
+
+                        <p>Dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the dustrys</strong> standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                            a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                            containing Lorem Ipsum passages, and more
+                            <br/>
+                            <br/>All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
+                            a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. recently with.</p>
+
+                        <p>Mark Smith
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-bottom border-left border-right bg-white mg-tb-15">
+                  
+
+                    <div>
+                        <div class="row">
+                           <!--  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="hpanel vw-mb">
+                                    <div class="panel-body file-body incon-ctn-view">
+                                        <i class="fa fa-file-pdf-o text-info"></i>
+                                    </div>
+                                    <div class="panel-footer ft-pn">
+                                        <a href="#">Document_2016.doc</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="hpanel vw-mb res-mg-t-30 table-mg-t-pro-n">
+                                    <div class="panel-body file-body incon-ctn-view">
+                                        <i class="fa fa-file-audio-o text-warning"></i>
+                                    </div>
+                                    <div class="panel-footer ft-pn">
+                                        <a href="#">Audio_2016.doc</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="hpanel vw-mb res-mg-t-30 table-mg-t-pro-n">
+                                    <div class="panel-body file-body incon-ctn-view">
+                                        <i class="fa fa-file-excel-o text-success"></i>
+                                    </div>
+                                    <div class="panel-footer ft-pn">
+                                        <a href="#">Sheets_2016.doc</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>
+
+                <div class="panel-footer text-right ft-pn">
+                    <div class="btn-group active-hook">
+                        <button class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
+<!--                         <button class="btn btn-default"><i class="fa fa-arrow-right"></i> Forward</button>
+                        <button class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+                        <button class="btn btn-default"><i class="fa fa-trash-o"></i> Remove</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock contents %}
+
+{% block specialscripts %}
+
+
+<script src="{% static 'zodiakApp/js/sparkline/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/sparkline/jquery.charts-sparkline.js' %}"></script>
+<!-- calendar JS
+============================================ -->
+<script src="{% static 'zodiakApp/js/calendar/moment.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/calendar/fullcalendar.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/calendar/fullcalendar-active.js' %}"></script>
+<!-- summernote JS
+============================================ -->
+<script src="{% static 'zodiakApp/js/summernote/summernote.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/summernote/summernote-active.js' %}"></script>
+<!-- form validate JS
+============================================ -->
+<script src="{% static 'zodiakApp/js/form-validation/jquery.form.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/form-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/form-validation/form-active.js' %}"></script>
+<!-- multiple email JS
+============================================ -->
+<script src="{% static 'zodiakApp/js/multiple-email/multiple-email-active.js' %}"></script>
+<!-- dropzone JS
+============================================ -->
+<script src="{% static 'zodiakApp/js/dropzone/dropzone.js' %}"></script>
+<!-- tab JS
+============================================ -->
+<script src="{% static 'zodiakApp/js/tab.js' %}"></script>
+
+{% endblock specialscripts %}

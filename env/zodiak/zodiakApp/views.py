@@ -107,6 +107,7 @@ def add_job(request):
         if form.is_valid:
             form2 = form.save(commit=False)
             form2.job_id = randomNumber(10)
+            form.Status = 'New'
             form2.save()
             messages.success(request, 'Job was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
@@ -119,7 +120,7 @@ def add_job(request):
         context['form'] = JobForm()
         context['names'] = User.objects.all()
         context['statuses'] = getStatuses()
-        response = render(request, 'zodiakApp/createjob.html', context)
+        response = render(request, 'zodiakApp/newjob.html', context)
         return response
 
 
@@ -432,6 +433,15 @@ def newmail(request):
     context['statuses'] = getStatuses()
     template_name = 'zodiakApp/newmail.html'
     return render(request, template_name, context)
+
+
+@login_required
+def view_mail(request,pk):
+    context = {}
+    context['statuses'] = getStatuses()
+    template_name = 'zodiakApp/viewmail.html'
+    return render(request, template_name, context)
+
 
 
 

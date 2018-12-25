@@ -17,7 +17,6 @@ urlpatterns = [
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
     url(r'^addjob/$', views.add_job, name="add_job"),
-
     url(r'^jobedit/(?P<pk>.+)/$', views.job_edit, name="job_edit"),
     url(r'^jobview/(?P<pk>.+)/$', views.job_view, name="job_view"),
     url(r'^jobdelete/(?P<pk>.+)/$', views.job_delete, name="job_delete"),
@@ -26,13 +25,14 @@ urlpatterns = [
     url(r'^userview/(?P<pk>.+)/$', views.user_view, name="user_view"),
     url(r'^myprofile/(?P<username>.+)/$', views.user_view_home, name="user_view_home"),
     url(r'^userdelete/(?P<pk>.+)/$', views.user_delete, name="user_delete"),
-
     url(r'^viewusers/$', views.viewusers, name="viewusers"),
     url(r'^adduser/$', views.addUser, name="add_user"),
-
     url(r'^edit-access$', views.user_access, name="user_access"),
+
     url(r'^mailbox/$',views.mails, name = "mails"),
     url(r'^newmail/$',views.newmail, name = "newmail"),
+    url(r'^viewmail/(?P<pk>.+)/$', views.view_mail, name="view_mail"),
+
     # url(r'^getPage/(?P<identifier>.+)$',views.get_page, name = "get_page"),
     # url(r'^newRecord/(?P<identifier>.+)$',views.add_record, name = "newrecord"),
     # # url(r'^categoryPassed/(?P<value>.+)$',views.getPassedCategory, name = "getPassedCategory"),

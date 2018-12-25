@@ -94,7 +94,7 @@ class Job(models.Model):
 	    ordering = ['-job_created_on']
 	    
 	def __unicode__(self):
-	    return '%s - %s' %(self.job_origin,self.job_destination)
+	    return '%s' %(self.job_id)
 
 
 class Comments(models.Model):

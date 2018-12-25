@@ -11,8 +11,8 @@ class UserAccountAdmin(admin.ModelAdmin):
     search_fields = ['created_on','phone_number','profile_updated', ]
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ('job_origin','job_destination')
-    search_fields = ['job_origin','job_destination',]
+    list_display = ('job_id',)
+    search_fields = ['job_id',]
 
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('city','state',)

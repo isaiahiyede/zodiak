@@ -46,10 +46,13 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <form action="{% url 'zodiakApp:user_access' %}" method="post" enctype="multipart/form-data">
                                             {% csrf_token %}
-                                            <div class="chosen-select-single">
-                                                <label>Staff Name</label><br>
-                                                <select data-placeholder="Select Customer name..." id="user_acc" name="user_acc" required>
-                                                    <option value="">Select staff name</option>
+
+ 
+                                            
+                                            <div class="chosen-select-single mg-b-20">
+                                                <label>Staff Name</label>
+                                                <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="user_acc" name="user_acc" required>
+                                                    <option value="">Select</option>
                                                     {% for name in names %}
                                                        <option value="{{name.user.username}}">
                                                             {{name.user.username}}
@@ -57,7 +60,8 @@
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <br>
+
+
                                             <div class="chosen-select-single">
                                                 <label>Action</label>
                                                 <select data-placeholder="Choose action..." id="acc_action" class="chosen-select" name="acc_action" required>
@@ -68,6 +72,7 @@
                                                 </select>
                                             </div>
                                             <br>
+
                                             <div class="chosen-select-single">
                                                 <label>Access Right</label>
                                                 <select data-placeholder="Choose access..." id="acc" name="acc" class="chosen-select" multiple="" tabindex="-1" required>

@@ -693,7 +693,7 @@
                                                             <div class="row">
                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                     <div class="chosen-select-single mg-b-20">
-                                                                        <select data-placeholder="Select status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status">
+                                                                        <select data-placeholder="Select status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status" required>
                                                                             <option value="">Select</option>
                                                                             {% for status in statuses %}
                                                                                <option value="{{status.name}}">
@@ -727,6 +727,17 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="form-group-inner">
+                                                    <div class="row">
+         
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label>Job Description</label>
+                                                            <div class="form-group">
+                                                                <textarea name="job_description" id="job_description" placeholder="Description"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -794,10 +805,9 @@
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
-                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                            <label class="login2 pull-right pull-right-pro">Job Shipper</label>
-                                                        </div>
+           
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label>Job Shipper</label>
                                                             <input id="job_shipper" name="job_shipper" type="text" class="form-control" />
                                                         </div>
                                                     </div>
@@ -805,9 +815,10 @@
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
-               
+                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                            <label class="login2"><span class="basic-ds-n">Job</span> Paid For</label>
+                                                        </div>
                                                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                                                            <label ><span class="basic-ds-n">Job</span> Paid For</label>
                                                             <div class="bt-df-checkbox">
                                                                 <label>
                                                                 <input class="pull-left" type="radio" checked="" value="True" id="job_paid_for" name="job_paid_for">YES</label>
@@ -883,26 +894,12 @@
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
-         
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Job Description</label>
-                                                            <div class="form-group">
-                                                            <textarea name="job_description" id="job_description" placeholder="Description"></textarea>
-                                                        </div>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group-inner">
-                                                    <div class="row">
      
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <label>Comments</label>
                                                             <div class="form-group">
-                                                            <textarea name="job_comment" id="job_comment" placeholder="Comments"></textarea>
-                                                        </div>
-                                                        </div>
+                                                                <textarea name="job_comment" id="job_comment" placeholder="Comments"></textarea>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

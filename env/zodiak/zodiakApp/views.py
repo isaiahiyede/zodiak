@@ -155,7 +155,7 @@ def job_edit(request,pk):
         context['job'] = job_obj
         context['names'] = User.objects.all()
         context['statuses'] = getStatuses()
-        response = render(request, 'zodiakApp/editjob.html', context)
+        response = render(request, 'zodiakApp/neweditjob.html', context)
         return response
 
 

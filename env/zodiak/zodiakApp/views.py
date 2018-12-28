@@ -30,7 +30,7 @@ def adminPage(request):
     context = {}
     print('i got here')
     template_name = 'zodiakApp/adminHome.html'
-    context['names'] = User.objects.all()
+    context['names'] = UserAccount.objects.all()
     context['statuses'] = getStatuses()
     # context['jobs'] = Job.objects.all()
     return render(request, template_name, context)
@@ -61,6 +61,19 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('zodiakApp:adminPage'))
+
+
+
+def get_job(request):
+    context = {}
+    job_pk = request.GET.get('job_id')
+    template_name = 'zodiakApp/jobmodal.html'
+    job_obj = Job.objects.get(pk=job_pk, deleted=False)
+    context['job'] = job_obj
+    context['statuses'] = getStatuses()
+    context['names'] = UserAccount.objects.all()
+    response = render(request, template_name, context)
+    return response
 
 
 @login_required

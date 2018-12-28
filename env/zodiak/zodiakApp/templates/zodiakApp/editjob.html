@@ -56,8 +56,8 @@
                                                                     <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
                                                                             <option value="{{job.job_user_acc.username}}">{{job.job_user_acc.username}}</option>
                                                                         {% for name in names %}
-                                                                           <option value="{{name.username}}">
-                                                                            {{name.username}}</option> 
+                                                                           <option value="{{name.user.username}}">
+                                                                            {{name.user.username}}</option> 
                                                                         {% endfor %}
                                                                     </select>
                                                                 </div>

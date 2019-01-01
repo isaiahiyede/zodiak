@@ -70,14 +70,29 @@
 
                                 <li><a title="New Job" href="{% url 'zodiakApp:add_job' %}"><span class="mini-sub-pro">Create Job</span></a></li>
 
-                                {% for status in statuses %}
-                                <li>
-                                    <a title="View {{status.name}}" href="{% url 'zodiakApp:view_jobs' status.name %}">
-                                        <span class="mini-sub-pro">{{status.name}} Jobs</span>
-                                        <span class="badge badge-primary">{% getJobCount request status.name %}</span>
-                                    </a>
-                                </li>
-                                {% endfor %}
+                                {% if request.user.is_staff %}
+
+                                    {% for status in statuses %}
+                                    <li>
+                                        <a title="View {{status.name}}" href="{% url 'zodiakApp:view_jobs' status.name %}">
+                                            <span class="mini-sub-pro">{{status.name}} Jobs</span>
+                                            <span class="badge badge-primary">{% getJobCount request status.name %}</span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    {% for status in statuses %}
+                                    <li>
+                                        <a title="View {{status.name}}" href="{% url 'zodiakApp:view_user_jobs' status.name %}">
+                                            <span class="mini-sub-pro">{{status.name}} Jobs</span>
+                                            <span class="badge badge-primary">{% getJobCount request status.name %}</span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+
+                                {% endif %}
 
                             </ul>
                         </li>
@@ -91,12 +106,22 @@
                             </ul>
                         </li>
 
+                        {% if request.user.is_staff%}
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-apps icon-wrap"></span> <span class="mini-click-non">User Access</span></a>
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
                                 <li><a title="Alerts" href="{% url 'zodiakApp:add_user' %}"><span class="mini-sub-pro">Add user</span></a></li>
                                 <li><a title="Modals" href="{% url 'zodiakApp:user_access' %}"><span class="mini-sub-pro">User Access</span></a></li>
                                 <li><a title="Buttons" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">All Users</span></a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+
+                        <li>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-apps icon-wrap"></span> <span class="mini-click-non">RM</span></a>
+                            <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
+                                <li><a title="Add Rm" href="{% url 'zodiakApp:add_rm' %}"><span class="mini-sub-pro">Add RM</span></a></li>
+                                <li><a title="All Rms" href="{% url 'zodiakApp:viewrms' %}"><span class="mini-sub-pro">All RMs</span></a></li>
                             </ul>
                         </li>
                        
@@ -210,6 +235,7 @@
                                             </form>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                        
                                     </div>

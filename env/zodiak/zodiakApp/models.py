@@ -19,10 +19,11 @@ class UserAccount(models.Model):
     profile_updated = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=50, null=True, blank=True)
     created_on = models.DateTimeField(default=timezone.now)
-    user_passport = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    user_cac = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    user_passport = models.FileField(upload_to="item_photo", null=True, blank=True)
+    user_cac = models.FileField(upload_to="item_photo", null=True, blank=True)
     inputter = models.BooleanField(default=True)
     authorizer = models.BooleanField(default=False)
+    rm_updated = models.BooleanField(default=False)
     reporter = models.BooleanField(default=False)
     administrator = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
@@ -92,6 +93,26 @@ class Job(models.Model):
 	class Meta:
 	    verbose_name_plural = 'Job'
 	    ordering = ['-job_created_on']
+	    
+	def __unicode__(self):
+	    return '%s' %(self.job_id)
+
+
+class RelationshipManager(models.Model):
+	rm_client = models.ForeignKey(UserAccount, null=True,blank=True)
+	rm_name = models.CharField(max_length=20,null=True,blank=True)
+	rm_email = models.CharField(max_length=20,null=True,blank=True)
+	rm_position = models.CharField(max_length=20,null=True,blank=True)
+	rm_alt_email = models.CharField(max_length=20,null=True,blank=True)
+	rm_contact_no = models.CharField(max_length=20,null=True,blank=True)
+	rm_designation = models.CharField(max_length=20,null=True,blank=True)
+	rm_office_address = models.TextField(null=True,blank=True)
+	rm_created_on = models.DateTimeField(default=timezone.now)
+	deleted = models.BooleanField(default=False)
+
+	class Meta:
+	    verbose_name_plural = 'Relationship Manager'
+	    ordering = ['-rm_created_on']
 	    
 	def __unicode__(self):
 	    return '%s' %(self.job_id)

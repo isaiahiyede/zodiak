@@ -13,8 +13,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, JobForm, UserAccountForm, AddressForm
-from zodiakApp.models import Job, UserAccount, Address, Status
+from zodiakApp.forms import UserForm, JobForm, UserAccountForm, AddressForm, RelationshipManagerForm
+from zodiakApp.models import Job, UserAccount, Address, Status, RelationshipManager
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -28,9 +28,17 @@ import csv
 @login_required
 def adminPage(request):
     context = {}
-    print('i got here')
     template_name = 'zodiakApp/adminHome.html'
     context['names'] = UserAccount.objects.all()
+    context['statuses'] = getStatuses()
+    # context['jobs'] = Job.objects.all()
+    return render(request, template_name, context)
+
+
+@login_required
+def clientPage(request):
+    context = {}
+    template_name = 'zodiakApp/clientHome.html'
     context['statuses'] = getStatuses()
     # context['jobs'] = Job.objects.all()
     return render(request, template_name, context)
@@ -45,7 +53,10 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('zodiakApp:adminPage'))
+                if user.is_staff:
+                    return redirect(reverse('zodiakApp:adminPage'))
+                else:
+                    return redirect(reverse('zodiakApp:clientPage'))
             else:
                 return HttpResponse("Your account was inactive.")
         else:
@@ -83,6 +94,17 @@ def view_jobs(request,jobtype):
     context['statuses'] = getStatuses()
     context['title'] = jobtype
     context['all_jobs'] = Job.objects.filter(job_status=jobtype, deleted=False)
+    response = render(request, template_name, context)
+    return response
+
+
+@login_required
+def view_user_jobs(request,jobtype):
+    context = {}
+    template_name = 'zodiakApp/jobviews.html'
+    context['statuses'] = getStatuses()
+    context['title'] = jobtype
+    context['all_jobs'] = Job.objects.filter(job_user_acc=request.user,job_status=jobtype, deleted=False)
     response = render(request, template_name, context)
     return response
 
@@ -141,7 +163,7 @@ def add_job(request):
 def clientpage(request):
     context = {}
     template_name = 'zodiakApp/clientpage.html'
-    user_jobs = Job.objects.filter(job_user_acc=request.user.useraccount, deleted=False)
+    user_jobs = Job.objects.filter(job_user_acc=request.user, deleted=False)
     context['userjobs'] = user_jobs
     response = render(request, template_name, context)
     return response
@@ -173,6 +195,31 @@ def job_edit(request,pk):
 
 
 @login_required
+def process_job(request,pk):
+    context={}
+    job_obj = Job.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        form = JobForm(request.POST,request.FILES,instance=job_obj)
+        if form.is_valid:
+            print(request.POST)
+            print(form.errors)
+            form.save()
+            messages.success(request, 'Job was successfully edited')
+            return redirect(reverse('zodiakApp:adminPage'))
+        else:
+            print(form.errors)
+            messages.warning(request, 'Job was not successfully edited')
+            response = redirect(re.META['HTTP_REFERER'])
+        return response
+    else:
+        context['job'] = job_obj
+        context['names'] = User.objects.all()
+        context['statuses'] = getStatuses()
+        response = render(request, 'zodiakApp/processjob.html', context)
+        return response
+
+
+@login_required
 def job_view(request,pk):
     context={}
     job_obj = Job.objects.get(pk=pk, deleted=False)
@@ -194,6 +241,10 @@ def job_delete(request,pk):
 
 def register(request):
     if request.method == "POST":
+
+        rp = request.POST
+        print(rp)
+
         if request.POST.get('bot_catcher') != "":
             messages.warning(request, "Invalid details provided")
             return redirect(request.META.get('HTTP_REFERER', '/'))
@@ -212,9 +263,6 @@ def register(request):
 
         form = UserForm(request.POST)
 
-        rp = request.POST
-        print(rp)
-
         if User.objects.filter(username=rp.get('username')).exists() or User.objects.filter(
                 email=rp.get('email')).exists():
             messages.warning(request, "Combination of Username and email already exists. Please enter a"
@@ -231,18 +279,26 @@ def register(request):
                 if len(password) < 6:
                     messages.warning(request, "Password less than six characters in length")
                     return redirect(request.META.get('HTTP_REFERER', '/'))
+
                 user.set_password(user.password)
                 user.date_joined = timezone.now().date()
                 user.save()
-                # print user
-                username = user.username
+                user_acc_form = UserAccountForm(request.POST,request.FILES)
+                print(user_acc_form.errors)
 
-                user_login = authenticate(username=username, password=password)
-                UserAccount.objects.create(user=user_login,
-                                           profile_updated=True,
-                                           phone_number=request.POST.get('phone_number'),
-                                           user_passport=request.POST('user_passport'),
-                                           user_cac=request.POST('user_cac'))
+                if user_acc_form.is_valid:
+                    user_acc_form2 = user_acc_form.save(commit=False)
+
+                    user_acc_form2.user = user
+                    user_acc_form2.save()
+
+                else:
+                    messages.warning(request, "Please check and make sure all fields are properly filled")
+                    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+                print(user_acc_form)
+                user_login = authenticate(username=user.username, password=password)
+
                 # print user_login
                 if user_login:
                     # Is the account active? It could have been disabled.
@@ -252,7 +308,7 @@ def register(request):
                         login(request, user_login)
                         messages.success(request, "Sign up was successful")
                         user = request.user
-                        return redirect(request.META.get('HTTP_REFERER', '/'))
+                        return redirect(reverse('zodiakApp:clientpage'))
                 else:
                     messages.success(request, "Sign up was not successful. Try again")
                     return redirect(request.META.get('HTTP_REFERER', '/'))
@@ -312,6 +368,43 @@ def viewusers(request):
 
 
 @login_required
+def viewrms(request):
+    context = {}
+    template_name = 'zodiakApp/viewrms.html'
+    if request.user.is_staff:
+        rms = RelationshipManager.objects.filter(deleted=False)
+    else:
+        rms = RelationshipManager.objects.filter(rm_client=request.user.useraccount,deleted=False)
+    context['rms'] = rms
+    response = render(request,template_name,context)
+    return response
+
+
+@login_required
+def add_rm(request):
+    context = {}
+    print(request.POST)
+    if request.method == "POST":
+        form = RelationshipManagerForm(request.POST)
+        if form.is_valid:
+            form2 = form.save(commit=False)
+            if request.user.is_staff:
+                form2.rm_client = UserAccount.objects.get(user=User.objects.get(request.POST.get('rm_client')))
+            messages.success(request, 'Rm was successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Rm was not successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        if request.user.is_staff:
+            context['names'] = UserAccount.objects.filter(deleted=False)
+        response = render(request, 'zodiakApp/newrm.html', context)
+        return response
+
+
+@login_required
 def user_view(request,pk):
     context={}
     user_obj = UserAccount.objects.get(pk=pk, deleted=False)
@@ -341,6 +434,49 @@ def user_delete(request,pk):
     user_obj.save()
     response = redirect(request.META['HTTP_REFERER'])
     return response
+
+
+@login_required
+def rm_delete(request,pk):
+    user_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
+    user_obj.deleted = True
+    user_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def rm_view(request,pk):
+    context={}
+    user_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
+    context['view_rm'] = view_rm
+    context['statuses'] = getStatuses()
+    response = render(request, 'zodiakApp/rmview.html', context)
+    return response
+
+
+@login_required
+def rm_edit(request,pk):
+    context={}
+    rm_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = RelationshipManagerForm(request.POST,request.FILES,instance=rm_obj)
+        if form.is_valid:
+            form.save()
+            messages.success(request, 'RM was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'RM was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['rm'] = rm_obj
+        context['statuses'] = getStatuses()
+        response = render(request, 'zodiakApp/editrm.html', context)
+        return response
 
 
 @login_required

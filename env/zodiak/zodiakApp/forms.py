@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Address
+from zodiakApp.models import Job, UserAccount, Address, RelationshipManager
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -19,9 +19,13 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name','last_name')
 
 
-class JobForm(forms.ModelForm):
+class RelationshipManagerForm(forms.ModelForm):
+    class Meta:
+        model = RelationshipManager
+        fields = ('rm_client','rm_name','rm_email','rm_position','rm_designation','rm_alt_email','rm_contact_no','rm_office_address')
 
-    
+
+class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = (
@@ -34,7 +38,7 @@ class JobForm(forms.ModelForm):
 class UserAccountForm(forms.ModelForm):
     class Meta:
         model = UserAccount
-        fields = ('user', 'profile_updated', 'phone_number', 'user_passport', 'user_cac')
+        fields = ('user', 'phone_number', 'user_passport', 'user_cac')
 
 
 class AddressForm(forms.ModelForm):

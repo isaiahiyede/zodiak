@@ -38,7 +38,7 @@ def adminPage(request):
 @login_required
 def clientPage(request):
     context = {}
-    template_name = 'zodiakApp/clientHome.html'
+    template_name = 'zodiakApp/clientPAGE.html'
     context['statuses'] = getStatuses()
     # context['jobs'] = Job.objects.all()
     return render(request, template_name, context)
@@ -370,6 +370,7 @@ def viewusers(request):
 @login_required
 def viewrms(request):
     context = {}
+    context['statuses'] = getStatuses()
     template_name = 'zodiakApp/viewrms.html'
     if request.user.is_staff:
         rms = RelationshipManager.objects.filter(deleted=False)
@@ -383,13 +384,19 @@ def viewrms(request):
 @login_required
 def add_rm(request):
     context = {}
+    context['statuses'] = getStatuses()
     print(request.POST)
     if request.method == "POST":
         form = RelationshipManagerForm(request.POST)
         if form.is_valid:
+            print(form.errors)
             form2 = form.save(commit=False)
             if request.user.is_staff:
-                form2.rm_client = UserAccount.objects.get(user=User.objects.get(request.POST.get('rm_client')))
+                user_obj = User.objects.get(username=request.POST.get('rm_client'))
+                form2.rm_client = UserAccount.objects.get(user=user_obj)
+            else:
+                form2.rm_client = UserAccount.objects.get(user=request.user)
+            form2.save()
             messages.success(request, 'Rm was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         else:
@@ -448,16 +455,20 @@ def rm_delete(request,pk):
 @login_required
 def rm_view(request,pk):
     context={}
-    user_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
-    context['view_rm'] = view_rm
+    rm_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
+    context['rm'] = rm_obj
+    if request.user.is_staff:
+        context['names'] = UserAccount.objects.filter(deleted=False)
     context['statuses'] = getStatuses()
-    response = render(request, 'zodiakApp/rmview.html', context)
+    response = render(request, 'zodiakApp/viewrm.html', context)
     return response
 
 
 @login_required
 def rm_edit(request,pk):
     context={}
+    if request.user.is_staff:
+        context['names'] = UserAccount.objects.filter(deleted=False)
     rm_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
     if request.method == "POST":
         rp = request.POST

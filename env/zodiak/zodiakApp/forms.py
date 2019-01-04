@@ -22,7 +22,7 @@ class UserForm(forms.ModelForm):
 class RelationshipManagerForm(forms.ModelForm):
     class Meta:
         model = RelationshipManager
-        fields = ('rm_client','rm_name','rm_email','rm_position','rm_designation','rm_alt_email','rm_contact_no','rm_office_address')
+        fields = ('rm_name','rm_email','rm_position','rm_designation','rm_alt_email','rm_contact_no','rm_office_address')
 
 
 class JobForm(forms.ModelForm):

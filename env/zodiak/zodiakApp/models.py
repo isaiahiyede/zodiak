@@ -115,7 +115,7 @@ class RelationshipManager(models.Model):
 	    ordering = ['-rm_created_on']
 	    
 	def __unicode__(self):
-	    return '%s' %(self.job_id)
+	    return '%s' %(self.rm_client)
 
 
 class Comments(models.Model):

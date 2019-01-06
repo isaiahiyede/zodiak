@@ -14,7 +14,7 @@ from django.db.models import Count
 from django import template
 import random, datetime, string
 from zodiakApp.forms import UserForm, JobForm, UserAccountForm, AddressForm, RelationshipManagerForm
-from zodiakApp.models import Job, UserAccount, Address, Status, RelationshipManager
+from zodiakApp.models import Job, UserAccount, Address, Status, RelationshipManager, JobModes
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -29,8 +29,9 @@ import csv
 def adminPage(request):
     context = {}
     template_name = 'zodiakApp/adminHome.html'
-    context['names'] = UserAccount.objects.all()
-    context['statuses'] = getStatuses()
+    context['names'] = UserAccount.objects.filter(deleted=False)
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     # context['jobs'] = Job.objects.all()
     return render(request, template_name, context)
 
@@ -39,7 +40,8 @@ def adminPage(request):
 def clientPage(request):
     context = {}
     template_name = 'zodiakApp/clientPAGE.html'
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     # context['jobs'] = Job.objects.all()
     return render(request, template_name, context)
 
@@ -81,8 +83,29 @@ def get_job(request):
     template_name = 'zodiakApp/jobmodal.html'
     job_obj = Job.objects.get(pk=job_pk, deleted=False)
     context['job'] = job_obj
-    context['statuses'] = getStatuses()
-    context['names'] = UserAccount.objects.all()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['names'] = UserAccount.objects.filter(deleted=False)
+    response = render(request, template_name, context)
+    return response
+
+
+def get_jobs_selected(request):
+    context = {}
+    user_obj = request.GET.get('user_obj')
+    selected = request.GET.get('selected')
+    jobtype = request.GET.get('jobtype')
+    job_status = Status.objects.get(alias=selected)
+    template_name = 'zodiakApp/tabledata.html'
+    if request.user.is_staff:
+        job_obj = Job.objects.filter(job_status=job_status.name, job_type=jobtype, deleted=False)
+    else:
+        job_obj = Job.objects.filter(job_user_acc=request.user.useraccount, job_status=job_status.name, job_type=jobtype, deleted=False) 
+        print(job_obj.count())   
+    context['all_jobs'] = job_obj
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['names'] = UserAccount.objects.filter(deleted=False)
     response = render(request, template_name, context)
     return response
 
@@ -90,10 +113,12 @@ def get_job(request):
 @login_required
 def view_jobs(request,jobtype):
     context = {}
+    print(jobtype)
     template_name = 'zodiakApp/jobviews.html'
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     context['title'] = jobtype
-    context['all_jobs'] = Job.objects.filter(job_status=jobtype, deleted=False)
+    context['all_jobs'] = Job.objects.filter(job_type=jobtype,deleted=False)
     response = render(request, template_name, context)
     return response
 
@@ -102,9 +127,10 @@ def view_jobs(request,jobtype):
 def view_user_jobs(request,jobtype):
     context = {}
     template_name = 'zodiakApp/jobviews.html'
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     context['title'] = jobtype
-    context['all_jobs'] = Job.objects.filter(job_user_acc=request.user,job_status=jobtype, deleted=False)
+    context['all_jobs'] = Job.objects.filter(job_user_acc=request.user.useraccount,job_type=jobtype, deleted=False)
     response = render(request, template_name, context)
     return response
 
@@ -127,9 +153,13 @@ def randomNumber(value):
     return '#' + 'JOB' + unique_id
 
 
-def getStatuses():
+def getStatus():
     statuses = Status.objects.all()
     return statuses
+
+def getJobModes():
+    jobmodes = JobModes.objects.all()
+    return jobmodes
 
 
 @login_required
@@ -139,22 +169,29 @@ def add_job(request):
     print(request.POST)
     if request.method == "POST":
         form = JobForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form2 = form.save(commit=False)
             form2.job_id = randomNumber(10)
-            form.Status = 'New'
+            try:
+                form2.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+            except:
+                form2.job_user_acc = UserAccount.objects.get(user=request.user)
+            job_status = Status.objects.get(name=request.POST.get('job_status'))
+            form2.job_status = job_status.name
             form2.save()
             messages.success(request, 'Job was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
+            print(JobForm())
             messages.warning(request, 'Job was not successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         return response
     else:
         context['form'] = JobForm()
-        context['names'] = User.objects.all()
-        context['statuses'] = getStatuses()
+        context['names'] = UserAccount.objects.filter(deleted=False)
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
         response = render(request, 'zodiakApp/newjob.html', context)
         return response
 
@@ -163,7 +200,7 @@ def add_job(request):
 def clientpage(request):
     context = {}
     template_name = 'zodiakApp/clientpage.html'
-    user_jobs = Job.objects.filter(job_user_acc=request.user, deleted=False)
+    user_jobs = Job.objects.filter(job_user_acc=request.user.useraccount, deleted=False)
     context['userjobs'] = user_jobs
     response = render(request, template_name, context)
     return response
@@ -174,22 +211,26 @@ def job_edit(request,pk):
     context={}
     job_obj = Job.objects.get(pk=pk, deleted=False)
     if request.method == "POST":
+        print(request.POST)
+        job_obj.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+        job_obj.save()
         form = JobForm(request.POST,request.FILES,instance=job_obj)
-        if form.is_valid:
-            print(request.POST)
-            print(form.errors)
-            form.save()
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            form2.save()
             messages.success(request, 'Job was successfully edited')
-            return redirect(reverse('zodiakApp:adminPage'))
+            response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
+            print(JobForm())
             messages.warning(request, 'Job was not successfully edited')
-            response = redirect(re.META['HTTP_REFERER'])
+            response = redirect(request.META['HTTP_REFERER'])
         return response
     else:
         context['job'] = job_obj
-        context['names'] = User.objects.all()
-        context['statuses'] = getStatuses()
+        context['names'] = UserAccount.objects.filter(deleted=False)
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
         response = render(request, 'zodiakApp/neweditjob.html', context)
         return response
 
@@ -200,7 +241,7 @@ def process_job(request,pk):
     job_obj = Job.objects.get(pk=pk, deleted=False)
     if request.method == "POST":
         form = JobForm(request.POST,request.FILES,instance=job_obj)
-        if form.is_valid:
+        if form.is_valid():
             print(request.POST)
             print(form.errors)
             form.save()
@@ -213,8 +254,9 @@ def process_job(request,pk):
         return response
     else:
         context['job'] = job_obj
-        context['names'] = User.objects.all()
-        context['statuses'] = getStatuses()
+        context['names'] = UserAccount.objects.filter(deleted=False)
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
         response = render(request, 'zodiakApp/processjob.html', context)
         return response
 
@@ -224,8 +266,9 @@ def job_view(request,pk):
     context={}
     job_obj = Job.objects.get(pk=pk, deleted=False)
     context['job'] = job_obj
-    context['names'] = User.objects.all()
-    context['statuses'] = getStatuses()
+    context['names'] = UserAccount.objects.filter(deleted=False)
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     response = render(request, 'zodiakApp/viewjob.html', context)
     return response
 
@@ -286,7 +329,7 @@ def register(request):
                 user_acc_form = UserAccountForm(request.POST,request.FILES)
                 print(user_acc_form.errors)
 
-                if user_acc_form.is_valid:
+                if user_acc_form.is_valid():
                     user_acc_form2 = user_acc_form.save(commit=False)
 
                     user_acc_form2.user = user
@@ -327,12 +370,13 @@ def register(request):
 @login_required
 def addUser(request):
     context = {}
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     template_name = 'zodiakApp/adduser.html'
     if request.method == 'POST':
         print(request.POST)
         userform = UserForm(request.POST)
-        if userform.is_valid():
+        if userform.is_valid()():
             form = userform.save(commit=False)
             if request.POST['password'] != request.POST['password2']:
                 messages.warning(request, "Password mismatch. Try again")
@@ -362,7 +406,8 @@ def viewusers(request):
     template_name = 'zodiakApp/viewusers.html'
     useraccounts = UserAccount.objects.filter(deleted=False)
     context['users'] = useraccounts
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     response = render(request,template_name,context)
     return response
 
@@ -370,7 +415,8 @@ def viewusers(request):
 @login_required
 def viewrms(request):
     context = {}
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     template_name = 'zodiakApp/viewrms.html'
     if request.user.is_staff:
         rms = RelationshipManager.objects.filter(deleted=False)
@@ -384,11 +430,12 @@ def viewrms(request):
 @login_required
 def add_rm(request):
     context = {}
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     print(request.POST)
     if request.method == "POST":
         form = RelationshipManagerForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             print(form.errors)
             form2 = form.save(commit=False)
             if request.user.is_staff:
@@ -416,7 +463,8 @@ def user_view(request,pk):
     context={}
     user_obj = UserAccount.objects.get(pk=pk, deleted=False)
     context['useraccount'] = user_obj
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     response = render(request, 'zodiakApp/viewuseraccount.html', context)
     return response
 
@@ -429,7 +477,8 @@ def user_view_home(request,username):
         context['useraccount'] = UserAccount.objects.get(user=user_obj, deleted=False)
     except:
         context['useraccount'] = user_obj
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     response = render(request, 'zodiakApp/viewuseraccount.html', context)
     return response
 
@@ -459,7 +508,8 @@ def rm_view(request,pk):
     context['rm'] = rm_obj
     if request.user.is_staff:
         context['names'] = UserAccount.objects.filter(deleted=False)
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     response = render(request, 'zodiakApp/viewrm.html', context)
     return response
 
@@ -474,7 +524,7 @@ def rm_edit(request,pk):
         rp = request.POST
         print(rp)
         form = RelationshipManagerForm(request.POST,request.FILES,instance=rm_obj)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             messages.success(request, 'RM was successfully edited')
             response = redirect(request.META['HTTP_REFERER'])
@@ -485,7 +535,8 @@ def rm_edit(request,pk):
         return response
     else:
         context['rm'] = rm_obj
-        context['statuses'] = getStatuses()
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
         response = render(request, 'zodiakApp/editrm.html', context)
         return response
 
@@ -498,7 +549,7 @@ def user_edit(request,pk):
         rp = request.POST
         print(rp)
         form = UserAccountForm(request.POST,request.FILES,instance=user_obj)
-        if form.is_valid:
+        if form.is_valid():
             user_obj = User.objects.get(username=rp['username'])
             userform = form.save(commit=False)
             userform.user = user_obj
@@ -532,7 +583,8 @@ def user_edit(request,pk):
         return response
     else:
         context['useraccount'] = user_obj
-        context['statuses'] = getStatuses()
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
         response = render(request, 'zodiakApp/edituseraccount.html', context)
         return response
 
@@ -542,7 +594,8 @@ def user_access(request):
     context={}
     user_obj = UserAccount.objects.filter(deleted=False)
     context['names'] = user_obj
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     if request.method == "POST":
         print('see me')
         rp = request.POST
@@ -582,7 +635,8 @@ def user_access(request):
 @login_required
 def mails(request):
     context = {}
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     template_name = 'zodiakApp/adminmailbox.html'
     return render(request, template_name, context)
 
@@ -590,7 +644,8 @@ def mails(request):
 @login_required
 def newmail(request):
     context = {}
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     template_name = 'zodiakApp/newmail.html'
     return render(request, template_name, context)
 
@@ -598,7 +653,8 @@ def newmail(request):
 @login_required
 def view_mail(request,pk):
     context = {}
-    context['statuses'] = getStatuses()
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
     template_name = 'zodiakApp/viewmail.html'
     return render(request, template_name, context)
 

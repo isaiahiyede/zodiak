@@ -29,11 +29,11 @@ class UserAccount(models.Model):
     deleted = models.BooleanField(default=False)
 
     class Meta:
-	    verbose_name_plural = 'UserAccount'
+	    verbose_name_plural = 'User Accounts'
 	    ordering = ['-created_on']
 	    
-    def __unicode__(self):
-	    return '%s' %(self.user)
+    def __string__(self):
+	    return '%s' %(self.user.username)
 
 
 class Address(models.Model):
@@ -53,10 +53,22 @@ class Address(models.Model):
 
 
 class Status(models.Model):
+	name = models.CharField(max_length=100,null=True,blank=True)
+	alias = models.CharField(max_length=100,null=True,blank=True)
+
+	class Meta:
+	    verbose_name_plural = 'Statuses'
+	    ordering = ['-name']
+	    
+	def __unicode__(self):
+	    return '%s' %(self.name)
+
+
+class JobModes(models.Model):
 	name = models.CharField(max_length=20,null=True,blank=True)
 
 	class Meta:
-	    verbose_name_plural = 'Status'
+	    verbose_name_plural = 'Job Modes'
 	    ordering = ['-name']
 	    
 	def __unicode__(self):
@@ -64,7 +76,7 @@ class Status(models.Model):
 
 
 class Job(models.Model):
-	job_user_acc = models.ForeignKey(User, null=True, blank=True)
+	job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
 	job_origin = models.CharField(max_length=50, null=True, blank=True)
 	job_destination = models.CharField(max_length=50, null=True, blank=True)
 	job_start_date = models.DateField(null=True, blank=True)
@@ -86,12 +98,22 @@ class Job(models.Model):
 	job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_3 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_paid_for = models.BooleanField(default=False)
 	job_created_on = models.DateTimeField(default=timezone.now)
 	deleted = models.BooleanField(default=False)
+	job_in_transit = models.BooleanField(default=False)
+	job_arrived = models.BooleanField(default=False)
+	job_undergoing_clearnace = models.BooleanField(default=False)
+	job_undergoing_ammendment = models.BooleanField(default=False)
+	job_examined = models.BooleanField(default=False)
+	job_cleared = models.BooleanField(default=False)
+	job_completed = models.BooleanField(default=False)
+	job_invoiced = models.BooleanField(default=False)
+	job_paid_for = models.BooleanField(default=False)
+	job_processing = models.BooleanField(default=False)
+	job_issue_resolution = models.BooleanField(default=False)
 
 	class Meta:
-	    verbose_name_plural = 'Job'
+	    verbose_name_plural = 'Jobs'
 	    ordering = ['-job_created_on']
 	    
 	def __unicode__(self):
@@ -111,7 +133,7 @@ class RelationshipManager(models.Model):
 	deleted = models.BooleanField(default=False)
 
 	class Meta:
-	    verbose_name_plural = 'Relationship Manager'
+	    verbose_name_plural = 'Relationship Managers'
 	    ordering = ['-rm_created_on']
 	    
 	def __unicode__(self):
@@ -124,9 +146,12 @@ class Comments(models.Model):
 	msg_created_on = models.DateTimeField(default=timezone.now)
 
 	class Meta:
-	    verbose_name_plural = 'Commnets'
+	    verbose_name_plural = 'Comments'
 	    ordering = ['-msg_created_on']
 	    
 	def __unicode__(self):
 	    return '%s - %s' %(self.job_message.job_id)
+
+
+
 

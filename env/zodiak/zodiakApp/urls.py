@@ -46,6 +46,7 @@ urlpatterns = [
 
     # url(r'^confirm-order/$',views.get_confirmation_order, name = "get_confirmation_order"),
     url(r'^getjob/$',views.get_job, name = "get_job"),
+    url(r'^selectedjobs/$',views.get_jobs_selected, name = "get_jobs_selected"),
     # url(r'^customer-list/$',views.all_customers, name = "all_customers"),
     # url(r'^customer-payment-list/$',views.customer_payments, name = "all_customers_payments"),
     # # url(r'^userComment/$',views.user_comment, name = "user_comment"),

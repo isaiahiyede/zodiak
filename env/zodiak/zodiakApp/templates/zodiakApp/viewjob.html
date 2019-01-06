@@ -52,7 +52,7 @@
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                 <div class="chosen-select-single mg-b-20">
                                                                     <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
-                                                                        <option value="{{job.job_user_acc}}">{{job.job_user_acc}}</option>
+                                                                        <option value="{{job.job_user_acc}}">{{job.job_user_acc.user.username}}</option>
                                                                         {% for name in names %}
                                                                            <option value="{{name.user.username}}">
                                                                             {{name.user.username}}</option> 

@@ -44,6 +44,8 @@
         <div class="product-payment-inner-st">
             <ul id="myTabedu1" class="tab-review-design">
                 <li class="active"><a href="#description">Create Job</a></li>
+
+
 <!--                 <li><a href="#reviews"> Acount Information</a></li>
                 <li><a href="#INFORMATION">Social Information</a></li> -->
             </ul>
@@ -62,7 +64,7 @@
 
                                         <div class="row">
 
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
@@ -74,6 +76,7 @@
                                                     </div>
                                                 </div>
 
+                                                {% if request.user.is_staff %}
                                                 <div class="form-group-inner">
                                                     <div class="row">
                                                         
@@ -85,7 +88,7 @@
                                                                         <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
                                                                             <option value="">Select</option>
                                                                             {% for name in names %}
-                                                                               <option value="{{name.user.username}}">
+                                                                               <option value="{{name.pk}}">
                                                                                 {{name.user.username}}</option>
                                                                             {% endfor %}
                                                                         </select>
@@ -95,6 +98,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {% endif %}
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
@@ -653,6 +657,43 @@
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label>Job Status</label>
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <div class="chosen-select-single mg-b-20">
+                                                                            <select data-placeholder="Select job status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status" required>
+                                                                                <option value="">Select ...
+                                                                                </option>
+                                                                                {% for status in statuses %}
+                                                                                   <option 
+                                                                                    value="{{status.name}}">
+                                                                                    {{status.name}}</option> 
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                               
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                                                <div class="form-group-inner">
+                                                    <div class="row">
+           
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label>Job Shipper</label>
+                                                            <input id="job_shipper" name="job_shipper" type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group-inner">
+                                                    <div class="row">
                                                         
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <label>Job End date</label>
@@ -686,28 +727,6 @@
                                                 </div>
 
                                                 <div class="form-group-inner">
-                                                    <div class="row">  
-                                                        
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Status</label>
-                                                            <div class="row">
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="chosen-select-single mg-b-20">
-                                                                        <select data-placeholder="Select status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status" required>
-                                                                            <option value="">Select</option>
-                                                                            {% for status in statuses %}
-                                                                               <option value="{{status.name}}">
-                                                                                {{status.name}}</option> 
-                                                                            {% endfor %}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group-inner">
                                                     <div class="row">
      
                                                         <div class="col-lg-12 col-md-12 col-sm12 col-xs-12">
@@ -729,18 +748,23 @@
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
-         
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Job Description</label>
-                                                            <div class="form-group">
-                                                                <textarea name="job_description" id="job_description" placeholder="Description"></textarea>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                            <label class="login2"><span class="basic-ds-n">Job</span> Paid For</label>
+                                                        </div>
+                                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                            <div class="bt-df-checkbox">
+                                                                <label>
+                                                                <input class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">YES</label>
+                                                                <label>
+                                                                <input class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">NO</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
 
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
@@ -754,21 +778,21 @@
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
-                                           
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Job Type</label>
-                                                            <div class="row">
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="chosen-select-single mg-b-20">
-                                                                        <select data-placeholder="Select status..." class="chosen-select" tabindex="-1" id="job_type" name="job_type">
-                                                                            <option value="">Select</option>
-                                                                            <option value="Air">Air</option>
-                                                                            <option value="Sea">Sea</option>
-                                                                            <option value="Ground">Ground</option>
-                                                                        </select>
+                                                            <label>Job Mode</label>
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <div class="chosen-select-single mg-b-20">
+                                                                            <select data-placeholder="Select job mode..." class="chosen-select" tabindex="-1" id="job_type" name="job_type" required>
+                                                                                <option value="">Select</option>
+                                                                                {% for jobmode in jobmodes %}
+                                                                                   <option value="{{jobmode.name}}">
+                                                                                    {{jobmode.name}}</option> 
+                                                                                {% endfor %}
+                                                                            </select>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>                               
                                                         </div>
                                                     </div>
                                                 </div>
@@ -802,91 +826,39 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                                                <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">File 1</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                            <div class="input append-big-btn">
+                                                                <label class="icon-left" for="append-big-btn">
+                                                                        <i class="fa fa-download"></i>
+                                                                    </label>
+                                                                <div class="file-button">
+                                                                    Browse
+                                                                    <input type="file" onchange="document.getElementById('append-big-btn').value = this.value;" name="job_doc_1" id="job_doc_1">
+                                                                </div>
+                                                                <input type="text" id="append-big-btn" placeholder="no file selected">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
 
                                                 <div class="form-group-inner">
                                                     <div class="row">
-           
+         
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>Job Shipper</label>
-                                                            <input id="job_shipper" name="job_shipper" type="text" class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group-inner">
-                                                    <div class="row">
-                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                                            <label class="login2"><span class="basic-ds-n">Job</span> Paid For</label>
-                                                        </div>
-                                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                                                            <div class="bt-df-checkbox">
-                                                                <label>
-                                                                <input class="pull-left" type="radio" checked="" value="True" id="job_paid_for" name="job_paid_for">YES</label>
-                                                                <label>
-                                                                <input class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">NO</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group-inner">
-                                                    <div class="row">
-    
-                                                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>File 1</label>
-                                                            <div class="file-upload-inner file-upload-inner-right ts-forms">
-                                                                <div class="input append-big-btn">
-                                                                    <label class="icon-left" for="append-big-btn">
-                                                                            <i class="fa fa-download"></i>
-                                                                        </label>
-                                                                    <div class="file-button">
-                                                                        Browse
-                                                                        <input type="file" onchange="document.getElementById('append-big-btn').value = this.value;" name="job_doc_1" id="job_doc_1">
-                                                                    </div>
-                                                                    <input type="text" id="append-big-btn" placeholder="no file selected">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group-inner">
-                                                    <div class="row">
-      
-                                                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>File 2</label>
-                                                            <div class="file-upload-inner file-upload-inner-right ts-forms">
-                                                                <div class="input append-big-btn">
-                                                                    <label class="icon-left" for="append-big-btn">
-                                                                            <i class="fa fa-download"></i>
-                                                                        </label>
-                                                                    <div class="file-button">
-                                                                        Browse
-                                                                        <input type="file" onchange="document.getElementById('append-big-btn').value = this.value;" name="job_doc_2" id="job_doc_2">
-                                                                    </div>
-                                                                    <input type="text" id="append-big-btn" placeholder="no file selected">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group-inner">
-                                                    <div class="row">
-   
-                                                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                                                            <label>File 3</label>
-                                                            <div class="file-upload-inner file-upload-inner-right ts-forms">
-                                                                <div class="input append-big-btn">
-                                                                    <label class="icon-left" for="append-big-btn">
-                                                                            <i class="fa fa-download"></i>
-                                                                        </label>
-                                                                    <div class="file-button">
-                                                                        Browse
-                                                                        <input type="file" onchange="document.getElementById('append-big-btn').value = this.value;" name="job_doc_3" id="job_doc_3">
-                                                                    </div>
-                                                                    <input type="text" id="append-big-btn" placeholder="no file selected">
-                                                                </div>
+                                                            <label>Job Description</label>
+                                                            <div class="form-group">
+                                                                <textarea name="job_description" id="job_description" placeholder="Description"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>

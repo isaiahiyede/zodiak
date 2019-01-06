@@ -59,7 +59,7 @@
 
                                         <div class="row">
 
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
 												<div class="form-group-inner">
 	                                                <div class="row">
@@ -82,15 +82,15 @@
 	                                                    	<label>Customer</label>
 	                                                        <div class="row">
 	                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                                <div class="chosen-select-single mg-b-20">
-	                                                                    <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
-	                                                                            <option value="{{job.job_user_acc.username}}">{{job.job_user_acc.username}}</option>
-	                                                                        {% for name in names %}
-	                                                                           <option value="{{name.user.username}}">
-                                                                            	{{name.user.username}}</option> 
-	                                                                        {% endfor %}
-	                                                                    </select>
-	                                                                </div>
+                                                                <div class="chosen-select-single mg-b-20">
+                                                                    <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
+                                                                        <option value="{{job.job_user_acc.pk}}">{{job.job_user_acc.user.username}}</option>
+                                                                        {% for name in names %}
+                                                                           <option value="{{name.pk}}">
+                                                                            {{name.user.username}}</option> 
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
 	                                                            </div>
 	                                                        </div>
 	                                                    </div>
@@ -661,6 +661,36 @@
 
 	                                            <div class="form-group-inner">
 	                                                <div class="row">
+	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+	                                                        <label><span class="basic-ds-n">Job</span> Paid For</label>
+	                                                    </div>
+	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+	                                                    	{% if job.paid_for %}
+	                                                        <div class="bt-df-checkbox">
+	                                                            <label>
+	                                                            <input class="pull-left" type="radio" checked="" value="True" id="job_paid_for" name="job_paid_for">YES</label>
+	                                                            <label>
+	                                                            <input class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">NO</label>
+	                                                        </div>
+	                                                        {% else %}
+	                                                        <div class="bt-df-checkbox">
+	                                                            <label>
+	                                                            <input class="pull-left" type="radio" value="True" id="job_paid_for" name="job_paid_for">YES</label>
+	                                                            <label>
+	                                                            <input checked="" class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">NO</label>
+	                                                        </div>
+	                                                        {% endif %}
+
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+												<div class="form-group-inner">
+	                                                <div class="row">
 	                                                    
 	                                                        
 	                                                    
@@ -710,7 +740,7 @@
 	                                                                    <select data-placeholder="Select status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status">
 	                                                                        <option value="{{job.job_status}}">{{job.job_status}}</option>
 	                                                                        {% for status in statuses %}
-	                                                                           <option value="{{status.name}}">
+	                                                                           <option value="{{status.alias}}">
 	                                                                            {{status.name}}</option> 
 	                                                                        {% endfor %}
 	                                                                    </select>
@@ -744,24 +774,21 @@
 	                                                </div>
 	                                            </div>
 
-
 	                                            <div class="form-group-inner">
 	                                                <div class="row">
 	                                                    
 	                                                        
 	                                                    
 	                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                    	<label>Comments</label>
-	                                                        <div class="form-group">
-	                                                        <textarea value="" name="job_comment" id="job_comment" placeholder="Comments">{{job.job_comment}}</textarea>
-	                                                    	</div>
+	                                                    	<label>Job Shipper</label> 
+	                                                        <input value="{{job.job_shipper}}" id="job_shipper" name="job_shipper" type="text" class="form-control" />
 	                                                    </div>
 	                                                </div>
 	                                            </div>
 
                                             </div>
 
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
                                                 <div class="form-group-inner">
 	                                                <div class="row">
@@ -787,9 +814,10 @@
 	                                                                <div class="chosen-select-single mg-b-20">
 	                                                                    <select data-placeholder="Select status..." class="chosen-select" tabindex="-1" id="job_type" name="job_type">
 	                                                                        <option value="{{job.job_type}}">{{job.job_type}}</option>
-	                                                                        <option value="Air">Air</option>
-	                                                                        <option value="Sea">Sea</option>
-	                                                                        <option value="Ground">Ground</option>
+                                                                                {% for jobmode in jobmodes %}
+                                                                                   <option value="{{jobmode.name}}">
+                                                                                    {{jobmode.name}}</option> 
+                                                                                {% endfor %}
 	                                                                    </select>
 	                                                                </div>
 	                                                            </div>
@@ -836,44 +864,6 @@
 
 	                                            <div class="form-group-inner">
 	                                                <div class="row">
-	                                                    
-	                                                        
-	                                                    
-	                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                    	<label>Job Shipper</label> 
-	                                                        <input value="{{job.job_shipper}}" id="job_shipper" name="job_shipper" type="text" class="form-control" />
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                            <div class="form-group-inner">
-	                                                <div class="row">
-	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-	                                                        <label><span class="basic-ds-n">Job</span> Paid For</label>
-	                                                    </div>
-	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-	                                                    	{% if job.paid_for %}
-	                                                        <div class="bt-df-checkbox">
-	                                                            <label>
-	                                                            <input class="pull-left" type="radio" checked="" value="True" id="job_paid_for" name="job_paid_for">YES</label>
-	                                                            <label>
-	                                                            <input class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">NO</label>
-	                                                        </div>
-	                                                        {% else %}
-	                                                        <div class="bt-df-checkbox">
-	                                                            <label>
-	                                                            <input class="pull-left" type="radio" value="True" id="job_paid_for" name="job_paid_for">YES</label>
-	                                                            <label>
-	                                                            <input checked="" class="pull-left" type="radio" value="False" id="job_paid_for" name="job_paid_for">NO</label>
-	                                                        </div>
-	                                                        {% endif %}
-
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-	  
-	                                            <div class="form-group-inner">
-	                                                <div class="row">
 
 	                                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
 	                                                    	<label>File 1</label>  
@@ -892,6 +882,10 @@
 	                                                    </div>
 	                                                </div>
 	                                            </div>
+
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
 	                                            <!-- <div class="form-group-inner">
 	                                                <div class="row">
@@ -936,6 +930,20 @@
 	                                                    </div>
 	                                                </div>
 	                                            </div> -->
+
+	                                            <div class="form-group-inner">
+	                                                <div class="row">
+	                                                    
+	                                                        
+	                                                    
+	                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                                                    	<label>Comments</label>
+	                                                        <div class="form-group">
+	                                                        <textarea value="" name="job_comment" id="job_comment" placeholder="Comments">{{job.job_comment}}</textarea>
+	                                                    	</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
 
 	                                            <div class="form-group-inner">
 	                                                <div class="row">

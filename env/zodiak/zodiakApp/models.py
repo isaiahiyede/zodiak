@@ -98,6 +98,7 @@ class Job(models.Model):
 	job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_3 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+	job_paid = models.CharField(max_length=20,null=True,blank=True)
 	job_created_on = models.DateTimeField(default=timezone.now)
 	deleted = models.BooleanField(default=False)
 	job_in_transit = models.BooleanField(default=False)

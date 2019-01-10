@@ -192,7 +192,7 @@ def add_job(request):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
-        response = render(request, 'zodiakApp/newjob.html', context)
+        response = render(request, 'zodiakApp/newjobcreate.html', context)
         return response
 
 

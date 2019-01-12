@@ -20,23 +20,23 @@
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <div id="toolbar">
-                                        <select class="form-control dt-tb" jobtype="{{title}}" user_obj="{{request.user}}" id="filter_options">
-                                            <option value="">Filter By...</option>
-                                            <option value="job_in_transit">In Transit</option>
-                                            <option value="job_arrived">Arrived</option>
-                                            <option value="job_processing">Processing</option>
-                                            <option value="job_undergoing_ammendment">Undergoing Ammendment</option>
-                                            <option value="job_undergoing_clearnace">Undergoing Clearance</option>
-                                            <option value="job_examined">Examined</option>
-                                            <option value="job_cleared">Cleared</option>
-                                            <option value="job_completed">Completed</option>
-                                            <option value="job_invoiced">Invoiced</option>
-                                            <option value="job_paid_for">Paid for</option>
-                                            <option value="job_issue_resolution">Issue Resolution</option>
-                                        </select>
+                                    <!--<div id="toolbar">-->
+                                        <!--<select class="form-control dt-tb" jobtype="{{title}}" user_obj="{{request.user}}" id="filter_options">-->
+                                            <!--<option value="">Filter By...</option>-->
+                                            <!--<option value="job_in_transit">In Transit</option>-->
+                                            <!--<option value="job_arrived">Arrived</option>-->
+                                            <!--<option value="job_processing">Processing</option>-->
+                                            <!--<option value="job_undergoing_ammendment">Undergoing Ammendment</option>-->
+                                            <!--<option value="job_undergoing_clearnace">Undergoing Clearance</option>-->
+                                            <!--<option value="job_examined">Examined</option>-->
+                                            <!--<option value="job_cleared">Cleared</option>-->
+                                            <!--<option value="job_completed">Completed</option>-->
+                                            <!--<option value="job_invoiced">Invoiced</option>-->
+                                            <!--<option value="job_paid_for">Paid for</option>-->
+                                            <!--<option value="job_issue_resolution">Issue Resolution</option>-->
+                                        <!--</select>-->
 
-                                    </div>
+                                    <!--</div>-->
 
                                     <table data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
@@ -110,27 +110,27 @@
          })
     });
 
-    $('body').on('change','#filter_options',function(e){
-        var selected = $(this).find(":selected").val()
-        var user_obj = $(this).attr('user_obj')
-        var jobtype = $(this).attr('jobtype')
-        alert(jobtype)
-        $.ajax({
-            data: {'selected':selected,'user_obj':user_obj, 'jobtype':jobtype},
-            type: 'GET',
-            url: "{% url 'zodiakApp:get_jobs_selected' %}",
-            
-            success:function(data){
-               $('#tabledata').replaceWith(data);
-               console.log('working');
-               
-            },
+    <!--$('body').on('change','#filter_options',function(e){-->
+        <!--var selected = $(this).find(":selected").val()-->
+        <!--var user_obj = $(this).attr('user_obj')-->
+        <!--var jobtype = $(this).attr('jobtype')-->
+        <!--alert(jobtype)-->
+        <!--$.ajax({-->
+            <!--data: {'selected':selected,'user_obj':user_obj, 'jobtype':jobtype},-->
+            <!--type: 'GET',-->
+            <!--url: "{% url 'zodiakApp:get_jobs_selected' %}",-->
+            <!---->
+            <!--success:function(data){-->
+               <!--$('#tabledata').replaceWith(data);-->
+               <!--console.log('working');-->
+               <!---->
+            <!--},-->
 
-            error:function(data){
-               console.log('not working');
-            }
-         })
-    });
+            <!--error:function(data){-->
+               <!--console.log('not working');-->
+            <!--}-->
+         <!--})-->
+    <!--});-->
 </script>
 
 <script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>

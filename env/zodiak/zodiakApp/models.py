@@ -75,7 +75,18 @@ class JobModes(models.Model):
 	    return '%s' %(self.name)
 
 
-class Job(models.Model):
+class PackageDimension(models.Model):
+    box_length      = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    box_width       = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    box_height      = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    box_weight      = models.DecimalField(max_digits = 15, decimal_places = 1, default = 0, null=True, blank=True)
+    box_weight_K    = models.DecimalField(max_digits = 15, decimal_places = 1, default = 0, null=True, blank=True)
+
+    class Meta():
+        abstract = True
+
+
+class Job(PackageDimension):
 	job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
 	job_origin = models.CharField(max_length=50, null=True, blank=True)
 	job_destination = models.CharField(max_length=50, null=True, blank=True)
@@ -87,19 +98,20 @@ class Job(models.Model):
 	job_amount_paid = models.FloatField(default=1.0,null=True, blank=True)
 	job_amount_balance = models.FloatField(default=1.0,null=True, blank=True)
 	job_shipper = models.CharField(max_length=20,null=True,blank=True)
-	job_description = models.TextField(null=True,blank=True)
-	job_comment = models.TextField(null=True,blank=True)
+
 	job_id = models.CharField(max_length=20,null=True,blank=True)
 	job_name = models.CharField(max_length=20,null=True,blank=True)
 	job_awl_number = models.CharField(max_length=20,null=True,blank=True)
 	job_bol_number = models.CharField(max_length=20,null=True,blank=True)
 	job_vessel_name = models.CharField(max_length=20,null=True,blank=True)
 	job_type = models.CharField(max_length=20,null=True,blank=True)
+
 	job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_3 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_paid = models.CharField(max_length=20,null=True,blank=True)
 	job_created_on = models.DateTimeField(default=timezone.now)
+
 	deleted = models.BooleanField(default=False)
 	job_in_transit = models.BooleanField(default=False)
 	job_arrived = models.BooleanField(default=False)
@@ -112,6 +124,49 @@ class Job(models.Model):
 	job_paid_for = models.BooleanField(default=False)
 	job_processing = models.BooleanField(default=False)
 	job_issue_resolution = models.BooleanField(default=False)
+
+	box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0)
+
+	insured = models.BooleanField(default=False)
+	vat = models.BooleanField(default=False)
+	demurrage = models.BooleanField(default=False)
+	insurance_charge = models.FloatField(default=0)
+	VAT_charge = models.FloatField(default=0)
+	demurrage_rate = models.FloatField(max_length=10, default=0.10)
+	demurrage_grace_period = models.IntegerField(default=7)
+	demurrage_start_date = models.DateField(null=True, blank=True)
+	demurrage_end_date = models.DateField(null=True, blank=True)
+
+	shippers_name = models.CharField(max_length=100, null=True, blank=True)
+	shippers_address = models.CharField(max_length=100, null=True, blank=True)
+	shippers_number = models.IntegerField(null=True, blank=True)
+	shippers_acct_no = models.CharField(max_length=100, null=True, blank=True)
+	consignees_name = models.CharField(max_length=100, null=True, blank=True)
+	consignees_address = models.CharField(max_length=100, null=True, blank=True)
+	consignees_number = models.IntegerField(null=True, blank=True)
+	consignees_acct_no = models.CharField(max_length=100, null=True, blank=True)
+	carrier_agent_name = models.CharField(max_length=100, null=True, blank=True)
+	carrier_agent_country = models.CharField(max_length=100, null=True, blank=True)
+	carrier_agent_iata_code = models.CharField(max_length=100, null=True, blank=True)
+	carrier_agent_acct_no = models.IntegerField(null=True, blank=True)
+
+	handling_info = models.CharField(max_length=100, null=True, blank=True)
+	job_description = models.TextField(null=True,blank=True)
+	job_comment = models.TextField(null=True,blank=True)
+
+	value_for_carriage = models.CharField(max_length=100, null=True, blank=True)
+	number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
+
+	gross_weight = models.IntegerField(null=True, blank=True)
+	chargeable_rate = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+	note_on_the_package = models.CharField(max_length=200, null=True, blank=True)
+	nature_and_quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
+
+	airline_tracking_number = models.IntegerField(null=True, blank=True)
+	other_charges_due_carrier = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+	place_of_execution = models.CharField(max_length=100, null=True, blank=True)
+	shippers_name = models.CharField(max_length=100, null=True, blank=True)
+	carrier_name = models.CharField(max_length=100, null=True, blank=True)
 
 	class Meta:
 	    verbose_name_plural = 'Jobs'
@@ -153,6 +208,46 @@ class Comments(models.Model):
 	def __unicode__(self):
 	    return '%s - %s' %(self.job_message.job_id)
 
+
+class DockReceipt(models.Model):
+    shipping_package                                = models.ForeignKey(Job, null=True, blank=True)
+    tracking_number                   				= models.CharField(max_length=100,null=True, blank=True)
+    exporter_name_and_address                       = models.CharField(max_length = 100,null=True, blank=True)
+    zip_code                                        = models.CharField(max_length = 100,null=True, blank=True)
+    consigned_to                                    = models.CharField(max_length = 100,null=True, blank=True)
+    notify_party_name_and_address                   = models.CharField(max_length = 100,null=True, blank=True)
+    document_number                                 = models.CharField(max_length = 100,null=True, blank=True)
+    bl_or_awb_number                                = models.CharField(max_length = 100,null=True, blank=True)
+    export_references                               = models.CharField(max_length = 100,null=True, blank=True)
+    forwarding_agent_fmc_no                         = models.CharField(max_length = 100,null=True, blank=True)
+    state_and_country_of_origin_or_ftz_number       = models.CharField(max_length = 100,null=True, blank=True)
+    domestic_routing                                = models.CharField(max_length = 100,null=True, blank=True)
+    loading_pier                                    = models.CharField(max_length = 100,null=True, blank=True)
+    type_of_move                                    = models.CharField(max_length = 100,null=True, blank=True)
+    containerized                                   = models.BooleanField(default=False)
+    precarriage_by                                  = models.CharField(max_length = 100,null=True, blank=True)
+    place_of_receipt_by_precarrier                  = models.CharField(max_length = 100,null=True, blank=True)
+    exporting_carrier                               = models.CharField(max_length = 100,null=True, blank=True)
+    port_of_loading                                 = models.CharField(max_length = 100,null=True, blank=True)
+    foreign_port_of_unloading                       = models.CharField(max_length = 100,null=True, blank=True)
+    place_of_delivery_by_oncarrier                  = models.CharField(max_length = 100,null=True, blank=True)
+    mks_nos                                         = models.CharField(max_length = 100,null=True, blank=True)
+    no_of_pkgs                                      = models.IntegerField(null=True, blank=True)
+    description_of_package_and_goods                = models.CharField(max_length = 100,null=True, blank=True)
+    gross_weight                                    = models.IntegerField(null=True, blank=True)
+    measurement                                     = models.CharField(max_length=100, null=True, blank=True)
+    lighter_truck                                   = models.CharField(max_length = 100,null=True, blank=True)
+    arrived_date                                    = models.CharField(max_length = 100,null=True, blank=True)
+    arrived_time                                    = models.CharField(max_length = 100,null=True, blank=True)
+    created_on                                      = models.DateField(default = timezone.now)
+    created_by                                      = models.CharField(max_length = 100,null=True, blank=True)
+    batch                                           = models.CharField(max_length = 100,null=True, blank=True)
+    unloaded_date                                   = models.CharField(max_length = 100,null=True, blank=True)
+    unloaded_time                                   = models.CharField(max_length = 100,null=True, blank=True)
+    checked_by                                      = models.CharField(max_length = 100,null=True, blank=True)
+    placed_location                                 = models.CharField(max_length = 100,null=True, blank=True)
+    receiving_clerk_name                            = models.CharField(max_length = 100,null=True, blank=True)
+    date_from_receiving_clerk                       = models.CharField(max_length = 100,null=True, blank=True)
 
 
 

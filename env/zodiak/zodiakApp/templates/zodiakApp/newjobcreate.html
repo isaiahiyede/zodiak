@@ -23,10 +23,10 @@
                     <div class="panel-group edu-custon-design" id="accordion2">
                         <div class="panel panel-default">
                             <div class="panel-heading accordion-head">
-                                <h4 class="panel-title">
+                                <h6 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion2" href="#collapse4">
 							 		General Details</a>
-                                </h4>
+                                </h6>
                             </div>
 
                             <div id="collapse4" class="panel-collapse panel-ic collapse">
@@ -44,28 +44,28 @@
 
 			                                        <div class="row">
 
-			                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Title</label>
+			                                                            <h6>Job Title</h6>
 			                                                            <input id="job_name" name="job_name" type="text" class="form-control" placeholder="Shippers Name" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
 			                                                {% if request.user.is_staff %}
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Customer</label>
+			                                                            <h6>Customer</h6>
 			                                                            <div class="row">
 			                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			                                                                    <div class="chosen-select-single mg-b-20">
-			                                                                        <select data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
+			                                                                        <select class="form-control" data-placeholder="Select Customer name..." class="chosen-select" tabindex="-1" id="job_user_acc" name="job_user_acc">
 			                                                                            <option value="">Select</option>
 			                                                                            {% for name in names %}
 			                                                                               <option value="{{name.pk}}">
@@ -80,15 +80,15 @@
 			                                                </div>
 			                                                {% endif %}
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Origin</label>
+			                                                            <h6>Job Origin</h6>
 			                                                          <div class="row">
 			                                                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			                                                            <div class="chosen-select-single mg-b-20">
-			                                                                <select id="job_origin" name="job_origin" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
+			                                                                <select class="form-control" id="job_origin" name="job_origin" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
 			                                                                        <option value="">Select</option>
 			                                                                        <option value="United States">United States</option>
 			                                                                        <option value="United Kingdom">United Kingdom</option>
@@ -349,15 +349,15 @@
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Destination</label>
+			                                                            <h6>Job Destination</h6>
 			                                                            <div class="row">
 			                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			                                                        <div class="chosen-select-single mg-b-20">
-			                                                            <select id="job_destination" name="job_destination" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
+			                                                            <select class="form-control" id="job_destination" name="job_destination" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
 			                                                                    <option value="">Select</option>
 			                                                                    <option value="United States">United States</option>
 			                                                                    <option value="United Kingdom">United Kingdom</option>
@@ -618,11 +618,11 @@
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Start date</label>
+			                                                            <h6>Job Start date</h6>
 			                                                            <div class="date-picker-inner">
 			                                                                <div class="form-group data-custon-pick" id="data_1">
 			                                                                    <div class="input-group date">
@@ -635,14 +635,14 @@
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Status</label>
+			                                                            <h6>Job Status</h6>
 			                                                                <div class="row">
 			                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			                                                                        <div class="chosen-select-single mg-b-20">
-			                                                                            <select data-placeholder="Select job status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status" required>
+			                                                                            <select class="form-control" data-placeholder="Select job status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status" required>
 			                                                                                <option value="">Select ...
 			                                                                                </option>
 			                                                                                {% for status in statuses %}
@@ -660,23 +660,23 @@
 
 			                                            </div>
 
-			                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			           
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Shipper</label>
+			                                                            <h6>Job Shipper</h6>
 			                                                            <input id="job_shipper" name="job_shipper" type="text" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job End date</label>
+			                                                            <h6>Job End date</h6>
 			                                                            <div class="date-picker-inner">
 			                                                                <div class="form-group data-custon-pick" id="data_1">
 			                                                                    <div class="input-group date">
@@ -689,11 +689,11 @@
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Date of Arrival</label>
+			                                                            <h6>Job Date of Arrival</h6>
 			                                                            <div class="date-picker-inner">
 			                                                                <div class="form-group data-custon-pick" id="data_1">
 			                                                                    <div class="input-group date">
@@ -706,35 +706,35 @@
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			     
 			                                                        <div class="col-lg-12 col-md-12 col-sm12 col-xs-12">
-			                                                            <label>Job AWL Number</label>
+			                                                            <h6>Job AWL Number</h6>
 			                                                            <input id="job_awl_number" name="job_awl_number" type="text" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 
 			                                                        <div class="col-lg-12 col-md-12 col-sm12 col-xs-12">
-			                                                            <label>Job BOL Number</label>
+			                                                            <h6>Job BOL Number</h6>
 			                                                            <input id="job_bol_number" name="job_bol_number" type="text" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Paid</label>
+			                                                            <h6>Job Paid</h6>
 			                                                            <div class="row">
 			                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			                                                                    <div class="chosen-select-single mg-b-20">
-			                                                                        <select data-placeholder="Select option" class="chosen-select" tabindex="-1" id="job_paid" name="job_paid">
+			                                                                        <select class="form-control" data-placeholder="Select option" class="chosen-select" tabindex="-1" id="job_paid" name="job_paid">
 			                                                                            <option value="">Select</option>
 			                                                                            <option value="Yes">Yes</option>
 			                                                                            <option value="No">No</option>
@@ -748,26 +748,26 @@
 
 			                                            </div>
 
-			                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                            
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Vessel Name</label>
+			                                                            <h6>Vessel Name</h6>
 			                                                            <input id="job_vessel_name" name="job_vessel_name" type="text" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Mode</label>
+			                                                            <h6>Job Mode</h6>
 			                                                                <div class="row">
 			                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			                                                                        <div class="chosen-select-single mg-b-20">
-			                                                                            <select data-placeholder="Select job mode..." class="chosen-select" tabindex="-1" id="job_type" name="job_type" required>
+			                                                                            <select class="form-control" data-placeholder="Select job mode..." class="chosen-select" tabindex="-1" id="job_type" name="job_type" required>
 			                                                                                <option value="">Select</option>
 			                                                                                {% for jobmode in jobmodes %}
 			                                                                                   <option value="{{jobmode.name}}">
@@ -781,50 +781,50 @@
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                    
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Cost (₦)</label>
+			                                                            <h6>Job Cost (₦)</h6>
 			                                                            <input id="job_cost" name="job_cost" type="number" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			                                                     
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Amount Paid (₦)</label>
+			                                                            <h6>Job Amount Paid (₦)</h6>
 			                                                            <input id="job_amount_paid" name="job_amount_paid" type="number" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			            
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Balance (₦)</label>
+			                                                            <h6>Job Balance (₦)</h6>
 			                                                            <input onclick="return getBal()" id="job_amount_balance" name="job_amount_balance" type="number" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
 
-			                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 				                                                <div class="row">
 				                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				                                                        <label class="login2 pull-right pull-right-pro">File 1</label>
+				                                                        <h6 class="login2 pull-right pull-right-pro">File 1</h6>
 				                                                    </div>
 				                                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
 				                                                        <div class="file-upload-inner file-upload-inner-right ts-forms">
 				                                                            <div class="input append-big-btn">
-				                                                                <label class="icon-left" for="append-big-btn">
+				                                                                <h6 class="icon-left" for="append-big-btn">
 				                                                                        <i class="fa fa-download"></i>
-				                                                                    </label>
+				                                                                    </h6>
 				                                                                <div class="file-button">
 				                                                                    Browse
 				                                                                    <input type="file" onchange="document.getElementById('append-big-btn').value = this.value;" name="job_doc_1" id="job_doc_1">
@@ -836,23 +836,136 @@
 				                                                </div>
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			         
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Job Description</label>
+			                                                            <h6>Job Description</h6>
 			                                                            <div class="form-group">
 			                                                                <textarea name="job_description" id="job_description" placeholder="Description"></textarea>
 			                                                            </div>
 			                                                        </div>
-			                                                    </div>
+			                                                    </div> 
 			                                                </div>
 
-			                                                <div class="form-group-inner">
+			                                                <div class="form-group">
 			                                                    <div class="row">
 			     
 			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                                            <label>Comments</label>
+			                                                            <h6>Comments</h6>
+			                                                            <div class="form-group">
+			                                                                <textarea name="job_comment" id="job_comment" placeholder="Comments"></textarea>
+			                                                            </div>
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+
+			                                            			                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			                            
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Vessel Name</h6>
+			                                                            <input id="job_vessel_name" name="job_vessel_name" type="text" class="form-control" />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Job Mode</h6>
+			                                                                <div class="row">
+			                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                                        <div class="chosen-select-single mg-b-20">
+			                                                                            <select class="form-control" data-placeholder="Select job mode..." class="chosen-select" tabindex="-1" id="job_type" name="job_type" required>
+			                                                                                <option value="">Select</option>
+			                                                                                {% for jobmode in jobmodes %}
+			                                                                                   <option value="{{jobmode.name}}">
+			                                                                                    {{jobmode.name}}</option> 
+			                                                                                {% endfor %}
+			                                                                            </select>
+			                                                                    </div>
+			                                                                </div>
+			                                                            </div>                               
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			                                    
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Job Cost (₦)</h6>
+			                                                            <input id="job_cost" name="job_cost" type="number" class="form-control" />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			                                                     
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Job Amount Paid (₦)</h6>
+			                                                            <input id="job_amount_paid" name="job_amount_paid" type="number" class="form-control" />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			            
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Job Balance (₦)</h6>
+			                                                            <input onclick="return getBal()" id="job_amount_balance" name="job_amount_balance" type="number" class="form-control" />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+
+			                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+
+			                                                <div class="form-group">
+				                                                <div class="row">
+				                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+				                                                        <h6 class="login2 pull-right pull-right-pro">File 1</h6>
+				                                                    </div>
+				                                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+				                                                        <div class="file-upload-inner file-upload-inner-right ts-forms">
+				                                                            <div class="input append-big-btn">
+				                                                                <h6 class="icon-left" for="append-big-btn">
+				                                                                        <i class="fa fa-download"></i>
+				                                                                    </h6>
+				                                                                <div class="file-button">
+				                                                                    Browse
+				                                                                    <input type="file" onchange="document.getElementById('append-big-btn').value = this.value;" name="job_doc_1" id="job_doc_1">
+				                                                                </div>
+				                                                                <input type="text" id="append-big-btn" placeholder="no file selected">
+				                                                            </div>
+				                                                        </div>
+				                                                    </div>
+				                                                </div>
+			                                                </div>
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			         
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Job Description</h6>
+			                                                            <div class="form-group">
+			                                                                <textarea name="job_description" id="job_description" placeholder="Description"></textarea>
+			                                                            </div>
+			                                                        </div>
+			                                                    </div> 
+			                                                </div>
+
+			                                                <div class="form-group">
+			                                                    <div class="row">
+			     
+			                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                                            <h6>Comments</h6>
 			                                                            <div class="form-group">
 			                                                                <textarea name="job_comment" id="job_comment" placeholder="Comments"></textarea>
 			                                                            </div>
@@ -882,10 +995,10 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading accordion-head">
-                                <h4 class="panel-title">
+                                <h6 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
 							 Job Specification</a>
-                                </h4>
+                                </h6>
                             </div>
                             <div id="collapse5" class="panel-collapse panel-ic collapse">
                                 <div class="panel-body admin-panel-content animated flash">
@@ -897,10 +1010,10 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading accordion-head">
-                                <h4 class="panel-title">
+                                <h6 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion2" href="#collapse6">
 							 Documentaion</a>
-                                </h4>
+                                </h6>
                             </div>
                             <div id="collapse6" class="panel-collapse panel-ic collapse">
                                 <div class="panel-body admin-panel-content animated flash">
@@ -912,10 +1025,10 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading accordion-head">
-                                <h4 class="panel-title">
+                                <h6 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion2" href="#collapse7">
                              Miscellanous/Comments/Description</a>
-                                </h4>
+                                </h6>
                             </div>
                             <div id="collapse7" class="panel-collapse panel-ic collapse">
                                 <div class="panel-body admin-panel-content animated flash">

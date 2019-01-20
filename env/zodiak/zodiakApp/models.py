@@ -110,6 +110,8 @@ class Job(PackageDimension):
 	job_doc_4 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_5 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_6 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+	job_doc_7 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+	job_doc_8 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 
 	job_created_on = models.DateTimeField(default=timezone.now)
 
@@ -134,10 +136,10 @@ class Job(PackageDimension):
 	insured = models.BooleanField(default=False)
 	vat = models.BooleanField(default=False)
 	demurrage = models.BooleanField(default=False)
-	insurance_charge = models.FloatField(default=0)
-	VAT_charge = models.FloatField(default=0)
-	demurrage_rate = models.FloatField(max_length=10, default=0.10)
-	demurrage_grace_period = models.IntegerField(default=7)
+	insurance_charge = models.FloatField(default=0, null=True, blank=True)
+	VAT_charge = models.FloatField(default=0, null=True, blank=True)
+	demurrage_rate = models.FloatField(max_length=10, default=0.10, null=True, blank=True)
+	demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
 	demurrage_start_date = models.DateField(null=True, blank=True)
 	demurrage_end_date = models.DateField(null=True, blank=True)
 
@@ -153,7 +155,7 @@ class Job(PackageDimension):
 	carrier_agent_name = models.CharField(max_length=100, null=True, blank=True)
 	carrier_agent_country = models.CharField(max_length=100, null=True, blank=True)
 	carrier_agent_iata_code = models.CharField(max_length=100, null=True, blank=True)
-	carrier_agent_acct_no = models.IntegerField(null=True, blank=True)
+	carrier_agent_acct_no = models.CharField(max_length=100,null=True, blank=True)
 	carrier_name = models.CharField(max_length=100, null=True, blank=True)
 
 	
@@ -162,9 +164,9 @@ class Job(PackageDimension):
 	gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
 	box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
 	chargeable_rate = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)	
-	nature_and_quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
+	nature_of_goods = models.CharField(max_length=200, null=True, blank=True)
 	quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
-	airline_tracking_number = models.IntegerField(null=True, blank=True)
+	airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
 	other_charges_due_carrier = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
 	place_of_execution = models.CharField(max_length=100, null=True, blank=True)
 

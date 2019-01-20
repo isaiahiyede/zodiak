@@ -175,15 +175,32 @@ def add_job(request):
             try:
                 form2.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
             except:
-                form2.job_user_acc = UserAccount.objects.get(user=request.user)
-            job_status = Status.objects.get(name=request.POST.get('job_status'))
-            form2.job_status = job_status.name
+                try:
+                    form2.job_user_acc = UserAccount.objects.get(user=request.user)
+                except:
+                    print(form.errors)
+                    messages.warning(request, 'Job was not successfully created..Please select a customer')
+                    response = redirect(request.META['HTTP_REFERER'])
+                    return response
+            try:
+                job_status = Status.objects.get(name=request.POST.get('job_status'))
+                form2.job_status = job_status.name
+            except:
+                messages.warning(request, 'Job was not successfully created..Please select a Job Status')
+                response = redirect(request.META['HTTP_REFERER'])
+                return response
+
+            job_type = request.POST.get('job_type')
+            if not job_type:
+                messages.warning(request, 'Job was not successfully created..Please select a Job Mode')
+                response = redirect(request.META['HTTP_REFERER'])
+                return response
+
             form2.save()
             messages.success(request, 'Job was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
-            print(JobForm())
             messages.warning(request, 'Job was not successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         return response
@@ -192,7 +209,7 @@ def add_job(request):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
-        response = render(request, 'zodiakApp/newjobcreate.html', context)
+        response = render(request, 'zodiakApp/createjob.html', context)
         return response
 
 
@@ -222,7 +239,6 @@ def job_edit(request,pk):
             response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
-            print(JobForm())
             messages.warning(request, 'Job was not successfully edited')
             response = redirect(request.META['HTTP_REFERER'])
         return response
@@ -231,7 +247,7 @@ def job_edit(request,pk):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
-        response = render(request, 'zodiakApp/neweditjob.html', context)
+        response = render(request, 'zodiakApp/editjob.html', context)
         return response
 
 

@@ -113,8 +113,14 @@
 
 
                                     <li>
-                                        <a title="" href="/">
+                                        <a title="" href="{% url 'zodiakApp:viewquotations'%}">
                                             <span class="mini-sub-pro">All Quotations</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a title="" href="{% url 'zodiakApp:quote_add'%}">
+                                            <span class="mini-sub-pro">New Quotations</span>
                                         </a>
                                     </li>
 
@@ -123,8 +129,13 @@
 
 
                                     <li>
-                                        <a title="" href="">
+                                        <a title="" href="{% url 'zodiakApp:viewquotations'%}">
                                             <span class="mini-sub-pro">My Quotations</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a title="" href="{% url 'zodiakApp:quote_add'%}">
+                                            <span class="mini-sub-pro">New Quotations</span>
                                         </a>
                                     </li>
 

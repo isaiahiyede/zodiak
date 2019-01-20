@@ -11,7 +11,6 @@ from django.template.defaultfilters import slugify
 import math
 
 # Create your models here.
-
 		
 class UserAccount(models.Model):
     """ user details """
@@ -47,6 +46,24 @@ class Address(models.Model):
 	class Meta:
 	    verbose_name_plural = 'Addresses'
 	    ordering = ['-user_acc']
+	    
+	def __unicode__(self):
+	    return '%s' %(self.user_acc)
+
+
+class Quotation(models.Model):
+	user_acct = models.ForeignKey(UserAccount, null=True, blank=True)
+	item = models.CharField(max_length=20,null=True,blank=True)
+	quantity = models.IntegerField(null=True, blank=True)
+	price_per_item = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+	total_cost = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+	notes_on_job = models.TextField(null=True,blank=True)
+	created_on = models.DateTimeField(default=timezone.now)
+	deleted = models.BooleanField(default=False)
+
+	class Meta:
+	    verbose_name_plural = 'Quotation'
+	    ordering = ['-user_acct']
 	    
 	def __unicode__(self):
 	    return '%s' %(self.user_acc)

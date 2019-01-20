@@ -13,8 +13,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, JobForm, UserAccountForm, AddressForm, RelationshipManagerForm
-from zodiakApp.models import Job, UserAccount, Address, Status, RelationshipManager, JobModes
+from zodiakApp.forms import UserForm, JobForm, UserAccountForm, AddressForm, RelationshipManagerForm, QuotationForm
+from zodiakApp.models import Job, UserAccount, Address, Status, RelationshipManager, JobModes, Quotation
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -413,6 +413,7 @@ def addUser(request):
         return redirect(request.META.get('HTTP_REFERER', '/'))
     else:
         context['userform'] = UserForm()
+        context['names'] = UserAccount.objects.filter(deleted=False)
         return render(request,template_name,context)
 
 
@@ -428,50 +429,103 @@ def viewusers(request):
     return response
 
 
+
+""" quotaion starts """
+
 @login_required
-def viewrms(request):
+def viewquotations(request):
     context = {}
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
-    template_name = 'zodiakApp/viewrms.html'
+    template_name = 'zodiakApp/viewquotations.html'
     if request.user.is_staff:
-        rms = RelationshipManager.objects.filter(deleted=False)
+        quotations = Quotation.objects.filter(deleted=False)
     else:
-        rms = RelationshipManager.objects.filter(rm_client=request.user.useraccount,deleted=False)
-    context['rms'] = rms
+        quotations = Quotation.objects.filter(user_acct=request.user.useraccount,deleted=False)
+    context['quotations'] = quotation
     response = render(request,template_name,context)
     return response
 
 
 @login_required
-def add_rm(request):
+def quote_add(request):
     context = {}
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     print(request.POST)
     if request.method == "POST":
-        form = RelationshipManagerForm(request.POST)
+        form = QuotationForm(request.POST)
         if form.is_valid():
-            print(form.errors)
             form2 = form.save(commit=False)
             if request.user.is_staff:
-                user_obj = User.objects.get(username=request.POST.get('rm_client'))
-                form2.rm_client = UserAccount.objects.get(user=user_obj)
+                user_obj = User.objects.get(username=request.POST.get('user_acct'))
+                form2.user_acct = UserAccount.objects.get(user=user_obj)
             else:
-                form2.rm_client = UserAccount.objects.get(user=request.user)
+                form2.user_acct = UserAccount.objects.get(user=request.user)
             form2.save()
-            messages.success(request, 'Rm was successfully created')
+            messages.success(request, 'Quotation was successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
-            messages.warning(request, 'Rm was not successfully created')
+            messages.warning(request, 'Quotation was not successfully created')
             response = redirect(request.META['HTTP_REFERER'])
         return response
     else:
         if request.user.is_staff:
             context['names'] = UserAccount.objects.filter(deleted=False)
-        response = render(request, 'zodiakApp/newrm.html', context)
+        response = render(request, 'zodiakApp/newquotation.html', context)
         return response
+
+
+@login_required
+def quote_delete(request,pk):
+    user_obj = Quotation.objects.get(pk=pk, deleted=False)
+    user_obj.deleted = True
+    user_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def quote_edit(request,pk):
+    context={}
+    if request.user.is_staff:
+        context['names'] = UserAccount.objects.filter(deleted=False)
+    quote_obj = Quotation.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = QuotationForm(request.POST,request.FILES,instance=rm_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Quotation was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Quotation was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['quote'] = quote_obj
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        response = render(request, 'zodiakApp/editquotation.html', context)
+        return response
+
+
+@login_required
+def quote_view(request,pk):
+    context={}
+    rm_obj = Quotation.objects.get(pk=pk, deleted=False)
+    context['quote'] = quote_obj
+    if request.user.is_staff:
+        context['names'] = UserAccount.objects.filter(deleted=False)
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    response = render(request, 'zodiakApp/viewquotation.html', context)
+    return response
+
+""" quotation ends """
 
 
 @login_required
@@ -507,6 +561,54 @@ def user_delete(request,pk):
     response = redirect(request.META['HTTP_REFERER'])
     return response
 
+
+""" rm starts here """
+
+
+@login_required
+def viewrms(request):
+    context = {}
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    template_name = 'zodiakApp/viewrms.html'
+    if request.user.is_staff:
+        rms = RelationshipManager.objects.filter(deleted=False)
+    else:
+        rms = RelationshipManager.objects.filter(rm_client=request.user.useraccount,deleted=False)
+    context['rms'] = rms
+    response = render(request,template_name,context)
+    return response 
+
+
+@login_required
+def add_rm(request):
+    context = {}
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    print(request.POST)
+    if request.method == "POST":
+        form = RelationshipManagerForm(request.POST)
+        if form.is_valid():
+            print(form.errors)
+            form2 = form.save(commit=False)
+            if request.user.is_staff:
+                user_obj = User.objects.get(username=request.POST.get('rm_client'))
+                form2.rm_client = UserAccount.objects.get(user=user_obj)
+            else:
+                form2.rm_client = UserAccount.objects.get(user=request.user)
+            form2.save()
+            messages.success(request, 'Rm was successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Rm was not successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        if request.user.is_staff:
+            context['names'] = UserAccount.objects.filter(deleted=False)
+        response = render(request, 'zodiakApp/newrm.html', context)
+        return response
 
 @login_required
 def rm_delete(request,pk):
@@ -556,6 +658,7 @@ def rm_edit(request,pk):
         response = render(request, 'zodiakApp/editrm.html', context)
         return response
 
+""" rm ends here """
 
 @login_required
 def user_edit(request,pk):

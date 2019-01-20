@@ -44,6 +44,13 @@ urlpatterns = [
     url(r'^rmview/(?P<pk>.+)/$', views.rm_view, name="rm_view"),
     url(r'^rmdelete/(?P<pk>.+)/$', views.rm_delete, name="rm_delete"),
 
+    url(r'^quoteAdd/$',views.quote_add, name = "quote_add"),
+    url(r'^viewquotations/$',views.viewquotations, name = "viewquotations"),
+
+    url(r'^quoteedit/(?P<pk>.+)/$', views.quote_edit, name="quote_edit"),
+    url(r'^quoteview/(?P<pk>.+)/$', views.quote_view, name="quote_view"),
+    url(r'^quotedelete/(?P<pk>.+)/$', views.quote_delete, name="quote_delete"),
+
     # url(r'^confirm-order/$',views.get_confirmation_order, name = "get_confirmation_order"),
     url(r'^getjob/$',views.get_job, name = "get_job"),
     url(r'^selectedjobs/$',views.get_jobs_selected, name = "get_jobs_selected"),

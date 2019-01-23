@@ -112,6 +112,8 @@
                                                 </div>
                                             </div>
 
+                                            {% if request.user.is_staff %}
+
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -195,6 +197,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {% endif %}
 
 
                                             <!--   

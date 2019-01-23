@@ -19,7 +19,10 @@ def current_year():
 
 
 @register.simple_tag
-def getJobCount(request, status):
-    return Job.objects.filter(job_status=status,deleted=False).count()
+def getJobCount(request, mode):
+	if request.user.is_staff:
+		return Job.objects.filter(job_type=mode,deleted=False).count()
+	return Job.objects.filter(job_user_acc=request.user.useraccount,job_type=mode,deleted=False).count()
+
     
 

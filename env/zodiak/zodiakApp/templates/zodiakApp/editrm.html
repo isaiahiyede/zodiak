@@ -1,0 +1,82 @@
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+{% endblock morecss %}
+
+{% block contents %}
+<div class="single-pro-review-area mt-t-30 mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-payment-inner-st">
+                            <ul id="myTabedu1" class="tab-review-design">
+                                <li class="active"><a href="#reviews"> Edit RM</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                
+                                <div class="product-tab-list tab-pane fade active in" id="reviews">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <div class="devit-card-custom">
+                                                        	<form action="{% url 'zodiakApp:rm_edit' rm.pk %}" method="post" enctype="multipart/form-data">
+                                                        		{% csrf_token %}
+
+					                                            {% for message in messages %}
+					                                               <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+					                                            {% endfor %}
+
+																{% if request.user.is_staff %}
+					                                            <div class="form-group">
+	                                                                <div class="chosen-select-single mg-b-20">
+	                                                                    <select data-placeholder="Select Client name..." class="chosen-select" tabindex="-1" id="rm_client" name="rm_client">
+	                                                                        <option value="{{rm.rm_client.user.username}}">{{rm.rm_client.user.username}}</option>
+	                                                                    </select>
+	                                                                </div>
+                                                        		</div>
+                                                        		{% endif %}
+
+	                                                        	<div class="form-group">
+	                                                                <input type="text" value="{{rm.rm_name}}" id='rm_name' name='rm_name' class="form-control" placeholder="Name" required>
+	                                                            </div>
+	                                                            <div class="form-group">
+	                                                                <input type="email" value="{{rm.rm_email}}" id='rm_email' name='rm_email' class="form-control" placeholder="Email" required>
+	                                                            </div>
+	                                                            <div class="form-group">
+	                                                                <input type="email" value="{{rm.rm_alt_email}}" id='rm_alt_email' name='rm_alt_email'class="form-control" placeholder="Alternate Email" required>
+	                                                            </div>
+	                                                            <div class="form-group">
+	                                                                <input type="text" value="{{rm.rm_contact_no}}" id='rm_contact_no' name='rm_contact_no' class="form-control" placeholder="Phone Number" required>
+	                                                            </div>
+                                                                <div class="form-group">
+                                                                    <input type="text" value="{{rm.rm_position}}" id='rm_position' name='rm_position' class="form-control" placeholder="Position" required>
+                                                                </div>
+	                                                        	<div class="form-group">
+	                                                                <input type="text" value="{{rm.rm_designation}}" id='rm_designation' name='rm_designation' class="form-control" placeholder="Designation" required>
+	                                                            </div>
+	                                                            <div class="form-group">
+	                                                                <textarea name="rm_office_address" id="rm_office_address" placeholder="office address">{{rm.rm_office_address}}</textarea>
+	                                                            </div>
+                                                            		<button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+{% endblock contents %}
+
+{% block specialscripts %}
+{% endblock specialscripts %}

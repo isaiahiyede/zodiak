@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf import settings
 from . import views
 
@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.adminPage, name='adminPage'),
+    url(r'^home/$', views.clientPage, name='clientPage'),
 
     # url(r'^$', views.homepage, name='homepage'),
     # url(r'^index/$', views.index, name='index'),
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^users/$', views.clientpage, name="clientpage"),
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
+    url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),
     url(r'^addjob/$', views.add_job, name="add_job"),
     url(r'^jobedit/(?P<pk>.+)/$', views.job_edit, name="job_edit"),
     url(r'^jobview/(?P<pk>.+)/$', views.job_view, name="job_view"),
@@ -33,11 +35,25 @@ urlpatterns = [
     url(r'^newmail/$',views.newmail, name = "newmail"),
     url(r'^viewmail/(?P<pk>.+)/$', views.view_mail, name="view_mail"),
 
-    # url(r'^getPage/(?P<identifier>.+)$',views.get_page, name = "get_page"),
-    # url(r'^newRecord/(?P<identifier>.+)$',views.add_record, name = "newrecord"),
-    # # url(r'^categoryPassed/(?P<value>.+)$',views.getPassedCategory, name = "getPassedCategory"),
+    url(r'^processjob/(?P<pk>.+)$',views.process_job, name = "process_job"),
+
+    url(r'^addrm/$',views.add_rm, name = "add_rm"),
+    url(r'^viewrms/$',views.viewrms, name = "viewrms"),
+
+    url(r'^rmedit/(?P<pk>.+)/$', views.rm_edit, name="rm_edit"),
+    url(r'^rmview/(?P<pk>.+)/$', views.rm_view, name="rm_view"),
+    url(r'^rmdelete/(?P<pk>.+)/$', views.rm_delete, name="rm_delete"),
+
+    url(r'^quoteAdd/$',views.quote_add, name = "quote_add"),
+    url(r'^viewquotations/$',views.viewquotations, name = "viewquotations"),
+
+    url(r'^quoteedit/(?P<pk>.+)/$', views.quote_edit, name="quote_edit"),
+    url(r'^quoteview/(?P<pk>.+)/$', views.quote_view, name="quote_view"),
+    url(r'^quotedelete/(?P<pk>.+)/$', views.quote_delete, name="quote_delete"),
+
     # url(r'^confirm-order/$',views.get_confirmation_order, name = "get_confirmation_order"),
-    # # url(r'^Contact-us/$',views.contact, name = "contact"),
+    url(r'^getjob/$',views.get_job, name = "get_job"),
+    url(r'^selectedjobs/$',views.get_jobs_selected, name = "get_jobs_selected"),
     # url(r'^customer-list/$',views.all_customers, name = "all_customers"),
     # url(r'^customer-payment-list/$',views.customer_payments, name = "all_customers_payments"),
     # # url(r'^userComment/$',views.user_comment, name = "user_comment"),

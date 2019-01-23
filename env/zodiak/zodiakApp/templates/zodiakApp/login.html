@@ -72,12 +72,17 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     {% block contents %}
+    
+    {% for message in messages %}
+       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
 
     <div class="error-pagewrap">
         <div class="error-page-int">
+
             <div class="text-center m-b-md custom-login">
                 <h3>LOGIN</h3>
-            </div>
+            </div>                                     
             <div class="content-error">
                 <div class="hpanel">
                     <div class="panel-body">

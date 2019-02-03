@@ -13,8 +13,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, JobForm, UserAccountForm, AddressForm, RelationshipManagerForm, QuotationForm
-from zodiakApp.models import Job, UserAccount, Address, Status, RelationshipManager, JobModes, Quotation
+from zodiakApp.forms import UserForm, JobForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.models import Job, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact,OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -308,19 +308,10 @@ def register(request):
             messages.warning(request, "Invalid details provided")
             return redirect(request.META.get('HTTP_REFERER', '/'))
 
-        if request.POST.get('phone_number') == "":
-            messages.warning(request, "Please provide a valid phone number. Try again")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
-
-        if request.POST.get('user_passport') == "":
-            messages.warning(request, "Please provide a valid passport")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
-
-        if request.POST.get('user_cac') == "":
-            messages.warning(request, "Please provide a valid CAC document")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
-
         form = UserForm(request.POST)
+        form2 = UserAccountForm(request.POST)
+        form3 = PrimaryContactForm(request.POST)
+        form4 = SecondaryContactForm(request.POST)
 
         if User.objects.filter(username=rp.get('username')).exists() or User.objects.filter(
                 email=rp.get('email')).exists():
@@ -342,12 +333,15 @@ def register(request):
                 user.set_password(user.password)
                 user.date_joined = timezone.now().date()
                 user.save()
+
                 user_acc_form = UserAccountForm(request.POST,request.FILES)
+                user_primary_contact_form = PrimaryContactForm(request.POST)
+                user_secondary_contact_form = SecondaryContactForm(request.POST)
+
                 print(user_acc_form.errors)
 
                 if user_acc_form.is_valid():
                     user_acc_form2 = user_acc_form.save(commit=False)
-
                     user_acc_form2.user = user
                     user_acc_form2.save()
 
@@ -355,7 +349,47 @@ def register(request):
                     messages.warning(request, "Please check and make sure all fields are properly filled")
                     return redirect(request.META.get('HTTP_REFERER', '/'))
 
-                print(user_acc_form)
+                if user_primary_contact_form.is_valid():
+                    user_acc_form3 = user_primary_contact_form.save(commit=False)
+                    user_acc_form3.user_acc = user
+                    user_acc_form3.save()
+
+                    rm_obj = RelationshipManager.objects.create(
+                        rm_client=user.useraccount,
+                        rm_name=user_acc_form3.contact_name,
+                        rm_email=user_acc_form3.contact_email,
+                        rm_position=user_acc_form3.contact_position,
+                        rm_designation=user_acc_form3.contact_department,
+                        rm_office_address=user_acc_form3.contact_address_1,
+                        rm_contact_no=user_acc_form3.contact_phone_number
+                        )
+                    rm_obj.save()
+
+                else:
+                    messages.warning(request, "Please check and make sure all fields are properly filled")
+                    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+                if user_secondary_contact_form.is_valid():
+                    user_acc_form4 = user_secondary_contact_form.save(commit=False)
+                    user_acc_form4.sec_user_acc = user
+                    user_acc_form4.save()
+
+                    rm_obj = RelationshipManager.objects.create(
+                        rm_client=user.useraccount,
+                        rm_name=user_acc_form4.sec_contact_name,
+                        rm_email=user_acc_form4.sec_contact_email,
+                        rm_position=user_acc_form4.sec_contact_position,
+                        rm_designation=user_acc_form4.sec_contact_department,
+                        rm_office_address=user_acc_form4.sec_contact_address_1,
+                        rm_contact_no=user_acc_form4.sec_contact_phone_number
+                        )
+                    rm_obj.save()
+
+
+                else:
+                    messages.warning(request, "Please check and make sure all fields are properly filled")
+                    return redirect(request.META.get('HTTP_REFERER', '/'))
+
                 user_login = authenticate(username=user.username, password=password)
 
                 # print user_login
@@ -369,7 +403,7 @@ def register(request):
                         user = request.user
                         return redirect(reverse('zodiakApp:clientpage'))
                 else:
-                    messages.success(request, "Sign up was not successful. Try again")
+                    messages.warning(request, "Sign up was not successful. Try again")
                     return redirect(request.META.get('HTTP_REFERER', '/'))
                 ''' try this '''
                 # new_user_acc_obj = UserAccount.objects.create(user=user)
@@ -389,10 +423,11 @@ def addUser(request):
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     template_name = 'zodiakApp/adduser.html'
+
     if request.method == 'POST':
         print(request.POST)
         userform = UserForm(request.POST)
-        if userform.is_valid()():
+        if userform.is_valid():
             form = userform.save(commit=False)
             if request.POST['password'] != request.POST['password2']:
                 messages.warning(request, "Password mismatch. Try again")
@@ -402,8 +437,11 @@ def addUser(request):
                 user = User.objects.create(username=form.username, first_name=form.first_name,is_staff=True,
                                             last_name=form.last_name, email=form.email, password=form.password)
                 user.save()
-                useraccount = UserAccount.objects.create(user=user,phone_number=request.POST['phone_no'])
-                useraccount.save()
+                if request.user.is_staff:
+                    useraccount = UserAccount.objects.create(user=user,phone_number=request.POST['phone_no'],acc_owner=request.POST['rm_client'])
+                else:
+                    useraccount = UserAccount.objects.create(user=user,phone_number=request.POST['phone_no'],acc_owner=request.user.username)
+                    useraccount.save()
                 messages.success(request, "User was successful created.")
         else:
             print(userform.errors)
@@ -421,7 +459,10 @@ def addUser(request):
 def viewusers(request):
     context = {}
     template_name = 'zodiakApp/viewusers.html'
-    useraccounts = UserAccount.objects.filter(deleted=False)
+    if request.user.is_staff:
+        useraccounts = UserAccount.objects.filter(deleted=False)
+    else:
+        useraccounts = UserAccount.objects.filter(acc_owner=request.user.username,deleted=False)
     context['users'] = useraccounts
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
@@ -610,6 +651,23 @@ def add_rm(request):
         response = render(request, 'zodiakApp/newrm.html', context)
         return response
 
+
+@login_required
+def add_officeusecase(request,pk):
+    rm_obj = UserAccount.objects.get(pk=pk)
+    office_use_obj = OfficeUseOnly.objects.create(
+        rm_client_obj=rm_obj,
+        internal_evaluation = request.POST.get('internal_evaluation'),
+        mode_of_operation = request.POST.get('mode_of_operation'),
+        special_request = request.POST.get('special_request'),
+        staff_evaluation = request.POST.get('staff_evaluation'),
+        )
+    
+    messages.success(request, 'Successfully created')
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
 @login_required
 def rm_delete(request,pk):
     user_obj = RelationshipManager.objects.get(pk=pk, deleted=False)
@@ -701,6 +759,10 @@ def user_edit(request,pk):
             response = redirect(request.META['HTTP_REFERER'])
         return response
     else:
+        try:
+            context['officialuse'] = OfficeUseOnly.objects.filter(rm_client_obj=user_obj)
+        except:
+            pass
         context['useraccount'] = user_obj
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
@@ -711,7 +773,10 @@ def user_edit(request,pk):
 @login_required
 def user_access(request):
     context={}
-    user_obj = UserAccount.objects.filter(deleted=False)
+    if request.user.is_staff:
+        user_obj = UserAccount.objects.filter(deleted=False)
+    else:
+        user_obj = UserAccount.objects.filter(acc_owner=request.user.username,deleted=False)
     context['names'] = user_obj
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()

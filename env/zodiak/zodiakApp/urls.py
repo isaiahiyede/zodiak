@@ -50,6 +50,7 @@ urlpatterns = [
     url(r'^quoteedit/(?P<pk>.+)/$', views.quote_edit, name="quote_edit"),
     url(r'^quoteview/(?P<pk>.+)/$', views.quote_view, name="quote_view"),
     url(r'^quotedelete/(?P<pk>.+)/$', views.quote_delete, name="quote_delete"),
+    url(r'^add_officeusecase/(?P<pk>.+)/$', views.add_officeusecase, name="add_officeusecase"),
 
     # url(r'^confirm-order/$',views.get_confirmation_order, name = "get_confirmation_order"),
     url(r'^getjob/$',views.get_job, name = "get_job"),

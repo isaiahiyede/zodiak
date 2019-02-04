@@ -17,38 +17,68 @@ class UserAccount(models.Model):
     user = models.OneToOneField(User, unique=True, null=True, blank=True)
     profile_updated = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=50, null=True, blank=True)
+    type_of_business = models.TextField(null=True,blank=True)
+    office_aadress = models.TextField(null=True,blank=True)
     created_on = models.DateTimeField(default=timezone.now)
-    user_passport = models.FileField(upload_to="item_photo", null=True, blank=True)
-    user_cac = models.FileField(upload_to="item_photo", null=True, blank=True)
+    user_passport = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    user_cac = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    user_other_means_of_id = models.ImageField(upload_to="item_photo", null=True, blank=True)
     inputter = models.BooleanField(default=True)
     authorizer = models.BooleanField(default=False)
     rm_updated = models.BooleanField(default=False)
     reporter = models.BooleanField(default=False)
     administrator = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
+    city = models.CharField(max_length=20,null=True,blank=True)
+    state = models.CharField(max_length=20,null=True,blank=True)
+    website = models.CharField(max_length=50,null=True,blank=True)
+    acc_owner = models.CharField(max_length=50,null=True,blank=True)
 
     class Meta:
 	    verbose_name_plural = 'User Accounts'
 	    ordering = ['-created_on']
 	    
-    def __string__(self):
+    def __unicode__(self):
 	    return '%s' %(self.user.username)
 
 
-class Address(models.Model):
-	user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
-	address_1 = models.CharField(max_length=20,null=True,blank=True)
-	address_2 = models.CharField(max_length=20,null=True,blank=True)
-	city = models.CharField(max_length=20,null=True,blank=True)
-	state = models.CharField(max_length=20,null=True,blank=True)
-	zip_code = models.CharField(max_length=20,null=True,blank=True)
+class PrimaryContact(models.Model):
+	contact_name = models.CharField(max_length=50,null=True,blank=True)
+	contact_position = models.CharField(max_length=50,null=True,blank=True)
+	contact_department = models.CharField(max_length=50,null=True,blank=True)
+	contact_phone_number = models.CharField(max_length=50, null=True, blank=True)
+	contact_email = models.EmailField(max_length=50,null=True,blank=True)
+	user_acc = models.ForeignKey(User, null=True, blank=True)
+	contact_address_1 = models.CharField(max_length=20,null=True,blank=True)
+	primary_created_on = models.DateTimeField(default=timezone.now)
+	deleted = models.BooleanField(default=False)
+
 
 	class Meta:
-	    verbose_name_plural = 'Addresses'
+	    verbose_name_plural = 'Primary Contact'
 	    ordering = ['-user_acc']
 	    
 	def __unicode__(self):
 	    return '%s' %(self.user_acc)
+
+class SecondaryContact(models.Model):
+	sec_contact_name = models.CharField(max_length=50,null=True,blank=True)
+	sec_contact_position = models.CharField(max_length=50,null=True,blank=True)
+	sec_contact_department = models.CharField(max_length=50,null=True,blank=True)
+	sec_contact_phone_number = models.CharField(max_length=50, null=True, blank=True)
+	sec_contact_email = models.EmailField(max_length=50,null=True,blank=True)
+	sec_user_acc = models.ForeignKey(User, null=True, blank=True)
+	sec_contact_address_1 = models.CharField(max_length=20,null=True,blank=True)
+	sec_contact_created_on = models.DateTimeField(default=timezone.now)
+	deleted = models.BooleanField(default=False)
+
+
+	class Meta:
+	    verbose_name_plural = 'Secondary Contact'
+	    ordering = ['-sec_user_acc']
+	    
+	def __unicode__(self):
+	    return '%s' %(self.sec_user_acc)
 
 
 class Quotation(models.Model):
@@ -103,6 +133,21 @@ class PackageDimension(models.Model):
         abstract = True
 
 
+class Batch(models.Model):
+	batch_id = models.CharField(max_length=20,null=True,blank=True)
+	no_of_jobs = models.IntegerField(null=True,blank=True)
+	mode_of_batch = models.CharField(max_length=20,null=True,blank=True)
+	deleted = models.BooleanField(default=False)
+	created_on = models.DateTimeField(default=timezone.now)
+
+	class Meta:
+	    verbose_name_plural = 'Batch'
+	    ordering = ['-created_on']
+	    
+	def __unicode__(self):
+	    return '%s' %(self.batch_id)
+
+
 class Job(PackageDimension):
 
 	job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
@@ -119,7 +164,7 @@ class Job(PackageDimension):
 	job_awl_number = models.CharField(max_length=20,null=True,blank=True)
 	job_bol_number = models.CharField(max_length=20,null=True,blank=True)
 	job_type = models.CharField(max_length=20,null=True,blank=True)
-
+	batch_type = models.ForeignKey(Batch, null=True, blank=True)
 
 	job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 	job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
@@ -213,8 +258,8 @@ class RelationshipManager(models.Model):
 	rm_contact_no = models.CharField(max_length=20,null=True,blank=True)
 	rm_designation = models.CharField(max_length=20,null=True,blank=True)
 	rm_office_address = models.TextField(null=True,blank=True)
-	rm_created_on = models.DateTimeField(default=timezone.now)
 	deleted = models.BooleanField(default=False)
+	rm_created_on = models.DateTimeField(default=timezone.now)
 
 	class Meta:
 	    verbose_name_plural = 'Relationship Managers'
@@ -222,6 +267,23 @@ class RelationshipManager(models.Model):
 	    
 	def __unicode__(self):
 	    return '%s' %(self.rm_client)
+
+
+class OfficeUseOnly(models.Model):
+	rm_client_obj = models.ForeignKey(UserAccount,null=True,blank=True)
+	internal_evaluation= models.TextField(null=True,blank=True)
+	mode_of_operation= models.CharField(max_length=20,null=True,blank=True)
+	special_request= models.CharField(max_length=20,null=True,blank=True)
+	staff_evaluation= models.TextField(null=True,blank=True)
+	off_deleted = models.BooleanField(default=False)
+	created_on = models.DateTimeField(default=timezone.now)
+
+	class Meta:
+	    verbose_name_plural = 'Office Use only'
+	    ordering = ['-created_on']
+	    
+	def __unicode__(self):
+	    return '%s' %(self.rm_client_obj.user)
 
 
 class Comments(models.Model):

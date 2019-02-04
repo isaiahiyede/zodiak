@@ -11,10 +11,10 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-payment-inner-st">
                             <ul id="myTabedu1" class="tab-review-design">
-                                <li class="active"><a href="#reviews">New Quotation</a></li>
+                                <li class="active"><a href="#reviews">New Quote</a></li>
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
-                                
+
                                 <div class="product-tab-list tab-pane fade active in" id="reviews">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -32,12 +32,12 @@
                                                                 {% if request.user.is_staff %}
                                                                 <div class="form-group">
                                                                     <div class="chosen-select-single mg-b-20">
-                                                                        <select data-placeholder="Select Client name..." class="chosen-select" tabindex="-1" id="user_acct" name="user_acct">
+                                                                        <select data-placeholder="Select Client name..." class="chosen-select" tabindex="-1" id="rm_client" name="rm_client">
                                                                             <option value="">Select Client</option>
-	                                                                        {% for name in names %}
-	                                                                           <option value="{{name.user.username}}">
-	                                                                            {{name.user.username}}</option>
-	                                                                        {% endfor %}
+                                                                            {% for name in names %}
+                                                                               <option value="{{name.user.username}}">
+                                                                                {{name.user.username}}</option>
+                                                                            {% endfor %}
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -50,7 +50,7 @@
                                                                     <input type="number" value="" id='quantity' name='quantity' class="form-control" placeholder="quantity" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="number" value="" id='price_per_item' name='price_per_item'class="form-control" placeholder="Price Per Item" required>
+                                                                    <input type="number" value="" id='price_per_item' name='price_per_item'class="form-control" placeholder="Price per item" required>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input type="number" value="" id='total_cost' name='total_cost' class="form-control" placeholder="Total Cost" required>
@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -77,4 +77,5 @@
 {% endblock contents %}
 
 {% block specialscripts %}
+>>>>>>> 0871d4f1e1412dec026d1906488ca3316b4953c9
 {% endblock specialscripts %}

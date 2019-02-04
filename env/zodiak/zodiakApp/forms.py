@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Address, RelationshipManager, Quotation
+from zodiakApp.models import Job, UserAccount, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -57,10 +57,35 @@ class JobForm(forms.ModelForm):
 class UserAccountForm(forms.ModelForm):
     class Meta:
         model = UserAccount
-        fields = ('user', 'phone_number', 'user_passport', 'user_cac')
+        fields = ('user', 'phone_number', 'user_passport', 'user_cac','type_of_business',
+            'user_other_means_of_id','city','state','website','office_aadress')
 
 
-class AddressForm(forms.ModelForm):
+class PrimaryContactForm(forms.ModelForm):
     class Meta:
-        model = Address
-        fields = ('user_acc', 'address_1', 'address_2', 'city', 'state', 'zip_code')
+        model = PrimaryContact
+        fields = ('contact_name', 'contact_position', 'contact_department',
+            'contact_phone_number','contact_email','contact_address_1')
+
+
+class SecondaryContactForm(forms.ModelForm):
+    class Meta:
+        model = SecondaryContact
+        fields = ('sec_contact_name', 'sec_contact_position', 'sec_contact_department',
+            'sec_contact_phone_number','sec_contact_email','sec_contact_address_1')
+
+
+class OfficeUseOnlyForm(forms.ModelForm):
+    class Meta:
+        model = OfficeUseOnly
+        fields = ('rm_client_obj', 'internal_evaluation', 'mode_of_operation',
+            'special_request','staff_evaluation')
+
+
+class BatchForm(forms.ModelForm):
+    class Meta:
+        model = Batch
+        fields = ('batch_id', 'no_of_jobs', 'mode_of_batch')
+
+
+

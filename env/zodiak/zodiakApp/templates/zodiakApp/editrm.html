@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 {% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
 {% endblock morecss %}
 
 {% block contents %}
@@ -12,7 +14,9 @@
                         <div class="product-payment-inner-st">
                             <ul id="myTabedu1" class="tab-review-design">
                                 <li class="active"><a href="#reviews"> Edit RM</a></li>
+                                
                             </ul>
+
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 
                                 <div class="product-tab-list tab-pane fade active in" id="reviews">
@@ -69,6 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 
                             </div>
                         </div>
@@ -79,4 +84,20 @@
 {% endblock contents %}
 
 {% block specialscripts %}
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
+
+<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
 {% endblock specialscripts %}

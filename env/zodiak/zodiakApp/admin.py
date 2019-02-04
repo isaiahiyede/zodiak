@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from zodiakApp.models import UserAccount, Status, Job, Address, Comments, RelationshipManager, JobModes
+from zodiakApp.models import UserAccount, Status, Job, Comments, RelationshipManager, JobModes, PrimaryContact, SecondaryContact, OfficeUseOnly, Batch
 
 
 
@@ -14,9 +14,13 @@ class JobAdmin(admin.ModelAdmin):
     list_display = ('job_id',)
     search_fields = ['job_id',]
 
-class AddressAdmin(admin.ModelAdmin):
-    list_display = ('city','state',)
-    search_fields = ['city','state',]
+class SecondaryContactAdmin(admin.ModelAdmin):
+    list_display = ('sec_contact_name','sec_contact_phone_number',)
+    search_fields = ['sec_contact_name','sec_contact_phone_number',]
+
+class PrimaryContactAdmin(admin.ModelAdmin):
+    list_display = ('contact_name','contact_phone_number',)
+    search_fields = ['contact_name','contact_phone_number',]
 
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('name','alias')
@@ -32,12 +36,20 @@ class CommentsAdmin(admin.ModelAdmin):
 class RelationshipManagerAdmin(admin.ModelAdmin):
     list_display = ('rm_client','rm_email',)
 
+class OfficeUseOnlyAdmin(admin.ModelAdmin):
+    list_display = ('rm_client_obj',)
+
+class BatchAdmin(admin.ModelAdmin):
+    list_display = ('batch_id',)
 
 admin.site.register(UserAccount, UserAccountAdmin)
 admin.site.register(Job, JobAdmin)
-admin.site.register(Address, AddressAdmin)
+admin.site.register(Batch, BatchAdmin)
+admin.site.register(PrimaryContact, PrimaryContactAdmin)
+admin.site.register(SecondaryContact, SecondaryContactAdmin)
 admin.site.register(Status, StatusAdmin)
 admin.site.register(JobModes, JobModesAdmin)
 admin.site.register(Comments, CommentsAdmin)
+admin.site.register(OfficeUseOnly, OfficeUseOnlyAdmin)
 admin.site.register(RelationshipManager, RelationshipManagerAdmin)
 

@@ -442,7 +442,7 @@ def viewquotations(request):
         quotations = Quotation.objects.filter(deleted=False)
     else:
         quotations = Quotation.objects.filter(user_acct=request.user.useraccount,deleted=False)
-    context['quotations'] = quotation
+    context['quotations'] = quotations
     response = render(request,template_name,context)
     return response
 

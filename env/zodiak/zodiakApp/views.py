@@ -218,6 +218,7 @@ def add_job(request,jobtype):
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
         context['job_type'] = jobtype
+        context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=jobtype)
         response = render(request, 'zodiakApp/createjob.html', context)
         return response
 

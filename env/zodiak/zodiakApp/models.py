@@ -137,12 +137,45 @@ class Batch(models.Model):
 	batch_id = models.CharField(max_length=20,null=True,blank=True)
 	no_of_jobs = models.IntegerField(null=True,blank=True)
 	mode_of_batch = models.CharField(max_length=20,null=True,blank=True)
+	status_of_batch = models.CharField(max_length=20,null=True,blank=True)
 	deleted = models.BooleanField(default=False)
 	created_on = models.DateTimeField(default=timezone.now)
+	total_batch_cost = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+	total_batch_weight = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
 
 	class Meta:
 	    verbose_name_plural = 'Batch'
-	    ordering = ['-created_on']
+
+	def batch_jobs_count(self):
+		total = 0    
+		total = self.job_set.filter(deleted=False).count()
+		if total == None:
+			total = 0.0
+		return total
+	    
+	def batch_jobs_cost(self):
+		total = 0.0
+		if self.batch_jobs_count() == 0:
+			total = 0.0
+		else:    
+			total = self.job_set.filter(deleted=False).aggregate(Sum('job_cost'))
+		return total
+
+	def batch_weight_total(self):
+		total = 0.0 
+		if self.batch_jobs_count() == 0:
+			total = 0.0
+		else:   
+			total = self.job_set.filter(deleted=False).aggregate(Sum('box_weight_Actual'))
+		return total
+  
+	def job_update(self,value):
+		if value == "edit":
+			batch_jobs = self.job_set.filter(deleted=False).update(job_status=self.status_of_batch)
+		else:
+			batch_jobs = self.job_set.filter(deleted=False).update(job_type=self.mode_of_batch)
+		return True
+
 	    
 	def __unicode__(self):
 	    return '%s' %(self.batch_id)
@@ -176,7 +209,6 @@ class Job(PackageDimension):
 	job_doc_8 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 
 	job_created_on = models.DateTimeField(default=timezone.now)
-
 
 	job_in_transit = models.BooleanField(default=False)
 	job_arrived = models.BooleanField(default=False)

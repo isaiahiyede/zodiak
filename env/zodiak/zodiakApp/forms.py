@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -17,6 +17,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'first_name','last_name')
+
+
+class BatchForm(forms.ModelForm):
+    class Meta:
+        model = Batch
+        fields = ('mode_of_batch',)
 
 
 class RelationshipManagerForm(forms.ModelForm):
@@ -82,10 +88,10 @@ class OfficeUseOnlyForm(forms.ModelForm):
             'special_request','staff_evaluation')
 
 
-class BatchForm(forms.ModelForm):
+class BatchProcessForm(forms.ModelForm):
     class Meta:
         model = Batch
-        fields = ('batch_id', 'no_of_jobs', 'mode_of_batch')
+        fields = ('status_of_batch',)
 
 
 

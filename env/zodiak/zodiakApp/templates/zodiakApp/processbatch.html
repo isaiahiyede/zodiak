@@ -1,0 +1,70 @@
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+{% endblock morecss %}
+
+{% block contents %}
+<div class="single-pro-review-area mt-t-30 mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-payment-inner-st">
+                            <ul id="myTabedu1" class="tab-review-design">
+                                <li class="active"><a href="#reviews">Process batch</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                
+                                <div class="product-tab-list tab-pane fade active in" id="reviews">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <div class="devit-card-custom">
+                                                            <form action="{% url 'zodiakApp:batch_process' batch_obj.pk %}" method="post" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+
+                                                                {% for message in messages %}
+                                                                   <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                                                {% endfor %}
+                                                                    <div class="form-group">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <h6>Batch Status</h6>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <div class="chosen-select-single mg-b-20">
+                                                                                            <select class="form-control" data-placeholder="Select Status..." class="chosen-select" tabindex="-1" id="status_of_batch" name="status_of_batch">
+                                                                                                <option value="{{batch_obj.status_of_batch}}">{{batch_obj.status_of_batch}}</option>
+                                                                                                {% for status in status_of_batch %}
+                                                                                                   <option value="{{status.name}}">
+                                                                                                    {{status.name}}</option>
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+{% endblock contents %}
+
+{% block specialscripts %}
+{% endblock specialscripts %}

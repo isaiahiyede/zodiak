@@ -18,7 +18,7 @@ urlpatterns = [
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
     url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),
-    url(r'^addjob/$', views.add_job, name="add_job"),
+    url(r'^addjob/(?P<jobtype>.+)$', views.add_job, name="add_job"),
     url(r'^jobedit/(?P<pk>.+)/$', views.job_edit, name="job_edit"),
     url(r'^jobview/(?P<pk>.+)/$', views.job_view, name="job_view"),
     url(r'^jobdelete/(?P<pk>.+)/$', views.job_delete, name="job_delete"),
@@ -28,9 +28,16 @@ urlpatterns = [
     url(r'^myprofile/(?P<username>.+)/$', views.user_view_home, name="user_view_home"),
     url(r'^userdelete/(?P<pk>.+)/$', views.user_delete, name="user_delete"),
     url(r'^viewusers/$', views.viewusers, name="viewusers"),
-    url(r'^adduser/$', views.addUser, name="add_user"),
-    url(r'^edit-access$', views.user_access, name="user_access"),
 
+    url(r'^adduser/$', views.addUser, name="add_user"),
+
+    url(r'^addbatch/$', views.add_batch, name="add_batch"),  
+    url(r'^viewbatches/$', views.viewbatches, name="viewbatches"),
+    url(r'^batchedit/(?P<pk>.+)/$', views.batch_edit, name="batch_edit"),
+    url(r'^batchprocess/(?P<pk>.+)/$', views.batch_process, name="batch_process"),
+    url(r'^batchdelete/(?P<pk>.+)/$', views.batch_delete, name="batch_delete"),
+
+    url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),
     url(r'^newmail/$',views.newmail, name = "newmail"),
     url(r'^viewmail/(?P<pk>.+)/$', views.view_mail, name="view_mail"),

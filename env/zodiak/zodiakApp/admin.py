@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from zodiakApp.models import UserAccount, Status, Job, Comments, RelationshipManager, JobModes, PrimaryContact, SecondaryContact, OfficeUseOnly, Batch
+from zodiakApp.models import UserAccount, Status, Job, Comments, Batch, RelationshipManager, JobModes, PrimaryContact, SecondaryContact, OfficeUseOnly, Batch
 
 
 
@@ -52,4 +52,5 @@ admin.site.register(JobModes, JobModesAdmin)
 admin.site.register(Comments, CommentsAdmin)
 admin.site.register(OfficeUseOnly, OfficeUseOnlyAdmin)
 admin.site.register(RelationshipManager, RelationshipManagerAdmin)
+
 

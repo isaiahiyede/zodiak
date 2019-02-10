@@ -13,8 +13,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, JobForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact,OfficeUseOnly
+from zodiakApp.forms import UserForm, BatchProcessForm, JobForm, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.models import Job, Batch, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact,OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -147,10 +147,18 @@ def edit_job(request, job_pk):
 
 def randomNumber(value):
     allowed_chars = ''.join((string.digits))
-    unique_id = ''.join(random.choice(allowed_chars) for _ in range(5))
+    unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
     while Job.objects.filter(job_id=unique_id):
-        unique_id = ''.join(random.choice(allowed_chars) for _ in range(5))
+        unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
     return '#' + 'JOB' + unique_id
+
+
+def randomBatchNumber(value):
+    allowed_chars = ''.join((string.digits))
+    unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    while Job.objects.filter(job_id=unique_id):
+        unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    return '#' + value.upper() + unique_id
 
 
 def getStatus():
@@ -163,7 +171,7 @@ def getJobModes():
 
 
 @login_required
-def add_job(request):
+def add_job(request,jobtype):
     context = {}
     print(randomNumber(10))
     print(request.POST)
@@ -209,6 +217,7 @@ def add_job(request):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
+        context['job_type'] = jobtype
         response = render(request, 'zodiakApp/createjob.html', context)
         return response
 
@@ -515,7 +524,103 @@ def quote_add(request):
         if request.user.is_staff:
             context['names'] = UserAccount.objects.filter(deleted=False)
         response = render(request, 'zodiakApp/newquotation.html', context)
+        return 
+
+
+@login_required
+def add_batch(request):
+    context = {}
+    context['jobmodes'] = getJobModes()
+    print(request.POST)
+    if request.method == "POST":
+        form = BatchForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            form2.batch_id = randomBatchNumber(request.POST.get('mode_of_batch')[0:3])
+            form2.save()
+            messages.success(request, 'Batch was successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Batch was not successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
         return response
+    else:
+        response = render(request, 'zodiakApp/addBatch.html', context)
+        return response
+
+
+@login_required
+def viewbatches(request):
+    context = {}
+    template_name = 'zodiakApp/allbatches.html'
+    batches=Batch.objects.filter(deleted=False)
+    context['batches'] = batches
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    response = render(request,template_name,context)
+    return response
+
+
+@login_required
+def batch_delete(request,pk):
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    batch_obj.deleted = True
+    batch_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def batch_edit(request,pk):
+    context={}
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = BatchForm(request.POST,request.FILES,instance=batch_obj)
+        if form.is_valid():
+            form.save()
+            batch_obj.job_update('edit')
+            messages.success(request, 'Batch was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Batch was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        context['batch_obj'] = batch_obj
+        response = render(request, 'zodiakApp/editbatch.html', context)
+        return response
+
+
+@login_required
+def batch_process(request,pk):
+    context={}
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = BatchProcessForm(request.POST,request.FILES,instance=batch_obj)
+        if form.is_valid():
+            form.save()
+            batch_obj.job_update('process')
+            messages.success(request, 'Batch was successfully processed')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Batch was not successfully processed')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['status_of_batch'] = context['statuses'] = getStatus()
+        context['jobmodes'] = getJobModes()
+        context['batch_obj'] = batch_obj
+        response = render(request, 'zodiakApp/processbatch.html', context)
+        return response  
 
 
 @login_required

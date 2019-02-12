@@ -194,6 +194,7 @@ def add_job(request,jobtype):
                 job_status = Status.objects.get(name=request.POST.get('job_status'))
                 form2.job_status = job_status.name
             except:
+                print(form.errors)
                 messages.warning(request, 'Job was not successfully created..Please select a Job Status')
                 response = redirect(request.META['HTTP_REFERER'])
                 return response
@@ -257,6 +258,7 @@ def job_edit(request,pk):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
+        context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=job_obj.job_type)
         response = render(request, 'zodiakApp/editjob.html', context)
         return response
 
@@ -295,6 +297,7 @@ def job_view(request,pk):
     context['names'] = UserAccount.objects.filter(deleted=False)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
+    context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=job_obj.job_type)
     response = render(request, 'zodiakApp/viewjob.html', context)
     return response
 

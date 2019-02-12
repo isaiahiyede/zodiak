@@ -47,7 +47,7 @@ class JobForm(forms.ModelForm):
             'shippers_address','consignees_name','consignees_number','consignee_email','consignee_country',
             'consignees_address','country_of_origin','country_of_arrival','port_of_destination','port_of_arrival',
             'job_vessel_name','job_awl_bol_number','paar_date','insured', 'insurance_date','packing_list', 
-            'packing_list_date','form_m','jon_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
+            'packing_list_date','form_m','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
             'commercial_invoice','batch_type',
 
             'job_user_acc','job_start_date', 'job_end_date', 'job_date_of_arrival',

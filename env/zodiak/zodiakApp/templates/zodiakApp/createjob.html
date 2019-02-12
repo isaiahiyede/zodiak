@@ -1611,7 +1611,7 @@
 					                                                                        <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
 					                                                                            <option value="">Select</option>
 					                                                                            {% for batch in batches %}
-					                                                                               <option value="{{name.pk}}">
+					                                                                               <option value="{{batch.pk}}">
 					                                                                                {{batch.batch_id}}</option>
 					                                                                            {% endfor %}
 					                                                                        </select>

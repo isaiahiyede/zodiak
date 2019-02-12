@@ -148,25 +148,26 @@ class Batch(models.Model):
 
 	def batch_jobs_count(self):
 		total = 0    
-		total = self.job_set.filter(deleted=False).count()
+		total = self.job_set.filter(deleted=False,job_type=self.mode_of_batch).count()
+		print(total)
 		if total == None:
-			total = 0.0
+			total = 0
 		return total
 	    
 	def batch_jobs_cost(self):
-		total = 0.0
-		if self.batch_jobs_count() == 0:
+		total = self.job_set.filter(deleted=False).aggregate(Sum('job_cost'))['job_cost__sum']
+		if total == 0.0:
 			total = 0.0
 		else:    
-			total = self.job_set.filter(deleted=False).aggregate(Sum('job_cost'))
+			total = total
 		return total
 
 	def batch_weight_total(self):
-		total = 0.0 
-		if self.batch_jobs_count() == 0:
+		total = self.job_set.filter(deleted=False).aggregate(Sum('box_weight_Actual'))['box_weight_Actual__sum']
+		if total == 0.0:
 			total = 0.0
 		else:   
-			total = self.job_set.filter(deleted=False).aggregate(Sum('box_weight_Actual'))
+			total = total
 		return total
   
 	def job_update(self,value):
@@ -206,7 +207,7 @@ class Job(PackageDimension):
     packing_list = models.BooleanField(default=False)
     packing_list_date = models.CharField(max_length=50, null=True, blank=True)
     form_m = models.CharField(max_length=50, null=True, blank=True)
-    jon_son = models.BooleanField(default=False)
+    job_son = models.BooleanField(default=False)
     son_date = models.DateField(null=True, blank=True)
     job_ccro = models.BooleanField(default=False)
     ccro_date = models.DateField(null=True, blank=True)

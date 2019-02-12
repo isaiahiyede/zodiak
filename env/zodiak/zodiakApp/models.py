@@ -183,133 +183,110 @@ class Batch(models.Model):
 
 class Job(PackageDimension):
 
-    job_paar    
-    shippers_name
-    shippers_email
-    shippers_number
-    shippers_country
-    shippers_address
-    consignees_name
-    consignees_number
-    consignee_email
-    consignee_country
-    consignees_address
-    country_of_origin
-    country_of_arrival
-    port_of_destination
-    port_of_arrival
-    job_vessel_name
-    job_awl_bol_number
-    paar_date
-    insured
-    insurance_date
-    packing_listpacking_list_date
-    packing_list_date
-    form_m
-    jon_son
-    son_date
-    job_ccro
-    ccro_date
-    duty_exemption
-    duty_exemption_date
-    commercial_invoice
-    batch_type
+    job_paar = models.BooleanField(default=False)  
+    shippers_name = models.CharField(max_length=50, null=True, blank=True)
+    shippers_email = models.CharField(max_length=50, null=True, blank=True)
+    shippers_number = models.CharField(max_length=50, null=True, blank=True)
+    shippers_country = models.CharField(max_length=50, null=True, blank=True)
+    shippers_address = models.CharField(max_length=50, null=True, blank=True)
+    consignees_name = models.CharField(max_length=50, null=True, blank=True)
+    consignees_number = models.CharField(max_length=50, null=True, blank=True)
+    consignee_email = models.CharField(max_length=50, null=True, blank=True)
+    consignee_country = models.CharField(max_length=50, null=True, blank=True)
+    consignees_address = models.CharField(max_length=50, null=True, blank=True)
+    country_of_origin = models.CharField(max_length=50, null=True, blank=True)
+    country_of_arrival = models.CharField(max_length=50, null=True, blank=True)
+    port_of_destination = models.CharField(max_length=50, null=True, blank=True)
+    port_of_arrival = models.CharField(max_length=50, null=True, blank=True)
+    job_vessel_name = models.CharField(max_length=50, null=True, blank=True)
+    job_awl_bol_number = models.CharField(max_length=50, null=True, blank=True)
+    paar_date = models.CharField(max_length=50, null=True, blank=True)
+    insured = models.BooleanField(default=False)
+    insurance_date = models.DateField(null=True, blank=True)
+    packing_list = models.BooleanField(default=False)
+    packing_list_date = models.CharField(max_length=50, null=True, blank=True)
+    form_m = models.CharField(max_length=50, null=True, blank=True)
+    jon_son = models.BooleanField(default=False)
+    son_date = models.DateField(null=True, blank=True)
+    job_ccro = models.BooleanField(default=False)
+    ccro_date = models.DateField(null=True, blank=True)
+    duty_exemption = models.BooleanField(default=False)
+    duty_exemption_date = models.DateField(null=True, blank=True)
+    commercial_invoice = models.CharField(max_length=50, null=True, blank=True)
+    batch_type = models.ForeignKey(Batch, null=True, blank=True)
 
-	job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
-	job_origin = models.CharField(max_length=50, null=True, blank=True)
-	job_destination = models.CharField(max_length=50, null=True, blank=True)
-	job_start_date = models.DateField(null=True, blank=True)
-	job_end_date = models.DateField(null=True, blank=True)
-	job_date_of_arrival = models.DateField(null=True, blank=True)
-	job_status = models.CharField(max_length=50, null=True, blank=True)
-	job_shipper = models.CharField(max_length=20,null=True,blank=True)
-	job_id = models.CharField(max_length=20,null=True,blank=True)
-	job_name = models.CharField(max_length=20,null=True,blank=True)
-	job_vessel_name = models.CharField(max_length=20,null=True,blank=True)
-	job_awl_number = models.CharField(max_length=20,null=True,blank=True)
-	job_bol_number = models.CharField(max_length=20,null=True,blank=True)
-	job_type = models.CharField(max_length=20,null=True,blank=True)
-	batch_type = models.ForeignKey(Batch, null=True, blank=True)
+    job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
+    job_start_date = models.DateField(null=True, blank=True)
+    job_end_date = models.DateField(null=True, blank=True)
+    job_date_of_arrival = models.DateField(null=True, blank=True)
+    job_status = models.CharField(max_length=50, null=True, blank=True)
+    job_id = models.CharField(max_length=20,null=True,blank=True)
+    job_type = models.CharField(max_length=20,null=True,blank=True)
 
-	job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_3 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_4 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_5 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_6 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_7 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-	job_doc_8 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_3 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_4 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_5 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_6 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_7 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_8 = models.ImageField(upload_to="item_photo", null=True, blank=True)
 
-	job_created_on = models.DateTimeField(default=timezone.now)
+    job_created_on = models.DateTimeField(default=timezone.now)
 
-	job_in_transit = models.BooleanField(default=False)
-	job_arrived = models.BooleanField(default=False)
-	job_undergoing_clearnace = models.BooleanField(default=False)
-	job_undergoing_ammendment = models.BooleanField(default=False)
-	job_examined = models.BooleanField(default=False)
-	job_cleared = models.BooleanField(default=False)
-	job_completed = models.BooleanField(default=False)
-	job_invoiced = models.BooleanField(default=False)
-	job_paid_for = models.BooleanField(default=False)
-	job_processing = models.BooleanField(default=False)
-	job_issue_resolution = models.BooleanField(default=False)
+    job_in_transit = models.BooleanField(default=False)
+    job_arrived = models.BooleanField(default=False)
+    job_undergoing_clearnace = models.BooleanField(default=False)
+    job_undergoing_ammendment = models.BooleanField(default=False)
+    job_examined = models.BooleanField(default=False)
+    job_cleared = models.BooleanField(default=False)
+    job_completed = models.BooleanField(default=False)
+    job_invoiced = models.BooleanField(default=False)
+    job_paid_for = models.BooleanField(default=False)
+    job_processing = models.BooleanField(default=False)
+    job_issue_resolution = models.BooleanField(default=False)
 
 
-	job_paid = models.CharField(max_length=20,null=True,blank=True)
-	job_cost = models.FloatField(default=1.0,null=True, blank=True)
-	job_amount_paid = models.FloatField(default=1.0,null=True, blank=True)
-	job_amount_balance = models.FloatField(default=1.0,null=True, blank=True)
-	insured = models.BooleanField(default=False)
-	vat = models.BooleanField(default=False)
-	demurrage = models.BooleanField(default=False)
-	insurance_charge = models.FloatField(default=0, null=True, blank=True)
-	VAT_charge = models.FloatField(default=0, null=True, blank=True)
-	demurrage_rate = models.FloatField(max_length=10, default=0.10, null=True, blank=True)
-	demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
-	demurrage_start_date = models.DateField(null=True, blank=True)
-	demurrage_end_date = models.DateField(null=True, blank=True)
+    job_paid = models.CharField(max_length=20,null=True,blank=True)
+    job_cost = models.FloatField(default=1.0,null=True, blank=True)
+    job_amount_paid = models.FloatField(default=1.0,null=True, blank=True)
+    job_amount_balance = models.FloatField(default=1.0,null=True, blank=True)
+    vat = models.BooleanField(default=False)
+    demurrage = models.BooleanField(default=False)
+    insurance_charge = models.FloatField(default=0, null=True, blank=True)
+    VAT_charge = models.FloatField(default=0, null=True, blank=True)
+    demurrage_rate = models.FloatField(max_length=10, default=0.10, null=True, blank=True)
+    demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
+    demurrage_start_date = models.DateField(null=True, blank=True)
+    demurrage_end_date = models.DateField(null=True, blank=True)
 
 
-	shippers_name = models.CharField(max_length=100, null=True, blank=True)
-	shippers_address = models.CharField(max_length=100, null=True, blank=True)
-	shippers_number = models.IntegerField(null=True, blank=True)
-	shippers_acct_no = models.CharField(max_length=100, null=True, blank=True)
-	consignees_name = models.CharField(max_length=100, null=True, blank=True)
-	consignees_address = models.CharField(max_length=100, null=True, blank=True)
-	consignees_number = models.IntegerField(null=True, blank=True)
-	consignees_acct_no = models.CharField(max_length=100, null=True, blank=True)
-	carrier_agent_name = models.CharField(max_length=100, null=True, blank=True)
-	carrier_agent_country = models.CharField(max_length=100, null=True, blank=True)
-	carrier_agent_iata_code = models.CharField(max_length=100, null=True, blank=True)
-	carrier_agent_acct_no = models.CharField(max_length=100,null=True, blank=True)
-	carrier_name = models.CharField(max_length=100, null=True, blank=True)
-
-	
-	value_for_carriage = models.CharField(max_length=100, null=True, blank=True)
-	number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
-	gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
-	box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
-	chargeable_rate = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)	
-	nature_of_goods = models.CharField(max_length=200, null=True, blank=True)
-	quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
-	airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
-	other_charges_due_carrier = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-	place_of_execution = models.CharField(max_length=100, null=True, blank=True)
+    value_for_carriage = models.CharField(max_length=100, null=True, blank=True)
+    number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
+    gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
+    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
+    chargeable_rate = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)	
+    nature_of_goods = models.CharField(max_length=200, null=True, blank=True)
+    quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
+    airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
+    other_charges_due_carrier = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    place_of_execution = models.CharField(max_length=100, null=True, blank=True)
 
 
-	handling_info = models.TextField(max_length=100, null=True, blank=True)
-	job_description = models.TextField(null=True,blank=True)
-	job_comment = models.TextField(null=True,blank=True)
-	note_on_the_package = models.TextField(max_length=200, null=True, blank=True)
-	
+    handling_info = models.TextField(max_length=100, null=True, blank=True)
+    job_description = models.TextField(null=True,blank=True)
+    job_comment = models.TextField(null=True,blank=True)
+    note_on_the_package = models.TextField(max_length=200, null=True, blank=True)
 
-	deleted = models.BooleanField(default=False)
 
-	class Meta:
+    deleted = models.BooleanField(default=False)
+
+
+    class Meta:
 	    verbose_name_plural = 'Jobs'
 	    ordering = ['-job_created_on']
 	    
-	def __unicode__(self):
+    def __unicode__(self):
 	    return '%s' %(self.job_id)
 
 

@@ -183,6 +183,38 @@ class Batch(models.Model):
 
 class Job(PackageDimension):
 
+    job_paar    
+    shippers_name
+    shippers_email
+    shippers_number
+    shippers_country
+    shippers_address
+    consignees_name
+    consignees_number
+    consignee_email
+    consignee_country
+    consignees_address
+    country_of_origin
+    country_of_arrival
+    port_of_destination
+    port_of_arrival
+    job_vessel_name
+    job_awl_bol_number
+    paar_date
+    insured
+    insurance_date
+    packing_listpacking_list_date
+    packing_list_date
+    form_m
+    jon_son
+    son_date
+    job_ccro
+    ccro_date
+    duty_exemption
+    duty_exemption_date
+    commercial_invoice
+    batch_type
+
 	job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
 	job_origin = models.CharField(max_length=50, null=True, blank=True)
 	job_destination = models.CharField(max_length=50, null=True, blank=True)

@@ -29,7 +29,7 @@
                                         </select>
                                     </div> -->
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
-                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="" data-toolbar="#toolbar">
 
                                         <thead>
                                             <tr>
@@ -50,9 +50,9 @@
                                                 <td></td>
                                                 <td>{{quote.user_acct}}</td>
                                                 <td>{{quote.item}}</td>
-                                                <td>{{quote.quantity}}</td>
-                                                <td>{{quote.price_per_item}}</td>
-                                                <td>{{quote.total_cost}}</td>
+                                                <td>{{quote.quantity|default_if_none:"0"}}</td>
+                                                <td>{{quote.price_per_item|default_if_none:"0.0"}}</td>
+                                                <td>{{quote.total_cost|default_if_none:"0.0"}}</td>
                                                 <td>{{quote.created_on}}</td>
                                                 <td class="datatable-ct">
                                                     <a title="view quote" href="{% url 'zodiakApp:quote_view' quote.pk %}"><i class="fa fa-eye"></i></a>&nbsp;

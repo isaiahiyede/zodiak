@@ -1259,6 +1259,17 @@
                                                                 </div>
 
                                                                 <div class="form-group">
+
+				                                                    <div class="row">
+
+				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				                                                            <h6>Commercial Invoice Number</h6>
+				                                                            <input value="{{job.commercial_invoice}}" id="commercial_invoice" name="commercial_invoice" type="text" style="font-size: 14px; height: 28px;" class="form-control" />
+				                                                        </div>
+				                                                    </div>
+				                                                </div>
+
+                                                                <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                             <h6>Status</h6>
@@ -1364,6 +1375,28 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="form-group">
+                                                                        <div class="row">
+
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <h6>Batch</h6>
+                                                                                <div class="row">
+                                                                                    <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <div class="chosen-select-single mg-b-20">
+                                                                                            <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
+                                                                                                <option value="{{job.batch_type.pk}}">{{job.batch_type.batch_id}}</option>
+                                                                                                {% for batch in batches %}
+                                                                                                   <option value="{{batch.pk}}">
+                                                                                                    {{batch.batch_id}}</option>
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                             </div>
 
                                                         </div>
@@ -1637,37 +1670,13 @@
                                                                     <div class="row">
                                                                         
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <h6>Commercial Invoice Amount (₦)</h6>
-                                                                            <input value="{{job.commercial_invoice}}" id="commercial_invoice" name="commercial_invoice" type="number" style="font-size: 14px; height: 28px;" class="form-control" />
+                                                                            <h6>Job Cost (₦)</h6>
+                                                                            <input value="{{job.job_cost}}" id="job_cost" name="job_cost" type="number" style="font-size: 14px; height: 28px;" class="form-control" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-
-                                                                    <div class="form-group">
-                                                                        <div class="row">
-                                                                            
-                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                <h6>Batch</h6>
-                                                                                <div class="row">
-                                                                                    <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                        <div class="chosen-select-single mg-b-20">
-                                                                                            <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
-                                                                                                <option value="{{job.batch_type.pk}}">{{job.batch_type.batch_id}}</option>
-                                                                                                {% for batch in batches %}
-                                                                                                   <option value="{{batch.pk}}">
-                                                                                                    {{batch.batch_id}}</option>
-                                                                                                {% endfor %}
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
 
                                                         </div>
                                                 </div>

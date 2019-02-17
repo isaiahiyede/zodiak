@@ -35,7 +35,11 @@ urlpatterns = [
     url(r'^viewbatches/$', views.viewbatches, name="viewbatches"),
     url(r'^batchedit/(?P<pk>.+)/$', views.batch_edit, name="batch_edit"),
     url(r'^batchprocess/(?P<pk>.+)/$', views.batch_process, name="batch_process"),
+    url(r'^viewminibatches/(?P<pk>.+)/$', views.viewminibatches, name="viewminibatches"),
+    url(r'^jobprocess/(?P<pk>.+)/$', views.process_job, name="process_job"),
     url(r'^batchdelete/(?P<pk>.+)/$', views.batch_delete, name="batch_delete"),
+    url(r'^batch_info_view/(?P<pk>.+)/$', views.batch_info_view, name="batch_info_view"),
+
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),

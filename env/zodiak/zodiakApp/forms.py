@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -17,6 +17,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'first_name','last_name')
+
+
+class MiniBatchesForm(forms.ModelForm):
+    class Meta:
+        model = MiniBatches
+        fields = ('no_of_packages','no_of_containers','type_of_container','carrier_name','gross_wgh','net_wgh','exp_date_of_arrival','date_of_arrival','cbm')
 
 
 class BatchForm(forms.ModelForm):
@@ -48,7 +54,7 @@ class JobForm(forms.ModelForm):
             'consignees_address','country_of_origin','country_of_arrival','port_of_destination','port_of_arrival',
             'job_vessel_name','job_awl_bol_number','paar_date','insured', 'insurance_date','packing_list', 
             'packing_list_date','form_m','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
-            'commercial_invoice','batch_type',
+            'commercial_invoice','batch_type', 'job_route', 
 
             'job_user_acc','job_start_date', 'job_end_date', 'job_date_of_arrival',
             'job_status', 'job_cost', 'job_amount_paid','job_paid', 'job_amount_balance', 'job_description',
@@ -62,7 +68,7 @@ class JobForm(forms.ModelForm):
 
             'box_length','box_width','box_height','box_weight','box_weight_K',
 
-            'consignees_number', 
+            'consignees_number', 'job_cost',
             'handling_info', 'value_for_carriage', 'number_of_pieces_to_ship','gross_weight', 'chargeable_rate', 'note_on_the_package', 'nature_of_goods', 
             'airline_tracking_number','other_charges_due_carrier', 'place_of_execution', 'shippers_name', 'quantity_of_goods',
 

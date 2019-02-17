@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Q, Sum
@@ -38,7 +37,7 @@ class UserAccount(models.Model):
 	    verbose_name_plural = 'User Accounts'
 	    ordering = ['-created_on']
 	    
-    def __unicode__(self):
+    def __str__(self):
 	    return '%s' %(self.user.username)
 
 
@@ -53,12 +52,11 @@ class PrimaryContact(models.Model):
 	primary_created_on = models.DateTimeField(default=timezone.now)
 	deleted = models.BooleanField(default=False)
 
-
 	class Meta:
 	    verbose_name_plural = 'Primary Contact'
 	    ordering = ['-user_acc']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.user_acc)
 
 class SecondaryContact(models.Model):
@@ -77,7 +75,7 @@ class SecondaryContact(models.Model):
 	    verbose_name_plural = 'Secondary Contact'
 	    ordering = ['-sec_user_acc']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.sec_user_acc)
 
 
@@ -95,7 +93,7 @@ class Quotation(models.Model):
 	    verbose_name_plural = 'Quotation'
 	    ordering = ['-user_acct']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.user_acc)
 
 
@@ -107,7 +105,7 @@ class Status(models.Model):
 	    verbose_name_plural = 'Statuses'
 	    ordering = ['-name']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.name)
 
 
@@ -118,7 +116,7 @@ class JobModes(models.Model):
 	    verbose_name_plural = 'Job Modes'
 	    ordering = ['-name']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.name)
 
 
@@ -134,56 +132,62 @@ class PackageDimension(models.Model):
 
 
 class Batch(models.Model):
-	batch_id = models.CharField(max_length=20,null=True,blank=True)
-	no_of_jobs = models.IntegerField(null=True,blank=True)
-	mode_of_batch = models.CharField(max_length=20,null=True,blank=True)
-	status_of_batch = models.CharField(max_length=20,null=True,blank=True)
-	deleted = models.BooleanField(default=False)
-	created_on = models.DateTimeField(default=timezone.now)
-	total_batch_cost = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
-	total_batch_weight = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    batch_id = models.CharField(max_length=20,null=True,blank=True)
+    no_of_jobs = models.IntegerField(null=True,blank=True)
+    mode_of_batch = models.CharField(max_length=20,null=True,blank=True)
+    status_of_batch = models.CharField(max_length=20,null=True,blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+    total_batch_cost = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    total_batch_weight = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
 
-	class Meta:
-	    verbose_name_plural = 'Batch'
+    class Meta:
+        verbose_name_plural = 'Batch'
 
-	def batch_jobs_count(self):
-		total = 0    
-		total = self.job_set.filter(deleted=False,job_type=self.mode_of_batch).count()
-		print(total)
-		if total == None:
-			total = 0
-		return total
-	    
-	def batch_jobs_cost(self):
-		total = self.job_set.filter(deleted=False).aggregate(Sum('job_cost'))['job_cost__sum']
-		if total == 0.0:
-			total = 0.0
-		else:    
-			total = total
-		return total
+    def getjobs(self):
+        return self.job_set.filter(deleted=False)
 
-	def batch_weight_total(self):
-		total = self.job_set.filter(deleted=False).aggregate(Sum('box_weight_Actual'))['box_weight_Actual__sum']
-		if total == 0.0:
-			total = 0.0
-		else:   
-			total = total
-		return total
-  
-	def job_update(self,value):
-		if value == "edit":
-			batch_jobs = self.job_set.filter(deleted=False).update(job_status=self.status_of_batch)
-		else:
-			batch_jobs = self.job_set.filter(deleted=False).update(job_type=self.mode_of_batch)
-		return True
+    def batch_jobs_count(self):
+        total = 0
+        total = self.job_set.filter(deleted=False,job_type=self.mode_of_batch).count()
+        if total == None:
+            total = 0
+        return total
 
-	    
-	def __unicode__(self):
-	    return '%s' %(self.batch_id)
+    def batch_jobs_cost(self):
+        total = self.job_set.filter(deleted=False).aggregate(Sum('job_cost'))['job_cost__sum']
+        if total == 0.0:
+            total = 0.0
+        else:
+            total = total
+        return total
+
+    def batch_weight_total(self):
+        total = self.job_set.filter(deleted=False).aggregate(Sum('box_weight_Actual'))['box_weight_Actual__sum']
+        if total == 0.0:
+            total = 0.0
+        else:
+            total = total
+        return total
+
+    def job_update(self,value):
+        if value == "edit":
+            batch_jobs = self.job_set.filter(deleted=False)
+            for job in batch_jobs:
+                job.job_status = self.status_of_batch
+                job.save()
+        else:
+            batch_jobs = self.job_set.filter(deleted=False)
+            for job in batch_jobs:
+                job.job_status = self.status_of_batch
+                job.save()
+        return True
+
+    def __str__(self):
+        return '%s' %(self.batch_id)
 
 
 class Job(PackageDimension):
-
     job_paar = models.BooleanField(default=False)  
     shippers_name = models.CharField(max_length=50, null=True, blank=True)
     shippers_email = models.CharField(max_length=50, null=True, blank=True)
@@ -201,7 +205,7 @@ class Job(PackageDimension):
     port_of_arrival = models.CharField(max_length=50, null=True, blank=True)
     job_vessel_name = models.CharField(max_length=50, null=True, blank=True)
     job_awl_bol_number = models.CharField(max_length=50, null=True, blank=True)
-    paar_date = models.CharField(max_length=50, null=True, blank=True)
+    paar_date = models.DateField(null=True, blank=True)
     insured = models.BooleanField(default=False)
     insurance_date = models.DateField(null=True, blank=True)
     packing_list = models.BooleanField(default=False)
@@ -247,9 +251,8 @@ class Job(PackageDimension):
     job_processing = models.BooleanField(default=False)
     job_issue_resolution = models.BooleanField(default=False)
 
-
     job_paid = models.CharField(max_length=20,null=True,blank=True)
-    job_cost = models.FloatField(default=1.0,null=True, blank=True)
+    job_cost = models.FloatField(default=0.0,null=True, blank=True)
     job_amount_paid = models.FloatField(default=1.0,null=True, blank=True)
     job_amount_balance = models.FloatField(default=1.0,null=True, blank=True)
     vat = models.BooleanField(default=False)
@@ -261,7 +264,6 @@ class Job(PackageDimension):
     demurrage_start_date = models.DateField(null=True, blank=True)
     demurrage_end_date = models.DateField(null=True, blank=True)
 
-
     value_for_carriage = models.CharField(max_length=100, null=True, blank=True)
     number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
     gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
@@ -272,23 +274,65 @@ class Job(PackageDimension):
     airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
     other_charges_due_carrier = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     place_of_execution = models.CharField(max_length=100, null=True, blank=True)
-
+    no_of_arrival_batches = models.IntegerField(default=0, null=True, blank=True)  
 
     handling_info = models.TextField(max_length=100, null=True, blank=True)
     job_description = models.TextField(null=True,blank=True)
     job_comment = models.TextField(null=True,blank=True)
     note_on_the_package = models.TextField(max_length=200, null=True, blank=True)
-
+    job_route = models.CharField(max_length=100, null=True, blank=True)
 
     deleted = models.BooleanField(default=False)
+
+    def jobtotalgrossweight(self):
+        total = self.minibatches_set.filter(deleted=False).aggregate(Sum('gross_wgh'))['gross_wgh__sum']
+        if total == 0.0:
+            total = 0.0
+        else:
+            total = total
+        return total
+
+    def jobtotalnetweight(self):
+        total = self.minibatches_set.filter(deleted=False).aggregate(Sum('net_wgh'))['net_wgh__sum']
+        if total == 0.0:
+            total = 0.0
+        else:
+            total = total
+        return total
+
+    def getminibatches(self):
+        return self.minibatches_set.filter(deleted=False)
 
 
     class Meta:
 	    verbose_name_plural = 'Jobs'
 	    ordering = ['-job_created_on']
 	    
-    def __unicode__(self):
+    def __str__(self):
 	    return '%s' %(self.job_id)
+
+
+class MiniBatches(models.Model):
+    job = models.ForeignKey(Job,null=True,blank=True)
+    no_of_packages = models.IntegerField(null=True, blank=True)
+    no_of_containers= models.IntegerField(null=True, blank=True)
+    type_of_container = models.CharField(max_length=50, null=True, blank=True)
+    carrier_name = models.CharField(max_length=50, null=True, blank=True)
+    mini_batch_id = models.CharField(max_length=50,null=True, blank=True)
+    cbm = models.CharField(max_length=50,null=True, blank=True)
+    gross_wgh = models.FloatField(default=0.0, null=True, blank=True)
+    net_wgh = models.FloatField(default=0.0, null=True, blank=True)
+    exp_date_of_arrival = models.DateField(null=True, blank=True)
+    date_of_arrival = models.DateField(null=True, blank=True)
+    batch_created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Mini Batches'
+        ordering = ['-batch_created_on']
+        
+    def __str__unicode__(self):
+        return '%s' %(self.mini_batch_id)
 
 
 class RelationshipManager(models.Model):
@@ -307,7 +351,7 @@ class RelationshipManager(models.Model):
 	    verbose_name_plural = 'Relationship Managers'
 	    ordering = ['-rm_created_on']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.rm_client)
 
 
@@ -324,7 +368,7 @@ class OfficeUseOnly(models.Model):
 	    verbose_name_plural = 'Office Use only'
 	    ordering = ['-created_on']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s' %(self.rm_client_obj.user)
 
 
@@ -337,7 +381,7 @@ class Comments(models.Model):
 	    verbose_name_plural = 'Comments'
 	    ordering = ['-msg_created_on']
 	    
-	def __unicode__(self):
+	def __str__(self):
 	    return '%s - %s' %(self.job_message.job_id)
 
 

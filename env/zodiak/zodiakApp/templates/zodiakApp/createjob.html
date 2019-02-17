@@ -85,7 +85,7 @@
 				                                                           <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                            <div class="chosen-select-single mg-b-20">
 				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="shippers_country" name="shippers_country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-				                                                                        <option value="">Select</option>
+				                                                                        <option value="none" selected="" disabled="">Select</option>
 				                                                                        <option value="United States">United States</option>
 				                                                                        <option value="United Kingdom">United Kingdom</option>
 				                                                                        <option value="Afghanistan">Afghanistan</option>
@@ -399,7 +399,7 @@
 				                                                           <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                            <div class="chosen-select-single mg-b-20">
 				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="consignee_country" name="consignee_country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-				                                                                        <option value="">Select</option>
+				                                                                        <option value="none" selected="" disabled="">Select</option>
 				                                                                        <option value="United States">United States</option>
 				                                                                        <option value="United Kingdom">United Kingdom</option>
 				                                                                        <option value="Afghanistan">Afghanistan</option>
@@ -706,8 +706,8 @@
 				                                                          <div class="row">
 				                                                           <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                            <div class="chosen-select-single mg-b-20">
-				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="country_of_origin" name="country_of_origin" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-				                                                                        <option value="">Select</option>
+				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="country_of_origin" name="country_of_origin" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1" required>
+				                                                                        <option value="none" selected="" disabled="">Select</option>
 				                                                                        <option value="United States">United States</option>
 				                                                                        <option value="United Kingdom">United Kingdom</option>
 				                                                                        <option value="Afghanistan">Afghanistan</option>
@@ -975,8 +975,8 @@
 				                                                          <div class="row">
 				                                                           <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                            <div class="chosen-select-single mg-b-20">
-				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="country_of_arrival" name="country_of_arrival" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-				                                                                        <option value="">Select</option>
+				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="country_of_arrival" name="country_of_arrival" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1" required>
+				                                                                        <option value="none" selected="" disabled="">Select</option>
 				                                                                        <option value="United States">United States</option>
 				                                                                        <option value="United Kingdom">United Kingdom</option>
 				                                                                        <option value="Afghanistan">Afghanistan</option>
@@ -1248,10 +1248,21 @@
 
 																<div class="form-group">
 				                                                    <div class="row">
-				                                                        
 				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                            <h6>Port of Arrival</h6>
-				                                                            <input id="port_of_arrival" name="port_of_arrival" type="text" style="font-size: 14px; height: 28px;" class="form-control" />
+				                                                            <input id="port_of_arrival" name="port_of_arrival" type="text" style="font-size: 14px; height: 28px;" 
+				                                                            class="form-control" />
+				                                                        </div>
+				                                                    </div>
+				                                                </div>
+
+																<div class="form-group">
+
+				                                                    <div class="row">
+
+				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				                                                            <h6>Commercial Invoice Number</h6>
+				                                                            <input id="commercial_invoice" name="commercial_invoice" type="text" style="font-size: 14px; height: 28px;" class="form-control" />
 				                                                        </div>
 				                                                    </div>
 				                                                </div>
@@ -1263,8 +1274,8 @@
 				                                                                <div class="row">
 				                                                                    <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                                        <div class="chosen-select-single mg-b-20">
-				                                                                            <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select job status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status">
-				                                                                                <option value="">Select ...
+				                                                                            <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select job status..." class="chosen-select" tabindex="-1" id="job_status" name="job_status" required>
+				                                                                                <option value="none" selected="" disabled="">Select ...
 				                                                                                </option>
 				                                                                                {% for status in statuses %}
 				                                                                                   <option 
@@ -1280,10 +1291,21 @@
 				                                                </div>
 
 				                                                <div class="form-group">
-				                                                    <div class="row">    
+				                                                    <div class="row">
+				                                                        
 				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				                                                            <h6>Mode</h6>
-				                                                            <input id="job_type" name="job_type" 	value="{{job_type}}" type="text" style="font-size: 14px; height: 28px;" class="form-control" readonly/>
+				                                                            <h6>Job Route</h6>
+				                                                          <div class="row">
+				                                                           <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				                                                            <div class="chosen-select-single mg-b-20">
+				                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="job_route" name="job_route" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1" required>
+				                                                                        <option value="none" selected="" disabled="">Select....</option>
+				                                                                        <option value="Import">Import</option>
+				                                                                        <option value="Export">Export</option>
+				                                                                    </select>
+				                                                                </div>
+				                                                             </div>
+				                                                           </div>
 				                                                        </div>
 				                                                    </div>
 				                                                </div>
@@ -1348,7 +1370,6 @@
 
 				                                                <div class="form-group">
 				                                                    <div class="row">
-				                                                        
 				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                                                            <h6>Actual Date of Arrival</h6>
 				                                                            <div class="date-picker-inner">
@@ -1362,8 +1383,37 @@
 				                                                        </div>
 				                                                    </div>
 				                                                </div>
-				                                            </div>
 
+				                                                <div class="form-group">
+				                                                    <div class="row">    
+				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				                                                            <h6>Mode</h6>
+				                                                            <input id="job_type" name="job_type" value="{{job_type}}" type="text" style="font-size: 14px; height: 28px;" class="form-control" readonly/>
+				                                                        </div>
+				                                                    </div>
+				                                                </div>
+
+				                                                <div class="form-group">
+					                                                    <div class="row">
+					                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					                                                            <h6>Batch</h6>
+					                                                            <div class="row">
+					                                                                <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					                                                                    <div class="chosen-select-single mg-b-20">
+					                                                                        <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
+					                                                                            <option value="">Select</option>
+					                                                                            {% for batch in batches %}
+					                                                                               <option value="{{batch.pk}}">
+					                                                                                {{batch.batch_id}}</option>
+					                                                                            {% endfor %}
+					                                                                        </select>
+					                                                                    </div>
+					                                                                </div>
+					                                                            </div>
+					                                                        </div>
+					                                                    </div>
+					                                                </div>
+				                                            </div>
 				                                        </div>
 				                                </div>
 				                              </div>
@@ -1490,9 +1540,7 @@
 				                                                        </div>
 				                                                    </div>
 				                                                </div>
-
 				                                            </div>
-
 
 				                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
@@ -1586,41 +1634,16 @@
 			                                                        </div>
 			                                                    </div>
 
-				                                                <div class="form-group">
+																<div class="form-group">
 
 				                                                    <div class="row">
-				                                                        
+
 				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				                                                            <h6>Commercial Invoice Amount (₦)</h6>
-				                                                            <input id="commercial_invoice" name="commercial_invoice" type="number" style="font-size: 14px; height: 28px;" class="form-control" />
+				                                                            <h6>Job Cost (₦)</h6>
+				                                                            <input id="job_cost" name="job_cost" min="1" type="number" style="font-size: 14px; height: 28px;" class="form-control" />
 				                                                        </div>
 				                                                    </div>
 				                                                </div>
-				                                            </div>
-
-				                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-
-					                                                <div class="form-group">
-					                                                    <div class="row">
-					                                                        
-					                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					                                                            <h6>Batch</h6>
-					                                                            <div class="row">
-					                                                                <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					                                                                    <div class="chosen-select-single mg-b-20">
-					                                                                        <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
-					                                                                            <option value="">Select</option>
-					                                                                            {% for batch in batches %}
-					                                                                               <option value="{{batch.pk}}">
-					                                                                                {{batch.batch_id}}</option>
-					                                                                            {% endfor %}
-					                                                                        </select>
-					                                                                    </div>
-					                                                                </div>
-					                                                            </div>
-					                                                        </div>
-					                                                    </div>
-					                                                </div>
 				                                            </div>
 
 				                                        </div>
@@ -1636,7 +1659,7 @@
 	                            <div class="panel-heading accordion-head">
 	                                <h6 class="panel-title">
 	                                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse7">
-								 Documentaion</a>
+								 Documentation</a>
 	                                </h6>
 	                            </div>
 	                            <div id="collapse7" class="panel-collapse panel-ic collapse in">

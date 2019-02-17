@@ -84,22 +84,22 @@ WSGI_APPLICATION = 'zodiak.wsgi.application'
 
 LOGIN_REDIRECT_URL = '/accounts/login/'
 
+#
 
-DATABASES = {
-    'default': {
-    'NAME': 'zodiak_db',
-    'ENGINE': 'sqlserver_ado',
-    'HOST': '127.0.0.1',
-    'PORT': '1433',
-    'USER': 'Assetdb',
-    'PASSWORD': '1234567@gooGLE',
-    'OPTIONS': {
-            'provider': 'SQLNCLI11',
-            'use_legacy_date_fields': 'True'
-        }
-    }
-}
-
+# DATABASES = {
+#     'default': {
+#     'NAME': 'zodiak_db',
+#     'ENGINE': 'sqlserver_ado',
+#     'HOST': '127.0.0.1',
+#     'PORT': '1433',
+#     'USER': 'Assetdb',
+#     'PASSWORD': '1234567@gooGLE',
+#     'OPTIONS': {
+#             'provider': 'SQLNCLI11',
+#             'use_legacy_date_fields': 'True'
+#         }
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #     'NAME': 'zodiak_db',
@@ -111,16 +111,16 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'zodiak_db',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zodiak_db',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Internationalization

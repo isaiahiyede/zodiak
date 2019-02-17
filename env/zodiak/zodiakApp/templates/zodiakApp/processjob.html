@@ -37,103 +37,110 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="product-payment-inner-st">
                     <ul id="myTabedu1" class="tab-review-design">
-                        <li class="active"><a href="#description">Basic Information</a></li>
+                        <li class="active"><a href="#description">Arrival Status</a></li>
                         <li><a href="#reviews"> Account Information</a></li>
-                        <li><a href="#INFORMATION">Social Information</a></li>
+                        <!--<li><a href="#INFORMATION">Social Information</a></li>-->
                         <li><a href="#payments"> Payments</a></li>
                         <li><a href="#documentation">Documentation</a></li>
-                        <li><a href="#statuses">Status</a></li>
+                        <!--<li><a href="#statuses">Status</a></li>-->
                     </ul>
                     <div id="myTabContent" class="tab-content custom-product-edit">
+
+                        {% if job.job_type = 'Air Cargo' or job.job_type = 'Haulage' %}
                         <div class="product-tab-list tab-pane fade active in" id="description">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
                                         <div id="dropzone1" class="pro-ad">
-                                            <form action="/upload" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                        </div>
+                                            <form action="{% url 'zodiakApp:process_job' job.pk %}" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
 
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="department" type="text" class="form-control" placeholder="Department">
-                                                        </div>
-                                                        <div class="form-group res-mg-t-15">
-                                                            <textarea name="description" placeholder="Description"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="gender" class="form-control">
-																<option value="none" selected="" disabled="">Select Gender</option>
-																<option value="0">Male</option>
-																<option value="1">Female</option>
+                                                {% for message in messages %}
+                                                   <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                                {% endfor %}
+
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 4 col-xs-12">
+                                                         <div class="form-group">
+                                                            <select id="arrival_status" name="arrival_status" class="form-control">
+																<option value="none" selected="" disabled="">Select.....</option>
+																<option value="completed">Completed</option>
+																<option value="short_landed">Short Landed</option>
 															</select>
+                                                         </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch hidden">
+                                                        <h6>First Batch</h6>
+                                                        <div class="form-group">
+                                                            <span>Number of Packages</span>
+                                                            <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
                                                         </div>
                                                         <div class="form-group">
-                                                            <select name="country" class="form-control">
-																	<option value="none" selected="" disabled="">Select country</option>
-																	<option value="0">India</option>
-																	<option value="1">Pakistan</option>
-																	<option value="2">Amerika</option>
-																	<option value="3">China</option>
-																	<option value="4">Dubai</option>
-																	<option value="5">Nepal</option>
-																</select>
+                                                            <span>CBM</span>
+                                                            <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
                                                         </div>
                                                         <div class="form-group">
-                                                            <select name="state" class="form-control">
-																	<option value="none" selected="" disabled="">Select state</option>
-																	<option value="0">Gujarat</option>
-																	<option value="1">Maharastra</option>
-																	<option value="2">Rajastan</option>
-																	<option value="3">Maharastra</option>
-																	<option value="4">Rajastan</option>
-																	<option value="5">Gujarat</option>
-																</select>
+                                                            <span>Gross  Weight (kg)</span>
+                                                            <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
                                                         </div>
                                                         <div class="form-group">
-                                                            <select name="city" class="form-control">
-																	<option value="none" selected="" disabled="">Select city</option>
-																	<option value="0">Surat</option>
-																	<option value="1">Baroda</option>
-																	<option value="2">Navsari</option>
-																	<option value="3">Baroda</option>
-																	<option value="4">Surat</option>
-																</select>
+                                                            <span>Net Weight (kg)</span>
+                                                            <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                         <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Expected Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 4 col-xs-12 secondbatch hidden">
+                                                        <h6>Second Batch</h6>
+                                                        <div class="form-group">
+                                                            <span>Number of Packages</span>
+                                                            <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input name="website" type="text" class="form-control" placeholder="Website URL">
+                                                            <span>CBM</span>
+                                                            <input name="sb_cbm" id="sb_cbm" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Gross  Weight (kg)</span>
+                                                            <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Net Weight (kg)</span>
+                                                            <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                         <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Expected Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <div class="row submititem hidden">
                                                     <div class="col-lg-12">
                                                         <div class="payment-adress">
                                                             <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
@@ -146,8 +153,149 @@
                                 </div>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="product-tab-list tab-pane fade active in" id="description">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="review-content-section">
+                                        <div id="dropzone1" class="pro-ad">
+                                            <form action="{% url 'zodiakApp:process_job' job.pk %}" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                {% for message in messages %}
+                                                   <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                                {% endfor %}
+
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 4 col-xs-12">
+                                                         <div class="form-group">
+                                                            <select id="arrival_status" name="arrival_status" class="form-control">
+                                                                <option value="none" selected="" disabled="">Select.....</option>
+                                                                <option value="completed">Completed</option>
+                                                                <option value="short_landed">Short Landed</option>
+                                                            </select>
+                                                         </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch hidden">
+                                                        <h6>First Batch</h6>
+                                                        <div class="form-group">
+                                                            <span>Carrier Name</span>
+                                                            <input name="fb_carrier_name" id="fb_carrier_name" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Number of Containers</span>
+                                                            <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Type of Container</span>
+                                                            <select id="fb_type_of_container" name="fb_type_of_container" class="form-control">
+                                                                <option value="none" selected="" disabled="">Select.....</option>
+                                                                <option value="40ft">40ft</option>
+                                                                <option value="20ft">20ft</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Number of Packages</span>
+                                                            <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>CBM</span>
+                                                            <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Gross  Weight (kg)</span>
+                                                            <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Net Weight (kg)</span>
+                                                            <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                         <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Expected Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 4 col-xs-12 secondbatch hidden">
+                                                        <h6>Second Batch</h6>
+                                                        <div class="form-group">
+                                                            <span>Carrier Name</span>
+                                                            <input name="sb_carrier_name" id="sb_carrier_name" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Number of Containers</span>
+                                                            <input name="sb_no_of_cntainers" id="sb_no_of_cntainers" type="number" min="1" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Type of Container</span>
+                                                            <select id="sb_type_of_container" name="sb_type_of_container" class="form-control">
+                                                                <option value="none" selected="" disabled="">Select.....</option>
+                                                                <option value="40ft">40ft</option>
+                                                                <option value="20ft">20ft</option>
+                                                            </select>
+                                                         </div>
+                                                        <div class="form-group">
+                                                            <span>Number of Packages</span>
+                                                            <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>CBM</span>
+                                                            <input name="sb_cbm" id="sb_cbm" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Gross  Weight (kg)</span>
+                                                            <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span>Net Weight (kg)</span>
+                                                            <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" class="form-control">
+                                                        </div>
+                                                         <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Expected Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group data-custon-pick" id="data_1">
+                                                            <div class="input-group date">
+
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <span>Date of Arrival</span>
+                                                                <input type="text" class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row submititem hidden">
+                                                    <div class="col-lg-12">
+                                                        <div class="payment-adress">
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
                         <div class="product-tab-list tab-pane fade" id="reviews">
-                            <div class="row">
+                           <!--  <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
                                         <div id="dropzone1" class="pro-ad">
@@ -245,111 +393,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="product-tab-list tab-pane fade" id="INFORMATION">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="review-content-section">
-                                        <div id="dropzone1" class="pro-ad">
-                                            <form action="/upload" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="department" type="text" class="form-control" placeholder="Department">
-                                                        </div>
-                                                        <div class="form-group res-mg-t-15">
-                                                            <textarea name="description" placeholder="Description"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="gender" class="form-control">
-                                                                <option value="none" selected="" disabled="">Select Gender</option>
-                                                                <option value="0">Male</option>
-                                                                <option value="1">Female</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="country" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select country</option>
-                                                                    <option value="0">India</option>
-                                                                    <option value="1">Pakistan</option>
-                                                                    <option value="2">Amerika</option>
-                                                                    <option value="3">China</option>
-                                                                    <option value="4">Dubai</option>
-                                                                    <option value="5">Nepal</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="state" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select state</option>
-                                                                    <option value="0">Gujarat</option>
-                                                                    <option value="1">Maharastra</option>
-                                                                    <option value="2">Rajastan</option>
-                                                                    <option value="3">Maharastra</option>
-                                                                    <option value="4">Rajastan</option>
-                                                                    <option value="5">Gujarat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="city" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select city</option>
-                                                                    <option value="0">Surat</option>
-                                                                    <option value="1">Baroda</option>
-                                                                    <option value="2">Navsari</option>
-                                                                    <option value="3">Baroda</option>
-                                                                    <option value="4">Surat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="website" type="text" class="form-control" placeholder="Website URL">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="payment-adress">
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="product-tab-list tab-pane fade" id="payments">
-                            <div class="row">
+                           <!--  <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
                                         <div id="dropzone1" class="pro-ad">
@@ -447,10 +494,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="product-tab-list tab-pane fade" id="documentation">
-                            <div class="row">
+                        <!--<div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
                                         <div id="dropzone1" class="pro-ad">
@@ -548,10 +595,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="product-tab-list tab-pane fade" id="statuses">
-                            <div class="row">
+                           <!--  <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
                                         <div id="dropzone1" class="pro-ad">
@@ -649,7 +696,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -658,6 +705,8 @@
     </div>
 </div>
 {% endblock contents %}
+
+
 
 {% block specialscripts %}
 <script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
@@ -677,4 +726,19 @@
 <script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
 <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
 <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+
+<script>
+  $('body').on('change','#arrival_status',function(e){
+        var selected = $(this).find(":selected").val()
+        if(selected == "short_landed"){
+            $(".firstbatch").removeClass("hidden")
+            $(".secondbatch").removeClass("hidden")
+            $(".submititem").removeClass("hidden")
+        }else{
+            $(".firstbatch").removeClass("hidden")
+            $(".secondbatch").addClass("hidden")
+            $(".submititem").removeClass("hidden")
+        }
+        });
+</script>
 {% endblock specialscripts %}

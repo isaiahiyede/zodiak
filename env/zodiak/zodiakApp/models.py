@@ -302,6 +302,9 @@ class Job(PackageDimension):
             total = total
         return total
 
+    def getminibatchesCount(self):
+        return self.minibatches_set.filter(deleted=False).count()
+
     def getminibatches(self):
         return self.minibatches_set.filter(deleted=False)
 
@@ -309,6 +312,7 @@ class Job(PackageDimension):
     class Meta:
 	    verbose_name_plural = 'Jobs'
 	    ordering = ['-job_created_on']
+
 	    
     def __str__(self):
 	    return '%s' %(self.job_id)
@@ -387,6 +391,14 @@ class MiniBatches(models.Model):
     date_of_arrival = models.DateField(null=True, blank=True)
     batch_created_on = models.DateTimeField(default=timezone.now)
     deleted = models.BooleanField(default=False)
+
+
+    def item_info(self):
+        return {'NOP': self.no_of_packages, 'NOC': self.no_of_containers, 'CBM':self.cbm,
+                'TOC': self.type_of_container, 'Carrier Name': self.carrier_name,
+                'Gross Weight':self.gross_wgh, 'Net Weight': self.net_wgh, 'EDOA': self.exp_date_of_arrival,
+                'DOA':self.date_of_arrival
+                }
 
     class Meta:
         verbose_name_plural = 'Mini Batches'

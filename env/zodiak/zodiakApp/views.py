@@ -846,6 +846,16 @@ def viewbatches(request):
 
 
 @login_required
+def print_manifest(request, pk):
+    context = {}
+    batch = get_object_or_404(Batch, pk=pk)
+    packages_assigned_to_batch = Job.objects.filter(batch_type = batch)
+    context['batch'] = batch
+    context['packages'] = packages_assigned_to_batch
+    return render(request, 'zodiakApp/print-manifest.html',context)
+
+
+@login_required
 def batch_delete(request,pk):
     batch_obj = Batch.objects.get(pk=pk, deleted=False)
     batch_obj.deleted = True

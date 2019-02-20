@@ -1,0 +1,97 @@
+
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+{% endblock morecss %}
+
+{% block contents %}
+<div class="data-table-area mg-b-15">
+    <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline13-list">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    <h1><span class="table-project-n"></span>JOB: {{job.job_id}}&nbsp;</h1>
+                                </div>
+                            </div>
+                            <div class="sparkline13-graph">
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+<!--                                     <div id="toolbar">
+                                        <select class="form-control dt-tb">
+                                            <option value="">Select action...</option>
+                                            <option value="1">Approve</option>
+                                            <option value="2">Approve All</option>
+                                            <option value="3">Approve Selected</option>
+                                        </select>
+                                    </div> -->
+                                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
+                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+
+                                        <thead>
+                                            <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="batch_id">Mini Batch ID</th>
+                                                <th data-field="no_of_packages">No of Packages</th>
+                                                <th data-field="no_of_containers">No of Containers</th>
+                                                <th data-field="type_of_container">Type of Container</th>
+                                                <th data-field="carrier_name">Carrier Name</th>
+                                                <th data-field="cbm">CBM</th>
+                                                <th data-field="gross_wgh">Gross weight</th>
+                                                <th data-field="net_wgh">Net weight</th>
+                                                <th data-field="exp_date_of_arrival">EDOA</th>
+                                                <th data-field="date_of_arrival">DOA</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for job in jobs_minibatches %}
+                                            <tr>
+                                                <td></td>  
+                                                <td>{{job.mini_batch_id}}</td>
+                                                <td>{{job.no_of_packages|default_if_none:"0"}}</td>
+                                                <td>{{job.no_of_containers|default_if_none:"0"}}</td>
+                                                <td>{{job.type_of_container}}</td>
+                                                <td>{{job.carrier_name}}</td>
+                                                <td>{{job.cbm}}</td>
+                                                <td>{{job.gross_wgh|default_if_none:"0.0"}}</td>
+                                                <td>{{job.net_wgh|default_if_none:"0.0"}}</td>
+                                                <td>{{job.exp_date_of_arrival}}</td>
+                                                <td>{{job.date_of_arrival}}</td>
+                                            </tr>
+
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	</div>
+</div>
+{% endblock contents %}
+
+{% block specialscripts %}
+
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
+
+<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+
+{% endblock specialscripts %}

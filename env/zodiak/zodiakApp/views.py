@@ -14,8 +14,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, JobForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact,OfficeUseOnly
+from zodiakApp.forms import UserForm, MiniBatchesForm, BatchProcessForm, JobForm, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.models import Job, Batch, MiniBatches, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact,OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -77,7 +77,6 @@ def user_logout(request):
     return redirect(reverse('zodiakApp:adminPage'))
 
 
-
 def get_job(request):
     context = {}
     job_pk = request.GET.get('job_id')
@@ -137,7 +136,7 @@ def view_user_jobs(request,jobtype):
 
 
 @login_required
-def edit_job(request, job_pk):
+def edit_job(request,job_pk):
     context = {}
     template_name = 'zodiakApp/edit_job.html'
     job_obj = Job.objects.get(pk=job_pk, deleted=False)
@@ -146,17 +145,45 @@ def edit_job(request, job_pk):
     return response
 
 
-def randomNumber(value):
+def randomNumber(value,route,type):
+    if route == 'Import':
+        val = "IMP"
+    else:
+        val = "EXP"
+    if type == 'Sea Cargo':
+        type = "SEA"
+    elif type == 'Air Cargo':
+        type = 'AIR'
+    elif type == 'Haulage':
+        type = 'HAU'
+    else:
+        val = "OTH"
     allowed_chars = ''.join((string.digits))
-    unique_id = ''.join(random.choice(allowed_chars) for _ in range(5))
+    unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
     while Job.objects.filter(job_id=unique_id):
-        unique_id = ''.join(random.choice(allowed_chars) for _ in range(5))
-    return '#' + 'JOB' + unique_id
+        unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    return type +  unique_id + val
+
+
+def randomBatchNumber(value):
+    allowed_chars = ''.join((string.digits))
+    unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    while Batch.objects.filter(batch_id=unique_id):
+        unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    return '#' + value.upper() + unique_id
+
+def randomMiniBatchNumber():
+    allowed_chars = ''.join((string.digits))
+    unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    while MiniBatches.objects.filter(mini_batch_id=unique_id):
+        unique_id = ''.join(random.choice(allowed_chars) for _ in range(9))
+    return '#' + unique_id
 
 
 def getStatus():
     statuses = Status.objects.all()
     return statuses
+
 
 def getJobModes():
     jobmodes = JobModes.objects.all()
@@ -164,15 +191,14 @@ def getJobModes():
 
 
 @login_required
-def add_job(request):
+def add_job(request,jobtype):
     context = {}
-    print(randomNumber(10))
     print(request.POST)
     if request.method == "POST":
         form = JobForm(request.POST)
         if form.is_valid():
             form2 = form.save(commit=False)
-            form2.job_id = randomNumber(10)
+            form2.job_id = randomNumber(10,request.POST.get('job_route'),request.POST.get('job_type'))
             try:
                 form2.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
             except:
@@ -187,6 +213,7 @@ def add_job(request):
                 job_status = Status.objects.get(name=request.POST.get('job_status'))
                 form2.job_status = job_status.name
             except:
+                print(form.errors)
                 messages.warning(request, 'Job was not successfully created..Please select a Job Status')
                 response = redirect(request.META['HTTP_REFERER'])
                 return response
@@ -210,6 +237,8 @@ def add_job(request):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
+        context['job_type'] = jobtype
+        context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=jobtype)
         response = render(request, 'zodiakApp/createjob.html', context)
         return response
 
@@ -248,6 +277,7 @@ def job_edit(request,pk):
         context['names'] = UserAccount.objects.filter(deleted=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
+        context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=job_obj.job_type)
         response = render(request, 'zodiakApp/editjob.html', context)
         return response
 
@@ -256,19 +286,153 @@ def job_edit(request,pk):
 def process_job(request,pk):
     context={}
     job_obj = Job.objects.get(pk=pk, deleted=False)
+    print(request.POST)
     if request.method == "POST":
-        form = JobForm(request.POST,request.FILES,instance=job_obj)
-        if form.is_valid():
-            print(request.POST)
-            print(form.errors)
-            form.save()
-            messages.success(request, 'Job was successfully edited')
-            return redirect(reverse('zodiakApp:adminPage'))
+        if request.POST.get('arrival_status') == "completed":
+            if job_obj.job_type == "Sea Cargo":
+                fields = ['fb_no_of_packages','fb_no_of_containers','fb_type_of_container','fb_carrier_name','fb_gross_weight','fb_net_weight','fb_exp_date_of_arrival','fb_date_of_arrival','fb_cbm']
+                for field in fields:
+                    if request.POST.get(field) == "":
+                        messages.success(request, 'Job was not successfully processed.Make sure all fields with asteriks are properly filled')
+                        response = redirect(request.META['HTTP_REFERER'])
+                        return response
+                minibatch_obj = MiniBatches.objects.create(
+                    no_of_packages=request.POST.get('fb_no_of_packages'),
+                    no_of_containers=request.POST.get('fb_no_of_containers'),
+                    type_of_container=request.POST.get('fb_type_of_container'),
+                    carrier_name=request.POST.get('fb_carrier_name'),
+                    gross_wgh=request.POST.get('fb_gross_weight'),
+                    net_wgh=request.POST.get('fb_net_weight'),
+                    exp_date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_exp_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    cbm=request.POST.get('fb_cbm'),
+                    job=job_obj,
+                    mini_batch_id=randomMiniBatchNumber()
+                    )
+                minibatch_obj.save()
+                job_obj.no_of_arrival_batches += 1
+                job_obj.gross_weight = job_obj.jobtotalgrossweight()
+                job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
+                job_obj.save()
+                messages.success(request, 'Job was successfully processed.')
+                response = redirect(request.META['HTTP_REFERER'])
+                return response
+            else:
+                fields = ['fb_no_of_packages','fb_gross_weight','fb_net_weight','fb_exp_date_of_arrival','fb_date_of_arrival','fb_cbm']
+                for field in fields:
+                    if request.POST.get(field) == "":
+                        messages.success(request, 'Job was not successfully processed.Make sure all fields with asteriks are properly filled')
+                        response = redirect(request.META['HTTP_REFERER'])
+                        return response
+                minibatch_obj = MiniBatches.objects.create(
+                    no_of_packages=request.POST.get('fb_no_of_packages'),
+                    gross_wgh=request.POST.get('fb_gross_weight'),
+                    net_wgh=request.POST.get('fb_net_weight'),
+                    exp_date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_exp_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    cbm=request.POST.get('fb_cbm'),
+                    job=job_obj,
+                    mini_batch_id=randomMiniBatchNumber()
+                )
+
+                job_obj.no_of_arrival_batches += 1
+                job_obj.gross_weight = job_obj.jobtotalgrossweight()
+                job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
+                job_obj.save()
+                minibatch_obj.save()
+                messages.success(request, 'Job was successfully processed.')
+                response = redirect(request.META['HTTP_REFERER'])
+                return response
+
         else:
-            print(form.errors)
-            messages.warning(request, 'Job was not successfully edited')
-            response = redirect(re.META['HTTP_REFERER'])
-        return response
+            if job_obj.job_type == "Sea Cargo":
+                fields = ['fb_no_of_packages','fb_no_of_containers','fb_type_of_container','fb_carrier_name','fb_gross_weight','fb_net_weight','fb_exp_date_of_arrival','fb_date_of_arrival','fb_cbm',
+                'sb_no_of_packages','sb_no_of_containers','sb_type_of_container','sb_carrier_name','sb_gross_weight','sb_net_weight','sb_exp_date_of_arrival','sb_date_of_arrival','sb_cbm']
+                for field in fields:
+                    if request.POST.get(field) == "":
+                        messages.success(request, 'Job was not successfully processed.Make sure all fields with asteriks are properly filled')
+                        response = redirect(request.META['HTTP_REFERER'])
+                        return response
+                minibatch_obj = MiniBatches.objects.create(
+                    no_of_packages=request.POST.get('fb_no_of_packages'),
+                    no_of_containers=request.POST.get('fb_no_of_containers'),
+                    type_of_container=request.POST.get('fb_type_of_container'),
+                    carrier_name=request.POST.get('fb_carrier_name'),
+                    gross_wgh=request.POST.get('fb_gross_weight'),
+                    net_wgh=request.POST.get('fb_net_weight'),
+                    exp_date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_exp_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    cbm=request.POST.get('fb_cbm'),
+                    job=job_obj,
+                    mini_batch_id=randomMiniBatchNumber()
+                )
+                minibatch_obj.save()
+                job_obj.no_of_arrival_batches += 1
+                job_obj.gross_weight = job_obj.jobtotalgrossweight()
+                job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
+                job_obj.save()
+                minibatch_obj = MiniBatches.objects.create(
+                    no_of_packages=request.POST.get('sb_no_of_packages'),
+                    no_of_containers=request.POST.get('sb_no_of_containers'),
+                    type_of_container=request.POST.get('sb_type_of_container'),
+                    carrier_name=request.POST.get('sb_carrier_name'),
+                    gross_wgh=request.POST.get('sb_gross_weight'),
+                    net_wgh=request.POST.get('sb_net_weight'),
+                    exp_date_of_arrival=datetime.datetime.strptime(request.POST.get('sb_exp_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    date_of_arrival=datetime.datetime.strptime(request.POST.get('sb_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    cbm=request.POST.get('sb_cbm'),
+                    job=job_obj,
+                    mini_batch_id=randomMiniBatchNumber()
+                )
+                minibatch_obj.save()
+                job_obj.no_of_arrival_batches += 1
+                job_obj.gross_weight = job_obj.jobtotalgrossweight()
+                job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
+                job_obj.save()
+                messages.success(request, 'Job was successfully processed.')
+                response = redirect(request.META['HTTP_REFERER'])
+                return response
+            else:
+                fields = ['fb_no_of_packages','fb_gross_weight','fb_net_weight','fb_exp_date_of_arrival','fb_date_of_arrival','fb_cbm',
+                    'sb_no_of_packages','sb_gross_weight','sb_net_weight','sb_exp_date_of_arrival','sb_date_of_arrival','sb_cbm']
+                for field in fields:
+                    if request.POST.get(field) == "":
+                        messages.success(request, 'Job was not successfully processed.Make sure all fields with asteriks are properly filled')
+                        response = redirect(request.META['HTTP_REFERER'])
+                        return response
+                minibatch_obj = MiniBatches.objects.create(
+                    no_of_packages=request.POST.get('fb_no_of_packages'),
+                    gross_wgh=request.POST.get('fb_gross_weight'),
+                    net_wgh=request.POST.get('fb_net_weight'),
+                    exp_date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_exp_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    date_of_arrival=datetime.datetime.strptime(request.POST.get('fb_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    cbm=request.POST.get('fb_cbm'),
+                    job=job_obj,
+                    mini_batch_id=randomMiniBatchNumber()
+                )
+                minibatch_obj.save()
+                job_obj.no_of_arrival_batches += 1
+                job_obj.gross_weight = job_obj.jobtotalgrossweight()
+                job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
+                job_obj.save()
+                minibatch_obj = MiniBatches.objects.create(
+                    no_of_packages=request.POST.get('sb_no_of_packages'),
+                    gross_wgh=request.POST.get('sb_gross_weight'),
+                    net_wgh=request.POST.get('sb_net_weight'),
+                    exp_date_of_arrival=datetime.datetime.strptime(request.POST.get('sb_exp_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    date_of_arrival=datetime.datetime.strptime(request.POST.get('sb_date_of_arrival'),'%m/%d/%Y').strftime('%Y-%m-%d'),
+                    cbm=request.POST.get('sb_cbm'),
+                    job=job_obj,
+                    mini_batch_id=randomMiniBatchNumber()
+                )
+                minibatch_obj.save()
+                job_obj.no_of_arrival_batches += 1
+                job_obj.gross_weight = job_obj.jobtotalgrossweight()
+                job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
+                job_obj.save()
+                messages.success(request, 'Job was successfully processed.')
+                response = redirect(request.META['HTTP_REFERER'])
+                return response
     else:
         context['job'] = job_obj
         context['names'] = UserAccount.objects.filter(deleted=False)
@@ -286,7 +450,21 @@ def job_view(request,pk):
     context['names'] = UserAccount.objects.filter(deleted=False)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
+    context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=job_obj.job_type)
     response = render(request, 'zodiakApp/viewjob.html', context)
+    return response
+
+
+@login_required
+def viewminibatches(request,pk):
+    context={}
+    job_obj = Job.objects.get(pk=pk, deleted=False)
+    jobs_minibatches = job_obj.getminibatches()
+    context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['job'] = job_obj
+    context['jobs_minibatches'] = jobs_minibatches
+    response = response = render(request, 'zodiakApp/minibatch.html', context)
     return response
 
 
@@ -470,8 +648,6 @@ def viewusers(request):
     response = render(request,template_name,context)
     return response
 
-
-
 """ quotaion starts """
 
 @login_required
@@ -484,7 +660,7 @@ def viewquotations(request):
         quotations = Quotation.objects.filter(deleted=False)
     else:
         quotations = Quotation.objects.filter(user_acct=request.user.useraccount,deleted=False)
-    context['quotations'] = quotation
+    context['quotations'] = quotations
     response = render(request,template_name,context)
     return response
 
@@ -517,6 +693,120 @@ def quote_add(request):
             context['names'] = UserAccount.objects.filter(deleted=False)
         response = render(request, 'zodiakApp/newquotation.html', context)
         return response
+
+
+@login_required
+def add_batch(request):
+    context = {}
+    context['jobmodes'] = getJobModes()
+    print(request.POST)
+    if request.method == "POST":
+        form = BatchForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            form2.batch_id = randomBatchNumber(request.POST.get('mode_of_batch')[0:3])
+            form2.save()
+            messages.success(request, 'Batch was successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Batch was not successfully created')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        response = render(request, 'zodiakApp/addBatch.html', context)
+        return response
+
+
+@login_required
+def viewbatches(request):
+    context = {}
+    template_name = 'zodiakApp/allbatches.html'
+    batches=Batch.objects.filter(deleted=False)
+    for batch in batches:
+        batch.no_of_jobs = batch.batch_jobs_count()
+        batch.total_batch_cost = batch.batch_jobs_cost()
+        batch.total_batch_weight = batch.batch_weight_total()
+        batch.save()
+    context['batches'] = batches
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    response = render(request,template_name,context)
+    return response
+
+
+@login_required
+def batch_delete(request,pk):
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    batch_obj.deleted = True
+    batch_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def batch_info_view(request,pk):
+    context={}
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    batch_jobs = batch_obj.getjobs()
+    context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['batch_obj'] = batch_obj
+    context['jobs'] = batch_jobs
+    response = response = render(request, 'zodiakApp/batch_info_view.html', context)
+    return response
+
+
+@login_required
+def batch_edit(request,pk):
+    context={}
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = BatchForm(request.POST,request.FILES,instance=batch_obj)
+        if form.is_valid():
+            form.save()
+            batch_obj.job_update('edit')
+            messages.success(request, 'Batch was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Batch was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        context['batch_obj'] = batch_obj
+        response = render(request, 'zodiakApp/editbatch.html', context)
+        return response
+
+
+@login_required
+def batch_process(request,pk):
+    context={}
+    batch_obj = Batch.objects.get(pk=pk, deleted=False)
+    if request.method == "POST":
+        rp = request.POST
+        print(rp)
+        form = BatchProcessForm(request.POST,request.FILES,instance=batch_obj)
+        if form.is_valid():
+            form.save()
+            batch_obj.job_update('process')
+            messages.success(request, 'Batch was successfully processed')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Batch was not successfully processed')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['status_of_batch'] = context['statuses'] = getStatus()
+        context['jobmodes'] = getJobModes()
+        context['batch_obj'] = batch_obj
+        response = render(request, 'zodiakApp/processbatch.html', context)
+        return response  
 
 
 @login_required

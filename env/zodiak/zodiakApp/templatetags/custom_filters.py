@@ -1,6 +1,6 @@
 from django import template
 from django.template.defaultfilters import stringfilter
-from zodiakApp.models import UserAccount, Job
+from zodiakApp.models import UserAccount, Job, Batch
 from django.contrib.auth.models import User
 # from export.models import *
 import datetime
@@ -23,6 +23,11 @@ def getJobCount(request, mode):
 	if request.user.is_staff:
 		return Job.objects.filter(job_type=mode,deleted=False).count()
 	return Job.objects.filter(job_user_acc=request.user.useraccount,job_type=mode,deleted=False).count()
+
+
+@register.simple_tag
+def getBatchCount(request):
+	return Batch.objects.filter(deleted=False).count()
 
     
 

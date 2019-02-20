@@ -183,6 +183,45 @@
 
 
                         <li>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class=""></span> <span class="mini-click-non">Reporting</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+
+                                {% if request.user.is_staff %}
+
+
+                                    <li>
+                                        <a title="" href="/">
+                                            <span class="mini-sub-pro">All Reports</span>
+                                        </a>
+                                    </li>
+
+
+                                {% endif %}
+
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class=""></span> <span class="mini-click-non">Book Keeping</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+
+                                {% if request.user.is_staff %}
+
+
+                                    <li>
+                                        <a title="" href="{% url 'zodiakApp:financerecords'%}">
+                                            <span class="mini-sub-pro">Financials</span>
+                                        </a>
+                                    </li>
+
+
+                                {% endif %}
+
+                            </ul>
+                        </li>
+
+
+                        <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class=""></span> <span class="mini-click-non">Messages</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="New mail" href="{% url 'zodiakApp:newmail' %}"><span class="mini-sub-pro">New Message</span></a></li>

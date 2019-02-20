@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^jobedit/(?P<pk>.+)/$', views.job_edit, name="job_edit"),
     url(r'^jobview/(?P<pk>.+)/$', views.job_view, name="job_view"),
     url(r'^jobdelete/(?P<pk>.+)/$', views.job_delete, name="job_delete"),
+    url(r'^jobprocess/(?P<pk>.+)/$', views.process_job, name="process_job"),
 
     url(r'^useredit/(?P<pk>.+)/$', views.user_edit, name="user_edit"),
     url(r'^userview/(?P<pk>.+)/$', views.user_view, name="user_view"),
@@ -36,10 +37,17 @@ urlpatterns = [
     url(r'^batchedit/(?P<pk>.+)/$', views.batch_edit, name="batch_edit"),
     url(r'^batchprocess/(?P<pk>.+)/$', views.batch_process, name="batch_process"),
     url(r'^viewminibatches/(?P<pk>.+)/$', views.viewminibatches, name="viewminibatches"),
-    url(r'^jobprocess/(?P<pk>.+)/$', views.process_job, name="process_job"),
+    url(r'^batchmanifest/(?P<pk>.+)/$', views.print_manifest, name="print_manifest"),
+    
     url(r'^batchdelete/(?P<pk>.+)/$', views.batch_delete, name="batch_delete"),
     url(r'^batch_info_view/(?P<pk>.+)/$', views.batch_info_view, name="batch_info_view"),
+    url(r'^jobinvoice/(?P<pk>.+)/$', views.job_invoice_page, name="job_invoice_page"),
 
+    url(r'^jobfinancials/(?P<pk>.+)/$', views.financials, name="financials"),
+    url(r'^financeRecords/$', views.financerecords, name="financerecords"),
+    url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
+    url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
+    url(r'^fin_info_delete/(?P<pk>.+)/$', views.fin_info_delete, name="fin_info_delete"),
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),

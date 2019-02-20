@@ -1,0 +1,61 @@
+
+<html>
+   <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <style type="text/css">
+                table_header{
+                        background-color: #82CAFA;
+                        }
+                table_header.th{
+                        font-weight: 100
+                        }
+        </style>
+   </head>
+        
+   <body>
+
+                
+        <table class="table table-bordered" border="0">
+            <th style="position: relative;left: 120px;">Batch No:{{batch.batch_id}} - (Manifest ({{batch.created_on|date:'d/m/Y'}})<br/>
+                Created By: {{request.user.email}} &nbsp; - No of Packages: 
+                {{batch.job_set.count}}
+            </th>
+        </table>
+        
+
+        <table class="table table-bordered" style=" border-spacing: 0; border-collapse: separate; border-color: gray; border: solid 1px #ddd;width:600px; margin-left:39px;">
+                
+                <tr style="background-color: #F0FFF0;">
+                   <td style="border-bottom:1px solid #ddd; width: 60px;">Job ID</td>
+                   <td style="border-bottom:1px solid #ddd; width: 60px;">No of Mini Batches</td>
+                   <td style="border-bottom:1px solid #ddd; width: 60px;">Actual Weight(kgs)</td>
+                   <td style="border-bottom:1px solid #ddd; width: 60px;">Gross Weight(kgs)</td>
+                   <td style="border-bottom:1px solid #ddd; width: 60px;">Total Cost (NGN)</td>
+                   <td style="border-bottom:1px solid #ddd; width: 60px;">Items Description</td>
+
+                </tr>
+
+                {% for pkg in packages %}
+                  <tr>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.job_id}}</td>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.getminibatchesCount }}</td>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.box_weight_actual }}kgs</td>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.gross_weight }}kgs</td>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.finances.jobtotalCost}}</td>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">
+                     {% for pg in pkg.getminibatches %} 
+                      {{ pg.item_info }}
+                     {% endfor %} 
+                     </td>
+
+                  </tr>
+                {% endfor %}
+                
+                
+        </table>
+
+   </body>
+</html>
+
+

@@ -15,7 +15,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1><span class="table-project-n"></span>Batches</h1>
+                                    <h1><span class="table-project-n"></span>Finance Records</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -34,32 +34,23 @@
                                         <thead>
                                             <tr>
                                                 <th data-field="state" data-checkbox="true"></th>
-                                                <th data-field="batch_id">Batch Number</th>
-                                                <th data-field="mode_of_batch">Mode of Batch</th>
-                                                <th data-field="status_of_batch">Status</th>
-                                                <th data-field="total_batch_cost">Total Cost</th>
-                                                <th data-field="total_batch_weight">Total Weight</th>
-                                                <th data-field="no_of_jobs">Number of Jobs</th>
+                                                <th data-field="job_id">Job Id</th>
+                                                <th data-field="total_cost">Total cost (₦)</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            {% for batch in batches %}
+                                            {% for fin_obj in fin_objs %}
                                             <tr>
                                                 <td></td>  
-                                                <td>{{batch.batch_id}}</td>
-                                                <td>{{batch.mode_of_batch}}</td>
-                                                <td>{{batch.status_of_batch}}</td>
-                                                <td>{{batch.total_batch_cost|default_if_none:"0.0"}}</td>
-                                                <td>{{batch.batch_weight_total|default_if_none:"0.0"}}</td>
-                                                <td>{{batch.no_of_jobs|default_if_none:"0"}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.jobtotalCost|default_if_none:"0.0"}}</td>
 
                                                 <td class="datatable-ct">
-                                                    <a title="view batch" href="{% url 'zodiakApp:print_manifest' batch.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
-                                                    <!--<a title="edit batch" href=""><i class="fa fa-pencil"></i></a>&nbsp;-->
-                                                    <a title="process batch" href="{% url 'zodiakApp:batch_process' batch.pk %}"><i class="fa fa-cogs"></i></a>&nbsp;
-                                                    <a title="delete batch" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:batch_delete' batch.pk %}"><i class="fa fa-trash"></i></a>
+                                                    <a title="view finance item" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
+                                                    <a title="edit finance item" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
+                                                    <a title="delete finance item" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
 

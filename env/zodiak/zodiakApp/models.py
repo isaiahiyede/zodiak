@@ -187,6 +187,8 @@ class Batch(models.Model):
         return '%s' %(self.batch_id)
 
 
+
+
 class Job(PackageDimension):
     job_paar = models.BooleanField(default=False)  
     shippers_name = models.CharField(max_length=50, null=True, blank=True)
@@ -251,28 +253,25 @@ class Job(PackageDimension):
     job_processing = models.BooleanField(default=False)
     job_issue_resolution = models.BooleanField(default=False)
 
-    job_paid = models.CharField(max_length=20,null=True,blank=True)
+    job_paid = models.BooleanField(default=False)
     job_cost = models.FloatField(default=0.0,null=True, blank=True)
     job_amount_paid = models.FloatField(default=1.0,null=True, blank=True)
     job_amount_balance = models.FloatField(default=1.0,null=True, blank=True)
     vat = models.BooleanField(default=False)
     demurrage = models.BooleanField(default=False)
-    insurance_charge = models.FloatField(default=0, null=True, blank=True)
-    VAT_charge = models.FloatField(default=0, null=True, blank=True)
-    demurrage_rate = models.FloatField(max_length=10, default=0.10, null=True, blank=True)
+
     demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
     demurrage_start_date = models.DateField(null=True, blank=True)
     demurrage_end_date = models.DateField(null=True, blank=True)
 
-    value_for_carriage = models.CharField(max_length=100, null=True, blank=True)
+
     number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
     gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
-    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
-    chargeable_rate = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)	
+    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)	
     nature_of_goods = models.CharField(max_length=200, null=True, blank=True)
     quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
     airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
-    other_charges_due_carrier = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    
     place_of_execution = models.CharField(max_length=100, null=True, blank=True)
     no_of_arrival_batches = models.IntegerField(default=0, null=True, blank=True)  
 
@@ -281,6 +280,9 @@ class Job(PackageDimension):
     job_comment = models.TextField(null=True,blank=True)
     note_on_the_package = models.TextField(max_length=200, null=True, blank=True)
     job_route = models.CharField(max_length=100, null=True, blank=True)
+
+    job_arrival_status = models.BooleanField(default=False)
+    job_financial_info = models.BooleanField(default=False)
 
     deleted = models.BooleanField(default=False)
 
@@ -300,6 +302,9 @@ class Job(PackageDimension):
             total = total
         return total
 
+    def getminibatchesCount(self):
+        return self.minibatches_set.filter(deleted=False).count()
+
     def getminibatches(self):
         return self.minibatches_set.filter(deleted=False)
 
@@ -307,9 +312,69 @@ class Job(PackageDimension):
     class Meta:
 	    verbose_name_plural = 'Jobs'
 	    ordering = ['-job_created_on']
+
 	    
     def __str__(self):
 	    return '%s' %(self.job_id)
+
+class Finances(models.Model):
+    job_finance = models.OneToOneField(Job,null=True,blank=True)
+    duty_amount = models.FloatField(default=0.0, null=True, blank=True)
+    duty_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    duty_date_paid = models.DateField(null=True, blank=True)
+    duty_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    terminal_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    terminal_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    terminal_charge_date_paid = models.DateField(null=True, blank=True)
+    terminal_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    shipping_line_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    shipping_line_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    shipping_line_charge_date_paid = models.DateField(null=True, blank=True)
+    shipping_line_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    son_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    son_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    son_charge_date_paid = models.DateField(null=True, blank=True)
+    son_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    airline_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    airline_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    airline_charge_date_paid = models.DateField(null=True, blank=True)
+    airline_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    quarantine_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    quarantine_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    quarantine_charge_date_paid = models.DateField(null=True, blank=True)
+    quarantine_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    ndlea_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    ndlea_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    ndlea_charge_date_paid = models.DateField(null=True, blank=True)
+    ndlea_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    nafdac_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
+    nafdac_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
+    nafdac_charge_date_paid = models.DateField(null=True, blank=True)
+    nafdac_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    other_charges_due_carrier = models.FloatField(default=0.0, null=True, blank=True)
+    insurance_charge = models.FloatField(default=0, null=True, blank=True)
+    VAT_charge = models.FloatField(default=0, null=True, blank=True)
+    demurrage_rate = models.FloatField(max_length=10, default=0.10, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    def jobtotalCost(self):
+        total = self.duty_amount + self.terminal_charge_amount + self.shipping_line_charge_amount + self.son_charge_amount +  self.airline_charge_amount + self.quarantine_charge_amount + self.ndlea_charge_amount +  self.nafdac_charge_amount + self.other_charges_due_carrier + self.VAT_charge + self.insurance_charge
+        if total == 0.0:
+            total = 0.0
+        else:
+            total =round(total,2)
+        return total
+
+
+    class Meta:
+        verbose_name_plural = 'Finances'
+        ordering = ['-created_on']
+        
+    def __str__(self):
+        return '%s' %(self.job_finance)
+
 
 
 class MiniBatches(models.Model):
@@ -326,6 +391,14 @@ class MiniBatches(models.Model):
     date_of_arrival = models.DateField(null=True, blank=True)
     batch_created_on = models.DateTimeField(default=timezone.now)
     deleted = models.BooleanField(default=False)
+
+
+    def item_info(self):
+        return {'NOP': self.no_of_packages, 'NOC': self.no_of_containers, 'CBM':self.cbm,
+                'TOC': self.type_of_container, 'Carrier Name': self.carrier_name,
+                'Gross Weight':self.gross_wgh, 'Net Weight': self.net_wgh, 'EDOA': self.exp_date_of_arrival,
+                'DOA':self.date_of_arrival
+                }
 
     class Meta:
         verbose_name_plural = 'Mini Batches'

@@ -55,75 +55,75 @@
             {% if pkg.finances.insure %}
             <tr>
                 <td>PS&DG</td>
-                <td>(₦) {{pkg.finances.insurance_charge|floatformat:2}}</td>
+                <td>(₦) {{pkg.finances.insurance_charge|default_if_none:"0.0"}}</td>
             </tr>
             {% endif %}
 
             {% if pkg.finances.demurrage %}
             <tr>
                 <td>PS&DG</td>
-                <td>(₦) {{pkg.finances.demurrage_rate|floatformat:2}}</td>
+                <td>(₦) {{pkg.finances.demurrage_rate|default_if_none:"0.0"}}</td>
             </tr>
             {% endif %}
 
             <tr>
                 <td>VAT</td>
-                <td>(₦) {{ pkg.finances.VAT_charge|floatformat:2}}</td>
+                <td>(₦) {{ pkg.finances.VAT_charge|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>Additional Charge</td>
-                <td>(₦) {{pkg.finances.other_charges_due_carrier|floatformat:2}}</td>>
+                <td>(₦) {{pkg.finances.other_charges_due_carrier|default_if_none:"0.0"}}</td>>
             </tr>
 
             <tr>
                 <td>Duty</td>
-                <td>(₦) {{ pkg.finances.duty_amount|floatformat:2}}</td>
+                <td>(₦) {{ pkg.finances.duty_amount|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>Terminal Charge </td>
-                <td>(₦) {{pkg.finances.terminal_charge_amount|floatformat:2}}</td>
+                <td>(₦) {{pkg.finances.terminal_charge_amount|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>Shipping Charge</td>
-                <td>(₦) {{pkg.finances.shipping_line_charge_amount|floatformat:2}}</td>>
+                <td>(₦) {{pkg.finances.shipping_line_charge_amount|default_if_none:"0.0"}}</td>>
             </tr>
 
             <tr>
                 <td>SON Charge</td>
-                <td>(₦) {{ pkg.finances.son_charge_amount|floatformat:2}}</td>
+                <td>(₦) {{ pkg.finances.son_charge_amount|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>Airline Charge </td>
-                <td>(₦) {{pkg.finances.airline_charge_amount|floatformat:2}}</td>
+                <td>(₦) {{pkg.finances.airline_charge_amount|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>Quarantine Charge</td>
-                <td>(₦) {{pkg.finances.quarantine_charge_amount|floatformat:2}}</td>>
+                <td>(₦) {{pkg.finances.quarantine_charge_amount|default_if_none:"0.0"}}</td>>
             </tr>
 
             <tr>
                 <td>NDLEA Charge</td>
-                <td>(₦) {{ pkg.finances.ndlea_charge_amount|floatformat:2}}</td>
+                <td>(₦) {{ pkg.finances.ndlea_charge_amount|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>NAFDAC Charge</td>
-                <td>(₦) {{pkg.finances.nafdac_charge_amount|floatformat:2}}</td>
+                <td>(₦) {{pkg.finances.nafdac_charge_amount|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr>
                 <td>Shipping  Charge</td>
-                <td>(₦) {{pkg.finances.shipping_line_charge_amount|floatformat:2}}</td>>
+                <td>(₦) {{pkg.finances.shipping_line_charge_amount|default_if_none:"0.0"}}</td>>
             </tr>
 
             <tr style="font-weight: bold; background-color: #CCCCCC;">
                 <td>TOTAL</td>
-                <td>(₦) {{pkg.finances.jobtotalCost|floatformat:2}}</td>
+                <td>(₦) {{pkg.finances.jobtotalCost|default_if_none:"0.0"}}</td>
             </tr>
 
             <tr {% if pkg.job_amount_paid == 0.0 or pkg.job_amount_paid == Null %} style="color: red; font-weight: bold;" {% else %}style="color: green; font-weight: bold; border: 1px solid black; padding: 5px 10px;"
@@ -195,7 +195,7 @@
         </tr>
     </table> -->
     <!-- </p> -->
-    
+
         <!--<table style="min-width: 600px;max-width: 600px;border-collapse: collapse;border: 2px solid black;padding:5px;">
             <tr>
                 <td colspan = 2 style="border: 1px solid black; padding: 5px 10px;">Payments in US Dollars (USD)</td>

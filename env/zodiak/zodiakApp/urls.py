@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^register/$', views.register, name="register"),
     url(r'^users/$', views.clientpage, name="clientpage"),
+    url(r'^reporting/$', views.reporting, name="reporting"),
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
     url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),

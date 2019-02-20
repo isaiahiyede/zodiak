@@ -123,6 +123,17 @@ def view_jobs(request,jobtype):
 
 
 @login_required
+def reporting(request):
+    context = {}
+    template_name = 'zodiakApp/reporting.html'
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['all_jobs'] = Job.objects.filter(deleted=False)
+    response = render(request, template_name, context)
+    return response
+
+
+@login_required
 def view_user_jobs(request,jobtype):
     context = {}
     template_name = 'zodiakApp/jobviews.html'

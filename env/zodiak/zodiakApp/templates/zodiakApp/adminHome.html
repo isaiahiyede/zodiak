@@ -190,7 +190,7 @@
 
 
                                     <li>
-                                        <a title="" href="/">
+                                        <a title="" href="{% url 'zodiakApp:reporting' %}">
                                             <span class="mini-sub-pro">All Reports</span>
                                         </a>
                                     </li>
@@ -202,7 +202,7 @@
                         </li>
 
                         <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class=""></span> <span class="mini-click-non">Book Keeping</span></a>
+                            <a class="has-arrow" href="{% url 'zodiakApp:financerecords'%}" aria-expanded="false"><span class=""></span> <span class="mini-click-non">Book Keeping</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
 
                                 {% if request.user.is_staff %}

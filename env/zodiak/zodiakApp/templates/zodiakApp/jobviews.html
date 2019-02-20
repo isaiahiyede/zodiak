@@ -57,7 +57,7 @@
                                                     <a title="process job" href="{% url 'zodiakApp:process_job' job.pk %}" style="cursor:pointer !important" class="process_job" job_pk={{job.pk}}><i class="fa fa-cog"></i></a>&nbsp;
                                                     <a title="view job" href="{% url 'zodiakApp:job_view' job.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
                                                     <a title="edit job" href="{% url 'zodiakApp:job_edit' job.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
-                                                    <a title="comment on job" href="{% url 'zodiakApp:job_edit' job.pk %}"><i class="fa fa-envelope"></i></a>&nbsp;
+                                                    <a title="invoice" href="{% url 'zodiakApp:job_invoice_page' job.pk %}"><i class="fa fa-file-o"></i></a>&nbsp;
                                                     <a title="delete job" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:job_delete' job.pk %}"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>

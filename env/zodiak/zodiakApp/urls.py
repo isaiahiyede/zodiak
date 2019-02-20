@@ -39,7 +39,13 @@ urlpatterns = [
     url(r'^jobprocess/(?P<pk>.+)/$', views.process_job, name="process_job"),
     url(r'^batchdelete/(?P<pk>.+)/$', views.batch_delete, name="batch_delete"),
     url(r'^batch_info_view/(?P<pk>.+)/$', views.batch_info_view, name="batch_info_view"),
+    url(r'^jobinvoice/(?P<pk>.+)/$', views.job_invoice_page, name="job_invoice_page"),
 
+    url(r'^jobfinancials/(?P<pk>.+)/$', views.financials, name="financials"),
+    url(r'^financeRecords/$', views.financerecords, name="financerecords"),
+    url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
+    url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
+    url(r'^fin_info_delete/(?P<pk>.+)/$', views.fin_info_delete, name="fin_info_delete"),
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),

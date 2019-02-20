@@ -13,8 +13,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, MiniBatchesForm, BatchProcessForm, JobForm, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, Batch, MiniBatches, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact,OfficeUseOnly
+from zodiakApp.forms import UserForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.models import Job, Batch, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -310,6 +310,7 @@ def process_job(request,pk):
                     )
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
+                job_obj.job_arrival_status = True
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -335,6 +336,7 @@ def process_job(request,pk):
                 )
 
                 job_obj.no_of_arrival_batches += 1
+                job_obj.job_arrival_status = True
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -367,6 +369,7 @@ def process_job(request,pk):
                 )
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
+                job_obj.job_arrival_status = True
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -385,6 +388,7 @@ def process_job(request,pk):
                 )
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
+                job_obj.job_arrival_status = True
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -411,6 +415,7 @@ def process_job(request,pk):
                 )
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
+                job_obj.job_arrival_status = True
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -426,6 +431,7 @@ def process_job(request,pk):
                 )
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
+                job_obj.job_arrival_status = True
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -465,6 +471,111 @@ def viewminibatches(request,pk):
     context['jobs_minibatches'] = jobs_minibatches
     response = response = render(request, 'zodiakApp/minibatch.html', context)
     return response
+
+
+@login_required
+def job_invoice_page(request, pk):
+    template = "zodiakApp/job_invoice_email_template.html"
+    context = {}
+    pkg = get_object_or_404(Job, pk=pk)
+    context['pkg'] = pkg
+    return render(request, template, context)
+
+"""" financial """
+
+@login_required
+def financerecords(request):
+    context={}
+    fin_objs = Finances.objects.filter(deleted=False)
+    context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['fin_objs'] = fin_objs
+    response = response = render(request, 'zodiakApp/viewfinances.html', context)
+    return response
+
+
+@login_required
+def fin_info_view(request,pk):
+    context={}
+    fin_obj = Finances.objects.get(deleted=False,pk=pk)
+    context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['fin_obj'] = fin_obj
+    response = response = render(request, 'zodiakApp/viewfinances.html', context)
+    return response
+
+
+@login_required
+def fin_info_edit(request,pk):
+    context = {}
+    fin_obj = Finances.objects.get(pk=pk, deleted=False)
+    print(request.POST)
+    if request.method == "POST":
+        form = FinancialsForm(request.POST,instance=fin_obj)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            job_obj = Job.objects.get(job_id=fin_obj.job_finance)
+            job_obj.job_cost = fin_obj.jobtotalcost()
+            job_obj.save()
+            form2.save()
+            messages.success(request, 'Payments sucessfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Payments was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['form'] = JobForm()
+        context['names'] = UserAccount.objects.filter(deleted=False)
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        context['job_type'] = jobtype
+        context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=jobtype)
+        response = render(request, 'zodiakApp/processjob.html', context)
+        return response
+
+@login_required
+def fin_info_delete(request,pk):
+    fin_obj = Finances.objects.get(pk=pk, deleted=False)
+    fin_obj.deleted = True
+    fin_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def financials(request, pk):    
+    context = {}
+    print(request.POST)
+    if request.method == "POST":
+        form = FinancialsForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            job_obj = Job.objects.get(pk=pk)
+            form2.job_finance = job_obj
+            job_obj.job_financial_info = True
+            job_obj.job_cost = job_obj.finances.jobtotalcost()
+            job_obj.save() 
+            form2.save()
+            messages.success(request, 'Job payments sucessfully updated')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Job payments was not successfully updated')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['form'] = JobForm()
+        context['names'] = UserAccount.objects.filter(deleted=False)
+        context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        context['job_type'] = jobtype
+        context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=jobtype)
+        response = render(request, 'zodiakApp/processjob.html', context)
+        return response
+
+""" finacials ends here """
 
 
 @login_required

@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -43,6 +43,23 @@ class QuotationForm(forms.ModelForm):
         fields = ('user_acct','item','quantity','price_per_item','total_cost','notes_on_job')
 
 
+class FinancialsForm(forms.ModelForm):
+    class Meta:
+        model = Finances
+        fields = (
+
+            'duty_amount','duty_paid_by','duty_date_paid','duty_refundablle_as',
+            'terminal_charge_amount','terminal_charge_paid_by','terminal_charge_date_paid','terminal_charge_refundablle_as',
+            'shipping_line_charge_amount','shipping_line_charge_paid_by','shipping_line_charge_date_paid','shipping_line_charge_refundablle_as',
+            'son_charge_amount','son_charge_paid_by','son_charge_date_paid','son_charge_refundablle_as',
+            'airline_charge_amount','airline_charge_paid_by','airline_charge_date_paid','airline_charge_refundablle_as',
+            'quarantine_charge_amount','quarantine_charge_paid_by','quarantine_charge_date_paid','quarantine_charge_refundablle_as',
+            'ndlea_charge_amount','ndlea_charge_paid_by','ndlea_charge_date_paid','ndlea_charge_refundablle_as',
+            'nafdac_charge_amount','nafdac_charge_paid_by','nafdac_charge_date_paid','nafdac_charge_refundablle_as',
+            'other_charges_due_carrier','insurance_charge','VAT_charge','demurrage_rate',
+
+            )
+
 class JobForm(forms.ModelForm):
 
     class Meta:
@@ -63,14 +80,14 @@ class JobForm(forms.ModelForm):
 
             'job_arrived', 'job_undergoing_clearnace', 'job_undergoing_ammendment', 'job_examined', 'job_cleared', 'job_completed',
             'job_invoiced', 'job_paid_for', 'job_processing','job_issue_resolution', 'box_weight_Actual', 'insured', 'vat', 'demurrage',
-            'insurance_charge', 'VAT_charge', 'demurrage_rate', 'demurrage_grace_period', 'shippers_name', 'shippers_address', 'shippers_number',
+            'demurrage_grace_period', 'shippers_name', 'shippers_address', 'shippers_number',
             'consignees_name', 'consignees_address',
 
             'box_length','box_width','box_height','box_weight','box_weight_K',
 
             'consignees_number', 'job_cost',
-            'handling_info', 'value_for_carriage', 'number_of_pieces_to_ship','gross_weight', 'chargeable_rate', 'note_on_the_package', 'nature_of_goods', 
-            'airline_tracking_number','other_charges_due_carrier', 'place_of_execution', 'shippers_name', 'quantity_of_goods',
+            'handling_info', 'number_of_pieces_to_ship','gross_weight',  'note_on_the_package', 'nature_of_goods', 
+            'airline_tracking_number', 'place_of_execution', 'shippers_name', 'quantity_of_goods',
 
             )
 

@@ -1,15 +1,15 @@
 /*-----------------------------------------------------------------------------------
 
-    Template Name: Kiaalap - Kiaalap Admin Template 
+    Template Name: Kiaalap - Kiaalap Admin Template
     Description: Kiaalap Admin Template is a responsive admin template based on the famous Bootstrap framework it's easy to edit and customize by documentation.
     Author: Colorlib
     Version: 1.0
 
 -----------------------------------------------------------------------------------
-    
+
     CSS INDEX
     ===================
-	
+
     1. Common
 	2. Helper Class
 	3. All Nested Class
@@ -89,42 +89,54 @@ body {}
 .mg-tb-30{
 	margin:30px 0px;
 }
+
 .mg-b-30{
 	margin-bottom:30px;
 }
+
 .mg-tb-15{
 	margin:15px 0px;
 }
+
 .mg-t-30{
 	margin-top:30px;
 }
+
 .mg-b-10{
 	margin-bottom:23px;
 }
+
 .mg-ub-10{
 	margin-bottom:17px;
 }
+
 .mg-t-15{
 	margin-top:15px;
 }
+
 .mg-t-10{
 	margin-top:10px;
 }
+
 .mg-b-15{
 	margin-bottom:20px;
 }
+
 .mt-b-30{
 	margin-bottom:30px;
 }
+
 .bg-green {
     background: #006DF0;
 }
+
 .bg-red {
     background: #933EC5;
 }
 .bg-blue {
     background: #65b12d;
 }
+
 .bg-purple {
     background: #D80027;
 }
@@ -315,17 +327,17 @@ body {}
 	background:#2b2a2a;
 }
 .header-top-menu .navbar-nav>li .dropdown-menu{
-	border: 0px solid #ccc; 
+	border: 0px solid #ccc;
     border: 0px solid rgba(0,0,0,.15);
 	background-color: #303030;
     -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.175);
-    box-shadow: 0 1px 4px rgba(0,0,0,.175);	
+    box-shadow: 0 1px 4px rgba(0,0,0,.175);
 }
 .header-right-info .navbar-nav>li .dropdown-menu{
-	border: 0px solid #ccc; 
+	border: 0px solid #ccc;
     border: 0px solid rgba(0,0,0,.15);
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.175);
-    box-shadow: 0 1px 4px rgba(0,0,0,.175);	
+    box-shadow: 0 1px 4px rgba(0,0,0,.175);
 }
 .header-top-menu .nav>li>a:focus, .header-top-menu .nav>li>a:hover, .header-top-menu .nav>li>a:active {
     text-decoration: none;
@@ -399,7 +411,7 @@ body {}
 	padding:18px 10px;
 }
 .header-right-info {
-	
+
 }
 .header-right-info ul.header-right-menu li{
 	display:inline-block;
@@ -916,7 +928,7 @@ ul.breadcome-menu li a:hover{
 }
 .rating > input:checked ~ label, .rating:not(:checked) > label:hover, .rating:not(:checked) > label:hover ~ label {
   color: #e12503;
-} 
+}
 .rating > input:checked + label:hover, .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, .rating > input:checked ~ label:hover ~ label {
   color: #e12503;
@@ -1121,46 +1133,58 @@ ul.breadcome-menu li a:hover{
 .m-t-xl h1{
     font-size:18px;
 }
+
 .stats-title h4{
 	font-size:20px;
 	color:#303030;
 }
+
 .stats-icon i, .icon-box i{
 	font-size:30px;
 }
+
 .m-t-xl small, .content-bg-pro small{
 	font-size:14px;
 	line-height:24px;
 	color:#444;
 }
+
 .content-box h2{
 	font-size:20px;
 	color:#303030;
 }
+
 .content-box p{
 	font-size:14px;
 	line-height:24px;
 }
+
 .content-box .mg-t-box{
 	margin-top:15px;
 }
+
 .content-bg-pro h3{
 	font-size:20px;
 	color:#fff;
 }
+
 .content-bg-pro p{
 	color:#fff !important;
 }
+
 .content-bg-pro .text-big{
 	font-size:18px;
 }
+
 .btn-success.widget-btn-1{
 	background:#006DF0;
 	border:1px solid #006DF0;
 }
+
 .text-info {
     color: #3498db;
 }
+
 .wd-tb-cr .text-success {
     color: #006DF0;
 }
@@ -1170,30 +1194,35 @@ ul.breadcome-menu li a:hover{
 .wd-tb-cr .text-warning {
     color: #65b12d;
 }
+
 .wd-tb-cr .text-danger {
     color: #D80027;
 }
 .text-warning {
     color: #ffb606;
 }
+
 .text-danger {
     color: #e74c3c;
 }
 .text-danger.ctn-ic-1{
 	color: #006DF0;
 }
+
 .text-success.ctn-ic-2{
 	color: #933EC5;
 }
 .text-success.ctn-ic-3{
 	color: #65b12d;
 }
+
 .text-success.ctn-ic-4{
 	color: #D80027;
 }
 .text-success.ctn-ic-5{
 	color: #555;
 }
+
 .text-big.font-light{
 	color:#fff;
 }
@@ -1544,7 +1573,7 @@ ul#single-product-tab li{
 	background:#f7941d;
 }
 .single-pro-size span, .color-quality-details span {
-  display: inline-block; 
+  display: inline-block;
   font-weight: 300;
   height: 25px;
   line-height: 25px;
@@ -1837,7 +1866,7 @@ ul.cus-product-sl-rp li i{
 	color:#999;
 	background:#F6F8FA;
 	box-shadow: none !important;
-} 
+}
 .cus-gh-hd-pro h2{
 	font-size:20px;
 }
@@ -4386,7 +4415,7 @@ div#sparklinehome canvas {
     margin: 0px 0px;
 }
 .mCS-light-1.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ background-color: #006DF0; }
-.mCS-light-1.mCSB_scrollTools .mCSB_draggerRail{ background-color: #ccc; } 
+.mCS-light-1.mCSB_scrollTools .mCSB_draggerRail{ background-color: #ccc; }
 /*-----------------------
 21. Wizard CSS
 -------------------------*/

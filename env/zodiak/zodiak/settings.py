@@ -86,6 +86,7 @@ WSGI_APPLICATION = 'zodiak.wsgi.application'
 LOGIN_REDIRECT_URL = '/accounts/login/'
 
 
+
 DATABASES = {
     'default': {
     'NAME': 'isaiahiyede$zodiak',
@@ -96,6 +97,46 @@ DATABASES = {
     'PASSWORD': 'ogheneyole@@101',
     }
 }
+
+#
+
+# DATABASES = {
+#     'default': {
+#     'NAME': 'zodiak_db',
+#     'ENGINE': 'sqlserver_ado',
+#     'HOST': '127.0.0.1',
+#     'PORT': '1433',
+#     'USER': 'Assetdb',
+#     'PASSWORD': '1234567@gooGLE',
+#     'OPTIONS': {
+#             'provider': 'SQLNCLI11',
+#             'use_legacy_date_fields': 'True'
+#         }
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#     'NAME': 'zodiak_db',
+#     'ENGINE': 'django.db.backends.mysql',
+#     'HOST': '127.0.0.1',
+#     'PORT': '3306',
+#     'USER': 'root',
+#     'PASSWORD': 'root',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'zodiak_db',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

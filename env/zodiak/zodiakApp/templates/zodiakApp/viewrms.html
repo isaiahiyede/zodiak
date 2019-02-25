@@ -30,7 +30,9 @@
                                     </div> -->
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
-
+                                                <style>
+                                                    th,td{font-size: 10px; width:10px;}
+                                                </style>
                                         <thead>
                                             <tr>
                                                 <th data-field="state" data-checkbox="true"></th>
@@ -49,7 +51,7 @@
                                         <tbody>
                                             {% for rm in rms %}
                                             <tr>
-                                                <td></td>  
+                                                <td></td>
                                                 <td>{{rm.rm_client.user}}</td>
                                                 <td>{{rm.rm_name}}</td>
                                                 <td>{{rm.rm_email}}</td>

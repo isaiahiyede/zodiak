@@ -29,13 +29,16 @@
                                     </div> -->
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                                <style>
+                                                    th,td{font-size: 10px; width:10px;}
+                                                </style>
                                         <thead>
                                             <tr>
                                                 <th data-field="state" data-checkbox="true"></th>
                                                 <th data-field="username">Username</th>
                                                 <th data-field="email">Email</th>
                                                 <th data-field="firstname">First Name</th>
-                                                
+
                                                 <th data-field="lastname">Profile Updated</th>
                                                 <th data-field="inputter">Inputter</th>
                                                 <th data-field="reporter">Reporter</th>
@@ -52,7 +55,7 @@
                                                 <td>{{user.user.username}}</td>
                                                 <td>{{user.user.email}}</td>
                                                 <td>{{user.user.first_name}}</td>
-                                                
+
 
                                                 {% if user.profile_updated %}
                                                 <td>
@@ -108,7 +111,7 @@
                                                 </td>
                                                 {% endif %}
 
-                                                
+
                                                 <td class="datatable-ct">
                                                     <a title="view user" href="{% url 'zodiakApp:user_view' user.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
                                                     <a title="edit user" href ="{% url 'zodiakApp:user_edit' user.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;

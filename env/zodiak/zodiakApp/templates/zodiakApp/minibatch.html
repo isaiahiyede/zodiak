@@ -30,7 +30,9 @@
                                     </div> -->
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
-
+                                                <style>
+                                                    th,td{font-size: 10px; width:10px;}
+                                                </style>
                                         <thead>
                                             <tr>
                                                 <th data-field="state" data-checkbox="true"></th>
@@ -50,7 +52,7 @@
                                         <tbody>
                                             {% for job in jobs_minibatches %}
                                             <tr>
-                                                <td></td>  
+                                                <td></td>
                                                 <td>{{job.mini_batch_id}}</td>
                                                 <td>{{job.no_of_packages|default_if_none:"0"}}</td>
                                                 <td>{{job.no_of_containers|default_if_none:"0"}}</td>

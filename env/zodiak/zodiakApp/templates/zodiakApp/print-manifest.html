@@ -39,10 +39,10 @@
                 {% for pkg in packages %}
                   <tr>
                      <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.job_id}}</td>
-                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.getminibatchesCount }}</td>
-                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.box_weight_actual }}kgs</td>
-                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.gross_weight }}kgs</td>
-                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.finances.jobtotalCost}}</td>
+                     <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.getminibatchesCount|default_if_none:"0.0" }}</td>
+                    <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.box_weight_actual|default_if_none:"0.0" }}</td>
+                    <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.gross_weight|default_if_none:"0.0" }}</td>
+                    <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">{{ pkg.finances.jobtotalCost|default_if_none:"0.0"}}</td>
                      <td style="border-bottom:1px solid #ddd; border-right: 1px solid #ddd; width: 60px;">
                      {% for pg in pkg.getminibatches %} 
                       {{ pg.item_info }}

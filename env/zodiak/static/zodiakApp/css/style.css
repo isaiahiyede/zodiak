@@ -3455,9 +3455,7 @@ td.text-right.mail-date {
     font-size: 18px;
     color: #303030;
 }
-.mini-navbar .charts-single-pro .bar-mini-ds{
-	display:none;
-}
+
 .alert-title.dropzone-custom-sys p, .download-custom p, .alert-title p, .sparkline-content p {
     font-size: 14px;
     color: #303030;
@@ -3586,13 +3584,11 @@ td.text-right.mail-date {
 	font-size:20px;
 }
 .custom-datatable-overright table tbody tr td a {
-    color: #303030;
-    font-size: 14px;
+    color: blue;
 }
 .custom-datatable-overright table tbody tr td {
     padding-left: 10px !important;
     padding-right: 5px !important;
-    font-size: 14px;
     text-align: left;
 }
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {

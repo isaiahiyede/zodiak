@@ -6,24 +6,26 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.adminPage, name='adminPage'),
-    url(r'^home/$', views.clientPage, name='clientPage'),
-
     # url(r'^$', views.homepage, name='homepage'),
     # url(r'^index/$', views.index, name='index'),
 
     url(r'^accounts/login/$', views.user_login, name="login"),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^register/$', views.register, name="register"),
-    url(r'^users/$', views.clientpage, name="clientpage"),
+    url(r'^home/$', views.clientpage, name="clientpage"),
     url(r'^reporting/$', views.reporting, name="reporting"),
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
     url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),
     url(r'^addjob/(?P<jobtype>.+)$', views.add_job, name="add_job"),
+    url(r'^addjob2/(?P<jobtype>.+)$', views.add_job2, name="add_job2"),
+    url(r'^addjob3/(?P<jobtype>.+)$', views.add_job3, name="add_job3"),
+    url(r'^addjob4/(?P<jobtype>.+)$', views.add_job4, name="add_job4"),
     url(r'^jobedit/(?P<pk>.+)/$', views.job_edit, name="job_edit"),
     url(r'^jobview/(?P<pk>.+)/$', views.job_view, name="job_view"),
     url(r'^jobdelete/(?P<pk>.+)/$', views.job_delete, name="job_delete"),
     url(r'^jobprocess/(?P<pk>.+)/$', views.process_job, name="process_job"),
+    url(r'^procjob/(?P<pk>.+)/$', views.process_spec_job, name="process_spec_job"),
 
     url(r'^useredit/(?P<pk>.+)/$', views.user_edit, name="user_edit"),
     url(r'^userview/(?P<pk>.+)/$', views.user_view, name="user_view"),
@@ -44,7 +46,7 @@ urlpatterns = [
     url(r'^batch_info_view/(?P<pk>.+)/$', views.batch_info_view, name="batch_info_view"),
     url(r'^jobinvoice/(?P<pk>.+)/$', views.job_invoice_page, name="job_invoice_page"),
 
-    url(r'^jobfinancials/(?P<pk>.+)/$', views.financials, name="financials"),
+    url(r'^jobfinancials/(?P<job_obj>.+)/$', views.financials, name="financials"),
     url(r'^financeRecords/$', views.financerecords, name="financerecords"),
     url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
     url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
@@ -55,7 +57,7 @@ urlpatterns = [
     url(r'^newmail/$',views.newmail, name = "newmail"),
     url(r'^viewmail/(?P<pk>.+)/$', views.view_mail, name="view_mail"),
 
-    url(r'^processjob/(?P<pk>.+)$',views.process_job, name = "process_job"),
+    url(r'^processjob/(?P<job_obj>.+)$',views.process_job, name = "process_job"),
 
     url(r'^addrm/$',views.add_rm, name = "add_rm"),
     url(r'^viewrms/$',views.viewrms, name = "viewrms"),

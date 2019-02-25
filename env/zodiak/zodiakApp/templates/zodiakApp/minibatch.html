@@ -51,8 +51,13 @@
 
                                         <tbody>
                                             {% for job in jobs_minibatches %}
+<<<<<<< HEAD
                                             <tr>
                                                 <td></td>
+=======
+                                            <tr class="info">
+                                                <td></td>  
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                                 <td>{{job.mini_batch_id}}</td>
                                                 <td>{{job.no_of_packages|default_if_none:"0"}}</td>
                                                 <td>{{job.no_of_containers|default_if_none:"0"}}</td>

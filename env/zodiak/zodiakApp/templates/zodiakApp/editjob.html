@@ -1259,17 +1259,6 @@
                                                                 </div>
 
                                                                 <div class="form-group">
-
-				                                                    <div class="row">
-
-				                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				                                                            <h6>Commercial Invoice Number</h6>
-				                                                            <input value="{{job.commercial_invoice}}" id="commercial_invoice" name="commercial_invoice" type="text" style="font-size: 14px; height: 28px;" class="form-control" />
-				                                                        </div>
-				                                                    </div>
-				                                                </div>
-
-                                                                <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                             <h6>Status</h6>
@@ -1293,7 +1282,33 @@
                                                                 </div>
 
                                                                 <div class="form-group">
+<<<<<<< HEAD
                                                                     <div class="row">
+=======
+                                                                        <div class="row">
+
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <h6>Batch</h6>
+                                                                                <div class="row">
+                                                                                    <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <div class="chosen-select-single mg-b-20">
+                                                                                            <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
+                                                                                                <option value="{{job.batch_type.pk}}">{{job.batch_type.batch_id}}</option>
+                                                                                                {% for batch in batches %}
+                                                                                                   <option value="{{batch.pk}}">
+                                                                                                    {{batch.batch_id}}</option>
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="row">    
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                             <h6>Mode</h6>
                                                                             <input value="{{job.job_type}}" id="job_type" name="job_type"    value="{{job_type}}" type="text" style="font-size: 14px; height: 28px;" class="form-control" readonly/>
@@ -1376,27 +1391,6 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group">
-                                                                        <div class="row">
-
-                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                <h6>Batch</h6>
-                                                                                <div class="row">
-                                                                                    <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                        <div class="chosen-select-single mg-b-20">
-                                                                                            <select style="font-size: 12px; height: 28px;" class="form-control" data-placeholder="Select batch..." class="chosen-select" tabindex="-1" id="batch_type" name="batch_type">
-                                                                                                <option value="{{job.batch_type.pk}}">{{job.batch_type.batch_id}}</option>
-                                                                                                {% for batch in batches %}
-                                                                                                   <option value="{{batch.pk}}">
-                                                                                                    {{batch.batch_id}}</option>
-                                                                                                {% endfor %}
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                             </div>
 
                                                         </div>
@@ -1538,6 +1532,7 @@
                                                                     </div>
                                                                 </div>
 
+<<<<<<< HEAD
                                                                 <div class="form-group-inner">
                                                                     <div class="row">
 
@@ -1547,6 +1542,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+=======
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
 
                                                             </div>
 
@@ -1665,6 +1662,7 @@
                                                                     </div>
                                                                 </div>
 
+<<<<<<< HEAD
                                                                 <div class="form-group">
 
                                                                     <div class="row">
@@ -1675,8 +1673,9 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+=======
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                                             </div>
-
 
                                                         </div>
                                                 </div>
@@ -1701,7 +1700,7 @@
                                               <div class="review-content-section">
                                                 <div id="dropzone1" class="pro-ad addcoursepro">
                                                         <div class="row">
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                                 <div class="form-group">
                                                                     <div class="row">
 
@@ -1732,7 +1731,7 @@
 
                                                             </div>
 
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -1764,7 +1763,7 @@
 
                                                             </div>
 
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -1796,7 +1795,7 @@
 
                                                             </div>
 
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -1828,6 +1827,7 @@
 
                                                             </div>
 
+<<<<<<< HEAD
                                                         </div>
                                                 </div>
                                               </div>
@@ -1991,11 +1991,15 @@
 
                                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
+=======
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
 
                                                                 <div class="form-group">
                                                                     <div class="row">
 
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<<<<<<< HEAD
                                                                             <h6>Undergoing Ammendment</h6>
                                                                           <div class="row">
                                                                            <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -2028,6 +2032,14 @@
                                                                                 </div>
                                                                              </div>
                                                                            </div>
+=======
+                                                                            {% if job.form_m_number %}
+                                                                                <h6>Form M<a href="{{job.form_m_number.url}}">{{job.form_m_number.url}}</a></h6>
+                                                                            {% else %}
+                                                                                <h6>Form M</h6>
+                                                                            {% endif %}
+                                                                            <input value="" id="form_m_number" name="form_m_number" type="file" style="font-size: 14px; height: 28px;" class="form-control" />
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2036,24 +2048,19 @@
                                                                     <div class="row">
 
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <h6>Cleared</h6>
-                                                                          <div class="row">
-                                                                           <div style="height: 32px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <div class="chosen-select-single mg-b-20">
-                                                                                <select style="font-size: 12px; height: 28px;" class="form-control" id="job_cleared" name="job_cleared" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-                                                                                        <option value="{{job.job_cleared}}">{{job.job_cleared}}</option>
-                                                                                        <option value="Yes">Yes</option>
-                                                                                        <option value="No">No</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                             </div>
-                                                                           </div>
+                                                                            {% if job.commercial_invoice_number %}
+                                                                                <h6>Commercial Invoice<a href="{{job.commercial_invoice_number.url}}">{{job.commercial_invoice_number.url}}</a></h6>
+                                                                            {% else %}
+                                                                                <h6>Commercial Invoice</h6>
+                                                                            {% endif %}
+                                                                            <input value="" id="commercial_invoice_number" name="commercial_invoice_number" type="file" style="font-size: 14px; height: 28px;" class="form-control" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                             </div>
 
+<<<<<<< HEAD
                                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
 
@@ -2099,16 +2106,20 @@
 
                                                             </div>
 
+=======
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                                         </div>
-                                                    </div>
+                                                </div>
                                               </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             {% endif %}
+=======
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
 
                             <div class="panel panel-default">
                                 <div class="panel-heading accordion-head">

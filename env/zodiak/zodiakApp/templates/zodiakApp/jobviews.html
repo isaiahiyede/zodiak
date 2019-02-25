@@ -21,15 +21,23 @@
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
 
+<<<<<<< HEAD
                                     <table  class="table-responsive" cellspacing="0" width="100%" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="" data-toolbar="#toolbar">
                                                 <style>
                                                     th,td{font-size: 10px; width:10px;}
                                                 </style>
+=======
+                                    <table data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
+                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="" data-toolbar="#toolbar" class="table table-sm table-responsive DT">
+
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                         <thead id="tabledata2">
                                             <tr>
+                                                
                                                 <th data-field="state" data-checkbox="true"></th>
                                                 <th data-field="client name">Clent</th>
+<<<<<<< HEAD
                                                 <th data-field="batch">Batch</th>
                                                 <th data-field="id">Job ID</th>
                                                 <th data-field="type">Job Mode</th>
@@ -38,25 +46,35 @@
                                                 <th data-field="grossweight">Gross Weight(kg)</th>
                                                 <th data-field="netweight">Net weight(kg)</th>
                                                 <th data-field="arrival batch">Arrival Batches</th>
+=======
+                                                <th data-field="batch">Batch No</th> 
+                                                <th data-field="id">Job ID</th>
+                                                <th data-field="type">Job Mode</th>            
+                                                <th data-field="amount">Amount (₦)</th>
+                                                <th data-field="phone">Status</th>
+                                                <th data-field="grossweight">Gross Wgh(kg)</th>
+                                                <th data-field="netweight">Net Wgh(kg)</th>
+                                                <th data-field="arrival batch">Batches</th>
+>>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
                                                 <th data-field="action">Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody id="tabledata">
                                             {% for job in all_jobs %}
-                                            <tr>
+                                            <tr class="info">
                                                 <td></td>
                                                 <td>{{job.job_user_acc.user}}</td>
-                                                <td>{{job.batch_type}}</td>
+                                                <td><a href="{% url 'zodiakApp:print_manifest' job.batch_type %}">{{job.batch_type}}</a></td>
                                                 <td>{{job.job_id}}</td>
                                                 <td>{{job.job_type}}</td>
-                                                <td>{{job.job_cost|default_if_none:"0.0"}}</td>
+                                                <td>{{job.totalcostofjob|default_if_none:"0.0"}}</td>
                                                 <td>{{job.job_status}}</td>
                                                 <td>{{job.gross_weight|default_if_none:"0.0"}}</td>
                                                 <td>{{job.box_weight_Actual|default_if_none:"0.0"}}</td>
                                                 <td><a href="{% url 'zodiakApp:viewminibatches' job.pk %}">{{job.no_of_arrival_batches|default_if_none:"0"}}</a></td>
                                                 <td class="datatable-ct">
-                                                    <a title="process job" href="{% url 'zodiakApp:process_job' job.pk %}" style="cursor:pointer !important" class="process_job" job_pk={{job.pk}}><i class="fa fa-cog"></i></a>&nbsp;
+                                                    <a title="payment" href="{% url 'zodiakApp:process_spec_job' job.pk %}" style="cursor:pointer !important" class="process_job" job_pk={{job.pk}}><i class="fa fa-cog"></i></a>&nbsp;
                                                     <a title="view job" href="{% url 'zodiakApp:job_view' job.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
                                                     <a title="edit job" href="{% url 'zodiakApp:job_edit' job.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
                                                     <a title="invoice" href="{% url 'zodiakApp:job_invoice_page' job.pk %}"><i class="fa fa-file-o"></i></a>&nbsp;

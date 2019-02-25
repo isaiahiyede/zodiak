@@ -212,14 +212,12 @@ class Job(PackageDimension):
     insurance_date = models.DateField(null=True, blank=True)
     packing_list = models.BooleanField(default=False)
     packing_list_date = models.CharField(max_length=50, null=True, blank=True)
-    form_m = models.CharField(max_length=50, null=True, blank=True)
     job_son = models.BooleanField(default=False)
     son_date = models.DateField(null=True, blank=True)
     job_ccro = models.BooleanField(default=False)
     ccro_date = models.DateField(null=True, blank=True)
     duty_exemption = models.BooleanField(default=False)
     duty_exemption_date = models.DateField(null=True, blank=True)
-    commercial_invoice = models.CharField(max_length=50, null=True, blank=True)
     batch_type = models.ForeignKey(Batch, null=True, blank=True)
 
     job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
@@ -230,14 +228,16 @@ class Job(PackageDimension):
     job_id = models.CharField(max_length=20,null=True,blank=True)
     job_type = models.CharField(max_length=20,null=True,blank=True)
 
-    job_doc_1 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_2 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_3 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_4 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_5 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_6 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_7 = models.ImageField(upload_to="item_photo", null=True, blank=True)
-    job_doc_8 = models.ImageField(upload_to="item_photo", null=True, blank=True)
+    job_doc_1 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_2 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_3 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_4 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_5 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_6 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_7 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    job_doc_8 = models.FileField(upload_to="item_photo", null=True, blank=True)
+    commercial_invoice_number = models.FileField(upload_to="item_photo", null=True, blank=True)
+    form_m_number = models.FileField(upload_to="item_photo", null=True, blank=True)
 
     job_created_on = models.DateTimeField(default=timezone.now)
 
@@ -253,6 +253,12 @@ class Job(PackageDimension):
     job_processing = models.BooleanField(default=False)
     job_issue_resolution = models.BooleanField(default=False)
 
+    job_details = models.BooleanField(default=False)
+    job_descript = models.BooleanField(default=False)
+    job_documentation = models.BooleanField(default=False)
+    job_finances = models.BooleanField(default=False)
+    job_arr_stat = models.BooleanField(default=False)
+
     job_paid = models.BooleanField(default=False)
     job_cost = models.FloatField(default=0.0,null=True, blank=True)
     job_amount_paid = models.FloatField(default=1.0,null=True, blank=True)
@@ -263,7 +269,6 @@ class Job(PackageDimension):
     demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
     demurrage_start_date = models.DateField(null=True, blank=True)
     demurrage_end_date = models.DateField(null=True, blank=True)
-
 
     number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
     gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
@@ -302,11 +307,25 @@ class Job(PackageDimension):
             total = total
         return total
 
+    def totalcostofjob(self):
+        allfinances = self.finances_set.filter(deleted=False)
+        total = 0.0
+        for finance in allfinances:
+            amount = finance.jobtotalCost()
+            if amount == None:
+                continue
+            else:
+                total += amount
+        return total
+
     def getminibatchesCount(self):
         return self.minibatches_set.filter(deleted=False).count()
 
     def getminibatches(self):
         return self.minibatches_set.filter(deleted=False)
+
+    def getfinances(self):
+        return self.finances_set.filter(deleted=False)
 
 
     class Meta:
@@ -318,7 +337,7 @@ class Job(PackageDimension):
 	    return '%s' %(self.job_id)
 
 class Finances(models.Model):
-    job_finance = models.OneToOneField(Job,null=True,blank=True)
+    job_finance = models.ForeignKey(Job,null=True,blank=True)
     duty_amount = models.FloatField(default=0.0, null=True, blank=True)
     duty_paid_by = models.CharField(max_length=50, null=True, blank=True)
     duty_date_paid = models.DateField(null=True, blank=True)
@@ -360,11 +379,21 @@ class Finances(models.Model):
 
 
     def jobtotalCost(self):
-        total = self.duty_amount + self.terminal_charge_amount + self.shipping_line_charge_amount + self.son_charge_amount +  self.airline_charge_amount + self.quarantine_charge_amount + self.ndlea_charge_amount +  self.nafdac_charge_amount + self.other_charges_due_carrier + self.VAT_charge + self.insurance_charge
-        if total == 0.0:
-            total = 0.0
-        else:
-            total =round(total,2)
+        
+        values = [ self.duty_amount,self.terminal_charge_amount,self.shipping_line_charge_amount,self.son_charge_amount, 
+                self.airline_charge_amount,self.quarantine_charge_amount,self.ndlea_charge_amount, 
+                self.nafdac_charge_amount,self.other_charges_due_carrier,self.VAT_charge,self.insurance_charge ]
+
+        total = 0.0
+        for val in values:
+            print("The value is:", val)
+            if val == None:
+                 continue 
+            else:
+                total += val
+
+        print("The total is:", total)
+        total = round(total,2)
         return total
 
 

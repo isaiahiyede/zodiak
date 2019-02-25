@@ -31,7 +31,7 @@
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                                 <style>
-                                                    th,td{font-size: 10px; width:10px;}
+                                                    th,td{font-size: 10px;}
                                                 </style>
                                         <thead>
                                             <tr>
@@ -50,13 +50,10 @@
 
                                         <tbody>
                                             {% for rm in rms %}
-<<<<<<< HEAD
-                                            <tr>
-                                                <td></td>
-=======
+
                                             <tr class="info">
-                                                <td></td>  
->>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285
+                                                <td></td>
+
                                                 <td>{{rm.rm_client.user}}</td>
                                                 <td>{{rm.rm_name}}</td>
                                                 <td>{{rm.rm_email}}</td>

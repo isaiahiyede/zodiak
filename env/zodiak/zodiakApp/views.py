@@ -53,7 +53,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('zodiakApp:adminPage'))
+    return redirect(reverse('zodiakApp:login'))
 
 
 def get_job(request):
@@ -898,7 +898,7 @@ def fin_info_delete(request,pk):
 
 
 @login_required
-def financials(request, job_obj):    
+def financials(request, job_obj):
     context = {}
     print(request.POST)
     if request.method == "POST":
@@ -913,7 +913,7 @@ def financials(request, job_obj):
             job_obj.job_financial_info = True
             job_obj.job_arr_stat = False
             job_obj.job_cost = job_obj.totalcostofjob()
-            job_obj.save() 
+            job_obj.save()
             form2.save()
             messages.success(request, 'Job payments sucessfully updated')
             if request.user.is_staff:
@@ -1290,7 +1290,7 @@ def batch_process(request,pk):
         context['jobmodes'] = getJobModes()
         context['batch_obj'] = batch_obj
         response = render(request, 'zodiakApp/processbatch.html', context)
-        return response  
+        return response
 
 
 @login_required
@@ -1618,9 +1618,7 @@ def view_mail(request,pk):
     return render(request, template_name, context)
 
 
-<<<<<<< HEAD
-=======
-@login_required
+
 def adminPage(request):
     context = {}
     context['names'] = UserAccount.objects.filter(deleted=False)
@@ -1630,5 +1628,3 @@ def adminPage(request):
     # context['jobs'] = Job.objects.all()
     return render(request, template_name, context)
 
-
->>>>>>> 32bd7de88a0066cfc8d54017c08fe2bf8d30b285

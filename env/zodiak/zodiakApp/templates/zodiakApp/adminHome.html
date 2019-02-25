@@ -53,7 +53,7 @@
 {% endblock header %}
 
 <body class="mini-navbar active">
-    
+
     {% block sidebar %}
     <div class="left-sidebar-pro">
         <nav id="sidebar" class="active">
@@ -64,7 +64,7 @@
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">
                     <ul class="metismenu" id="menu1">
-                        
+
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Create Jobs</span></a>
                             </a>
@@ -113,7 +113,9 @@
                                     <li>
                                         <a title="View {{jobmode.name}}" href="{% url 'zodiakApp:view_user_jobs' jobmode.name %}">
                                             <span class="mini-sub-pro">{{jobmode.name}}</span>
+                                            {% if request.user.is_authenticated %}
                                             <span class="badge badge-primary">{% getJobCount request jobmode.name %}</span>
+                                            {% endif %}
                                         </a>
                                     </li>
                                     {% endfor %}
@@ -300,7 +302,7 @@
                                 <li><a title="All Rms" href="{% url 'zodiakApp:viewrms' %}"><span class="mini-sub-pro">All RMs</span></a></li>
                             </ul>
                         </li>
-                       
+
                     </ul>
                 </nav>
             </div>
@@ -309,7 +311,7 @@
     {% endblock sidebar %}
     <!-- End Left menu area -->
     <!-- Start Welcome area -->
-    
+
     <div class="all-content-wrapper">
         {% block headerTitle %}
         <div class="container-fluid">
@@ -323,7 +325,7 @@
         </div>
         {% endblock headerTitle %}
 
-        
+
         <div class="header-advance-area">
             {% block headerArea %}
             <div class="header-top-area">
@@ -365,7 +367,7 @@
                                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                         <div class="header-right-info">
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
-                                               
+
                                                 <li class="nav-item">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
                                                             <img src="{% static 'zodiakApp/img/product/pro4.png' %}" alt="" />
@@ -375,8 +377,10 @@
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
                                                         <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
                                                         </li>
+                                                        {% if request.user.is_authenticated %}
                                                         <li><a href="{% url 'zodiakApp:user_view_home' request.user.username %}"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
                                                         </li>
+                                                        {% endif %}
                                                         <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
                                                         </li>
                                                         <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
@@ -385,7 +389,7 @@
                                                         </li>
                                                     </ul>
                                                 </li>
-                                              
+
                                             </ul>
                                         </div>
                                     </div>
@@ -397,7 +401,7 @@
             </div>
             {% endblock headerArea %}
             <!-- Mobile Menu start -->
-          
+
             <!-- Mobile Menu end -->
             {% block contents %}
 
@@ -406,18 +410,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="breadcome-list single-page-breadcome">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="breadcome-heading">
 
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                       
-                                    </div>
-                                    
-                                </div>
                             </div>
                         </div>
                          {% for message in messages %}
@@ -430,7 +423,7 @@
             {% endblock contents %}
         </div>
 
-        
+
         {% block footer %}
         {% endblock footer %}
 
@@ -471,7 +464,7 @@
     <script src="{% static 'zodiakApp/js/metisMenu/metisMenu-active.js' %}"></script>
     <!-- Charts JS
     ============================================ -->
-    {% block specialscripts %}    
+    {% block specialscripts %}
     <script src="{% static 'zodiakApp/js/charts/Chart.js' %}"></script>
     <script src="{% static 'zodiakApp/js/charts/bar-chart.js' %}"></script>
     {% endblock specialscripts %}

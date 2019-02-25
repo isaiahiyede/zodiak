@@ -37,7 +37,7 @@ def user_login(request):
                 if user.is_staff:
                     return redirect(reverse('zodiakApp:adminPage'))
                 else:
-                    return redirect(reverse('zodiakApp:clientPage'))
+                    return redirect(reverse('zodiakApp:clientpage'))
             else:
                 return HttpResponse("Your account was inactive.")
         else:

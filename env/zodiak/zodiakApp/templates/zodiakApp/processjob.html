@@ -318,12 +318,40 @@
                                 <div class="datatable-dashv1-list custom-datatable-overright">
 
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
-                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar" class="table-wrap">
 
                                         <thead>
-                                            <tr>
+                                            <tr class="info">
+    
                                                 <th data-field="state" data-checkbox="true"></th>
-                                                <th data-field="job_id">Job Id</th>
+                                                <th data-field="job_id">DC</th>
+                                                <th data-field="joP_id">DCPB</th>
+                                                <th data-field="joQ_id">DCD</th>
+                                                <th data-field="joA_id">TC</th>
+                                                <th data-field="joX_id">TCPB</th>
+                                                <th data-field="joC_id">TCD</th>
+                                                <th data-field="joJ_id">SLC</th>
+                                                <th data-field="joL_id">SLCPB</th>
+                                                <th data-field="joN_id">SLCD</th>
+                                                <th data-field="joH_id">SC</th>
+                                                <th data-field="joT_id">SCPB</th>
+                                                <th data-field="jobT_id">SCD</th>
+                                                <th data-field="jobW_id">ALC</th>
+                                                <th data-field="jobS_id">ALCPB</th>
+                                                <th data-field="jobG_id">ALCD</th>
+                                                <th data-field="jobR_id">QC</th>
+                                                <th data-field="Ijb_id">QCPB</th>
+                                                <th data-field="ob_id">QCD</th>
+                                                <th data-field="jb_id">NDLEAC</th>
+                                                <th data-field="jR_id">NDLEAPB</th>
+                                                <th data-field="jFF_id">NCLEACD</th>
+                                                <th data-field="jWE_id">NAFLC</th>
+                                                <th data-field="WW_id">NAFCPB</th>
+                                                <th data-field="NA_id">NAFCD</th>
+                                                <th data-field="OC_id">OCH</th>
+                                                <th data-field="I_id">IC</th>
+                                                <th data-field="V_id">VC</th>
+                                                <th data-field="DR_id">DR</th>
                                                 <th data-field="total_cost">Total cost (₦)</th>
                                                 <th>Action</th>
                                             </tr>
@@ -333,6 +361,33 @@
                                             {% for fin_obj in job.getfinances %}
                                             <tr class="info">
                                                 <td></td>  
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.job_finance}}</td>
                                                 <td>{{fin_obj.job_finance}}</td>
                                                 <td>{{fin_obj.jobtotalCost|default_if_none:"0.0"}}</td>
 

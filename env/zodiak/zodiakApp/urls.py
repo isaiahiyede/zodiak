@@ -12,12 +12,8 @@ urlpatterns = [
     url(r'^accounts/login/$', views.user_login, name="login"),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^register/$', views.register, name="register"),
-<<<<<<< HEAD
     url(r'^home/$', views.clientpage, name="clientpage"),
-=======
-    url(r'^users/$', views.clientpage, name="clientpage"),
     url(r'^reporting/$', views.reporting, name="reporting"),
->>>>>>> 29dc5827312170a02c557f7ac7de716d3a805028
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
     url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),

@@ -49,7 +49,7 @@
 
                                         <tbody>
                                             {% for job in jobs_minibatches %}
-                                            <tr>
+                                            <tr class="info">
                                                 <td></td>  
                                                 <td>{{job.mini_batch_id}}</td>
                                                 <td>{{job.no_of_packages|default_if_none:"0"}}</td>

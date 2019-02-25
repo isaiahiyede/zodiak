@@ -37,273 +37,16 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="product-payment-inner-st">
                     <ul id="myTabedu1" class="tab-review-design">
-                        {% if not job.job_arrival_status %}
-                        <li class="active"><a href="#description">Arrival Status</a></li>
-                        {% endif %}
 
-                        {% if not job.job_financial_info %}
-                        <li><a href="#reviews">Financial Information</a></li>
-                        {% endif %}
-                        <!--<li><a href="#INFORMATION">Social Information</a></li>-->
-                        <li><a href="#payments"> Payments</a></li>
-                        <li><a href="#documentation">Documentation</a></li>
+                        <li class="active"><a href="#reviews">Financial Information</a></li>
+
+                        <li><a href="#all_payment">All Payment Information</a></li>
                         <!--<li><a href="#statuses">Status</a></li>-->
                     </ul>
 
                     <div id="myTabContent" class="tab-content custom-product-edit">
 
-                        {% if not job.job_arrival_status %}
-                            {% if job.job_type = 'Air Cargo' or job.job_type = 'Haulage' %}
-                            <div class="product-tab-list tab-pane fade active in" id="description">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="review-content-section">
-                                            <div id="dropzone1" class="pro-ad">
-                                                <form action="{% url 'zodiakApp:process_job' job.pk %}" method="post" enctype="multipart/form-data">
-                                                    {% csrf_token %}
-
-                                                    {% for message in messages %}
-                                                       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                                                    {% endfor %}
-
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-4 4 col-xs-12">
-                                                             <div class="form-group">
-                                                                <select id="arrival_status" name="arrival_status" class="form-control">
-    																<option value="none" selected="" disabled="">Select.....</option>
-    																<option value="completed">Completed</option>
-    																<option value="short_landed">Short Landed</option>
-    															</select>
-                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch hidden">
-                                                            <h6>First Batch</h6>
-                                                            <div class="form-group">
-                                                                <span>Number of Packages</span>
-                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>CBM</span>
-                                                                <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Gross  Weight (kg)</span>
-                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Net Weight (kg)</span>
-                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                             <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Expected Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 secondbatch hidden">
-                                                            <h6>Second Batch</h6>
-                                                            <div class="form-group">
-                                                                <span>Number of Packages</span>
-                                                                <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>CBM</span>
-                                                                <input name="sb_cbm" id="sb_cbm" type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Gross  Weight (kg)</span>
-                                                                <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Net Weight (kg)</span>
-                                                                <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                             <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Expected Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row submititem hidden">
-                                                        <div class="col-lg-12">
-                                                            <div class="payment-adress">
-                                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% else %}
-                            <div class="product-tab-list tab-pane fade active in" id="description">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="review-content-section">
-                                            <div id="dropzone1" class="pro-ad">
-                                                <form action="{% url 'zodiakApp:process_job' job.pk %}" method="post" enctype="multipart/form-data">
-                                                    {% csrf_token %}
-
-                                                    {% for message in messages %}
-                                                       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                                                    {% endfor %}
-
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-4 4 col-xs-12">
-                                                             <div class="form-group">
-                                                                <select id="arrival_status" name="arrival_status" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select.....</option>
-                                                                    <option value="completed">Completed</option>
-                                                                    <option value="short_landed">Short Landed</option>
-                                                                </select>
-                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch hidden">
-                                                            <h6>First Batch</h6>
-                                                            <div class="form-group">
-                                                                <span>Carrier Name</span>
-                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Number of Containers</span>
-                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Type of Container</span>
-                                                                <select id="fb_type_of_container" name="fb_type_of_container" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select.....</option>
-                                                                    <option value="40ft">40ft</option>
-                                                                    <option value="20ft">20ft</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Number of Packages</span>
-                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>CBM</span>
-                                                                <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Gross  Weight (kg)</span>
-                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Net Weight (kg)</span>
-                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                             <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Expected Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 secondbatch hidden">
-                                                            <h6>Second Batch</h6>
-                                                            <div class="form-group">
-                                                                <span>Carrier Name</span>
-                                                                <input name="sb_carrier_name" id="sb_carrier_name" type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Number of Containers</span>
-                                                                <input name="sb_no_of_cntainers" id="sb_no_of_cntainers" type="number" min="1" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Type of Container</span>
-                                                                <select id="sb_type_of_container" name="sb_type_of_container" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select.....</option>
-                                                                    <option value="40ft">40ft</option>
-                                                                    <option value="20ft">20ft</option>
-                                                                </select>
-                                                             </div>
-                                                            <div class="form-group">
-                                                                <span>Number of Packages</span>
-                                                                <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>CBM</span>
-                                                                <input name="sb_cbm" id="sb_cbm" type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Gross  Weight (kg)</span>
-                                                                <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <span>Net Weight (kg)</span>
-                                                                <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" class="form-control">
-                                                            </div>
-                                                             <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Expected Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group data-custon-pick" id="data_1">
-                                                                <div class="input-group date">
-
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <span>Date of Arrival</span>
-                                                                    <input type="text" class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row submititem hidden">
-                                                        <div class="col-lg-12">
-                                                            <div class="payment-adress">
-                                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                        {% endif %}
-
-                        {% if not job.job_financial_info %}
-                        <div class="product-tab-list tab-pane fade" id="reviews">
+                        <div class="product-tab-list tab-pane fade active in" id="reviews">
                           <div class="row">
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                 <div class="sparkline10-list mt-b-30">
@@ -321,47 +64,49 @@
                                                             {% for message in messages %}
                                                                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
                                                             {% endfor %}
+
                                                             <div class="form-group-inner">
                                                                 <h5>Duty</h5>
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="duty_amount" id="duty_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="duty_amount" id="duty_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="duty_paid_by" id="duty_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="duty_paid_by" id="duty_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="duty_date_paid" id="duty_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="duty_date_paid" id="duty_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="duty_refundablle_as" id="duty_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="duty_refundablle_as" id="duty_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                             <hr>
+
                                                             <div class="form-group-inner">
                                                                 <h5>Terminal Charge</h5>
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="terminal_charge_amount" id="terminal_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="terminal_charge_amount" id="terminal_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="terminal_charge_paid_by" id="terminal_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="terminal_charge_paid_by" id="terminal_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="terminal_charge_date_paid" id="terminal_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="terminal_charge_date_paid" id="terminal_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="terminal_charge_refundablle_as" id="terminal_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="terminal_charge_refundablle_as" id="terminal_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
@@ -373,19 +118,19 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="shipping_line_charge_amount" id="shipping_line_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="shipping_line_charge_amount" id="shipping_line_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="shipping_line_charge_paid_by" id="shipping_line_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="shipping_line_charge_paid_by" id="shipping_line_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="shipping_line_charge_date_paid" id="shipping_line_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="shipping_line_charge_date_paid" id="shipping_line_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="shipping_line_charge_refundablle_as" id="shipping_line_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="shipping_line_charge_refundablle_as" id="shipping_line_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
@@ -397,19 +142,19 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="son_charge_amount" id="son_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="son_charge_amount" id="son_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="son_charge_paid_by" id="son_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="son_charge_paid_by" id="son_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="son_charge_date_paid" id="son_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="son_charge_date_paid" id="son_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="son_charge_refundablle_as" id="son_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="son_charge_refundablle_as" id="son_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
@@ -421,19 +166,19 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="airline_charge_amount" id="airline_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="airline_charge_amount" id="airline_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="airline_charge_paid_by" id="airline_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="airline_charge_paid_by" id="airline_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="airline_charge_date_paid" id="airline_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="airline_charge_date_paid" id="airline_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="airline_charge_refundablle_as" id="airline_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="airline_charge_refundablle_as" id="airline_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
@@ -445,19 +190,19 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="quarantine_charge_amount" id="quarantine_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="quarantine_charge_amount" id="quarantine_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="quarantine_charge_paid_by" id="quarantine_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="quarantine_charge_paid_by" id="quarantine_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="quarantine_charge_date_paid" id="quarantine_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="quarantine_charge_date_paid" id="quarantine_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="quarantine_charge_refundablle_as" id="quarantine_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="quarantine_charge_refundablle_as" id="quarantine_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
@@ -469,43 +214,43 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="ndlea_charge_amount" id="ndlea_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="ndlea_charge_amount" id="ndlea_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="ndlea_charge_paid_by" id="ndlea_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="ndlea_charge_paid_by" id="ndlea_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="ndlea_charge_date_paid" id="ndlea_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="ndlea_charge_date_paid" id="ndlea_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="ndlea_charge_refundablle_as" id="ndlea_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="ndlea_charge_refundablle_as" id="ndlea_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                             <hr>
 
-                                                             <div class="form-group-inner">
+                                                            <div class="form-group-inner">
                                                                 <h5>NAFDAC</h5>
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Amount (₦)</label>
-                                                                        <input type="number" min='1.0' name="nafdac_charge_amount" id="nafdac_charge_amount" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="nafdac_charge_amount" id="nafdac_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Paid By</label>
-                                                                        <input type="text" name="nafdac_charge_paid_by" id="nafdac_charge_paid_by" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="text" name="nafdac_charge_paid_by" id="nafdac_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Date paid</label>
-                                                                        <input type="date" name="nafdac_charge_date_paid" id="nafdac_charge_date_paid" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="date" name="nafdac_charge_date_paid" id="nafdac_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Refundable As</label>
-                                                                        <input type="text" name="nafdac_charge_refundablle_as" id="nafdac_charge_refundablle_as" required class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        <input type="text" name="nafdac_charge_refundablle_as" id="nafdac_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                     </div>
 
                                                                 </div>
@@ -517,19 +262,19 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Other Chrges due to carrier (₦)</label>
-                                                                        <input type="number" min='1.0' name="other_charges_due_carrier" id="other_charges_due_carrier" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="other_charges_due_carrier" id="other_charges_due_carrier" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Insurance Charge (%)</label>
-                                                                        <input type="number" min='1.0' name="insurance_charge" id="insurance_charge" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="insurance_charge" id="insurance_charge" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>VAT (%)</label>
-                                                                        <input type="number" min='1.0' name="VAT_charge" id="VAT_charge" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="VAT_charge" id="VAT_charge" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
                                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                         <label>Demurrage Rate (%)</label>
-                                                                        <input type="number" min='1.0' name="demurrage_rate" id="demurrage_rate" step='any' required class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        <input type="number" min='1.0' name="demurrage_rate" id="demurrage_rate" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                     </div>
 
                                                                 </div>
@@ -556,313 +301,61 @@
                               </div>
                           </div> 
                         </div>
-                        {% endif %}
 
-                        <div class="product-tab-list tab-pane fade" id="payments">
-                            <!--  <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="review-content-section">
-                                        <div id="dropzone1" class="pro-ad">
-                                            <form action="/upload" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="department" type="text" class="form-control" placeholder="Department">
-                                                        </div>
-                                                        <div class="form-group res-mg-t-15">
-                                                            <textarea name="description" placeholder="Description"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="gender" class="form-control">
-                                                                <option value="none" selected="" disabled="">Select Gender</option>
-                                                                <option value="0">Male</option>
-                                                                <option value="1">Female</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="country" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select country</option>
-                                                                    <option value="0">India</option>
-                                                                    <option value="1">Pakistan</option>
-                                                                    <option value="2">Amerika</option>
-                                                                    <option value="3">China</option>
-                                                                    <option value="4">Dubai</option>
-                                                                    <option value="5">Nepal</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="state" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select state</option>
-                                                                    <option value="0">Gujarat</option>
-                                                                    <option value="1">Maharastra</option>
-                                                                    <option value="2">Rajastan</option>
-                                                                    <option value="3">Maharastra</option>
-                                                                    <option value="4">Rajastan</option>
-                                                                    <option value="5">Gujarat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="city" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select city</option>
-                                                                    <option value="0">Surat</option>
-                                                                    <option value="1">Baroda</option>
-                                                                    <option value="2">Navsari</option>
-                                                                    <option value="3">Baroda</option>
-                                                                    <option value="4">Surat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="website" type="text" class="form-control" placeholder="Website URL">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="payment-adress">
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                        <div class="product-tab-list tab-pane fade" id="all_payment">
+                          <div class="row">
+                            <div class="data-table-area mg-b-15">
+                                <div class="container-fluid">
+                                    <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline13-list">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    
                                 </div>
-                            </div> -->
+                            </div>
+                            <div class="sparkline13-graph">
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
+                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+
+                                        <thead>
+                                            <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="job_id">Job Id</th>
+                                                <th data-field="total_cost">Total cost (₦)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for fin_obj in job.getfinances %}
+                                            <tr class="info">
+                                                <td></td>  
+                                                <td>{{fin_obj.job_finance}}</td>
+                                                <td>{{fin_obj.jobtotalCost|default_if_none:"0.0"}}</td>
+
+                                                <td class="datatable-ct">
+                                                    <a title="view finance item"><i class="fa fa-eye"></i></a>&nbsp;
+                                                    <a title="edit finance item"><i class="fa fa-pencil"></i></a>&nbsp;
+                                                    <a title="delete finance item" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+                          </div> 
                         </div>
 
-                        <div class="product-tab-list tab-pane fade" id="documentation">
-                            <!--<div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="review-content-section">
-                                        <div id="dropzone1" class="pro-ad">
-                                            <form action="/upload" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="department" type="text" class="form-control" placeholder="Department">
-                                                        </div>
-                                                        <div class="form-group res-mg-t-15">
-                                                            <textarea name="description" placeholder="Description"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="gender" class="form-control">
-                                                                <option value="none" selected="" disabled="">Select Gender</option>
-                                                                <option value="0">Male</option>
-                                                                <option value="1">Female</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="country" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select country</option>
-                                                                    <option value="0">India</option>
-                                                                    <option value="1">Pakistan</option>
-                                                                    <option value="2">Amerika</option>
-                                                                    <option value="3">China</option>
-                                                                    <option value="4">Dubai</option>
-                                                                    <option value="5">Nepal</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="state" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select state</option>
-                                                                    <option value="0">Gujarat</option>
-                                                                    <option value="1">Maharastra</option>
-                                                                    <option value="2">Rajastan</option>
-                                                                    <option value="3">Maharastra</option>
-                                                                    <option value="4">Rajastan</option>
-                                                                    <option value="5">Gujarat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="city" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select city</option>
-                                                                    <option value="0">Surat</option>
-                                                                    <option value="1">Baroda</option>
-                                                                    <option value="2">Navsari</option>
-                                                                    <option value="3">Baroda</option>
-                                                                    <option value="4">Surat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="website" type="text" class="form-control" placeholder="Website URL">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="payment-adress">
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
-
-                        <div class="product-tab-list tab-pane fade" id="statuses">
-                           <!--  <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="review-content-section">
-                                        <div id="dropzone1" class="pro-ad">
-                                            <form action="/upload" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="firstname" type="text" class="form-control" placeholder="Full Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="address" type="text" class="form-control" placeholder="Address">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="mobileno" type="number" class="form-control" placeholder="Mobile no.">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                        <div class="form-group">
-                                                            <input name="department" type="text" class="form-control" placeholder="Department">
-                                                        </div>
-                                                        <div class="form-group res-mg-t-15">
-                                                            <textarea name="description" placeholder="Description"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="gender" class="form-control">
-                                                                <option value="none" selected="" disabled="">Select Gender</option>
-                                                                <option value="0">Male</option>
-                                                                <option value="1">Female</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="country" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select country</option>
-                                                                    <option value="0">India</option>
-                                                                    <option value="1">Pakistan</option>
-                                                                    <option value="2">Amerika</option>
-                                                                    <option value="3">China</option>
-                                                                    <option value="4">Dubai</option>
-                                                                    <option value="5">Nepal</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="state" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select state</option>
-                                                                    <option value="0">Gujarat</option>
-                                                                    <option value="1">Maharastra</option>
-                                                                    <option value="2">Rajastan</option>
-                                                                    <option value="3">Maharastra</option>
-                                                                    <option value="4">Rajastan</option>
-                                                                    <option value="5">Gujarat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select name="city" class="form-control">
-                                                                    <option value="none" selected="" disabled="">Select city</option>
-                                                                    <option value="0">Surat</option>
-                                                                    <option value="1">Baroda</option>
-                                                                    <option value="2">Navsari</option>
-                                                                    <option value="3">Baroda</option>
-                                                                    <option value="4">Surat</option>
-                                                                </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="website" type="text" class="form-control" placeholder="Website URL">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="payment-adress">
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
                     </div>
                 </div>
             </div>
@@ -870,7 +363,6 @@
     </div>
 </div>
 {% endblock contents %}
-
 
 
 {% block specialscripts %}

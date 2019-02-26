@@ -113,7 +113,9 @@
                                     <li>
                                         <a title="View {{jobmode.name}}" href="{% url 'zodiakApp:view_user_jobs' jobmode.name %}">
                                             <span class="mini-sub-pro">{{jobmode.name}}</span>
+                                            {% if request.user.is_authenticated %}
                                             <span class="badge badge-primary">{% getJobCount request jobmode.name %}</span>
+                                            {% endif %}
                                         </a>
                                     </li>
                                     {% endfor %}
@@ -375,8 +377,10 @@
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
                                                         <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
                                                         </li>
+                                                        {% if request.user.is_authenticated %}
                                                         <li><a href="{% url 'zodiakApp:user_view_home' request.user.username %}"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
                                                         </li>
+                                                        {% endif %}
                                                         <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
                                                         </li>
                                                         <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>

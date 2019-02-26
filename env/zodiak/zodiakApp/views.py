@@ -1,3 +1,4 @@
+
 from __future__ import unicode_literals
 from django.template.loader import render_to_string, get_template
 from django.shortcuts import render_to_response, render, redirect, get_object_or_404
@@ -52,7 +53,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('zodiakApp:adminPage'))
+    return redirect(reverse('zodiakApp:login'))
 
 
 def get_job(request):
@@ -78,8 +79,8 @@ def get_jobs_selected(request):
     if request.user.is_staff:
         job_obj = Job.objects.filter(job_status=job_status.name, job_type=jobtype, deleted=False)
     else:
-        job_obj = Job.objects.filter(job_user_acc=request.user.useraccount, job_status=job_status.name, job_type=jobtype, deleted=False) 
-        print(job_obj.count())   
+        job_obj = Job.objects.filter(job_user_acc=request.user.useraccount, job_status=job_status.name, job_type=jobtype, deleted=False)
+        print(job_obj.count())
     context['all_jobs'] = job_obj
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
@@ -897,7 +898,7 @@ def fin_info_delete(request,pk):
 
 
 @login_required
-def financials(request, job_obj):    
+def financials(request, job_obj):
     context = {}
     print(request.POST)
     if request.method == "POST":
@@ -912,7 +913,7 @@ def financials(request, job_obj):
             job_obj.job_financial_info = True
             job_obj.job_arr_stat = False
             job_obj.job_cost = job_obj.totalcostofjob()
-            job_obj.save() 
+            job_obj.save()
             form2.save()
             messages.success(request, 'Job payments sucessfully updated')
             if request.user.is_staff:
@@ -1096,7 +1097,7 @@ def addUser(request):
             print(userform.errors)
             context['form'] = userform
             messages.warning(request, "User was not successful created. Try again")
-            return render(request,template_name,context)   
+            return render(request,template_name,context)
         return redirect(request.META.get('HTTP_REFERER', '/'))
     else:
         context['userform'] = UserForm()
@@ -1289,7 +1290,7 @@ def batch_process(request,pk):
         context['jobmodes'] = getJobModes()
         context['batch_obj'] = batch_obj
         response = render(request, 'zodiakApp/processbatch.html', context)
-        return response  
+        return response
 
 
 @login_required
@@ -1392,7 +1393,7 @@ def viewrms(request):
         rms = RelationshipManager.objects.filter(rm_client=request.user.useraccount,deleted=False)
     context['rms'] = rms
     response = render(request,template_name,context)
-    return response 
+    return response
 
 
 @login_required
@@ -1436,7 +1437,7 @@ def add_officeusecase(request,pk):
         special_request = request.POST.get('special_request'),
         staff_evaluation = request.POST.get('staff_evaluation'),
         )
-    
+
     messages.success(request, 'Successfully created')
     response = redirect(request.META['HTTP_REFERER'])
     return response
@@ -1617,14 +1618,13 @@ def view_mail(request,pk):
     return render(request, template_name, context)
 
 
-@login_required
+
 def adminPage(request):
     context = {}
     context['names'] = UserAccount.objects.filter(deleted=False)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     template_name = 'zodiakApp/adminHome.html'
-    # context['jobs'] = Job.objects.all()
+    context['all_jobs'] = Job.objects.filter(deleted=False)
     return render(request, template_name, context)
-
 

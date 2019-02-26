@@ -30,7 +30,9 @@
                                     </div> -->
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
-
+                                                <style>
+                                                    th,td{font-size: 10px;}
+                                                </style>
                                         <thead>
                                             <tr>
                                                 <th data-field="state" data-checkbox="true"></th>
@@ -48,8 +50,10 @@
 
                                         <tbody>
                                             {% for rm in rms %}
+
                                             <tr class="info">
-                                                <td></td>  
+                                                <td></td>
+
                                                 <td>{{rm.rm_client.user}}</td>
                                                 <td>{{rm.rm_name}}</td>
                                                 <td>{{rm.rm_email}}</td>
@@ -76,7 +80,6 @@
 </div>
 {% endblock contents %}
 
-{% block specialscripts %}
 
 <script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
 <script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
@@ -94,5 +97,3 @@
 <script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
 <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
 <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
-
-{% endblock specialscripts %}

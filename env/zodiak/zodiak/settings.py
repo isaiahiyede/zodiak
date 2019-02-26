@@ -1,3 +1,4 @@
+
 """
 Django settings for zodiak project.
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'nmso-o2j6x4=w^sypv35=h6@5=npn5v18wz2_q*lcu0pn$2p^*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['isaiahiyede.pythonanywhere.com']
 
 
 # Application definition
@@ -84,6 +85,37 @@ WSGI_APPLICATION = 'zodiak.wsgi.application'
 
 LOGIN_REDIRECT_URL = '/accounts/login/'
 
+
+
+
+DATABASES = {
+    'default': {
+    'NAME': 'isaiahiyede$zodiak',
+    'ENGINE': 'django.db.backends.mysql',
+    'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',
+    'PORT': '',
+    'USER': 'isaiahiyede',
+    'PASSWORD': 'ogheneyole@@101',
+    }
+}
+
+
+# DATABASES = {
+#     'default': {
+#     'NAME': 'zodiak_db',
+#     'ENGINE': 'sqlserver_ado',
+#     'HOST': '127.0.0.1',
+#     'PORT': '1433',
+#     'USER': 'Assetdb',
+#     'PASSWORD': '1234567@gooGLE',
+#     'OPTIONS': {
+#             'provider': 'SQLNCLI11',
+#             'use_legacy_date_fields': 'True'
+#         }
+#     }
+# }
+
+
 #
 
 # DATABASES = {
@@ -112,16 +144,16 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'zodiak_db',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'zodiak_db',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Internationalization
@@ -142,10 +174,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 
-STATIC_ROOT = ''
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/isaiahiyede/zodiak/env/zodiak/'
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     'static',

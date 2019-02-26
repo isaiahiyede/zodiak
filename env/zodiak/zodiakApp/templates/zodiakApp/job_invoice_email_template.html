@@ -88,7 +88,7 @@
 
             <tr>
                 <td>Shipping Charge</td>
-                <td>(₦) {{pkg.finances.shipping_line_charge_amount|floatformat:2}}</td>>
+                <td>(₦) {{pkg.finances.shipping_line_charge_amount|default_if_none:"0.0"}}</td>>
             </tr>
 
             <tr>
@@ -195,7 +195,7 @@
         </tr>
     </table> -->
     <!-- </p> -->
-    
+
         <!--<table style="min-width: 600px;max-width: 600px;border-collapse: collapse;border: 2px solid black;padding:5px;">
             <tr>
                 <td colspan = 2 style="border: 1px solid black; padding: 5px 10px;">Payments in US Dollars (USD)</td>

@@ -90,18 +90,6 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 
 # DATABASES = {
 #     'default': {
-#     'NAME': 'isaiahiyede$zodiak',
-#     'ENGINE': 'django.db.backends.mysql',
-#     'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',
-#     'PORT': '',
-#     'USER': 'isaiahiyede',
-#     'PASSWORD': 'ogheneyole@@101',
-#     }
-# }
-
-
-# DATABASES = {
-#     'default': {
 #     'NAME': 'zodiak_db',
 #     'ENGINE': 'sqlserver_ado',
 #     'HOST': '127.0.0.1',

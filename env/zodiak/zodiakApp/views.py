@@ -109,6 +109,7 @@ def reporting(request):
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     context['all_jobs'] = Job.objects.filter(deleted=False)
+    context['names'] = UserAccount.objects.filter(deleted=False)
     response = render(request, template_name, context)
     return response
 

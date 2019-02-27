@@ -88,32 +88,32 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 
 
 
-DATABASES = {
-    'default': {
-    'NAME': 'isaiahiyede$zodiak',
-    'ENGINE': 'django.db.backends.mysql',
-    'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',
-    'PORT': '',
-    'USER': 'isaiahiyede',
-    'PASSWORD': 'ogheneyole@@101',
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
-#     'NAME': 'zodiak_db',
-#     'ENGINE': 'sqlserver_ado',
-#     'HOST': '127.0.0.1',
-#     'PORT': '1433',
-#     'USER': 'Assetdb',
-#     'PASSWORD': '1234567@gooGLE',
-#     'OPTIONS': {
-#             'provider': 'SQLNCLI11',
-#             'use_legacy_date_fields': 'True'
-#         }
+#     'NAME': 'isaiahiyede$zodiak',
+#     'ENGINE': 'django.db.backends.mysql',
+#     'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',
+#     'PORT': '',
+#     'USER': 'isaiahiyede',
+#     'PASSWORD': 'ogheneyole@@101',
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+    'NAME': 'zodiak_db',
+    'ENGINE': 'sqlserver_ado',
+    'HOST': '127.0.0.1',
+    'PORT': '1433',
+    'USER': 'Assetdb',
+    'PASSWORD': '1234567@gooGLE',
+    'OPTIONS': {
+            'provider': 'SQLNCLI11',
+            'use_legacy_date_fields': 'True'
+        }
+    }
+}
 
 
 #

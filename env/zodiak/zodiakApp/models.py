@@ -190,7 +190,10 @@ class Batch(models.Model):
 
 
 class Job(PackageDimension):
-    job_paar = models.BooleanField(default=False)  
+    job_paar = models.BooleanField(default=False) 
+    ref_number = models.CharField(max_length=50, null=True, blank=True)
+    company_name = models.CharField(max_length=50, null=True, blank=True)
+    customer_type = models.CharField(max_length=50, null=True, blank=True) 
     shippers_name = models.CharField(max_length=50, null=True, blank=True)
     shippers_email = models.CharField(max_length=50, null=True, blank=True)
     shippers_number = models.CharField(max_length=50, null=True, blank=True)

@@ -314,7 +314,10 @@ def add_job(request,jobtype):
             context['jobmodes'] = getJobModes()
             context['statuses'] = getStatus()
             job_obj = Job.objects.get(job_id=form2.job_id)
-            job_obj.job_details = True
+            job_obj.job_arr_stat = True
+            job_obj.job_descript = False
+            job_obj.job_documentation = False
+            job_obj.job_details = False
             job_obj.save()
             context['job_type'] = jobtype
             context['job_obj_obj'] = job_obj

@@ -3910,7 +3910,7 @@ div#sparklinehome canvas {
 	overflow:unset;
 }
 .sidebar-nav .metismenu a{
-	color:#8d9498;
+	color:blue;
 }
 .sidebar-nav .metismenu a:hover, .sidebar-nav .metismenu a:focus, .sidebar-nav .metismenu a:active {
     background: #F6F6F6;

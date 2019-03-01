@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -156,6 +156,16 @@ class BatchProcessForm(forms.ModelForm):
     class Meta:
         model = Batch
         fields = ('status_of_batch',)
+
+
+class ContainerTypesForm(forms.ModelForm):
+    class Meta:
+        model = ContainerTypes
+        fields = ('dry_freight_20','dry_freight_40','high_cube_dry_cont_40','high_cube_dry_cont_45',
+                    'reefer_cont_20','reefer_cont_40','flat_rack_cont_20','flat_rack_cont_40',
+                    'col_flat_rack_20','col_flat_rack_40','open_top_cont_20','open_top_cont_40','artificial_tweendeck',
+                    'open_sided_open_top_20','open_sided_open_top_40','job_obj_cont',)
+
 
 
 

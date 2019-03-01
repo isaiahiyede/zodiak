@@ -477,6 +477,33 @@ class OfficeUseOnly(models.Model):
 	    return '%s' %(self.rm_client_obj.user)
 
 
+class ContainerTypes(models.Model):
+    job_obj_cont = models.ForeignKey(Job,null=True,blank=True)
+    dry_freight_20 = models.IntegerField(null=True,blank=True)
+    dry_freight_40 = models.IntegerField(null=True, blank=True)
+    high_cube_dry_cont_40 = models.IntegerField(null=True, blank=True)
+    high_cube_dry_cont_45 = models.IntegerField(null=True, blank=True)
+    reefer_cont_20 = models.IntegerField(null=True, blank=True)
+    reefer_cont_40 = models.IntegerField(null=True, blank=True)
+    flat_rack_cont_20 = models.IntegerField(null=True, blank=True)
+    flat_rack_cont_40 = models.IntegerField(null=True, blank=True)
+    col_flat_rack_20 = models.IntegerField(null=True, blank=True)
+    col_flat_rack_40 = models.IntegerField(null=True, blank=True)
+    open_top_cont_20 = models.IntegerField(null=True, blank=True)
+    open_top_cont_40 = models.IntegerField(null=True, blank=True)
+    artificial_tweendeck = models.IntegerField(null=True, blank=True)
+    open_sided_open_top_20= models.IntegerField(null=True, blank=True)
+    open_sided_open_top_40= models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name_plural = 'Types of Containers'
+        ordering = ['-created_on']
+        
+    def __str__(self):
+        return '%s' %(self.job_obj_cont)
+
+
 class Comments(models.Model):
 	job_message = models.ForeignKey(Job, null=True, blank=True)
 	msg = models.TextField(null=True,blank=True)

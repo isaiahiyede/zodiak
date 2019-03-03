@@ -46,7 +46,7 @@
 
                             <div class="product-tab-list tab-pane fade active in" id="reviews">
                               <div class="row">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="sparkline10-list mt-b-30">
                                         <div class="sparkline10-hd">
 
@@ -66,217 +66,48 @@
                                                                 <div class="form-group-inner">
                                                                     <h5>Duty</h5>
                                                                     <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                                                <select style="font-size: 12px; height: 28px;" name="fb_type_of_container" required class="form-control"> 
+                                                                                <option value="" selected="" disabled="">Select.....</option>
+                                                                                <option value="Form M">Form M</option>
+                                                                                <option value="Commercial Invoice">Commercial Invoice</option>
+                                                                                <option value="Packing List">Packing List</option>
+                                                                                
+                                                                            </select>
+                                                                        </div>
+
+
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                                             <label>Amount (₦)</label>
                                                                             <input type="number" min='1.0' name="duty_amount" id="duty_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                         </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                                             <label>Paid By</label>
                                                                             <input type="text" name="duty_paid_by" id="duty_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
                                                                         </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                                             <label>Date paid</label>
                                                                             <input type="date" name="duty_date_paid" id="duty_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                         </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                                             <label>Refundable As</label>
                                                                             <input type="text" name="duty_refundablle_as" id="duty_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
                                                                         </div>
 
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 
-                                                                <div class="form-group-inner">
-                                                                    <h5>Terminal Charge</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="terminal_charge_amount" id="terminal_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                            <i class="fa fa-plus btn-copy-4"></i>&nbsp;
+                                                                            <i class="fa fa-minus btn-copy-minus-4"></i>
                                                                         </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="terminal_charge_paid_by" id="terminal_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="terminal_charge_date_paid" id="terminal_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="terminal_charge_refundablle_as" id="terminal_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
+
+
+
+
 
                                                                     </div>
                                                                 </div>
                                                                 <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>Shipping Line Charge</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="shipping_line_charge_amount" id="shipping_line_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="shipping_line_charge_paid_by" id="shipping_line_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="shipping_line_charge_date_paid" id="shipping_line_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="shipping_line_charge_refundablle_as" id="shipping_line_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>SON Charge</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="son_charge_amount" id="son_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="son_charge_paid_by" id="son_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="son_charge_date_paid" id="son_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="son_charge_refundablle_as" id="son_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>Airline Charge</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="airline_charge_amount" id="airline_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="airline_charge_paid_by" id="airline_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="airline_charge_date_paid" id="airline_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="airline_charge_refundablle_as" id="airline_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>Quarantine Charge</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="quarantine_charge_amount" id="quarantine_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="quarantine_charge_paid_by" id="quarantine_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="quarantine_charge_date_paid" id="quarantine_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="quarantine_charge_refundablle_as" id="quarantine_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>NDLEA</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="ndlea_charge_amount" id="ndlea_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="ndlea_charge_paid_by" id="ndlea_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="ndlea_charge_date_paid" id="ndlea_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="ndlea_charge_refundablle_as" id="ndlea_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>NAFDAC</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Amount (₦)</label>
-                                                                            <input type="number" min='1.0' name="nafdac_charge_amount" id="nafdac_charge_amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Paid By</label>
-                                                                            <input type="text" name="nafdac_charge_paid_by" id="nafdac_charge_paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Date paid</label>
-                                                                            <input type="date" name="nafdac_charge_date_paid" id="nafdac_charge_date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Refundable As</label>
-                                                                            <input type="text" name="nafdac_charge_refundablle_as" id="nafdac_charge_refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
-
-                                                                <div class="form-group-inner">
-                                                                    <h5>Other Charges</h5>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Other Chrges due to carrier (₦)</label>
-                                                                            <input type="number" min='1.0' name="other_charges_due_carrier" id="other_charges_due_carrier" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Insurance Charge (%)</label>
-                                                                            <input type="number" min='1.0' name="insurance_charge" id="insurance_charge" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>VAT (%)</label>
-                                                                            <input type="number" min='1.0' name="VAT_charge" id="VAT_charge" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label>Demurrage Rate (%)</label>
-                                                                            <input type="number" min='1.0' name="demurrage_rate" id="demurrage_rate" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="form-group-inner">
                                                                  <div class="row">

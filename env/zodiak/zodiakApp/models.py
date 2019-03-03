@@ -228,19 +228,8 @@ class Job(PackageDimension):
     job_end_date = models.DateField(null=True, blank=True)
     job_date_of_arrival = models.DateField(null=True, blank=True)
     job_status = models.CharField(max_length=50, null=True, blank=True)
-    job_id = models.CharField(max_length=20,null=True,blank=True)
+    job_id = models.CharField(max_length=50,null=True,blank=True)
     job_type = models.CharField(max_length=20,null=True,blank=True)
-
-    job_doc_1 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_2 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_3 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_4 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_5 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_6 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_7 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    job_doc_8 = models.FileField(upload_to="item_photo", null=True, blank=True)
-    commercial_invoice_number = models.FileField(upload_to="item_photo", null=True, blank=True)
-    form_m_number = models.FileField(upload_to="item_photo", null=True, blank=True)
 
     job_created_on = models.DateTimeField(default=timezone.now)
 
@@ -291,6 +280,7 @@ class Job(PackageDimension):
 
     job_arrival_status = models.BooleanField(default=False)
     job_financial_info = models.BooleanField(default=False)
+    job_arrival_status_mode = models.CharField(max_length=100, null=True, blank=True)
 
     deleted = models.BooleanField(default=False)
 
@@ -479,25 +469,28 @@ class OfficeUseOnly(models.Model):
 
 class ContainerTypes(models.Model):
     job_obj_cont = models.ForeignKey(Job,null=True,blank=True)
-    dry_freight_20 = models.IntegerField(null=True,blank=True)
-    dry_freight_40 = models.IntegerField(null=True, blank=True)
-    high_cube_dry_cont_40 = models.IntegerField(null=True, blank=True)
-    high_cube_dry_cont_45 = models.IntegerField(null=True, blank=True)
-    reefer_cont_20 = models.IntegerField(null=True, blank=True)
-    reefer_cont_40 = models.IntegerField(null=True, blank=True)
-    flat_rack_cont_20 = models.IntegerField(null=True, blank=True)
-    flat_rack_cont_40 = models.IntegerField(null=True, blank=True)
-    col_flat_rack_20 = models.IntegerField(null=True, blank=True)
-    col_flat_rack_40 = models.IntegerField(null=True, blank=True)
-    open_top_cont_20 = models.IntegerField(null=True, blank=True)
-    open_top_cont_40 = models.IntegerField(null=True, blank=True)
-    artificial_tweendeck = models.IntegerField(null=True, blank=True)
-    open_sided_open_top_20= models.IntegerField(null=True, blank=True)
-    open_sided_open_top_40= models.IntegerField(null=True, blank=True)
+    name_of_container = models.CharField(max_length=100,null=True, blank=True)
+    number_of_container = models.CharField(max_length=100,null=True, blank=True)
     created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Types of Containers'
+        ordering = ['-created_on']
+        
+    def __str__(self):
+        return '%s' %(self.job_obj_cont)
+
+
+class Documents(models.Model):
+    job_obj_doc = models.ForeignKey(Job,null=True,blank=True)
+    name_of_doc = models.CharField(max_length=100,null=True, blank=True)
+    doc_obj = models.FileField(upload_to="item_photo", null=True, blank=True)
+    created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Documents'
         ordering = ['-created_on']
         
     def __str__(self):

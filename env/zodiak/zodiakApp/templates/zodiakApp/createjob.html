@@ -1964,31 +1964,32 @@
 
 								                                                    <input type="hidden" name="job_obj" value="{{job_obj}}">
 									                                                <input type="hidden" name="arrival_status" value="completed">
+
 								                                                    <div class="row">
 								                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch">
 								                                                            <h6>First Batch</h6>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Packages</span>
-								                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
+								                                                                <input required name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>CBM</span>
-								                                                                <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
+								                                                                <input required name="fb_cbm" id="fb_cbm" type="text" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Gross  Weight (kg)</span>
-								                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
+								                                                                <input required name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Net Weight (kg)</span>
-								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" required class="form-control"> 
 								                                                            </div>
 								                                                             <div class="form-group data-custon-pick" id="data_1">
 								                                                                <div class="input-group date">
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Expected Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                            <div class="form-group data-custon-pick" id="data_1">
@@ -1996,7 +1997,7 @@
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="fb_date_of_arrival" id="fb_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                        </div>
@@ -2034,15 +2035,15 @@
 								                                                            <h6>First Batch</h6>
 								                                                            <div class="form-group">
 								                                                                <span>Carrier Name</span>
-								                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" class="form-control">
+								                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" required class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Containers</span>
-								                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" class="form-control">
+								                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" required class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Type of Container</span>
-								                                                                <select id="fb_type_of_container" name="fb_type_of_container" class="form-control">
+								                                                                <select id="fb_type_of_container" name="fb_type_of_container" required class="form-control"> 
 								                                                                    <option value="none" selected="" disabled="">Select.....</option>
 								                                                                    <option value="40ft">40ft</option>
 								                                                                    <option value="20ft">20ft</option>
@@ -2050,26 +2051,26 @@
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Packages</span>
-								                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
+								                                                                <input required name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>CBM</span>
-								                                                                <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
+								                                                                <input required name="fb_cbm" id="fb_cbm" type="text" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Gross  Weight (kg)</span>
-								                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
+								                                                                <input required name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Net Weight (kg)</span>
-								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" required class="form-control"> 
 								                                                            </div>
 								                                                             <div class="form-group data-custon-pick" id="data_1">
 								                                                                <div class="input-group date">
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Expected Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                            <div class="form-group data-custon-pick" id="data_1">
@@ -2077,7 +2078,7 @@
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="fb_date_of_arrival" id="fb_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                        </div>
@@ -2117,15 +2118,15 @@
 								                                                            <h6>First Batch</h6>
 								                                                            <div class="form-group">
 								                                                                <span>Carrier Name</span>
-								                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" class="form-control">
+								                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" required class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Containers</span>
-								                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" class="form-control">
+								                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" required class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Type of Container</span>
-								                                                                <select id="fb_type_of_container" name="fb_type_of_container" class="form-control">
+								                                                                <select id="fb_type_of_container" name="fb_type_of_container" required class="form-control"> 
 								                                                                    <option value="none" selected="" disabled="">Select.....</option>
 								                                                                    <option value="40ft">40ft</option>
 								                                                                    <option value="20ft">20ft</option>
@@ -2133,26 +2134,26 @@
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Packages</span>
-								                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
+								                                                                <input required name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>CBM</span>
-								                                                                <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
+								                                                                <input required name="fb_cbm" id="fb_cbm" type="text" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Gross  Weight (kg)</span>
-								                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
+								                                                                <input required name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Net Weight (kg)</span>
-								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
+								                                                                <input required name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control"> 
 								                                                            </div>
 								                                                             <div class="form-group data-custon-pick" id="data_1">
 								                                                                <div class="input-group date">
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Expected Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                            <div class="form-group data-custon-pick" id="data_1">
@@ -2160,7 +2161,7 @@
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="fb_date_of_arrival" id="fb_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                        </div>
@@ -2168,15 +2169,15 @@
 								                                                            <h6>Second Batch</h6>
 								                                                            <div class="form-group">
 								                                                                <span>Carrier Name</span>
-								                                                                <input name="sb_carrier_name" id="sb_carrier_name" type="text" class="form-control">
+								                                                                <input required name="sb_carrier_name" id="sb_carrier_name" type="text" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Containers</span>
-								                                                                <input name="sb_no_of_cntainers" id="sb_no_of_cntainers" type="number" min="1" class="form-control">
+								                                                                <input required name="sb_no_of_cntainers" id="sb_no_of_cntainers" type="number" min="1" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Type of Container</span>
-								                                                                <select id="sb_type_of_container" name="sb_type_of_container" class="form-control">
+								                                                                <select id="sb_type_of_container" name="sb_type_of_container" required class="form-control"> 
 								                                                                    <option value="none" selected="" disabled="">Select.....</option>
 								                                                                    <option value="40ft">40ft</option>
 								                                                                    <option value="20ft">20ft</option>
@@ -2184,26 +2185,26 @@
 								                                                             </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Packages</span>
-								                                                                <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control">
+								                                                                <input required name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>CBM</span>
-								                                                                <input name="sb_cbm" id="sb_cbm" type="text" class="form-control">
+								                                                                <input  requiredname="sb_cbm" id="sb_cbm" type="text" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Gross  Weight (kg)</span>
-								                                                                <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control">
+								                                                                <input required name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control"> 
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Net Weight (kg)</span>
-								                                                                <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" required class="form-control"> 
 								                                                            </div>
 								                                                             <div class="form-group data-custon-pick" id="data_1">
 								                                                                <div class="input-group date">
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Expected Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                            <div class="form-group data-custon-pick" id="data_1">
@@ -2211,7 +2212,7 @@
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
+								                                                                    <input type="text" class="form-control" required name="sb_date_of_arrival" id="sb_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                        </div>
@@ -2249,15 +2250,15 @@
 								                                                            <h6>First Batch</h6>
 								                                                            <div class="form-group">
 								                                                                <span>Carrier Name</span>
-								                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" class="form-control">
+								                                                                <input name="fb_carrier_name" id="fb_carrier_name" type="text" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Containers</span>
-								                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" class="form-control">
+								                                                                <input name="fb_no_of_containers" id="fb_no_of_containers" type="number" min="1" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Type of Container</span>
-								                                                                <select id="fb_type_of_container" name="fb_type_of_container" class="form-control">
+								                                                                <select id="fb_type_of_container" name="fb_type_of_container" required class="form-control">
 								                                                                    <option value="none" selected="" disabled="">Select.....</option>
 								                                                                    <option value="40ft">40ft</option>
 								                                                                    <option value="20ft">20ft</option>
@@ -2265,26 +2266,26 @@
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Packages</span>
-								                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" class="form-control">
+								                                                                <input name="fb_no_of_packages" id="fb_no_of_packages" type="number" min="1" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>CBM</span>
-								                                                                <input name="fb_cbm" id="fb_cbm" type="text" class="form-control">
+								                                                                <input name="fb_cbm" id="fb_cbm" type="text" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Gross  Weight (kg)</span>
-								                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="fb_gross_weight" step="any" id="fb_gross_weight" type="number" min="1.0" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Net Weight (kg)</span>
-								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="fb_net_weight" step="any" id="fb_net_weight" type="number" min="1.0" required class="form-control">
 								                                                            </div>
 								                                                             <div class="form-group data-custon-pick" id="data_1">
 								                                                                <div class="input-group date">
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Expected Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
+								                                                                    <input type="text" required class="form-control" name="fb_exp_date_of_arrival" id="fb_exp_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                            <div class="form-group data-custon-pick" id="data_1">
@@ -2292,7 +2293,7 @@
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
+								                                                                    <input type="text" required class="form-control" name="fb_date_of_arrival" id="fb_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                        </div>
@@ -2300,15 +2301,15 @@
 								                                                            <h6>Second Batch</h6>
 								                                                            <div class="form-group">
 								                                                                <span>Carrier Name</span>
-								                                                                <input name="sb_carrier_name" id="sb_carrier_name" type="text" class="form-control">
+								                                                                <input name="sb_carrier_name" id="sb_carrier_name" type="text" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Containers</span>
-								                                                                <input name="sb_no_of_cntainers" id="sb_no_of_cntainers" type="number" min="1" class="form-control">
+								                                                                <input name="sb_no_of_cntainers" id="sb_no_of_cntainers" type="number" min="1" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Type of Container</span>
-								                                                                <select id="sb_type_of_container" name="sb_type_of_container" class="form-control">
+								                                                                <select id="sb_type_of_container" name="sb_type_of_container" required class="form-control">
 								                                                                    <option value="none" selected="" disabled="">Select.....</option>
 								                                                                    <option value="40ft">40ft</option>
 								                                                                    <option value="20ft">20ft</option>
@@ -2316,26 +2317,26 @@
 								                                                             </div>
 								                                                            <div class="form-group">
 								                                                                <span>Number of Packages</span>
-								                                                                <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" class="form-control">
+								                                                                <input name="sb_no_of_packages" id="sb_no_of_packages" type="number" min="1" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>CBM</span>
-								                                                                <input name="sb_cbm" id="sb_cbm" type="text" class="form-control">
+								                                                                <input name="sb_cbm" id="sb_cbm" type="text" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Gross  Weight (kg)</span>
-								                                                                <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="sb_gross_weight" step="any" id="sb_gross_weight" type="number" min="1.0" required class="form-control">
 								                                                            </div>
 								                                                            <div class="form-group">
 								                                                                <span>Net Weight (kg)</span>
-								                                                                <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" class="form-control">
+								                                                                <input name="sb_net_weight" step="any" id="sb_net_weight" type="number" min="1.0" required class="form-control">
 								                                                            </div>
 								                                                             <div class="form-group data-custon-pick" id="data_1">
 								                                                                <div class="input-group date">
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Expected Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
+								                                                                    <input type="text" required class="form-control" name="sb_exp_date_of_arrival" id="sb_exp_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                            <div class="form-group data-custon-pick" id="data_1">
@@ -2343,7 +2344,7 @@
 
 								                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 								                                                                    <span>Date of Arrival</span>
-								                                                                    <input type="text" class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
+								                                                                    <input type="text" required class="form-control" name="sb_date_of_arrival" id="sb_date_of_arrival">
 								                                                                </div>
 								                                                            </div>
 								                                                        </div>

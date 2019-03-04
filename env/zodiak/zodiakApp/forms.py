@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, Documents, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -70,18 +70,17 @@ class JobForm(forms.ModelForm):
             'shippers_address','consignees_name','consignees_number','consignee_email','consignee_country',
             'consignees_address','country_of_origin','country_of_arrival','port_of_destination','port_of_arrival',
             'job_vessel_name','job_awl_bol_number','paar_date','insured', 'insurance_date','packing_list', 
-            'packing_list_date','form_m_number','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
-            'commercial_invoice_number','batch_type', 'job_route', 
+            'packing_list_date','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
+            'batch_type', 'job_route','ref_number','customer_type','company_name',
 
             'job_user_acc','job_start_date', 'job_end_date', 'job_date_of_arrival',
             'job_status', 'job_cost', 'job_amount_paid','job_paid', 'job_amount_balance', 'job_description',
-            'job_paid_for', 'job_vessel_name', 'job_type', 'job_doc_1', 'job_doc_2',
-            'job_doc_3','job_comment', 'job_in_transit','job_doc_4', 'job_doc_5', 'job_doc_6','job_doc_7','job_doc_8',
+            'job_paid_for', 'job_vessel_name', 'job_type',
 
             'job_arrived', 'job_undergoing_clearnace', 'job_undergoing_ammendment', 'job_examined', 'job_cleared', 'job_completed',
             'job_invoiced', 'job_paid_for', 'job_processing','job_issue_resolution', 'box_weight_Actual', 'insured', 'vat', 'demurrage',
             'demurrage_grace_period', 'shippers_name', 'shippers_address', 'shippers_number',
-            'consignees_name', 'consignees_address',
+            'consignees_name', 'consignees_address','job_arrival_status_mode',
 
             'box_length','box_width','box_height','box_weight','box_weight_K',
 
@@ -102,15 +101,6 @@ class JobForm2(forms.ModelForm):
             'packing_list_date','job_son', 'son_date', 'job_ccro', 'ccro_date','duty_exemption', 'duty_exemption_date',
             )
 
-
-class JobForm3(forms.ModelForm):
-
-    class Meta:
-        model = Job
-        fields = (
-            'job_doc_1','job_doc_2','form_m_number','commercial_invoice_number',
-            'job_doc_3','job_doc_4','job_doc_5','job_doc_6','job_doc_7','job_doc_8',
-            )
 
 
 class JobForm4(forms.ModelForm):
@@ -156,6 +146,19 @@ class BatchProcessForm(forms.ModelForm):
     class Meta:
         model = Batch
         fields = ('status_of_batch',)
+
+
+class ContainerTypesForm(forms.ModelForm):
+    class Meta:
+        model = ContainerTypes
+        fields = ('name_of_container','number_of_container','job_obj_cont',)
+
+
+class DocumentsForm(forms.ModelForm):
+    class Meta:
+        model = Documents
+        fields = ('name_of_doc','doc_obj','job_obj_doc',)
+
 
 
 

@@ -88,18 +88,6 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 
 
 
-DATABASES = {
-    'default': {
-    'NAME': 'isaiahiyede$zodiak',
-    'ENGINE': 'django.db.backends.mysql',
-    'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',
-    'PORT': '',
-    'USER': 'isaiahiyede',
-    'PASSWORD': 'ogheneyole@@101',
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
 #     'NAME': 'zodiak_db',
@@ -144,16 +132,16 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'zodiak_db',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zodiak_db',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Internationalization

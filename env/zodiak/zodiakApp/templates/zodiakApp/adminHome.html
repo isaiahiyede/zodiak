@@ -43,7 +43,7 @@
 <link rel="stylesheet" href="{% static 'zodiakApp/css/responsive.css' %}">
 <link rel="stylesheet" href="{% static 'css/accordions.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/editor/x-editor-style.css' %}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="{% static 'zodiakApp/js/jquery.min.js' %}"></script>
 <script src="{% static 'zodiakApp/js/vendor/modernizr-2.8.3.min.js' %}"></script>
 
 {% block morecss %}
@@ -69,7 +69,7 @@
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Create Jobs</span></a>
                             </a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                    <li>
+                                    <li  style="background:#d3d3d3;">
                                         <a>
                                             <span class="mini-sub-pro">Create Job</span>
                                         </a>
@@ -90,7 +90,7 @@
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-interface icon-wrap"></span> <span class="mini-click-non">Jobs</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
 
-                                    <li>
+                                    <li style="background:#d3d3d3;">
                                         <a >
                                             <span class="mini-sub-pro">View Jobs</span>
                                         </a>
@@ -131,7 +131,7 @@
 
                                 {% if request.user.is_staff %}
 
-                                    <li>
+                                    <li style="background:#d3d3d3;">
                                         <a>
                                             <span class="mini-sub-pro">Quotations</span>
                                         </a>
@@ -153,7 +153,7 @@
 
                                 {% else %}
 
-                                    <li>
+                                    <li style="background:#d3d3d3;">
                                         <a>
                                             <span class="mini-sub-pro">Quotations</span>
                                         </a>
@@ -183,7 +183,7 @@
 
                                 {% if request.user.is_staff %}
 
-                                    <li>
+                                    <li style="background:#d3d3d3;">
                                         <a>
                                             <span class="mini-sub-pro">Procurements</span>
                                         </a>
@@ -200,7 +200,7 @@
                                 {% else %}
 
 
-                                    <li>
+                                    <li style="background:#d3d3d3;">
                                         <a>
                                             <span class="mini-sub-pro">Procurements</span>
                                         </a>
@@ -251,7 +251,7 @@
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"></span> <span class="mini-click-non">Messages</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="New mail" href="{% url 'zodiakApp:newmail' %}"><span class="mini-sub-pro">New Message</span></a></li>
+                                <li style="background:#d3d3d3;"><a title="New mail" href="{% url 'zodiakApp:newmail' %}"><span class="mini-sub-pro">New Message</span></a></li>
                                 <li><a title="Inbox" href="{% url 'zodiakApp:mails' %}"><span class="mini-sub-pro">Mail Box</span></a></li>
                                 <li><a title="Notifications" href="/"><span class="mini-sub-pro">Notifications</span></a></li>
                             </ul>
@@ -261,7 +261,7 @@
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span><span class="mini-click-non">User Access</span></a>
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li><a><span class="mini-sub-pro">User Access</span></a></li>
+                                <li style="background:#d3d3d3;"><a><span class="mini-sub-pro">User Access</span></a></li>
                                 <li><a title="Alerts" href="{% url 'zodiakApp:add_user' %}"><span class="mini-sub-pro">Add user</span></a></li>
                                 <li><a title="Modals" href="{% url 'zodiakApp:user_access' %}"><span class="mini-sub-pro">User Access</span></a></li>
                                 <li><a title="Buttons" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">All Users</span></a></li>
@@ -271,7 +271,7 @@
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span><span class="mini-click-non">User Access</span></a>
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li><a><span class="mini-sub-pro">User Access</span></a></li>
+                                <li style="background:#d3d3d3;"><a><span class="mini-sub-pro">User Access</span></a></li>
                                 <li><a title="Alerts" href="{% url 'zodiakApp:add_user' %}"><span class="mini-sub-pro">Add user</span></a></li>
                                 <li><a title="Modals" href="{% url 'zodiakApp:user_access' %}"><span class="mini-sub-pro">User Access</span></a></li>
                                 <li><a title="Buttons" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">All Users</span></a></li>
@@ -284,7 +284,7 @@
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Batches</span></a>
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li><a><span class="mini-sub-pro">Batches</span></a></li>
+                                <li style="background:#d3d3d3;"><a><span class="mini-sub-pro">Batches</span></a></li>
                                 <li><a title="Alerts" href="{% url 'zodiakApp:add_batch' %}"><span class="mini-sub-pro">Add Batch</span></a></li>
                                 <li><a title="Modals" href="{% url 'zodiakApp:viewbatches' %}">
                                     <span class="mini-sub-pro">All Batches</span>
@@ -297,7 +297,7 @@
                         <li>
                             <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">RM</span></a>
                             <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li><a ><span class="mini-sub-pro">RM</span></a></li>
+                                <li style="background:#d3d3d3;"><a ><span class="mini-sub-pro">RM</span></a></li>
                                 <li><a title="Add Rm" href="{% url 'zodiakApp:add_rm' %}"><span class="mini-sub-pro">Add RM</span></a></li>
                                 <li><a title="All Rms" href="{% url 'zodiakApp:viewrms' %}"><span class="mini-sub-pro">All RMs</span></a></li>
                             </ul>
@@ -544,7 +544,6 @@
     ============================================ -->
     <script src="{% static 'zodiakApp/js/main.js' %}"></script>
 
-
     <script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
     <script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
     <script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
@@ -561,8 +560,6 @@
     <script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
     <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
     <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
-
-
 
 </body>
 

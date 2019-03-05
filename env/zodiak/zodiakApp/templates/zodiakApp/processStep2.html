@@ -42,14 +42,11 @@
                                 <div class="product-payment-inner-st">
                                     <ul id="myTabedu1" class="tab-review-design">
                                     
-                                    <li class="active"><a href="#description">Completed</a></li>
-                                    <li><a href="#reviews">Short Landed</a></li>
-                                    
                                     </ul>
                                         <div id="myTabContent" class="tab-content custom-product-edit">
 
-                                            {% if job_obj.job_type = 'Air Cargo' or job_obj.job_type = 'Haulage' %}
-                                                <div class="product-tab-list tab-pane fade active in" id="description">
+                                            {% if job_obj.job_type = 'Air Cargo' and job_obj.job_arrival_status_mode = 'Completed' %}
+                                                <div class="product-tab-list tab-pane fade in active" id="description">
                                                     <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="review-content-section">
@@ -72,7 +69,7 @@
                                                                                         <label class="login2">Carrier Name</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_carrier_name" value="" name="fb_carrier_name" class="form-control" />
+                                                                                        <input type="text" id="fb_carrier_name" value="" required name="fb_carrier_name" class="form-control" />
 
                                                                                     </div>
                                                                                 </div>
@@ -84,7 +81,7 @@
                                                                                         <label class="login2">Number of Packages</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" name="fb_no_of_packages" class="form-control" />
+                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" required name="fb_no_of_packages" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -96,7 +93,7 @@
                                                                                         <label class="login2">CBM</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_cbm" value="" name="fb_cbm" class="form-control" />
+                                                                                        <input type="text" id="fb_cbm" value="" required name="fb_cbm" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -108,7 +105,7 @@
                                                                                         <label class="login2">Gross  Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" name="fb_gross_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_gross_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -120,7 +117,7 @@
                                                                                         <label class="login2">Net Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" name="fb_net_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" required name="fb_net_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -131,7 +128,7 @@
                                                                                         <label class="login2">Description</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <textarea  name="job_description" class="form-control" required id="job_description" placeholder="Office Address"></textarea>
+                                                                                        <textarea  name="fb_job_description" class="form-control" required id="fb_job_description" placeholder="Office Address"></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -153,8 +150,8 @@
                                                     </div>
                                                     </div>
                                                 </div>
-                                            {% else %}
-                                                <div class="product-tab-list tab-pane fade active in" id="description">
+                                            {% elif job_obj.job_type = 'Sea Cargo' and job_obj.job_arrival_status_mode = 'Completed'%}
+                                                <div class="product-tab-list tab-pane fade in active" id="description">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                           <div class="review-content-section">
@@ -176,7 +173,7 @@
                                                                                         <label class="login2">Carrier Name</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_carrier_name" value="" name="fb_carrier_name" class="form-control" />
+                                                                                        <input type="text" id="fb_carrier_name" value="" required name="fb_carrier_name" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -237,7 +234,7 @@
                                                                                         <label class="login2">Number of Packages</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" name="fb_no_of_packages" class="form-control" />
+                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" required name="fb_no_of_packages" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -249,7 +246,7 @@
                                                                                         <label class="login2">CBM</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_cbm" value="" name="fb_cbm" class="form-control" />
+                                                                                        <input type="text" id="fb_cbm" value="" required name="fb_cbm" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -261,7 +258,7 @@
                                                                                         <label class="login2">Gross  Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" name="fb_gross_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_gross_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -273,7 +270,7 @@
                                                                                         <label class="login2">Net Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" name="fb_net_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" required name="fb_net_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -284,7 +281,7 @@
                                                                                         <label class="login2">Description</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <textarea style="" name="job_description" class="form-control" required id="job_description" placeholder=""></textarea>
+                                                                                        <textarea style="" name="fb_job_description" class="form-control" required id="fb_job_description" placeholder=""></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -306,10 +303,115 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            {% elif job_obj.job_type = 'Haulage' and job_obj.job_arrival_status_mode = 'Completed'%}
+                                                <div class="product-tab-list tab-pane fade in active" id="description">
+                                                    <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="review-content-section">
+                                                            <div id="dropzone1" class="pro-ad">
+                                                                <form action="{% url 'zodiakApp:process_job' job_obj %}" method="post" enctype="multipart/form-data">
+                                                                    {% csrf_token %}
+
+                                                                    <input type="hidden" name="job_obj" value="{{job_obj}}">
+                                                                    <input type="hidden" name="arrival_status" value="completed">
+
+                                                                    <div class="row">
+
+                                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch">
+
+                                                                         <h6>First Batch</h6>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Carrier Name</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="text" id="fb_carrier_name" value="" required name="fb_carrier_name" class="form-control" />
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Number of Packages</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" required name="fb_no_of_packages" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">CBM</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="text" id="fb_cbm" value="" required name="fb_cbm" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Gross  Weight (kg)</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_gross_weight" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Net Weight (kg)</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" required name="fb_net_weight" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Description</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <textarea  name="fb_job_description" class="form-control" required id="fb_job_description" placeholder="Office Address"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row submititem">
+                                                                        <div class="col-lg-12">
+                                                                            <div class="payment-adress">
+                                                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
                                             {% endif %}
 
-                                            {% if job_obj.job_type = 'Air Cargo' or job_obj.job_type = 'Haulage' %}
-                                                <div class="product-tab-list tab-pane fade" id="reviews">
+                                            {% if job_obj.job_type = 'Air Cargo' and job_obj.job_arrival_status_mode = 'Short landed' %}
+                                                <div class="product-tab-list tab-pane fade in active" id="reviews">
                                                     <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="review-content-section">
@@ -329,7 +431,7 @@
                                                                                         <label class="login2">Carrier Name</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_carrier_name" value="" name="fb_carrier_name" class="form-control" />
+                                                                                        <input type="text" id="fb_carrier_name" value="" required name="fb_carrier_name" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -340,7 +442,7 @@
                                                                                         <label class="login2">Number of Packages</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" name="fb_no_of_packages" class="form-control" />
+                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" required name="fb_no_of_packages" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -352,7 +454,7 @@
                                                                                         <label class="login2">CBM</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_cbm" value="" name="fb_cbm" class="form-control" />
+                                                                                        <input type="text" id="fb_cbm" value="" required name="fb_cbm" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -364,7 +466,7 @@
                                                                                         <label class="login2">Gross  Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" name="fb_gross_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_gross_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -376,7 +478,7 @@
                                                                                         <label class="login2">Net Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" name="fb_net_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" required name="fb_net_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -387,7 +489,7 @@
                                                                                         <label class="login2">Description</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <textarea style="" name="job_description" class="form-control" required id="job_description" placeholder=""></textarea>
+                                                                                        <textarea style="" name="fb_job_description" class="form-control" required id="fb_job_description" placeholder=""></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -403,7 +505,7 @@
                                                                                         <label class="login2">Carrier Name</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="sb_carrier_name" value="" name="sb_carrier_name" class="form-control" />
+                                                                                        <input type="text" id="sb_carrier_name" value="" required name="sb_carrier_name" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -414,7 +516,7 @@
                                                                                         <label class="login2">Number of Packages</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1" id="sb_no_of_packages" value="" name="sb_no_of_packages" class="form-control" />
+                                                                                        <input type="number" min="1" id="sb_no_of_packages" value="" required name="sb_no_of_packages" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -426,7 +528,7 @@
                                                                                         <label class="login2">CBM</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="sb_cbm" value="" name="sb_cbm" class="form-control" />
+                                                                                        <input type="text" id="sb_cbm" value="" required name="sb_cbm" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -438,7 +540,7 @@
                                                                                         <label class="login2">Gross  Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1.0" step="any" id="sb_gross_weight" value="" name="sb_gross_weight" class="form-control" />
+                                                                                        <input type="number" min="1.0" step="any" id="sb_gross_weight" value="" required name="sb_gross_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -450,7 +552,7 @@
                                                                                         <label class="login2">Net Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1.0" step="any" id="sb_net_weight" value="" name="sb_net_weight" class="form-control" />
+                                                                                        <input type="number" min="1.0" step="any" id="sb_net_weight" value="" required name="sb_net_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -461,7 +563,7 @@
                                                                                         <label class="login2">Description</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <textarea style="" name="job_description" class="form-control" required id="job_description" placeholder=""></textarea>
+                                                                                        <textarea style="" name="sb_job_description" class="form-control" required id="sb_job_description" placeholder=""></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>                                                                                          
@@ -483,8 +585,8 @@
                                                     </div>
                                                     </div>
                                                 </div>
-                                            {% else %}
-                                                <div class="product-tab-list tab-pane fade" id="reviews">
+                                            {% elif job_obj.job_type = 'Haulage' and job_obj.job_arrival_status_mode = 'Short landed' %}
+                                                <div class="product-tab-list tab-pane fade in active" id="reviews">
                                                     <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="review-content-section">
@@ -492,7 +594,180 @@
                                                                 <form action="{% url 'zodiakApp:process_job' job_obj %}" method="post" enctype="multipart/form-data">
                                                                     {% csrf_token %}
 
+                                                                    <input type="hidden" name="job_obj" value="{{job_obj}}">
 
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 firstbatch">
+                                                                            <h6>First Batch</h6>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Carrier Name</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="text" id="fb_carrier_name" value="" required name="fb_carrier_name" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Number of Packages</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" required name="fb_no_of_packages" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">CBM</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="text" id="fb_cbm" value="" required name="fb_cbm" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Gross  Weight (kg)</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_gross_weight" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Net Weight (kg)</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" step="any" min="1.0" id="fb_net_weight" value="" required name="fb_net_weight" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Description</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <textarea style="" name="fb_job_description" class="form-control" required id="fb_job_description" placeholder=""></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        
+                                                                        <div class="col-lg-4 col-md-4 4 col-xs-12 secondbatch">
+                                                                            <h6>Second Batch</h6>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Carrier Name</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="text" id="sb_carrier_name" value="" required name="sb_carrier_name" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Number of Packages</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" min="1" id="sb_no_of_packages" value="" required name="sb_no_of_packages" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">CBM</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="text" id="sb_cbm" value="" required name="sb_cbm" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Gross  Weight (kg)</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" min="1.0" step="any" id="sb_gross_weight" value="" required name="sb_gross_weight" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                                                               
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Net Weight (kg)</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <input type="number" min="1.0" step="any" id="sb_net_weight" value="" required name="sb_net_weight" class="form-control" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                                        <label class="login2">Description</label>
+                                                                                    </div>
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                                        <textarea style="" name="sb_job_description" class="form-control" required id="sb_job_description" placeholder=""></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>                                                                                          
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row submititem">
+                                                                        <div class="col-lg-12">
+                                                                            <div class="payment-adress">
+                                                                                <button type="submit" class="btn btn-primary waves-effect waves-light pull-right">Submit</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            {% elif job_obj.job_type = 'Sea Cargo' and job_obj.job_arrival_status_mode = 'Short landed' %}
+                                                <div class="product-tab-list tab-pane fade in active" id="reviews">
+                                                    <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="review-content-section">
+                                                            <div id="dropzone1" class="pro-ad">
+                                                                <form action="{% url 'zodiakApp:process_job' job_obj %}" method="post" enctype="multipart/form-data">
+                                                                    {% csrf_token %}
 
                                                                     <input type="hidden" name="job_obj" value="{{job_obj}}">
 
@@ -506,7 +781,7 @@
                                                                                         <label class="login2">Carrier Name</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_carrier_name" value="" name="fb_carrier_name" class="form-control" />
+                                                                                        <input type="text" id="fb_carrier_name" value="" required name="fb_carrier_name" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -566,7 +841,7 @@
                                                                                         <label class="login2">Number of Packages</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" name="fb_no_of_packages" class="form-control" />
+                                                                                        <input type="number" min="1" id="fb_no_of_packages" value="" required name="fb_no_of_packages" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -578,7 +853,7 @@
                                                                                         <label class="login2">CBM</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="fb_cbm" value="" name="fb_cbm" class="form-control" />
+                                                                                        <input type="text" id="fb_cbm" value="" required name="fb_cbm" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -590,7 +865,7 @@
                                                                                         <label class="login2">Gross  Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" name="fb_gross_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_gross_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -602,7 +877,7 @@
                                                                                         <label class="login2">Net Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" name="fb_net_weight" class="form-control" />
+                                                                                        <input type="number" step="any" min="1.0" id="fb_gross_weight" value="" required name="fb_net_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -613,7 +888,7 @@
                                                                                         <label class="login2">Description</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <textarea style="" name="job_description" class="form-control" required id="job_description" placeholder=""></textarea>
+                                                                                        <textarea style="" name="fb_job_description" class="form-control" required id="job_description" placeholder=""></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -627,7 +902,7 @@
                                                                                         <label class="login2">Carrier Name</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="sb_carrier_name" value="" name="sb_carrier_name" class="form-control" />
+                                                                                        <input type="text" id="sb_carrier_name" value="" required name="sb_carrier_name" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -685,7 +960,7 @@
                                                                                         <label class="login2">Number of Packages</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1" id="sb_no_of_packages" value="" name="sb_no_of_packages" class="form-control" />
+                                                                                        <input type="number" min="1" id="sb_no_of_packages" value="" required name="sb_no_of_packages" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -697,7 +972,7 @@
                                                                                         <label class="login2">CBM</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="text" id="sb_cbm" value="" name="sb_cbm" class="form-control" />
+                                                                                        <input type="text" id="sb_cbm" value="" required name="sb_cbm" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -709,7 +984,7 @@
                                                                                         <label class="login2">Gross  Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1.0" step="any" id="sb_gross_weight" value="" name="sb_gross_weight" class="form-control" />
+                                                                                        <input type="number" min="1.0" step="any" id="sb_gross_weight" value="" required name="sb_gross_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -721,7 +996,7 @@
                                                                                         <label class="login2">Net Weight (kg)</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <input type="number" min="1.0" step="any" id="sb_net_weight" value="" name="sb_net_weight" class="form-control" />
+                                                                                        <input type="number" min="1.0" step="any" id="sb_net_weight" value="" required name="sb_net_weight" class="form-control" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -732,7 +1007,7 @@
                                                                                         <label class="login2">Description</label>
                                                                                     </div>
                                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                                                        <textarea style="" name="job_description" class="form-control" required id="job_description" placeholder=""></textarea>
+                                                                                        <textarea style="" name="sb_job_description" class="form-control" required id="sb_job_description" placeholder=""></textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

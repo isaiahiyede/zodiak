@@ -31,14 +31,11 @@
                                                 <th data-field="state" data-checkbox="true"></th>
                                                 <th data-field="batch_id">Mini Batch ID</th>
                                                 <th data-field="no_of_packages">No of Packages</th>
-                                                <th data-field="no_of_containers">No of Containers</th>
-                                                <th data-field="type_of_container">Type of Container</th>
                                                 <th data-field="carrier_name">Carrier Name</th>
                                                 <th data-field="cbm">CBM</th>
                                                 <th data-field="gross_wgh">Gross weight</th>
                                                 <th data-field="net_wgh">Net weight</th>
-                                                <th data-field="exp_date_of_arrival">EDOA</th>
-                                                <th data-field="date_of_arrival">DOA</th>
+
                                             </tr>
                                         </thead>
 
@@ -50,14 +47,11 @@
 
                                                 <td>{{job.mini_batch_id}}</td>
                                                 <td>{{job.no_of_packages|default_if_none:"0"}}</td>
-                                                <td>{{job.no_of_containers|default_if_none:"0"}}</td>
-                                                <td>{{job.type_of_container}}</td>
                                                 <td>{{job.carrier_name}}</td>
                                                 <td>{{job.cbm}}</td>
                                                 <td>{{job.gross_wgh|default_if_none:"0.0"}}</td>
                                                 <td>{{job.net_wgh|default_if_none:"0.0"}}</td>
-                                                <td>{{job.exp_date_of_arrival}}</td>
-                                                <td>{{job.date_of_arrival}}</td>
+
                                             </tr>
 
                                             {% endfor %}

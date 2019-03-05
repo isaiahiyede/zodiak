@@ -28,6 +28,7 @@ class UserAccount(models.Model):
     reporter = models.BooleanField(default=False)
     administrator = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
+    staff_account = models.BooleanField(default=True)
     city = models.CharField(max_length=20,null=True,blank=True)
     state = models.CharField(max_length=20,null=True,blank=True)
     website = models.CharField(max_length=50,null=True,blank=True)
@@ -301,18 +302,35 @@ class Job(PackageDimension):
         return total
 
     def totalcostofjob(self):
-        allfinances = self.finances_set.filter(deleted=False)
-        total = 0.0
-        for finance in allfinances:
-            amount = finance.jobtotalCost()
-            if amount == None:
-                continue
-            else:
-                total += amount
+        total = self.finances_set.filter(deleted=False).aggregate(Sum('amount'))['amount__sum']
+        if total == 0.0 or total == None:
+            total = 0.0
+        else:
+            total = total
         return total
 
     def getminibatchesCount(self):
         return self.minibatches_set.filter(deleted=False).count()
+
+    def getContainerTypesInfo(self):
+        list_of_containers = []
+        all_containers = self.containertypes_set.filter(deleted=False)
+        if all_containers != []:
+            for container in all_containers:
+                list_of_containers.append(container.item_info())
+        else:
+            list_of_containers = "Nil"
+        return list_of_containers
+
+    def getDescription(self):
+        descriptions = []
+        all_desc = self.minibatches_set.filter(deleted=False)
+        if all_desc != []:
+            for desc in all_desc:
+                descriptions.append(desc.item_info())
+        else:
+            descriptions = "Nil"
+        return descriptions
 
     def getminibatches(self):
         return self.minibatches_set.filter(deleted=False)
@@ -331,62 +349,20 @@ class Job(PackageDimension):
 
 class Finances(models.Model):
     job_finance = models.ForeignKey(Job,null=True,blank=True)
-    duty_amount = models.FloatField(default=0.0, null=True, blank=True)
-    duty_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    duty_date_paid = models.DateField(null=True, blank=True)
-    duty_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    terminal_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    terminal_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    terminal_charge_date_paid = models.DateField(null=True, blank=True)
-    terminal_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    shipping_line_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    shipping_line_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    shipping_line_charge_date_paid = models.DateField(null=True, blank=True)
-    shipping_line_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    son_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    son_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    son_charge_date_paid = models.DateField(null=True, blank=True)
-    son_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    airline_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    airline_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    airline_charge_date_paid = models.DateField(null=True, blank=True)
-    airline_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    quarantine_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    quarantine_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    quarantine_charge_date_paid = models.DateField(null=True, blank=True)
-    quarantine_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    ndlea_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    ndlea_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    ndlea_charge_date_paid = models.DateField(null=True, blank=True)
-    ndlea_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    nafdac_charge_amount = models.FloatField(default=0.0, null=True, blank=True)
-    nafdac_charge_paid_by = models.CharField(max_length=50, null=True, blank=True)
-    nafdac_charge_date_paid = models.DateField(null=True, blank=True)
-    nafdac_charge_refundablle_as = models.CharField(max_length=50, null=True, blank=True)
-    other_charges_due_carrier = models.FloatField(default=0.0, null=True, blank=True)
-    insurance_charge = models.FloatField(default=0, null=True, blank=True)
-    VAT_charge = models.FloatField(default=0, null=True, blank=True)
-    demurrage_rate = models.FloatField(max_length=10, default=0.10, null=True, blank=True)
+    charge_type = models.CharField(max_length=50, null=True, blank=True)
+    amount = models.FloatField(default=0.0, null=True, blank=True)
+    paid_by = models.CharField(max_length=50, null=True, blank=True)
+    date_paid = models.DateField(null=True, blank=True)
+    refundablle_as = models.CharField(max_length=50, null=True, blank=True)
     deleted = models.BooleanField(default=False)
     created_on = models.DateTimeField(default=timezone.now)
 
 
     def jobtotalCost(self):
         
-        values = [ self.duty_amount,self.terminal_charge_amount,self.shipping_line_charge_amount,self.son_charge_amount, 
-                self.airline_charge_amount,self.quarantine_charge_amount,self.ndlea_charge_amount, 
-                self.nafdac_charge_amount,self.other_charges_due_carrier,self.VAT_charge,self.insurance_charge ]
-
-        total = 0.0
-        for val in values:
-            print("The value is:", val)
-            if val == None:
-                 continue 
-            else:
-                total += val
-
-        print("The total is:", total)
-        total = round(total,2)
+        total = self.amount
+        if total == None or total == 0:
+            return 0
         return total
 
 
@@ -402,8 +378,7 @@ class Finances(models.Model):
 class MiniBatches(models.Model):
     job = models.ForeignKey(Job,null=True,blank=True)
     no_of_packages = models.IntegerField(null=True, blank=True)
-    no_of_containers= models.IntegerField(null=True, blank=True)
-    type_of_container = models.CharField(max_length=50, null=True, blank=True)
+    job_description = models.CharField(max_length=255, null=True, blank=True)
     carrier_name = models.CharField(max_length=50, null=True, blank=True)
     mini_batch_id = models.CharField(max_length=50,null=True, blank=True)
     cbm = models.CharField(max_length=50,null=True, blank=True)
@@ -416,9 +391,10 @@ class MiniBatches(models.Model):
 
 
     def item_info(self):
-        return {'NOP': self.no_of_packages, 'NOC': self.no_of_containers, 'CBM':self.cbm,
-                'TOC': self.type_of_container, 'Carrier Name': self.carrier_name,
-                'Gross Weight':self.gross_wgh, 'Net Weight': self.net_wgh, 'EDOA': self.exp_date_of_arrival,
+        return {'NOP': self.no_of_packages, 'CBM':self.cbm,
+                'Carrier Name': self.carrier_name, 'Job Description':self.job_description,
+                'Gross Weight':self.gross_wgh, 'Net Weight': self.net_wgh,
+                'EDOA': self.exp_date_of_arrival,
                 'DOA':self.date_of_arrival
                 }
 
@@ -474,6 +450,9 @@ class ContainerTypes(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     deleted = models.BooleanField(default=False)
 
+    def item_info(self):
+        return {'NAOC': self.name_of_container, 'NUOC': self.number_of_container}
+
     class Meta:
         verbose_name_plural = 'Types of Containers'
         ordering = ['-created_on']
@@ -494,20 +473,21 @@ class Documents(models.Model):
         ordering = ['-created_on']
         
     def __str__(self):
-        return '%s' %(self.job_obj_cont)
+        return '%s' %(self.job_obj_doc)
 
 
 class Comments(models.Model):
-	job_message = models.ForeignKey(Job, null=True, blank=True)
-	msg = models.TextField(null=True,blank=True)
-	msg_created_on = models.DateTimeField(default=timezone.now)
+    job_message = models.ForeignKey(Job, null=True, blank=True)
+    msg = models.TextField(null=True,blank=True)
+    commented_by = models.CharField(max_length=255,null=True,blank=True)
+    msg_created_on = models.DateTimeField(default=timezone.now)
 
-	class Meta:
-	    verbose_name_plural = 'Comments'
-	    ordering = ['-msg_created_on']
-	    
-	def __str__(self):
-	    return '%s - %s' %(self.job_message.job_id)
+    class Meta:
+        verbose_name_plural = 'Comments'
+        ordering = ['-msg_created_on']
+        
+    def __str__(self):
+        return '%s - %s' %(self.job_message.job_id)
 
 
 class DockReceipt(models.Model):

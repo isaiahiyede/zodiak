@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nmso-o2j6x4=w^sypv35=h6@5=npn5v18wz2_q*lcu0pn$2p^*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['isaiahiyede.pythonanywhere.com']
 
@@ -86,6 +86,15 @@ WSGI_APPLICATION = 'zodiak.wsgi.application'
 LOGIN_REDIRECT_URL = '/accounts/login/'
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'isaiahiyede$zodiak',
+        'USER': 'isaiahiyede',
+        'PASSWORD': 'ogheneyole@@101',
+        'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',
+    }
+}
 
 
 # DATABASES = {
@@ -104,8 +113,6 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 # }
 
 
-#
-
 # DATABASES = {
 #     'default': {
 #     'NAME': 'zodiak_db',
@@ -120,6 +127,7 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 #         }
 #     }
 # }
+
 
 # DATABASES = {
 #     'default': {
@@ -132,16 +140,17 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'zodiak_db',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'zodiak_db',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Internationalization

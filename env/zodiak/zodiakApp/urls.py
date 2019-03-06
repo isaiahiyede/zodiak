@@ -55,6 +55,9 @@ urlpatterns = [
     url(r'^newmail/$',views.newmail, name = "newmail"),
     url(r'^viewmail/(?P<pk>.+)/$', views.view_mail, name="view_mail"),
 
+    url(r'^jobdocs/(?P<job_obj>.+)/$', views.addDoc, name="addDoc"),
+    url(r'^delete_doc/(?P<pk>.+)/$', views.delete_doc, name="delete_doc"),
+
     url(r'^processjob/(?P<job_obj>.+)$',views.process_job, name = "process_job"),
 
     url(r'^addrm/$',views.add_rm, name = "add_rm"),

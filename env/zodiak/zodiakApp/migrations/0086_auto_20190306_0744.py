@@ -18,17 +18,22 @@ class Migration(migrations.Migration):
         ),
         migrations.RenameField(
             model_name='finances',
+            old_name='airline_charge_paid_by',
+            new_name='charge_type',
+        ),
+        migrations.RenameField(
+            model_name='finances',
             old_name='airline_charge_date_paid',
             new_name='date_paid',
         ),
         migrations.RenameField(
             model_name='finances',
-            old_name='airline_charge_paid_by',
+            old_name='airline_charge_refundablle_as',
             new_name='paid_by',
         ),
         migrations.RenameField(
             model_name='finances',
-            old_name='airline_charge_refundablle_as',
+            old_name='duty_paid_by',
             new_name='refundablle_as',
         ),
         migrations.RemoveField(
@@ -46,10 +51,6 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name='finances',
             name='duty_date_paid',
-        ),
-        migrations.RemoveField(
-            model_name='finances',
-            name='duty_paid_by',
         ),
         migrations.RemoveField(
             model_name='finances',
@@ -158,5 +159,38 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name='finances',
             name='terminal_charge_refundablle_as',
+        ),
+        migrations.RemoveField(
+            model_name='minibatches',
+            name='no_of_containers',
+        ),
+        migrations.RemoveField(
+            model_name='minibatches',
+            name='type_of_container',
+        ),
+        migrations.AddField(
+            model_name='comments',
+            name='commented_by',
+            field=models.CharField(max_length=255, blank=True, null=True),
+        ),
+        migrations.AddField(
+            model_name='comments',
+            name='deleted',
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
+            model_name='job',
+            name='job_new_comment',
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
+            model_name='minibatches',
+            name='job_description',
+            field=models.CharField(max_length=255, blank=True, null=True),
+        ),
+        migrations.AddField(
+            model_name='useraccount',
+            name='staff_account',
+            field=models.BooleanField(default=True),
         ),
     ]

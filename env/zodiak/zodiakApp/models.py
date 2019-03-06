@@ -10,7 +10,7 @@ from django.template.defaultfilters import slugify
 import math
 
 # Create your models here.
-		
+        
 class UserAccount(models.Model):
     """ user details """
     user = models.OneToOneField(User, unique=True, null=True, blank=True)
@@ -35,90 +35,90 @@ class UserAccount(models.Model):
     acc_owner = models.CharField(max_length=50,null=True,blank=True)
 
     class Meta:
-	    verbose_name_plural = 'User Accounts'
-	    ordering = ['-created_on']
-	    
+        verbose_name_plural = 'User Accounts'
+        ordering = ['-created_on']
+        
     def __str__(self):
-	    return '%s' %(self.user.username)
+        return '%s' %(self.user.username)
 
 
 class PrimaryContact(models.Model):
-	contact_name = models.CharField(max_length=50,null=True,blank=True)
-	contact_position = models.CharField(max_length=50,null=True,blank=True)
-	contact_department = models.CharField(max_length=50,null=True,blank=True)
-	contact_phone_number = models.CharField(max_length=50, null=True, blank=True)
-	contact_email = models.EmailField(max_length=50,null=True,blank=True)
-	user_acc = models.ForeignKey(User, null=True, blank=True)
-	contact_address_1 = models.CharField(max_length=20,null=True,blank=True)
-	primary_created_on = models.DateTimeField(default=timezone.now)
-	deleted = models.BooleanField(default=False)
+    contact_name = models.CharField(max_length=50,null=True,blank=True)
+    contact_position = models.CharField(max_length=50,null=True,blank=True)
+    contact_department = models.CharField(max_length=50,null=True,blank=True)
+    contact_phone_number = models.CharField(max_length=50, null=True, blank=True)
+    contact_email = models.EmailField(max_length=50,null=True,blank=True)
+    user_acc = models.ForeignKey(User, null=True, blank=True)
+    contact_address_1 = models.CharField(max_length=20,null=True,blank=True)
+    primary_created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
 
-	class Meta:
-	    verbose_name_plural = 'Primary Contact'
-	    ordering = ['-user_acc']
-	    
-	def __str__(self):
-	    return '%s' %(self.user_acc)
+    class Meta:
+        verbose_name_plural = 'Primary Contact'
+        ordering = ['-user_acc']
+        
+    def __str__(self):
+        return '%s' %(self.user_acc)
 
 class SecondaryContact(models.Model):
-	sec_contact_name = models.CharField(max_length=50,null=True,blank=True)
-	sec_contact_position = models.CharField(max_length=50,null=True,blank=True)
-	sec_contact_department = models.CharField(max_length=50,null=True,blank=True)
-	sec_contact_phone_number = models.CharField(max_length=50, null=True, blank=True)
-	sec_contact_email = models.EmailField(max_length=50,null=True,blank=True)
-	sec_user_acc = models.ForeignKey(User, null=True, blank=True)
-	sec_contact_address_1 = models.CharField(max_length=20,null=True,blank=True)
-	sec_contact_created_on = models.DateTimeField(default=timezone.now)
-	deleted = models.BooleanField(default=False)
+    sec_contact_name = models.CharField(max_length=50,null=True,blank=True)
+    sec_contact_position = models.CharField(max_length=50,null=True,blank=True)
+    sec_contact_department = models.CharField(max_length=50,null=True,blank=True)
+    sec_contact_phone_number = models.CharField(max_length=50, null=True, blank=True)
+    sec_contact_email = models.EmailField(max_length=50,null=True,blank=True)
+    sec_user_acc = models.ForeignKey(User, null=True, blank=True)
+    sec_contact_address_1 = models.CharField(max_length=20,null=True,blank=True)
+    sec_contact_created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
 
 
-	class Meta:
-	    verbose_name_plural = 'Secondary Contact'
-	    ordering = ['-sec_user_acc']
-	    
-	def __str__(self):
-	    return '%s' %(self.sec_user_acc)
+    class Meta:
+        verbose_name_plural = 'Secondary Contact'
+        ordering = ['-sec_user_acc']
+        
+    def __str__(self):
+        return '%s' %(self.sec_user_acc)
 
 
 class Quotation(models.Model):
-	user_acct = models.ForeignKey(UserAccount, null=True, blank=True)
-	item = models.CharField(max_length=20,null=True,blank=True)
-	quantity = models.IntegerField(null=True, blank=True)
-	price_per_item = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
-	total_cost = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
-	notes_on_job = models.TextField(null=True,blank=True)
-	created_on = models.DateTimeField(default=timezone.now)
-	deleted = models.BooleanField(default=False)
+    user_acct = models.ForeignKey(UserAccount, null=True, blank=True)
+    item = models.CharField(max_length=20,null=True,blank=True)
+    quantity = models.IntegerField(null=True, blank=True)
+    price_per_item = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    total_cost = models.DecimalField(max_digits = 15, decimal_places = 1, null=True, blank=True)
+    notes_on_job = models.TextField(null=True,blank=True)
+    created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
 
-	class Meta:
-	    verbose_name_plural = 'Quotation'
-	    ordering = ['-user_acct']
-	    
-	def __str__(self):
-	    return '%s' %(self.user_acc)
+    class Meta:
+        verbose_name_plural = 'Quotation'
+        ordering = ['-user_acct']
+        
+    def __str__(self):
+        return '%s' %(self.user_acc)
 
 
 class Status(models.Model):
-	name = models.CharField(max_length=100,null=True,blank=True)
-	alias = models.CharField(max_length=100,null=True,blank=True)
+    name = models.CharField(max_length=100,null=True,blank=True)
+    alias = models.CharField(max_length=100,null=True,blank=True)
 
-	class Meta:
-	    verbose_name_plural = 'Statuses'
-	    ordering = ['-name']
-	    
-	def __str__(self):
-	    return '%s' %(self.name)
+    class Meta:
+        verbose_name_plural = 'Statuses'
+        ordering = ['-name']
+        
+    def __str__(self):
+        return '%s' %(self.name)
 
 
 class JobModes(models.Model):
-	name = models.CharField(max_length=20,null=True,blank=True)
+    name = models.CharField(max_length=20,null=True,blank=True)
 
-	class Meta:
-	    verbose_name_plural = 'Job Modes'
-	    ordering = ['-name']
-	    
-	def __str__(self):
-	    return '%s' %(self.name)
+    class Meta:
+        verbose_name_plural = 'Job Modes'
+        ordering = ['-name']
+        
+    def __str__(self):
+        return '%s' %(self.name)
 
 
 class PackageDimension(models.Model):
@@ -258,6 +258,7 @@ class Job(PackageDimension):
     job_amount_balance = models.FloatField(default=1.0,null=True, blank=True)
     vat = models.BooleanField(default=False)
     demurrage = models.BooleanField(default=False)
+    job_new_comment = models.BooleanField(default=False)
 
     demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
     demurrage_start_date = models.DateField(null=True, blank=True)
@@ -265,7 +266,7 @@ class Job(PackageDimension):
 
     number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
     gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
-    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)	
+    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)    
     nature_of_goods = models.CharField(max_length=200, null=True, blank=True)
     quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
     airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
@@ -312,6 +313,11 @@ class Job(PackageDimension):
     def getminibatchesCount(self):
         return self.minibatches_set.filter(deleted=False).count()
 
+
+    def getcommentsCount(self):
+        return self.comments_set.filter(deleted=False).count()
+
+
     def getContainerTypesInfo(self):
         list_of_containers = []
         all_containers = self.containertypes_set.filter(deleted=False)
@@ -340,12 +346,12 @@ class Job(PackageDimension):
 
 
     class Meta:
-	    verbose_name_plural = 'Jobs'
-	    ordering = ['-job_created_on']
+        verbose_name_plural = 'Jobs'
+        ordering = ['-job_created_on']
 
-	    
+        
     def __str__(self):
-	    return '%s' %(self.job_id)
+        return '%s' %(self.job_id)
 
 class Finances(models.Model):
     job_finance = models.ForeignKey(Job,null=True,blank=True)
@@ -372,7 +378,6 @@ class Finances(models.Model):
         
     def __str__(self):
         return '%s' %(self.job_finance)
-
 
 
 class MiniBatches(models.Model):
@@ -407,40 +412,40 @@ class MiniBatches(models.Model):
 
 
 class RelationshipManager(models.Model):
-	rm_client = models.ForeignKey(UserAccount, null=True,blank=True)
-	rm_name = models.CharField(max_length=20,null=True,blank=True)
-	rm_email = models.CharField(max_length=20,null=True,blank=True)
-	rm_position = models.CharField(max_length=20,null=True,blank=True)
-	rm_alt_email = models.CharField(max_length=20,null=True,blank=True)
-	rm_contact_no = models.CharField(max_length=20,null=True,blank=True)
-	rm_designation = models.CharField(max_length=20,null=True,blank=True)
-	rm_office_address = models.TextField(null=True,blank=True)
-	deleted = models.BooleanField(default=False)
-	rm_created_on = models.DateTimeField(default=timezone.now)
+    rm_client = models.ForeignKey(UserAccount, null=True,blank=True)
+    rm_name = models.CharField(max_length=20,null=True,blank=True)
+    rm_email = models.CharField(max_length=20,null=True,blank=True)
+    rm_position = models.CharField(max_length=20,null=True,blank=True)
+    rm_alt_email = models.CharField(max_length=20,null=True,blank=True)
+    rm_contact_no = models.CharField(max_length=20,null=True,blank=True)
+    rm_designation = models.CharField(max_length=20,null=True,blank=True)
+    rm_office_address = models.TextField(null=True,blank=True)
+    deleted = models.BooleanField(default=False)
+    rm_created_on = models.DateTimeField(default=timezone.now)
 
-	class Meta:
-	    verbose_name_plural = 'Relationship Managers'
-	    ordering = ['-rm_created_on']
-	    
-	def __str__(self):
-	    return '%s' %(self.rm_client)
+    class Meta:
+        verbose_name_plural = 'Relationship Managers'
+        ordering = ['-rm_created_on']
+        
+    def __str__(self):
+        return '%s' %(self.rm_client)
 
 
 class OfficeUseOnly(models.Model):
-	rm_client_obj = models.ForeignKey(UserAccount,null=True,blank=True)
-	internal_evaluation= models.TextField(null=True,blank=True)
-	mode_of_operation= models.CharField(max_length=20,null=True,blank=True)
-	special_request= models.CharField(max_length=20,null=True,blank=True)
-	staff_evaluation= models.TextField(null=True,blank=True)
-	off_deleted = models.BooleanField(default=False)
-	created_on = models.DateTimeField(default=timezone.now)
+    rm_client_obj = models.ForeignKey(UserAccount,null=True,blank=True)
+    internal_evaluation= models.TextField(null=True,blank=True)
+    mode_of_operation= models.CharField(max_length=20,null=True,blank=True)
+    special_request= models.CharField(max_length=20,null=True,blank=True)
+    staff_evaluation= models.TextField(null=True,blank=True)
+    off_deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
 
-	class Meta:
-	    verbose_name_plural = 'Office Use only'
-	    ordering = ['-created_on']
-	    
-	def __str__(self):
-	    return '%s' %(self.rm_client_obj.user)
+    class Meta:
+        verbose_name_plural = 'Office Use only'
+        ordering = ['-created_on']
+        
+    def __str__(self):
+        return '%s' %(self.rm_client_obj.user)
 
 
 class ContainerTypes(models.Model):
@@ -479,8 +484,10 @@ class Documents(models.Model):
 class Comments(models.Model):
     job_message = models.ForeignKey(Job, null=True, blank=True)
     msg = models.TextField(null=True,blank=True)
-    commented_by = models.CharField(max_length=255,null=True,blank=True)
+    commented_by = models.CharField(max_length = 255,null=True, blank=True)
     msg_created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
+
 
     class Meta:
         verbose_name_plural = 'Comments'
@@ -492,7 +499,7 @@ class Comments(models.Model):
 
 class DockReceipt(models.Model):
     shipping_package                                = models.ForeignKey(Job, null=True, blank=True)
-    tracking_number                   				= models.CharField(max_length=100,null=True, blank=True)
+    tracking_number                                 = models.CharField(max_length=100,null=True, blank=True)
     exporter_name_and_address                       = models.CharField(max_length = 100,null=True, blank=True)
     zip_code                                        = models.CharField(max_length = 100,null=True, blank=True)
     consigned_to                                    = models.CharField(max_length = 100,null=True, blank=True)

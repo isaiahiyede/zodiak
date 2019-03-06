@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Comments, Documents, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+
+from zodiakApp.models import Job, UserAccount, Documents, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -19,10 +20,11 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name','last_name')
 
 
-class CommentForm(forms.ModelForm):
+
+class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
-        fields = ('commented_by', 'msg',)
+        fields = ('msg', 'commented_by',)
 
 
 class MiniBatchesForm(forms.ModelForm):

@@ -14,8 +14,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, ContainerTypesForm,CommentForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, Batch, Documents, Comments, ContainerTypes, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
+from zodiakApp.forms import UserForm, ContainerTypesForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.models import Job, Batch, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -54,17 +54,28 @@ def user_logout(request):
     logout(request)
     return redirect(reverse('zodiakApp:clientpage'))
 
+
 def jobCount():
     total = Job.objects.filter(deleted=False)
     if total == 0:
         return str(1)
     return str(total.count())
 
+
 def clientJobCount(name):
     total = Job.objects.filter(deleted=False,job_user_acc=name)
     if total == 0:
         return str(1)
     return str(total.count())
+
+
+def newMessageCountAdmin():
+    return Job.objects.filter(deleted=False,job_new_comment=True).count()
+
+
+def newMessageCountClient(name):
+    return Job.objects.filter(deleted=False,job_new_comment=False,job_user_acc=name).count()
+
 
 def get_job(request):
     context = {}
@@ -286,6 +297,7 @@ def add_job(request,jobtype):
 @login_required
 def clientpage(request):
     context = {}
+    context['messagecount'] = newMessageCountClient(request.user.useraccount)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     user_jobs = Job.objects.filter(job_user_acc=request.user.useraccount, deleted=False)
@@ -1572,16 +1584,6 @@ def newmail(request):
 
 
 @login_required
-def get_job_comments(request):
-    context = {}
-    comments = Comments.objects.filter(job_message=Job.objects.get(pk=request.GET.get('job_id')))
-    context['comments'] = comments
-    template_name = 'zodiakApp/comments.html'
-    return render(request, template_name, context)
-
-
-
-@login_required
 def view_mail(request,pk):
     context = {}
     context['jobmodes'] = getJobModes()
@@ -1605,6 +1607,7 @@ def addDoc(request, job_obj):
     context = {}
     print(request.POST)
     print(request.FILES)
+
     if request.method == "POST":
 
         document_type = request.POST.getlist('document_type')
@@ -1614,6 +1617,7 @@ def addDoc(request, job_obj):
             job_obj = Job.objects.get(job_id=job_obj)
         except:
             job_obj = Job.objects.get(pk=job_obj)
+
 
         for i in document_type:
             val = document_type.index(i)
@@ -1646,6 +1650,54 @@ def delete_doc(request,pk):
     response = redirect(request.META['HTTP_REFERER'])
     return response
 
+
+@login_required
+def get_job_comments(request):
+    context = {}
+    print('got here')
+    context['comments'] = Comments.objects.filter(job_message=request.GET.get('job_id'))
+    context['job'] = request.GET.get('job_id')
+    template_name = 'zodiakApp/comment.html'
+    return render(request, template_name, context)
+
+
+@login_required
+def get_job_desc(request):
+    context = {}
+    print('got here')
+    jobs = Job.objects.get(pk=request.GET.get('job_id'))
+    context['jobs_info'] = jobs.getDescription()
+    template_name = 'zodiakApp/descinfo.html'
+    return render(request, template_name, context)
+
+
+@login_required
+def get_job_info(request):
+    context = {}
+    jobs = Job.objects.get(pk=request.GET.get('job_id'))
+    context['jobs_info'] = jobs.getContainerTypesInfo()
+    template_name = 'zodiakApp/descinfo.html'
+    return render(request, template_name, context)
+
+
+@login_required
+def post_comments(request,pk):
+    print(request.POST)
+    job_obj = Job.objects.get(pk=pk)
+    context = {}
+    if request.user.is_staff:
+        commenter = 'admin'
+        job_obj.job_new_comment = False
+        job_obj.save()
+    else:
+        job_obj.job_new_comment = True
+        job_obj.save()
+        commenter = request.user.username
+    comm_obj = Comments.objects.create(job_message=job_obj,msg=request.POST.get('msg'),commented_by=commenter)
+    comm_obj.save()
+    messages.success(request, 'Job comments were sucessfully updated')
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
 
 
 

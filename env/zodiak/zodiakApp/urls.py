@@ -45,6 +45,8 @@ urlpatterns = [
     url(r'^jobinvoice/(?P<pk>.+)/$', views.job_invoice_page, name="job_invoice_page"),
 
     url(r'^jobComments/$', views.get_job_comments, name="get_job_comments"),
+    url(r'^jobdesc/$', views.get_job_desc, name="get_job_desc"),
+    url(r'^jobinfo/$', views.get_job_info, name="get_job_info"),
 
     url(r'^jobfinancials/(?P<job_obj>.+)/$', views.financials, name="financials"),
     url(r'^financeRecords/$', views.financerecords, name="financerecords"),
@@ -64,6 +66,8 @@ urlpatterns = [
 
     url(r'^addrm/$',views.add_rm, name = "add_rm"),
     url(r'^viewrms/$',views.viewrms, name = "viewrms"),
+
+    url(r'^postComments/(?P<pk>.+)/$',views.post_comments, name = "post_comments"),
 
     url(r'^rmedit/(?P<pk>.+)/$', views.rm_edit, name="rm_edit"),
     url(r'^rmview/(?P<pk>.+)/$', views.rm_view, name="rm_view"),

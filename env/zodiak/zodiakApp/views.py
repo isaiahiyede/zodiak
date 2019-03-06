@@ -1664,8 +1664,8 @@ def get_job_comments(request):
 @login_required
 def get_job_desc(request):
     context = {}
-    print('got here')
     jobs = Job.objects.get(pk=request.GET.get('job_id'))
+    print(jobs.getDescription())
     context['jobs_info'] = jobs.getDescription()
     template_name = 'zodiakApp/descinfo.html'
     return render(request, template_name, context)
@@ -1676,7 +1676,7 @@ def get_job_info(request):
     context = {}
     jobs = Job.objects.get(pk=request.GET.get('job_id'))
     context['jobs_info'] = jobs.getContainerTypesInfo()
-    template_name = 'zodiakApp/descinfo.html'
+    template_name = 'zodiakApp/descinfo2.html'
     return render(request, template_name, context)
 
 

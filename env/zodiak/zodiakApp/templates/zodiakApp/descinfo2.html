@@ -14,9 +14,7 @@
                                         <div class="row">
                                             {% for job in jobs_info %}
                                             <div>
-                                                <p>Description: {{job.job_description}}; Gross Weight: {{job.gross_wgh}}kg; Net Weight: {{job.net_wgh}}kg; 
-                                                    CBM: {{job.cbm}}; NOP: {{job.no_of_packages}}; Carrier Name: {{job.carrier_name}}
-                                                </p>
+                                                <p>NAOC: {{job.NAOC}}; NUOC: {{job.NUOC}}</p>
                                             </div>
                                             <hr>
                                             {% endfor %}

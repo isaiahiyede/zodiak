@@ -286,6 +286,7 @@ class Job(PackageDimension):
 
     deleted = models.BooleanField(default=False)
 
+
     def jobtotalgrossweight(self):
         total = self.minibatches_set.filter(deleted=False).aggregate(Sum('gross_wgh'))['gross_wgh__sum']
         if total == 0.0:
@@ -293,6 +294,7 @@ class Job(PackageDimension):
         else:
             total = total
         return total
+
 
     def jobtotalnetweight(self):
         total = self.minibatches_set.filter(deleted=False).aggregate(Sum('net_wgh'))['net_wgh__sum']
@@ -302,6 +304,7 @@ class Job(PackageDimension):
             total = total
         return total
 
+
     def totalcostofjob(self):
         total = self.finances_set.filter(deleted=False).aggregate(Sum('amount'))['amount__sum']
         if total == 0.0 or total == None:
@@ -309,6 +312,7 @@ class Job(PackageDimension):
         else:
             total = total
         return total
+
 
     def getminibatchesCount(self):
         return self.minibatches_set.filter(deleted=False).count()
@@ -328,6 +332,7 @@ class Job(PackageDimension):
             list_of_containers = "Nil"
         return list_of_containers
 
+
     def getDescription(self):
         descriptions = []
         all_desc = self.minibatches_set.filter(deleted=False)
@@ -338,8 +343,10 @@ class Job(PackageDimension):
             descriptions = "Nil"
         return descriptions
 
+
     def getminibatches(self):
         return self.minibatches_set.filter(deleted=False)
+
 
     def getfinances(self):
         return self.finances_set.filter(deleted=False)
@@ -396,11 +403,9 @@ class MiniBatches(models.Model):
 
 
     def item_info(self):
-        return {'NOP': self.no_of_packages, 'CBM':self.cbm,
-                'Carrier Name': self.carrier_name, 'Job Description':self.job_description,
-                'Gross Weight':self.gross_wgh, 'Net Weight': self.net_wgh,
-                'EDOA': self.exp_date_of_arrival,
-                'DOA':self.date_of_arrival
+        return {'no_of_packages': self.no_of_packages, 'cbm':self.cbm,
+                'carrier_name': self.carrier_name, 'job_description':self.job_description,
+                'gross_wgh':self.gross_wgh, 'net_wgh': self.net_wgh,
                 }
 
     class Meta:

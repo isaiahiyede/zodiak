@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 {% extends 'zodiakApp/adminHome.html' %}
 {% load staticfiles %}
@@ -247,4 +248,255 @@ $('body').on('click','.btn-copy-minus-6',function(e){
 <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
 
 
+=======
+
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+{% endblock morecss %}
+
+{% block contents %}
+<!--<div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
+<!--            <div class="breadcome-list single-page-breadcome">-->
+                <!--<div class="row">-->
+                <!--    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+                <!--        <div class="breadcome-heading">-->
+                <!--            job.job_id}}-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+                <!--        <ul class="breadcome-menu">-->
+                <!--            <li><a href="#">Home</a> <span class="bread-slash">/</span>-->
+                <!--            </li>-->
+                <!--            <li><span class="bread-blod">Process Job</span>-->
+                <!--            </li>-->
+                <!--        </ul>-->
+                <!--    </div>-->
+                <!--</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="single-pro-review-area mt-t-30 mg-b-15">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-payment-inner-st">
+                    <ul id="myTabedu1" class="tab-review-design">
+                        <li class="active"><a href="#reviews">Financial Information</a></li>
+                        <li>{{job.job_id}}</li>
+                    </ul>
+
+                    {% for message in messages %}
+                       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+
+
+                    <div id="myTabContent" class="tab-content custom-product-edit">
+                        <div class="product-tab-list tab-pane fade active in" id="reviews">
+
+                              <div class="row">
+                                <div class="data-table-area mg-b-15">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="sparkline13-list">
+                                                    <div class="sparkline13-hd">
+                                                        <div class="main-sparkline13-hd">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="sparkline13-graph">
+                                                        <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                                            <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
+                                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                                <style>
+                                                    th,td{font-size: 10px;}
+                                                </style>
+                                        <thead>
+                                            <tr class="info">
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="job_id">JOB Id</th>
+                                                <th data-field="job_type">Charge Type</th>
+                                                <th data-field="job_paid">Paid By</th>
+                                                <th data-field="job_date">Date Paid</th>
+                                                <th data-field="job_refund">Refundable AS</th>
+                                                <th data-field="total_cost">Total cost (₦)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for fin_obj in job.getfinances %}
+                                            <tr class="info">
+                                                <td></td>
+                                                <td>{{job.job_id}}</td>
+                                                <td>{{fin_obj.charge_type}}</td>
+                                                <td>{{fin_obj.paid_by}}</td>
+                                                <td>{{fin_obj.date_paid}}</td>
+                                                <td>{{fin_obj.refundablle_as}}</td>
+                                                <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>
+                                                <td class="datatable-ct">
+                                                    <a title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+
+                                            {% endfor %}
+                                        </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+
+
+                               <hr>
+
+
+                             <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="sparkline10-list mt-b-30">
+                                        <div class="sparkline10-hd">
+
+                                        </div>
+                                        <div class="sparkline10-graph">
+                                            <div class="basic-login-form-ad">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="basic-login-inner inline-basic-form">
+                                                            <form action="{% url 'zodiakApp:financials' job.pk %}" method="post" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+
+
+
+                                                                <div class="form-group-inner example-6">
+                                                                    <div class="row" id="example-6">
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                                                <label>Charge Type</label>
+                                                                                <select style="font-size: 12px; height: 28px" name="type_of_charge" required class="form-control"> 
+                                                                                <option value="" selected="" disabled="">Select.....</option>
+                                                                                <option value="Duty">Duty</option>
+                                                                                <option value="Terminal Charge">Terminal Charge</option>
+                                                                                <option value="Shipping Line Charge">Shipping Line Charge</option>
+                                                                                <option value="SON Charge">SON Charge</option>
+                                                                                <option value="Airline Charge">Airline Charge</option>
+                                                                                <option value="Quarantine Charge">Quarantine Charge</option>
+                                                                                <option value="NDLEA Charge">NDLEA Charge</option>
+                                                                                <option value="NAFDAC Charge">NAFDAC Charge</option>
+                                                                                <option value="Insurance Charge">Insurance Charge</option>                 
+                                                                                <option value="VAT Charge">VAT Charge</option>
+                                                                                <option value="Demurrage Charge">Demurrage Charge</option>
+                                                                               
+                                                                            </select>
+                                                                        </div>
+
+
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                                            <label>Amount (₦)</label>
+                                                                            <input type="number" min='1.0' required name="amount" id="amount" step='any' class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        </div>
+
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                                            <label>Paid By</label>
+                                                                            <input type="text"  required name="paid_by" id="paid_by" class="form-control basic-ele-mg-b-10 responsive-mg-b-10" />
+                                                                        </div>
+
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                                            <label>Date paid</label>
+                                                                            <input type="date"  required name="date_paid" id="date_paid" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        </div>
+
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                                            <label>Refundable As</label>
+                                                                            <input type="text"  required name="refundablle_as" id="refundablle_as" class="form-control basic-ele-mg-b-10 responsive-mg-b-10"/>
+                                                                        </div>
+
+
+                                                                            <i style="margin-top: 20px;"class="fa fa-plus btn-copy-6"></i>&nbsp;
+                                                                            <i style="margin-top: 20px;"class="fa fa-minus btn-copy-minus-6"></i>
+
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group-inner">
+                                                                 <div class="row">
+                                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                                        <div class="login-horizental">
+                                                                            <button class="btn btn-sm btn-primary login-submit-cs pull-right" type="submit">Save</button>
+                                                                        </div>
+                                                                    </div>
+                                                                 </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                              </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+$('body').on('click','.btn-copy-6',function(){
+  $(this).parents('.example-6').append($(this).parent().clone());
+});
+
+$('body').on('click','.btn-copy-minus-6',function(e){
+    var div = $('.example-6 > #example-6')
+    if (div.length > 1){
+        div.last().remove();
+    }
+    return false;
+
+});
+</script>
+
+{% endblock contents %}
+
+
+{% block specialscripts %}
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
+<!--  editable JS
+    ============================================ -->
+<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+
+
+>>>>>>> ac523860c0878bc5b00bbf3f5ce187121b193941
 {% endblock specialscripts %}

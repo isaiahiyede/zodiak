@@ -55,10 +55,16 @@ urlpatterns = [
     url(r'^newmail/$',views.newmail, name = "newmail"),
     url(r'^viewmail/(?P<pk>.+)/$', views.view_mail, name="view_mail"),
 
+    url(r'^jobdocs/(?P<job_obj>.+)/$', views.addDoc, name="addDoc"),
+    url(r'^delete_doc/(?P<pk>.+)/$', views.delete_doc, name="delete_doc"),
+
     url(r'^processjob/(?P<job_obj>.+)$',views.process_job, name = "process_job"),
 
     url(r'^addrm/$',views.add_rm, name = "add_rm"),
     url(r'^viewrms/$',views.viewrms, name = "viewrms"),
+
+    url(r'^getComments/$',views.get_comments, name = "get_comments"),
+    url(r'^postComments/(?P<pk>.+)/$',views.post_comments, name = "post_comments"),
 
     url(r'^rmedit/(?P<pk>.+)/$', views.rm_edit, name="rm_edit"),
     url(r'^rmview/(?P<pk>.+)/$', views.rm_view, name="rm_view"),

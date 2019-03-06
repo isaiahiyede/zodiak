@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django import forms
 from django.contrib.auth.models import User
-from zodiakApp.models import Job, UserAccount, Documents, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, Documents, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: green;', 'required': 'required'}
 attr4 = {'style': 'border-color: green;'}
@@ -19,10 +19,16 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name','last_name')
 
 
+class CommentsForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ('msg', 'commented_by',)
+
+
 class MiniBatchesForm(forms.ModelForm):
     class Meta:
         model = MiniBatches
-        fields = ('no_of_packages','no_of_containers','type_of_container','carrier_name','gross_wgh','net_wgh','exp_date_of_arrival','date_of_arrival','cbm')
+        fields = ('no_of_packages','job_description','carrier_name','gross_wgh','net_wgh','exp_date_of_arrival','date_of_arrival','cbm')
 
 
 class BatchForm(forms.ModelForm):
@@ -48,16 +54,7 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'duty_amount','duty_paid_by','duty_date_paid','duty_refundablle_as',
-            'terminal_charge_amount','terminal_charge_paid_by','terminal_charge_date_paid','terminal_charge_refundablle_as',
-            'shipping_line_charge_amount','shipping_line_charge_paid_by','shipping_line_charge_date_paid','shipping_line_charge_refundablle_as',
-            'son_charge_amount','son_charge_paid_by','son_charge_date_paid','son_charge_refundablle_as',
-            'airline_charge_amount','airline_charge_paid_by','airline_charge_date_paid','airline_charge_refundablle_as',
-            'quarantine_charge_amount','quarantine_charge_paid_by','quarantine_charge_date_paid','quarantine_charge_refundablle_as',
-            'ndlea_charge_amount','ndlea_charge_paid_by','ndlea_charge_date_paid','ndlea_charge_refundablle_as',
-            'nafdac_charge_amount','nafdac_charge_paid_by','nafdac_charge_date_paid','nafdac_charge_refundablle_as',
-            'other_charges_due_carrier','insurance_charge','VAT_charge','demurrage_rate',
-
+            'amount','paid_by','date_paid','refundablle_as','charge_type',
             )
 
 class JobForm(forms.ModelForm):

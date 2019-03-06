@@ -451,7 +451,11 @@
                                             <tr class="info">
                                                 <td></td>
                                                 <td>{{job.job_user_acc.user}}</td>
+                                                {% if job.batch_type %}
                                                 <td><a href="{% url 'zodiakApp:print_manifest' job.batch_type %}">{{job.batch_type}}</a></td>
+                                                {% else %}
+                                                <td> N/A</td>
+                                                {% endif %}
                                                 <td>{{job.job_id}}</td>
                                                 <td>{{job.job_type}}</td>
                                                 <td>{{job.totalcostofjob|default_if_none:"0.0"}}</td>

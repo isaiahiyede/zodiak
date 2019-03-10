@@ -253,11 +253,18 @@
                         {% endif %}
 
                         <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"></span> <span class="mini-click-non">Messages</span></a>
+                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"><span class="badge badge-primary">{% getMessageCount request %}</span></span> 
+                                <span class="mini-click-non">Messages </span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li style="background:#d3d3d3;"><a title="New mail" href="{% url 'zodiakApp:newmail' %}"><span class="mini-sub-pro">New Message</span></a></li>
-                                <li><a title="Inbox" href="{% url 'zodiakApp:mails' %}"><span class="mini-sub-pro">Mail Box</span></a></li>
-                                <li><a title="Notifications" href="/"><span class="mini-sub-pro">Notifications</span></a></li>
+                                <li>
+                                    <a title="Inbox" href="{% url 'zodiakApp:mails' %}">
+                                    <span class="mini-sub-pro">Mail Box</span>
+                                    <span class="badge badge-primary">{% getMessageCount request %}</span>
+                                </a>
+                                </li>
+                                    
+                                
                             </ul>
                         </li>
 
@@ -380,15 +387,10 @@
                                                         </a>
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
 
-                                                        <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
-                                                        </li>
                                                         {% if request.user.is_authenticated %}
                                                         <li><a href="{% url 'zodiakApp:user_view_home' request.user.username %}"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
                                                         </li>
                                                         {% endif %}
-                                                        <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
-                                                        </li>
-                                                        <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
                                                         </li>
                                                         <li><a href="{% url 'zodiakApp:logout' %}"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
                                                         </li>
@@ -423,8 +425,8 @@
                                             <div class="sparkline13-graph">
                                                 <div class="datatable-dashv1-list custom-datatable-overright">
 
-                                                <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
-                                                data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                                <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="" data-resizable="true" data-cookie="true"
+                                                data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="" data-toolbar="#toolbar">
                                                 <style>
                                                     th,td{font-size: 10px;}
                                                 </style>

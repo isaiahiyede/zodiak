@@ -29,5 +29,14 @@ def getJobCount(request, mode):
 def getBatchCount(request):
 	return Batch.objects.filter(deleted=False).count()
 
+
+@register.simple_tag
+def getMessageCount(request):
+	if request.user.is_staff:
+		return Job.objects.filter(job_new_comment=True,deleted=False).count()
+	else:
+		return Job.objects.filter(job_new_comment=False,deleted=False,job_user_acc=request.user.useraccount,job_commented_on=True).count()
+	
+
     
 

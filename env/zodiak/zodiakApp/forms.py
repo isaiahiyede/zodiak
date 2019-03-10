@@ -70,22 +70,21 @@ class JobForm(forms.ModelForm):
             'consignees_address','country_of_origin','country_of_arrival','port_of_destination','port_of_arrival',
             'job_vessel_name','job_awl_bol_number','paar_date','insured', 'insurance_date','packing_list', 
             'packing_list_date','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
-            'batch_type', 'job_route','ref_number','customer_type','company_name',
+            'job_route','ref_number','customer_type','company_name',
 
-            'job_user_acc','job_start_date', 'job_end_date', 'job_date_of_arrival',
+            'job_start_date', 'job_end_date', 'job_date_of_arrival',
             'job_status', 'job_cost', 'job_amount_paid','job_paid', 'job_amount_balance', 'job_description',
             'job_paid_for', 'job_vessel_name', 'job_type',
 
             'job_arrived', 'job_undergoing_clearnace', 'job_undergoing_ammendment', 'job_examined', 'job_cleared', 'job_completed',
             'job_invoiced', 'job_paid_for', 'job_processing','job_issue_resolution', 'box_weight_Actual', 'insured', 'vat', 'demurrage',
-            'demurrage_grace_period', 'shippers_name', 'shippers_address', 'shippers_number',
-            'consignees_name', 'consignees_address','job_arrival_status_mode',
+            'demurrage_grace_period','job_arrival_status_mode',
 
             'box_length','box_width','box_height','box_weight','box_weight_K',
 
-            'consignees_number', 'job_cost',
+            'job_cost',
             'handling_info', 'number_of_pieces_to_ship','gross_weight',  'note_on_the_package', 'nature_of_goods', 
-            'airline_tracking_number', 'place_of_execution', 'shippers_name', 'quantity_of_goods',
+            'airline_tracking_number', 'place_of_execution', 'quantity_of_goods',
 
             )
 
@@ -117,7 +116,7 @@ class UserAccountForm(forms.ModelForm):
     class Meta:
         model = UserAccount
         fields = ('user', 'phone_number', 'user_passport', 'user_cac','type_of_business','acc_owner',
-            'user_other_means_of_id','city','state','website','office_aadress')
+            'user_other_means_of_id','country','state','website','office_aadress')
 
 
 class PrimaryContactForm(forms.ModelForm):
@@ -150,7 +149,7 @@ class BatchProcessForm(forms.ModelForm):
 class ContainerTypesForm(forms.ModelForm):
     class Meta:
         model = ContainerTypes
-        fields = ('name_of_container','number_of_container','job_obj_cont',)
+        fields = ('name_of_container','number_of_container')
 
 
 class DocumentsForm(forms.ModelForm):

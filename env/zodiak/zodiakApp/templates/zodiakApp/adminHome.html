@@ -1,573 +1,3 @@
-<<<<<<< HEAD
-{% load staticfiles %}
-{% load custom_filters %}
-
-<!doctype html>
-<html class="no-js" lang="en">
-
-{% block header %}
-<head>
-
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Zodiak</title>
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="shortcut icon" type="image/x-icon" href="{% static 'zodiakApp/img/favicon.ico' %}">
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/font-awesome.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/owl.carousel.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/owl.theme.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/owl.transitions.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/animate.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/normalize.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/meanmenu.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/main.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/educate-custon-icon.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/morrisjs/morris.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/data-table/bootstrap-table.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/data-table/bootstrap-editable.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/scrollbar/jquery.mCustomScrollbar.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/metisMenu/metisMenu.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/metisMenu/metisMenu-vertical.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/calendar/fullcalendar.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/calendar/fullcalendar.print.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/datapicker/datepicker3.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/form/themesaller-forms.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/select2/select2.min.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/chosen/bootstrap-chosen.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/dropzone/dropzone.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/style.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/responsive.css' %}">
-<link rel="stylesheet" href="{% static 'css/accordions.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/editor/x-editor-style.css' %}">
-<script src="{% static 'zodiakApp/js/jquery.min.js' %}"></script>
-<script src="{% static 'zodiakApp/js/vendor/modernizr-2.8.3.min.js' %}"></script>
-
-{% block morecss %}
-{% endblock morecss %}
-
-</head>
-{% endblock header %}
-
-<body class="mini-navbar active">
-
-    {% block sidebar %}
-    <div class="left-sidebar-pro">
-        <nav id="sidebar" class="active">
-            <div class="sidebar-header">
-                <a href="/"><img class="main-logo" src="{% static 'zodiakApp/img/logo/logo.png' %}" alt="" /></a>
-                <strong><a href="/"><img src="{% static 'zodiakApp/img/logo/pagelogo.png' %}" alt="" /></a></strong>
-            </div>
-            <div class="left-custom-menu-adp-wrap comment-scrollbar">
-                <nav class="sidebar-nav left-sidebar-menu-pro">
-                    <ul class="metismenu" id="menu1">
-
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Create Jobs</span></a>
-                            </a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                    <li  style="background:#d3d3d3;">
-                                        <a>
-                                            <span class="mini-sub-pro">Create Job</span>
-                                        </a>
-
-                                    </li>
-                                {% for jobmode in jobmodes %}
-                                    <li>
-                                        <a title="add {{jobmode.name}}" href="{% url 'zodiakApp:add_job' jobmode.name %}">
-                                            <span class="mini-sub-pro">{{jobmode.name}}</span>
-                                        </a>
-
-                                    </li>
-                                {% endfor %}
-                             </ul>
-                        </li>
-
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-interface icon-wrap"></span> <span class="mini-click-non">Jobs</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-
-                                    <li style="background:#d3d3d3;">
-                                        <a >
-                                            <span class="mini-sub-pro">View Jobs</span>
-                                        </a>
-                                    </li>
-
-                                {% if request.user.is_staff %}
-
-                                    {% for jobmode in jobmodes %}
-                                    <li>
-                                        <a title="View {{jobmode.name}}" href="{% url 'zodiakApp:view_jobs' jobmode.name %}">
-                                            <span class="mini-sub-pro">{{jobmode.name}}</span>
-                                            <span class="badge badge-primary">{% getJobCount request jobmode.name %}</span>
-                                        </a>
-                                    </li>
-                                    {% endfor %}
-
-                                {% else %}
-
-                                    {% for jobmode in jobmodes %}
-                                    <li>
-                                        <a title="View {{jobmode.name}}" href="{% url 'zodiakApp:view_user_jobs' jobmode.name %}">
-                                            <span class="mini-sub-pro">{{jobmode.name}}</span>
-                                            {% if request.user.is_authenticated %}
-                                            <span class="badge badge-primary">{% getJobCount request jobmode.name %}</span>
-                                            {% endif %}
-                                        </a>
-                                    </li>
-                                    {% endfor %}
-
-                                {% endif %}
-
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span>  <span class="mini-click-non">Quotations</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-
-                                {% if request.user.is_staff %}
-
-                                    <li style="background:#d3d3d3;">
-                                        <a>
-                                            <span class="mini-sub-pro">Quotations</span>
-                                        </a>
-                                    </li>
-
-
-                                    <li>
-                                        <a title="" href="{% url 'zodiakApp:viewquotations'%}">
-                                            <span class="mini-sub-pro">All Quotations</span>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a title="" href="{% url 'zodiakApp:quote_add'%}">
-                                            <span class="mini-sub-pro">New Quotations</span>
-                                        </a>
-                                    </li>
-
-
-                                {% else %}
-
-                                    <li style="background:#d3d3d3;">
-                                        <a>
-                                            <span class="mini-sub-pro">Quotations</span>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a title="" href="{% url 'zodiakApp:viewquotations'%}">
-                                            <span class="mini-sub-pro">My Quotations</span>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a title="" href="{% url 'zodiakApp:quote_add'%}">
-                                            <span class="mini-sub-pro">New Quotations</span>
-                                        </a>
-                                    </li>
-
-
-                                {% endif %}
-
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-pages icon-wrap"></span> <span class="mini-click-non">Procurement</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-
-                                {% if request.user.is_staff %}
-
-                                    <li style="background:#d3d3d3;">
-                                        <a>
-                                            <span class="mini-sub-pro">Procurements</span>
-                                        </a>
-                                    </li>
-
-
-                                    <li>
-                                        <a title="" href="/">
-                                            <span class="mini-sub-pro">All Procurements</span>
-                                        </a>
-                                    </li>
-
-
-                                {% else %}
-
-
-                                    <li style="background:#d3d3d3;">
-                                        <a>
-                                            <span class="mini-sub-pro">Procurements</span>
-                                        </a>
-                                    </li>
-
-
-                                    <li>
-                                        <a title="" href="/">
-                                            <span class="mini-sub-pro">My Procurements</span>
-
-                                        </a>
-                                    </li>
-
-
-                                {% endif %}
-
-                            </ul>
-                        </li>
-
-                        {% if request.user.is_staff %}
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-charts icon-wrap"></span> <span class="mini-click-non">Reporting</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                    <li>
-                                        <a title="" href="{% url 'zodiakApp:reporting' %}">
-                                            <span class="mini-sub-pro">All Reports</span>
-                                        </a>
-                                    </li>
-                            </ul>
-                        </li>
-                        {% endif %}
-
-                        {% if request.user.is_staff %}
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-library icon-wrap"></span><span class="mini-click-non">Book Keeping</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-
-                                    <li>
-                                        <a title="" href="{% url 'zodiakApp:financerecords'%}">
-                                            <span class="mini-sub-pro">Financials</span>
-                                        </a>
-                                    </li>
-
-                            </ul>
-                        </li>
-                        {% endif %}
-
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"></span> <span class="mini-click-non">Messages</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                <li style="background:#d3d3d3;"><a title="New mail" href="{% url 'zodiakApp:newmail' %}"><span class="mini-sub-pro">New Message</span></a></li>
-                                <li><a title="Inbox" href="{% url 'zodiakApp:mails' %}"><span class="mini-sub-pro">Mail Box</span></a></li>
-                                <li><a title="Notifications" href="/"><span class="mini-sub-pro">Notifications</span></a></li>
-                            </ul>
-                        </li>
-
-                        {% if request.user.is_staff%}
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span><span class="mini-click-non">User Access</span></a>
-                            <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li style="background:#d3d3d3;"><a><span class="mini-sub-pro">User Access</span></a></li>
-                                <li><a title="Alerts" href="{% url 'zodiakApp:add_user' %}"><span class="mini-sub-pro">Add user</span></a></li>
-                                <li><a title="Modals" href="{% url 'zodiakApp:user_access' %}"><span class="mini-sub-pro">User Access</span></a></li>
-                                <li><a title="Buttons" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">All Users</span></a></li>
-                            </ul>
-                        </li>
-                        {% else %}
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span><span class="mini-click-non">User Access</span></a>
-                            <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li style="background:#d3d3d3;"><a><span class="mini-sub-pro">User Access</span></a></li>
-                                <li><a title="Alerts" href="{% url 'zodiakApp:add_user' %}"><span class="mini-sub-pro">Add user</span></a></li>
-                                <li><a title="Modals" href="{% url 'zodiakApp:user_access' %}"><span class="mini-sub-pro">User Access</span></a></li>
-                                <li><a title="Buttons" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">All Users</span></a></li>
-                            </ul>
-                        </li>
-                        {% endif %}
-
-
-                        {% if request.user.is_staff%}
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-department icon-wrap"></span> <span class="mini-click-non">Batches</span></a>
-                            <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li style="background:#d3d3d3;"><a><span class="mini-sub-pro">Batches</span></a></li>
-                                <li><a title="Alerts" href="{% url 'zodiakApp:add_batch' %}"><span class="mini-sub-pro">Add Batch</span></a></li>
-                                <li><a title="Modals" href="{% url 'zodiakApp:viewbatches' %}">
-                                    <span class="mini-sub-pro">All Batches</span>
-                                    <span class="badge badge-primary">{% getBatchCount request %}</span>
-                                </a></li>
-                            </ul>
-                        </li>
-                        {% endif %}
-
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">RM</span></a>
-                            <ul class="submenu-angle app-mini-nb-dp" aria-expanded="false">
-                                <li style="background:#d3d3d3;"><a ><span class="mini-sub-pro">RM</span></a></li>
-                                <li><a title="Add Rm" href="{% url 'zodiakApp:add_rm' %}"><span class="mini-sub-pro">Add RM</span></a></li>
-                                <li><a title="All Rms" href="{% url 'zodiakApp:viewrms' %}"><span class="mini-sub-pro">All RMs</span></a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </nav>
-            </div>
-        </nav>
-    </div>
-    {% endblock sidebar %}
-    <!-- End Left menu area -->
-    <!-- Start Welcome area -->
-
-    <div class="all-content-wrapper">
-        {% block headerTitle %}
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="logo-pro">
-                        <a href="/"><img class="main-logo" src="{% static 'zodiakApp/img/logo/logo.png' %}" alt="" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endblock headerTitle %}
-
-
-        <div class="header-advance-area">
-            {% block headerArea %}
-            <div class="header-top-area">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="header-top-wraper">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
-                                        <div class="menu-switcher-pro">
-                                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                                                    <i class="educate-icon educate-nav"></i>
-                                                </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
-                                       <!--  <div class="header-top-menu tabl-d-n">
-                                            <ul class="nav navbar-nav mai-top-nav">
-                                                <li class="nav-item"><a href="#" class="nav-link">Home</a>
-                                                </li>
-                                                <li class="nav-item"><a href="#" class="nav-link">About</a>
-                                                </li>
-                                                <li class="nav-item"><a href="#" class="nav-link">Services</a>
-                                                </li>
-                                                <li class="nav-item dropdown res-dis-nn">
-                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
-                                                    <div role="menu" class="dropdown-menu animated zoomIn">
-                                                        <a href="#" class="dropdown-item">Documentation</a>
-                                                        <a href="#" class="dropdown-item">Expert Backend</a>
-                                                        <a href="#" class="dropdown-item">Expert FrontEnd</a>
-                                                        <a href="#" class="dropdown-item">Contact Support</a>
-                                                    </div>
-                                                </li>
-                                                <li class="nav-item"><a href="#" class="nav-link">Support</a>
-                                                </li>
-                                            </ul>
-                                        </div> -->
-                                    </div>
-                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                        <div class="header-right-info">
-                                            <ul class="nav navbar-nav mai-top-nav header-right-menu">
-
-                                                <li class="nav-item">
-                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                                                            <img src="{% static 'zodiakApp/img/product/pro4.png' %}" alt="" />
-                                                            <span class="admin-name">Welcome {{request.user.username}}</span>
-                                                            <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
-                                                        </a>
-                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                        <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
-                                                        </li>
-                                                        {% if request.user.is_authenticated %}
-                                                        <li><a href="{% url 'zodiakApp:user_view_home' request.user.username %}"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
-                                                        </li>
-                                                        {% endif %}
-                                                        <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
-                                                        </li>
-                                                        <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
-                                                        </li>
-                                                        <li><a href="{% url 'zodiakApp:logout' %}"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endblock headerArea %}
-            <!-- Mobile Menu start -->
-
-            <!-- Mobile Menu end -->
-            {% block contents %}
-
-            <div class="data-table-area mg-b-15">
-                    <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="sparkline13-list">
-                                            <div class="sparkline13-hd">
-                                                <div class="main-sparkline13-hd">
-                                                    <h1><span class="table-project-n"></span></h1>
-                                                </div>
-                                            </div>
-                                            <div class="sparkline13-graph">
-                                                <div class="datatable-dashv1-list custom-datatable-overright">
-
-                                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
-                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
-                                                <style>
-                                                    th,td{font-size: 10px;}
-                                                </style>
-                                        <thead id="tabledata2">
-                                            <tr>
-                                                <th data-field="state" data-checkbox="true"></th>
-                                                <th data-field="client name">Clent</th>
-                                                <th data-field="batch">Batch No</th>
-                                                <th data-field="id">Job ID</th>
-                                                <th data-field="type">Job Mode</th>
-                                                <th data-field="amount">Amount (₦)</th>
-                                                <th data-field="phone">Status</th>
-                                                <th data-field="grossweight">Gross Wgh(kg)</th>
-                                                <th data-field="netweight">Net Wgh(kg)</th>
-                                                <th data-field="desc">Description</th>
-                                                <th data-field="packaging">Packaging Info</th>
-                                                <th data-field="arrival batch">Batches</th>
-                                                <th data-field="action">Action</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody id="tabledata">
-                                            {% for job in all_jobs %}
-                                            <tr class="info">
-                                                <td></td>
-                                                <td>{{job.job_user_acc.user}}</td>
-                                                <td><a href="{% url 'zodiakApp:print_manifest' job.batch_type %}">{{job.batch_type}}</a></td>
-                                                <td>{{job.job_id}}</td>
-                                                <td>{{job.job_type}}</td>
-                                                <td>{{job.totalcostofjob|default_if_none:"0.0"}}</td>
-                                                <td>{{job.job_status}}</td>
-                                                <td>{{job.gross_weight|default_if_none:"0.0"}}</td>
-                                                <td>{{job.box_weight_Actual|default_if_none:"0.0"}}</td>
-                                                <td>{{job.getDescription}}</td>
-                                                <td>{{job.getContainerTypesInfo}}</td>
-                                                <td><a href="{% url 'zodiakApp:viewminibatches' job.pk %}">{{job.no_of_arrival_batches|default_if_none:"0"}}</a></td>
-                                                <td class="datatable-ct">
-                                                    <a title="payment" href="{% url 'zodiakApp:process_spec_job' job.pk %}" style="cursor:pointer !important" class="process_job" job_pk={{job.pk}}>
-                                                        <i class="fa fa-usd"></i></a>&nbsp;
-                                                    <!-- <a title="view job" href=""><i class="fa fa-eye"></i></a>&nbsp; -->
-                                                    <a title="edit job" href="{% url 'zodiakApp:job_edit' job.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
-                                                    <a title="invoice" href="{% url 'zodiakApp:job_invoice_page' job.pk %}"><i class="fa fa-file-o"></i></a>&nbsp;
-                                                    <a title="delete job" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:job_delete' job.pk %}"><i class="fa fa-trash"></i></a>&nbsp;
-                                                    <a title="invoice" href=""><i class="fa fa-comment"></i></a>&nbsp;
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                </div>
-                </div>
-
-            {% endblock contents %}
-        </div>
-
-
-        {% block footer %}
-        {% endblock footer %}
-
-    </div>
-
-
-    <!-- jquery
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/vendor/jquery-1.12.4.min.js' %}"></script>
-    <!-- bootstrap JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/bootstrap.min.js' %}"></script>
-    <!-- wow JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/wow.min.js' %}"></script>
-    <!-- price-slider JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/jquery-price-slider.js' %}"></script>
-    <!-- meanmenu JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/jquery.meanmenu.js' %}"></script>
-    <!-- owl.carousel JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/owl.carousel.min.js' %}"></script>
-    <!-- sticky JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/jquery.sticky.js' %}"></script>
-    <!-- scrollUp JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/jquery.scrollUp.min.js' %}"></script>
-    <!-- mCustomScrollbar JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/scrollbar/jquery.mCustomScrollbar.concat.min.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/scrollbar/mCustomScrollbar-active.js' %}"></script>
-    <!-- metisMenu JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/metisMenu/metisMenu.min.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/metisMenu/metisMenu-active.js' %}"></script>
-    <!-- Charts JS
-    ============================================ -->
-    {% block specialscripts %}
-    <script src="{% static 'zodiakApp/js/charts/Chart.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/charts/bar-chart.js' %}"></script>
-    {% endblock specialscripts %}
-
-    <!-- Chart JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/chart/jquery.peity.min.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/peity/peity-active.js' %}"></script>
-    <!-- tab JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/datapicker/bootstrap-datepicker.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/datapicker/datepicker-active.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/tab.js' %}"></script>
-
-    <script src="{% static 'zodiakApp/js/chosen/chosen.jquery.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/chosen/chosen-active.js' %}"></script>
-    <!-- plugins JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/plugins.js' %}"></script>
-    <!-- main JS
-    ============================================ -->
-    <script src="{% static 'zodiakApp/js/main.js' %}"></script>
-
-    <script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
-
-    <script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
-    <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
-
-</body>
-
-=======
 {% load staticfiles %}
 {% load custom_filters %}
 
@@ -943,12 +373,13 @@
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
 
                                                 <li class="nav-item">
-                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
                                                             <img src="{% static 'zodiakApp/img/product/pro4.png' %}" alt="" />
                                                             <span class="admin-name">Welcome {{request.user.username}}</span>
                                                             <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
                                                         </a>
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+
                                                         <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
                                                         </li>
                                                         {% if request.user.is_authenticated %}
@@ -992,12 +423,13 @@
                                             <div class="sparkline13-graph">
                                                 <div class="datatable-dashv1-list custom-datatable-overright">
 
-                                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
-                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                                <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="" data-resizable="true" data-cookie="true"
+                                                data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="" data-toolbar="#toolbar">
                                                 <style>
                                                     th,td{font-size: 10px;}
                                                 </style>
-                                        <thead id="tabledata2">
+
+                                                    <thead id="tabledata2">
                                             <tr>
                                                 <th data-field="state" data-checkbox="true"></th>
                                                 <th data-field="client name">Clent</th>
@@ -1011,37 +443,44 @@
                                                 <th data-field="desc">Description</th>
                                                 <th data-field="packaging">Packaging Info</th>
                                                 <th data-field="arrival batch">Batches</th>
-                                                <th data-field="action">Action</th>
                                             </tr>
-                                        </thead>
+                                                    </thead>
 
-                                        <tbody id="tabledata">
+                                                    <tbody id="tabledata">
                                             {% for job in all_jobs %}
                                             <tr class="info">
                                                 <td></td>
                                                 <td>{{job.job_user_acc.user}}</td>
+                                                {% if job.batch_type %}
                                                 <td><a href="{% url 'zodiakApp:print_manifest' job.batch_type %}">{{job.batch_type}}</a></td>
+                                                {% else %}
+                                                <td> N/A</td>
+                                                {% endif %}
                                                 <td>{{job.job_id}}</td>
                                                 <td>{{job.job_type}}</td>
                                                 <td>{{job.totalcostofjob|default_if_none:"0.0"}}</td>
                                                 <td>{{job.job_status}}</td>
                                                 <td>{{job.gross_weight|default_if_none:"0.0"}}</td>
                                                 <td>{{job.box_weight_Actual|default_if_none:"0.0"}}</td>
-                                                <td>{{job.getDescription}}</td>
-                                                <td>{{job.getContainerTypesInfo}}</td>
+
+
+                                                {% if job.getDescription %}
+                                                    <td><a style="cursor:pointer !important;" class="job_desc" job_pk={{job.pk}}>Click to View...</a></td>
+                                                {% else %}
+                                                    <td>N/A</td>
+                                                {% endif %}
+
+                                                {% if job.getContainerTypesInfo %}
+                                                    <td><a style="cursor:pointer !important;" class="job_info" job_pk={{job.pk}}>Click to View...</a></td>
+                                                {% else %}
+                                                    <td>N/A</td>
+                                                {% endif %}
+
                                                 <td><a href="{% url 'zodiakApp:viewminibatches' job.pk %}">{{job.no_of_arrival_batches|default_if_none:"0"}}</a></td>
-                                                <td class="datatable-ct">
-                                                    <a title="payment" href="{% url 'zodiakApp:process_spec_job' job.pk %}" style="cursor:pointer !important" class="process_job" job_pk={{job.pk}}>
-                                                        <i class="fa fa-usd"></i></a>&nbsp;
-                                                    <!-- <a title="view job" href=""><i class="fa fa-eye"></i></a>&nbsp; -->
-                                                    <a title="edit job" href="{% url 'zodiakApp:job_edit' job.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
-                                                    <a title="invoice" href="{% url 'zodiakApp:job_invoice_page' job.pk %}"><i class="fa fa-file-o"></i></a>&nbsp;
-                                                    <a title="delete job" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:job_delete' job.pk %}"><i class="fa fa-trash"></i></a>&nbsp;
-                                                </td>
                                             </tr>
                                             {% endfor %}
-                                        </tbody>
-                                    </table>
+                                                    </tbody>
+                                                </table>
 
                                                 </div>
                                             </div>
@@ -1049,8 +488,33 @@
                                     </div>
                                 </div>
 
-
                 </div>
+                </div>
+
+
+                <div id="PrimaryModalalert2" class="modal modal-edu-general fullwidth-popup-InformationproModal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-close-area modal-close-df">
+                                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                            </div>
+                            <div class="modal-body">
+                                <div class="sparkline12-graph">
+                                    <div class="basic-login-form-ad">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="all-form-element-inner">
+
+                                                    <hr>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -1098,14 +562,61 @@
     ============================================ -->
     <script src="{% static 'zodiakApp/js/metisMenu/metisMenu.min.js' %}"></script>
     <script src="{% static 'zodiakApp/js/metisMenu/metisMenu-active.js' %}"></script>
+
+
+    <script>
+
+    $('body').on('click','.job_info', function(e){
+        var job_id = $(this).attr('job_pk')
+        $.ajax({
+            data: {'job_id':job_id},
+            type: 'GET',
+            url: "{% url 'zodiakApp:get_job_info' %}",
+
+            success:function(data){
+               $('#PrimaryModalalert2').replaceWith(data);
+               $('#PrimaryModalalert2').modal('handleUpdate').modal('show');
+               console.log('working');
+
+            },
+
+            error:function(data){
+               console.log('not working');
+            }
+         })
+    });
+
+
+    $('body').on('click','.job_desc', function(e){
+        var job_id = $(this).attr('job_pk')
+        $.ajax({
+            data: {'job_id':job_id},
+            type: 'GET',
+            url: "{% url 'zodiakApp:get_job_desc' %}",
+
+            success:function(data){
+               $('#PrimaryModalalert2').replaceWith(data);
+               $('#PrimaryModalalert2').modal('handleUpdate').modal('show');
+               console.log('working');
+
+            },
+
+            error:function(data){
+               console.log('not working');
+            }
+         })
+    });
+
+
+    </script>
     <!-- Charts JS
     ============================================ -->
+
+
     {% block specialscripts %}
+
     <script src="{% static 'zodiakApp/js/charts/Chart.js' %}"></script>
     <script src="{% static 'zodiakApp/js/charts/bar-chart.js' %}"></script>
-    {% endblock specialscripts %}
-
-
 
 
     <!-- Chart JS
@@ -1144,8 +655,8 @@
     <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
     <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
 
+    {% endblock specialscripts %}
 
 </body>
 
->>>>>>> ac523860c0878bc5b00bbf3f5ce187121b193941
 </html>

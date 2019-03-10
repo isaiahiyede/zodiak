@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^jobdelete/(?P<pk>.+)/$', views.job_delete, name="job_delete"),
     url(r'^jobprocess/(?P<pk>.+)/$', views.process_job, name="process_job"),
     url(r'^procjob/(?P<pk>.+)/$', views.process_spec_job, name="process_spec_job"),
+    url(r'^editbatch/$', views.editbatch, name="editbatch"),
+    url(r'^editContainer/$', views.editContainer, name="editContainer"),
 
     url(r'^useredit/(?P<pk>.+)/$', views.user_edit, name="user_edit"),
     url(r'^userview/(?P<pk>.+)/$', views.user_view, name="user_view"),
@@ -83,6 +85,7 @@ urlpatterns = [
 
     # url(r'^confirm-order/$',views.get_confirmation_order, name = "get_confirmation_order"),
     url(r'^getjob/$',views.get_job, name = "get_job"),
+    url(r'^getUserDetails/$',views.get_user_details, name = "get_user_details"),
     url(r'^selectedjobs/$',views.get_jobs_selected, name = "get_jobs_selected"),
     # url(r'^customer-list/$',views.all_customers, name = "all_customers"),
     # url(r'^customer-payment-list/$',views.customer_payments, name = "all_customers_payments"),

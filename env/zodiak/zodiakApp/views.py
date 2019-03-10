@@ -234,6 +234,15 @@ def add_job4(request,jobtype):
     return response
 
 
+@login_required
+def get_user_details(request):
+    context = {}
+    template_name = 'zodiakApp/customerdetails.html'
+    user_obj = User.objects.get(username=request.GET.get('user_obj'))
+    useraccount_obj = user_obj.useraccount
+    context['user_obj'] = useraccount_obj
+    return render(request,template_name,context)
+
 
 @login_required
 def add_job(request,jobtype):
@@ -244,11 +253,17 @@ def add_job(request,jobtype):
         if form.is_valid():
             form2 = form.save(commit=False)
             if request.user.is_staff:
-                name = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+                try:
+                    name = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+                except:
+                    name_obj = User.objects.get(username=request.POST.get('job_user_acc'))
+                    name = name_obj.useraccount
             else:
                 name = request.user.useraccount
             try:
-                form2.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+                name_obj = User.objects.get(username=request.POST.get('job_user_acc'))
+                name = name_obj.useraccount
+                form2.job_user_acc = name
             except:
                 try:
                     form2.job_user_acc = UserAccount.objects.get(user=request.user)
@@ -271,8 +286,10 @@ def add_job(request,jobtype):
                 messages.warning(request, 'Job was not successfully created..Please select a Job Mode')
                 response = redirect(request.META['HTTP_REFERER'])
                 return response
-
-            form2.save()
+            batch_obj = request.POST.get('batch_type')
+            if batch_obj:
+                batch =  Batch.objects.get(batch_id=batch_obj)
+                form2.batch_type = batch
             form2.job_id = randomNumber(5,request.POST.get('job_route'),request.POST.get('job_type'),request.POST.get('ref_number'),name)
             form2.save()
             print(form2.job_id)
@@ -313,11 +330,22 @@ def job_edit(request,pk):
     job_obj = Job.objects.get(pk=pk, deleted=False)
     if request.method == "POST":
         print(request.POST)
-        job_obj.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+        try:
+            job_obj.job_user_acc = UserAccount.objects.get(pk=request.POST.get('job_user_acc'))
+        except:
+            user_obj = User.objects.get(username=request.POST.get('job_user_acc'))
+            job_obj.job_user_acc = user_obj.useraccount
         job_obj.save()
         form = JobForm(request.POST,request.FILES,instance=job_obj)
         if form.is_valid():
             form2 = form.save(commit=False)
+            batchNo =request.POST.get('batch_type')
+            if batchNo:
+                try:
+                    job_obj.batch_type = Batch.objects.get(pk=batchNo)
+                except:
+                    job_obj.batch_type = Batch.objects.get(batch_id=batchNo)
+                job_obj.save()
             form2.save()
             messages.success(request, 'Job was successfully edited')
             response = redirect(request.META['HTTP_REFERER'])
@@ -334,6 +362,56 @@ def job_edit(request,pk):
         context['statuses'] = getStatus()
         context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=job_obj.job_type)
         response = render(request, 'zodiakApp/editjob2.html', context)
+        return response
+
+
+@login_required
+def editbatch(request):
+    context = {}
+    template_name = 'zodiakApp/editminibatch.html'
+    if request.method == "POST":
+        print(request.POST)
+        minibatch_obj = MiniBatches.objects.get(pk=request.POST.get('mini_id'))
+        form = MiniBatchesForm(request.POST, instance=minibatch_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Job was successfully updated')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Job was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        minibatch_obj = MiniBatches.objects.get(pk=request.GET.get('mini_id'))
+        context['minibatch_obj'] = minibatch_obj
+        response = render(request,template_name,context)
+        return response
+
+
+
+
+@login_required
+def editContainer(request):
+    context = {}
+    template_name = 'zodiakApp/editcontainer.html'
+    if request.method == "POST":
+        print(request.POST)
+        cont_obj = ContainerTypes.objects.get(pk=request.POST.get('cont_id'))
+        form = ContainerTypesForm(request.POST, instance=cont_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Job was successfully updated')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Job was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        cont_obj = ContainerTypes.objects.get(pk=request.GET.get('cont_id'))
+        context['cont_obj'] = cont_obj
+        response = render(request,template_name,context)
         return response
 
 
@@ -376,7 +454,6 @@ def process_job(request,job_obj):
 
                 job_obj.no_of_arrival_batches += 1
                 job_obj.job_arrival_status = True
-                job_obj.job_arrival_status_mode = "Completed"
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -419,7 +496,6 @@ def process_job(request,job_obj):
 
                 job_obj.no_of_arrival_batches += 1
                 job_obj.job_arrival_status = True
-                job_obj.job_arrival_status_mode = "Completed"
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -455,7 +531,6 @@ def process_job(request,job_obj):
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
                 job_obj.job_arrival_status = True
-                job_obj.job_arrival_status_mode = "Short landed"
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -492,7 +567,6 @@ def process_job(request,job_obj):
 
                 job_obj.no_of_arrival_batches += 1
                 job_obj.job_arrival_status = True
-                job_obj.job_arrival_status_mode = "Short landed"
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -526,7 +600,6 @@ def process_job(request,job_obj):
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
                 job_obj.job_arrival_status = True
-                job_obj.job_arrival_status_mode = "Short landed"
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -545,7 +618,6 @@ def process_job(request,job_obj):
                 minibatch_obj.save()
                 job_obj.no_of_arrival_batches += 1
                 job_obj.job_arrival_status = True
-                job_obj.job_arrival_status_mode = "Short landed"
                 job_obj.gross_weight = job_obj.jobtotalgrossweight()
                 job_obj.box_weight_Actual = job_obj.jobtotalnetweight()
                 job_obj.save()
@@ -919,36 +991,45 @@ def job_delete(request,pk):
 
 
 def register(request):
+    context = {}
     if request.method == "POST":
 
         rp = request.POST
         print(rp)
-
-        if request.POST.get('bot_catcher') != "":
-            messages.warning(request, "Invalid details provided")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
 
         form = UserForm(request.POST)
         form2 = UserAccountForm(request.POST)
         form3 = PrimaryContactForm(request.POST)
         form4 = SecondaryContactForm(request.POST)
 
+        if request.POST.get('bot_catcher') != "":
+            context['message'] = "iRobot detected...."
+            context['form'] = request.POST
+            response = render(request, 'zodiakApp/newreg.html', context)
+            return response
+
         if User.objects.filter(username=rp.get('username')).exists() or User.objects.filter(
                 email=rp.get('email')).exists():
-            messages.warning(request, "Combination of Username and email already exists. Please enter a"
-                                      " different username and/or email")
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            context['form'] = request.POST
+            context['message'] = """Combination of Username and email already exists. Please enter a
+                                      different username and/or email"""
+            response = render(request, 'zodiakApp/newreg.html', context)
+            return response
         else:
             if form.is_valid():
                 user = form.save(commit=False)
                 password = rp.get('password')
                 password1 = rp.get('password2')
                 if password != password1:
-                    messages.warning(request, "Password mismatch. Try again")
-                    return redirect(request.META.get('HTTP_REFERER', '/'))
-                if len(password) < 6:
-                    messages.warning(request, "Password less than six characters in length")
-                    return redirect(request.META.get('HTTP_REFERER', '/'))
+                    context['form'] = request.POST
+                    context['message'] = "Password mismatch. Try again"
+                    response = render(request, 'zodiakApp/newreg.html', context)
+                    return response
+                if len(password) <= 6:
+                    context['form'] = request.POST
+                    context['message'] = "Password must be at least 8 characters long"
+                    response = render(request, 'zodiakApp/newreg.html', context)
+                    return response
 
                 user.set_password(user.password)
                 user.date_joined = timezone.now().date()
@@ -970,8 +1051,14 @@ def register(request):
                     user_acc_form2.save()
 
                 else:
-                    messages.warning(request, "Please check and make sure all fields are properly filled")
-                    return redirect(request.META.get('HTTP_REFERER', '/'))
+                    form = UserForm(request.POST)
+                    form2 = UserAccountForm(request.POST)
+                    form3 = PrimaryContactForm(request.POST)
+                    form4 = SecondaryContactForm(request.POST)
+                    context['form'] = request.POST
+                    context['message'] = "Please check and make sure all fields are properly filled"
+                    response = render(request, 'zodiakApp/newreg.html', context)
+                    return response
 
                 if user_primary_contact_form.is_valid():
                     user_acc_form3 = user_primary_contact_form.save(commit=False)
@@ -990,8 +1077,10 @@ def register(request):
                     rm_obj.save()
 
                 else:
-                    messages.warning(request, "Please check and make sure all fields are properly filled")
-                    return redirect(request.META.get('HTTP_REFERER', '/'))
+                    context['form'] = request.POST
+                    context['message'] = "Please check and make sure all fields are properly filled"
+                    response = render(request, 'zodiakApp/newreg.html', context)
+                    return response
 
                 if user_secondary_contact_form.is_valid():
                     user_acc_form4 = user_secondary_contact_form.save(commit=False)
@@ -1011,8 +1100,10 @@ def register(request):
 
 
                 else:
-                    messages.warning(request, "Please check and make sure all fields are properly filled")
-                    return redirect(request.META.get('HTTP_REFERER', '/'))
+                    context['form'] = request.POST
+                    context['message'] = "Please check and make sure all fields are properly filled"
+                    response = render(request, 'zodiakApp/newreg.html', context)
+                    return response
 
                 user_login = authenticate(username=user.username, password=password)
 
@@ -1027,14 +1118,18 @@ def register(request):
                         user = request.user
                         return redirect(reverse('zodiakApp:clientpage'))
                 else:
-                    messages.warning(request, "Sign up was not successful. Try again")
+                    context['form'] = request.POST
+                    context['message'] = "Sign up was not successful. Try again"
+                    response = render(request, 'zodiakApp/newreg.html', context)
                     return redirect(request.META.get('HTTP_REFERER', '/'))
                 ''' try this '''
                 # new_user_acc_obj = UserAccount.objects.create(user=user)
             else:
                 print(form.errors)
-                messages.success(request, "Sign up was not successful. Try again")
-                return redirect(request.META.get('HTTP_REFERER', '/'))
+                context['form'] = request.POST
+                context['message'] = "Please check and make sure all fields are properly filled"
+                response = render(request, 'zodiakApp/newreg.html', context)
+                return response
     else:
         context = {}
         response = render(request, 'zodiakApp/newreg.html', context)
@@ -1568,6 +1663,9 @@ def user_access(request):
 @login_required
 def mails(request):
     context = {}
+    context['newmailsCountAdmin'] = Job.objects.filter(job_new_comment=True,deleted=False).count()
+    context['newmailsCountUser'] = Job.objects.filter(job_new_comment=False,deleted=False,job_user_acc=request.user.useraccount,job_commented_on=True).count()
+    context['newmails'] = Job.objects.filter(deleted=False,job_commented_on=True)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     template_name = 'zodiakApp/adminmailbox.html'
@@ -1688,11 +1786,11 @@ def post_comments(request,pk):
     if request.user.is_staff:
         commenter = 'admin'
         job_obj.job_new_comment = False
-        job_obj.save()
     else:
         job_obj.job_new_comment = True
-        job_obj.save()
         commenter = request.user.username
+    job_obj.job_commented_on = True
+    job_obj.save()
     comm_obj = Comments.objects.create(job_message=job_obj,msg=request.POST.get('msg'),commented_by=commenter)
     comm_obj.save()
     messages.success(request, 'Job comments were sucessfully updated')

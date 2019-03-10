@@ -29,7 +29,7 @@ class UserAccount(models.Model):
     administrator = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     staff_account = models.BooleanField(default=True)
-    city = models.CharField(max_length=20,null=True,blank=True)
+    country = models.CharField(max_length=20,null=True,blank=True)
     state = models.CharField(max_length=20,null=True,blank=True)
     website = models.CharField(max_length=50,null=True,blank=True)
     acc_owner = models.CharField(max_length=50,null=True,blank=True)
@@ -225,12 +225,13 @@ class Job(PackageDimension):
     batch_type = models.ForeignKey(Batch, null=True, blank=True)
 
     job_user_acc = models.ForeignKey(UserAccount, null=True, blank=True)
-    job_start_date = models.DateField(null=True, blank=True)
-    job_end_date = models.DateField(null=True, blank=True)
-    job_date_of_arrival = models.DateField(null=True, blank=True)
+    job_start_date = models.CharField(max_length=200, null=True, blank=True)
+    job_end_date = models.CharField(max_length=200, null=True, blank=True)
+    job_date_of_arrival = models.CharField(max_length=200, null=True, blank=True)
     job_status = models.CharField(max_length=50, null=True, blank=True)
     job_id = models.CharField(max_length=50,null=True,blank=True)
     job_type = models.CharField(max_length=20,null=True,blank=True)
+    job_commented_on = models.BooleanField(default=False)
 
     job_created_on = models.DateTimeField(default=timezone.now)
 
@@ -322,6 +323,10 @@ class Job(PackageDimension):
         return self.comments_set.filter(deleted=False).count()
 
 
+    def getlastcomments(self):
+        return self.comments_set.filter(deleted=False)[0]
+
+
     def getContainerTypesInfo(self):
         list_of_containers = []
         all_containers = self.containertypes_set.filter(deleted=False)
@@ -346,6 +351,10 @@ class Job(PackageDimension):
 
     def getminibatches(self):
         return self.minibatches_set.filter(deleted=False)
+
+
+    def getcontainertypes(self):
+        return self.containertypes_set.filter(deleted=False)
 
 
     def getfinances(self):

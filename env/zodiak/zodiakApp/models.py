@@ -17,6 +17,7 @@ class UserAccount(models.Model):
     profile_updated = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=50, null=True, blank=True)
     type_of_business = models.TextField(null=True,blank=True)
+    comp_name = models.TextField(null=True,blank=True)
     office_aadress = models.TextField(null=True,blank=True)
     created_on = models.DateTimeField(default=timezone.now)
     user_passport = models.ImageField(upload_to="item_photo", null=True, blank=True)

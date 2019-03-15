@@ -339,13 +339,15 @@ def job_edit(request,pk):
         form = JobForm(request.POST,request.FILES,instance=job_obj)
         if form.is_valid():
             form2 = form.save(commit=False)
-            batchNo =request.POST.get('batch_type')
-            if batchNo:
+            batchNo = request.POST.get('batch_type')
+            if batchNo == 'None':
+                pass
+            else:
                 try:
                     job_obj.batch_type = Batch.objects.get(pk=batchNo)
                 except:
                     job_obj.batch_type = Batch.objects.get(batch_id=batchNo)
-                job_obj.save()
+            job_obj.save()
             form2.save()
             messages.success(request, 'Job was successfully edited')
             response = redirect(request.META['HTTP_REFERER'])
@@ -1000,7 +1002,7 @@ def register(request):
         form = UserForm(request.POST)
         form2 = UserAccountForm(request.POST)
         form3 = PrimaryContactForm(request.POST)
-        form4 = SecondaryContactForm(request.POST)
+
 
         if request.POST.get('bot_catcher') != "":
             context['message'] = "iRobot detected...."
@@ -1040,7 +1042,6 @@ def register(request):
                 user_acc_form2.staff_account = False
                 user_acc_form2.save()
                 user_primary_contact_form = PrimaryContactForm(request.POST)
-                user_secondary_contact_form = SecondaryContactForm(request.POST)
 
                 print(user_acc_form.errors)
 
@@ -1056,7 +1057,7 @@ def register(request):
                     form3 = PrimaryContactForm(request.POST)
                     form4 = SecondaryContactForm(request.POST)
                     context['form'] = request.POST
-                    context['message'] = "Please check and make sure all fields are properly filled"
+                    context['message'] = "Incorrect values submitted...Except for office address and type of business, all others fields should not have spaces in between them"
                     response = render(request, 'zodiakApp/newreg.html', context)
                     return response
 
@@ -1078,30 +1079,7 @@ def register(request):
 
                 else:
                     context['form'] = request.POST
-                    context['message'] = "Please check and make sure all fields are properly filled"
-                    response = render(request, 'zodiakApp/newreg.html', context)
-                    return response
-
-                if user_secondary_contact_form.is_valid():
-                    user_acc_form4 = user_secondary_contact_form.save(commit=False)
-                    user_acc_form4.sec_user_acc = user
-                    user_acc_form4.save()
-
-                    rm_obj = RelationshipManager.objects.create(
-                        rm_client=user.useraccount,
-                        rm_name=user_acc_form4.sec_contact_name,
-                        rm_email=user_acc_form4.sec_contact_email,
-                        rm_position=user_acc_form4.sec_contact_position,
-                        rm_designation=user_acc_form4.sec_contact_department,
-                        rm_office_address=user_acc_form4.sec_contact_address_1,
-                        rm_contact_no=user_acc_form4.sec_contact_phone_number
-                        )
-                    rm_obj.save()
-
-
-                else:
-                    context['form'] = request.POST
-                    context['message'] = "Please check and make sure all fields are properly filled"
+                    context['message'] = "Incorrect values submitted...Except for office address and type of business, all others fields should not have spaces in between them"
                     response = render(request, 'zodiakApp/newreg.html', context)
                     return response
 
@@ -1663,13 +1641,16 @@ def user_access(request):
 @login_required
 def mails(request):
     context = {}
-    context['newmailsCountAdmin'] = Job.objects.filter(job_new_comment=True,deleted=False).count()
-    context['newmailsCountUser'] = Job.objects.filter(job_new_comment=False,deleted=False,job_user_acc=request.user.useraccount,job_commented_on=True).count()
+    if request.user.is_staff:
+        context['newmailsCountAdmin'] = Job.objects.filter(job_new_comment=True,deleted=False).count()
+    else:
+        context['newmailsCountUser'] = Job.objects.filter(job_new_comment=False,deleted=False,job_user_acc=request.user.useraccount,job_commented_on=True).count()
     context['newmails'] = Job.objects.filter(deleted=False,job_commented_on=True)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     template_name = 'zodiakApp/adminmailbox.html'
     return render(request, template_name, context)
+
 
 
 @login_required
@@ -1690,6 +1671,7 @@ def view_mail(request,pk):
     return render(request, template_name, context)
 
 
+@login_required
 def adminPage(request):
     context = {}
     context['names'] = UserAccount.objects.filter(deleted=False,staff_account=False)

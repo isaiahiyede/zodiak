@@ -60,10 +60,10 @@ class Migration(migrations.Migration):
                 'ordering': ['-created_on'],
             },
         ),
-        migrations.RemoveField(
-            model_name='job',
-            name='VAT_charge',
-        ),
+        # migrations.RemoveField(
+        #     model_name='job',
+        #     name='VAT_charge',
+        # ),
         migrations.RemoveField(
             model_name='job',
             name='chargeable_rate',

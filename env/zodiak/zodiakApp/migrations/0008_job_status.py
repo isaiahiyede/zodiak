@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='job',
             name='status',
-            field=models.BooleanField(default='New'),
+            field=models.BooleanField(default=False),
         ),
     ]

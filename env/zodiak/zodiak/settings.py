@@ -89,7 +89,7 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'isaiahiyede$default',
+        'NAME': 'isaiahiyede$zodiakDefault',
         'USER': 'isaiahiyede',
         'PASSWORD': 'ogheneyole@@101',
         'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',

@@ -1592,6 +1592,7 @@ def view_mail(request,pk):
     return render(request, template_name, context)
 
 
+@login_required
 def adminPage(request):
     context = {}
     context['names'] = UserAccount.objects.filter(deleted=False,staff_account=False)
@@ -1643,7 +1644,7 @@ def addDoc(request, job_obj):
 
 
 @login_required
-def delete_doc(request,pk):
+def delete_doc(request, pk):
     doc_obj = Documents.objects.get(pk=pk, deleted=False)
     doc_obj.deleted = True
     doc_obj.save()

@@ -33,6 +33,7 @@ class UserAccount(models.Model):
     country = models.CharField(max_length=20,null=True,blank=True)
     state = models.CharField(max_length=20,null=True,blank=True)
     website = models.CharField(max_length=50,null=True,blank=True)
+    cust_type = models.CharField(max_length=50,null=True,blank=True)
     acc_owner = models.CharField(max_length=50,null=True,blank=True)
 
     class Meta:

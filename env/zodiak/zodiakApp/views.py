@@ -1044,6 +1044,11 @@ def register(request):
                 user_acc_form = UserAccountForm(request.POST,request.FILES)
                 user_acc_form2 = user_acc_form.save(commit=False)
                 user_acc_form2.staff_account = False
+                user_acc_form2.cust_type = request.POST.get('cust_type')
+                try:
+                    user_acc_form2.comp_name = request.POST.get('comp_name')
+                except:
+                    pass
                 user_acc_form2.save()
                 user_primary_contact_form = PrimaryContactForm(request.POST)
                 user_secondary_contact_form = SecondaryContactForm(request.POST)

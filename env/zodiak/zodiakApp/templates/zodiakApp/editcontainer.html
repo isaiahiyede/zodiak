@@ -1,0 +1,91 @@
+<div id="PrimaryModalalertContainer" class="modal modal-edu-general fullwidth-popup-InformationproModal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-close-area modal-close-df">
+                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+            </div>
+            <div class="modal-body">
+                <div class="sparkline12-graph">
+                    <div class="basic-login-form-ad">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="all-form-element-inner">
+
+                                <form action="{% url 'zodiakApp:editContainer' %}" method="post" id="my_cont" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                                    <div class="row">
+
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+
+                                            <input type="hidden" name="cont_id" value="{{cont_obj.pk}}">
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Name of Container</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        
+                                                        <select style="font-size: 10px; height: 28px;" name="name_of_container" required class="form-control">
+
+                                                            <option value="{{cont_obj.name_of_container}}" selected="{{cont_obj.name_of_container}}" disabled="">{{cont_obj.name_of_container}}</option>
+                                                            <option value="Dry Freight 20ft">Dry Freight 20ft</option>
+                                                            <option value="Dry Freight 40ft">Dry Freight 40ft</option>
+                                                            <option value="High Cube Dry 40ft">High Cube Dry 40ft</option>
+                                                            <option value="High Cube Dry 45ft">High Cube Dry 45ft</option>
+                                                            <option value="Reefer 20ft">Reefer 20ft</option>
+                                                            <option value="Reefer 40ft">Reefer 40ft</option>
+                                                            <option value="High Cube Reefer 40ft">High Cube Reefer 40ft</option>
+                                                            <option value="High Cube Reefer 45ft">High Cube Reefer 45ft</option>
+                                                            <option value="Flat Rack 40ft">Flat Rack 40ft</option>
+                                                            <option value="Flat Rack 20ft">Flat Rack 20ft</option>
+                                                            <option value="Collapsible Flat Rack 20ft">Collapsible Flat Rack 20ft</option>
+                                                            <option value="Collapsible Flat Rack 40ft">Collapsible Flat Rack 40ft</option>
+                                                            <option value="Open Top 20ft">Open Top 20ft</option>
+                                                            <option value="Open Top 40ft">Open Top 40ft</option>
+                                                            <option value="Open Sided/Open Top 20ft">Open Sided/Open Top 20ft</option>
+                                                            <option value="Open Sided/Open Top 40ft">Open Sided/Open Top 40ft</option>
+                                                            <option value="Aritificial Tweendeck">Aritificial Tweendeck</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>  
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Number of Container</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        <input style="font-size: 10px;" type="number" min="1" id="number_of_container" required 
+                                                        name="number_of_container" value="{{cont_obj.number_of_container}}" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="row submititem">
+                                        <div class="col-lg-12">
+                                            <div class="payment-adress">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light pull-right">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -48,7 +48,7 @@
                                             <tr class="info">
                                                 <td></td>
                                                 <td>{{fin_obj.job_finance}}</td>
-                                                <td>{{fin_obj.jobtotalCost|default_if_none:"0.0"}}</td>
+                                                <td>{{fin_obj.job_finance.totalcostofjob|default_if_none:"0.0"}}</td>
 
                                                 <td class="datatable-ct">
                                                     <a title="view finance item" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-eye"></i></a>&nbsp;

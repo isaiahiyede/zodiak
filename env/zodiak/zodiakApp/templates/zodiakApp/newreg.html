@@ -19,9 +19,10 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="logo-pro">
                 <h3>Register Here</h3>
-                {% for message in messages %}
-                   <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
+
+                {% if message %}
+                   <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
                 
             </div>
         </div>
@@ -35,8 +36,6 @@
         <div class="row">
             <form method="post" id="loginForm" action="{% url 'zodiakApp:register' %}" enctype="multipart/form-data">
             {% csrf_token %}
-
-
 
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                    <div class="sparkline12-list">
@@ -58,8 +57,12 @@
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                         <div class="form-select-list">
-                                                            <select style="font-size: 12px; height: 28px; box-shadow: 0 0 3px red;" class="form-control" required id="cust_type" name="cust_type" data-placeholder="Choose a Customer Type..." class="chosen-select" tabindex="-1">
+                                                            <select style="font-size: 10px; height: 28px; " class="form-control" required id="cust_type" name="cust_type" data-placeholder="Choose a Customer Type..." class="chosen-select" tabindex="-1">
+                                                                {% if message %}
+                                                                <option value="{{form.cust_type}}" selected="{{form.cust_type}}">{{form.cust_type}}</option>
+                                                                {% else %}
                                                                 <option value="none" selected="" disabled="">Select</option>
+                                                                {% endif %}          
                                                                 <option value="corporate">Corporate</option>
                                                                 <option value="private">Private</option>
                                                             </select>
@@ -72,35 +75,25 @@
                                             <div class="form-group-inner company hidden">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Company Name</label>
+                                                        <label class="login2">Company Name <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="company_name" name="company_name" type="text" class="form-control"/>
+                                                        <input style="font-size:10px;" style="" id="comp_name" name="comp_name"{% if message %}value="{{form.comp_name}}"{% endif %} type="text" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <input id="bot_catcher" name="bot_catcher" type="hidden" class="form-control" required />
+                                            <input style="font-size:10px;" id="bot_catcher" name="bot_catcher" type="hidden" class="form-control" required />
 
 
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">First Name</label>
+                                                        <label class="login2">First Name <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="first_name" name="first_name" type="text" class="form-control" required/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Last Name</label>
-                                                    </div>
-                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="last_name" name="last_name" type="text" class="form-control" required/>
+                                                        <input style="font-size:10px;" style="" id="first_name" name="first_name" {% if message %}value="{{form.first_name}}"{% endif %}    type="text" value="" class="form-control" required/>
+                                                     
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,10 +101,21 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Username</label>
+                                                        <label class="login2">Last Name <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="username" name="username" type="text" class="form-control" required/>
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.last_name}}"{% endif %} style="" id="last_name" name="last_name" type="text" class="form-control" required/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Username <span style="color:red;">*</span></label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.username}}"{% endif %} style="" id="username" name="username" type="text" class="form-control" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,10 +123,10 @@
                                            <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Email</label>
+                                                        <label class="login2">Email <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="email" name="email" type="text" class="form-control" required placeholder="hint: praise@gmail.com"/>
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.email}}"{% endif %} style="" id="email" name="email" type="text" class="form-control" required placeholder="hint: praise@gmail.com"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,10 +134,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Website</label>
+                                                        <label class="login2">Website <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" type="text" id="website" name="website" type="text" class="form-control"/required>
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.website}}"{% endif %} style="" type="text" id="website" name="website" type="text" class="form-control"/required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,10 +145,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Password</label>
+                                                        <label class="login2">Password <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="password" name="password" type="password" class="form-control" required placeholder="Above eight characters Long"/>
+                                                        <input style="font-size:10px;" style="" id="password" name="password" type="password" class="form-control" required placeholder="Above eight characters Long"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,10 +156,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Confirm Pwd</label>
+                                                        <label class="login2">Confirm Pwd <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="password2" name="password2" type="password" class="form-control" required/>
+                                                        <input style="font-size:10px;" style="" id="password2" name="password2" type="password" class="form-control" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,10 +167,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Telephone</label>
+                                                        <label class="login2">Telephone <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="phone_number" name="phone_number" type="number" min="1" class="form-control" required/>
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.phone_number}}"{% endif %} style="" id="phone_number" name="phone_number" type="number" min="1" class="form-control" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -174,12 +178,16 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Country</label>
+                                                        <label class="login2">Country <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                         <div class="form-select-list">
-                                                            <select style="font-size: 12px; height: 28px; box-shadow: 0 0 3px red;" class="form-control" required id="country" name="country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
+                                                            <select style="font-size: 10px; height: 28px; " class="form-control" required id="country" name="country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
+                                                                {% if message %}
+                                                                <option value="{{form.country}}">{{form.country}}</option>
+                                                                {% else %}
                                                                 <option value="">Select</option>
+                                                                {% endif %}
                                                                 <option value="United States">United States</option>
                                                                 <option value="United Kingdom">United Kingdom</option>
                                                                 <option value="Afghanistan">Afghanistan</option>
@@ -440,10 +448,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Office Address</label>
+                                                        <label class="login2">Office Address <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <textarea style="box-shadow: 0 0 3px red;" name="office_address" class="form-control" requiredid="office_address" placeholder="Office Address"></textarea>
+                                                        <textarea style="font-size:10px;" name="office_aadress" class="form-control" required id="office_aadress" placeholder="Office Address">{% if message %}{{form.office_aadress}}{% endif %}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -451,10 +459,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <label class="login2">Type of Business</label>
+                                                        <label class="login2">Type of Business <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <textarea style="box-shadow: 0 0 3px red;" name="type_of_business" class="form-control" requiredid="type_of_business" placeholder="Type of Business"></textarea>
+                                                        <textarea style="font-size:10px;" name="type_of_business" class="form-control" required id="type_of_business" placeholder="Type of Business">{% if message %}{{form.type_of_business}}{% endif %}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -486,7 +494,7 @@
                                                         <label class="login2">Name</label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="contact_name" name="contact_name" type="text" class="form-control"/>
+                                                        <input style="font-size:10px;" style="" id="contact_name" name="contact_name" {% if message %}value="{{form.contact_name}}"{% endif %}type="text" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -497,7 +505,7 @@
                                                         <label class="login2">Department</label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="contact_department" name="contact_department" type="text" class="form-control" />
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.contact_department}}"{% endif %} style="" id="contact_department" name="contact_department" type="text" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -508,7 +516,8 @@
                                                         <label class="login2">Position</label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="contact_position" name="contact_position" type="text" class="form-control" />
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.contact_position}}"
+                                                        {% endif %} style="" id="contact_position" name="contact_position" type="text" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -519,7 +528,8 @@
                                                         <label class="login2">Location</label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="contact_address_1" name="contact_address_1" type="text" class="form-control" />
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.contact_position}}"
+                                                        {% endif %} style="" id="contact_address_1" name="contact_address_1" type="text" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -531,7 +541,8 @@
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
 
-                                                        <input style="box-shadow: 0 0 3px red;" id="contact_email" name="contact_email" type="email" class="form-control" placeholder="hint: praise@gmail.com"/>
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.contact_email}}"
+                                                        {% endif %} style="" id="contact_email" name="contact_email" type="email" class="form-control" placeholder="hint: praise@gmail.com"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -542,7 +553,8 @@
                                                         <label class="login2">Telephone</label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="box-shadow: 0 0 3px red;" id="contact_phone_number" name="contact_phone_number" type="number" class="form-control" />
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.contact_phone_number}}"
+                                                        {% endif %} style="" id="contact_phone_number" name="contact_phone_number" type="number" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -578,9 +590,9 @@
                                                             <div class="input prepend-small-btn">
                                                                 <div class="file-button">
                                                                     Browse
-                                                                    <input type="file" id="user_passport" name="user_passport" onchange="document.getElementById('prepend2-small-btn').value = this.value;">
+                                                                    <input style="font-size:10px;" type="file" id="user_passport" name="user_passport" onchange="document.getElementById('prepend2-small-btn').value = this.value;">
                                                                 </div>
-                                                                <input style="box-shadow: 0 0 3px green;" type="text" id="prepend2-small-btn" placeholder="no file selected">
+                                                                <input style="font-size:10px;" style="box-shadow: 0 0 3px green;" type="text" id="prepend2-small-btn" placeholder="no file selected">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -597,9 +609,9 @@
                                                             <div class="input prepend-small-btn">
                                                                 <div class="file-button">
                                                                     Browse
-                                                                    <input type="file" id="user_cac" name="user_cac" onchange="document.getElementById('prepend3-small-btn').value = this.value;">
+                                                                    <input style="font-size:10px;" type="file" id="user_cac" name="user_cac" onchange="document.getElementById('prepend3-small-btn').value = this.value;">
                                                                 </div>
-                                                                <input style="box-shadow: 0 0 3px green;" type="text" id="prepend3-small-btn" placeholder="no file selected">
+                                                                <input style="font-size:10px;" style="box-shadow: 0 0 3px green;" type="text" id="prepend3-small-btn" placeholder="no file selected">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -616,9 +628,9 @@
                                                             <div class="input prepend-small-btn">
                                                                 <div class="file-button">
                                                                     Browse
-                                                                    <input type="file" id="user_other_means_of_id" name="user_other_means_of_id" onchange="document.getElementById('prepend4-small-btn').value = this.value;">
+                                                                    <input style="font-size:10px;" type="file" id="user_other_means_of_id" name="user_other_means_of_id" onchange="document.getElementById('prepend4-small-btn').value = this.value;">
                                                                 </div>
-                                                                <input style="box-shadow: 0 0 3px green;" type="text" id="prepend4-small-btn" placeholder="no file selected">
+                                                                <input style="font-size:10px;" style="box-shadow: 0 0 3px green;" type="text" id="prepend4-small-btn" placeholder="no file selected">
                                                             </div>
                                                         </div>
                                                     </div>

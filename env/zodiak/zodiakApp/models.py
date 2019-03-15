@@ -289,6 +289,10 @@ class Job(PackageDimension):
     deleted = models.BooleanField(default=False)
 
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Job._meta.fields]
+
+
     def jobtotalgrossweight(self):
         total = self.minibatches_set.filter(deleted=False).aggregate(Sum('gross_wgh'))['gross_wgh__sum']
         if total == 0.0:

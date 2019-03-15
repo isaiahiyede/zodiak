@@ -1689,8 +1689,6 @@ def adminPage(request):
 @login_required
 def addDoc(request, job_obj):
     context = {}
-    print(request.POST)
-    print(request.FILES)
 
     if request.method == "POST":
 

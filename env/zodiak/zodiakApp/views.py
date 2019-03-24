@@ -1656,9 +1656,10 @@ def mails(request):
     context = {}
     if request.user.is_staff:
         context['newmailsCountAdmin'] = Job.objects.filter(job_new_comment=True,deleted=False).count()
+        context['newmails'] = Job.objects.filter(deleted=False,job_commented_on=True)
     else:
         context['newmailsCountUser'] = Job.objects.filter(job_new_comment=False,deleted=False,job_user_acc=request.user.useraccount,job_commented_on=True).count()
-    context['newmails'] = Job.objects.filter(deleted=False,job_commented_on=True)
+        context['newmails'] = Job.objects.filter(deleted=False,job_commented_on=True,job_user_acc=request.user.useraccount)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
     template_name = 'zodiakApp/adminmailbox.html'

@@ -20,9 +20,7 @@
             <div class="logo-pro">
                 <h3>Register Here</h3>
 
-                {% if message %}
-                   <div class="alert alert-warning">{{ message }}</div>
-                {% endif %}
+
                 
             </div>
         </div>
@@ -36,6 +34,10 @@
         <div class="row">
             <form method="post" id="loginForm" action="{% url 'zodiakApp:register' %}" enctype="multipart/form-data">
             {% csrf_token %}
+
+                {% if message %}
+                   <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
 
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                    <div class="sparkline12-list">
@@ -71,7 +73,6 @@
                                                 </div>
                                             </div>
 
-
                                             <div class="form-group-inner company hidden">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
@@ -84,7 +85,6 @@
                                             </div>
 
                                             <input style="font-size:10px;" id="bot_catcher" name="bot_catcher" type="hidden" class="form-control" required />
-
 
                                             <div class="form-group-inner">
                                                 <div class="row">
@@ -115,12 +115,12 @@
                                                         <label class="login2">Username <span style="color:red;">*</span></label>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                                                        <input style="font-size:10px;" {% if message %}value="{{form.username}}"{% endif %} style="" id="username" name="username" type="text" class="form-control" required/>
+                                                        <input style="font-size:10px;" {% if message %}value="{{form.username}}"{% endif %} style="" id="" name="username" type="text" class="form-control" required/>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                           <div class="form-group-inner">
+                                            <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                                                         <label class="login2">Email <span style="color:red;">*</span></label>
@@ -182,7 +182,7 @@
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                         <div class="form-select-list">
-                                                            <select style="font-size: 10px; height: 28px; " class="form-control" required id="country" name="country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
+                                                            <select style="font-size: 10px; height: 28px; " class="form-control" required id="" name="country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
                                                                 {% if message %}
                                                                 <option value="{{form.country}}">{{form.country}}</option>
                                                                 {% else %}
@@ -554,7 +554,7 @@
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                         <input style="font-size:10px;" {% if message %}value="{{form.contact_phone_number}}"
-                                                        {% endif %} style="" id="contact_phone_number" name="contact_phone_number" type="number" class="form-control" />
+                                                        {% endif %} style="" id="contact_phone_number" name="contact_phone_number" type="number" min="1" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>

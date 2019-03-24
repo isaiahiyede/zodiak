@@ -34,9 +34,13 @@
                                                     th,td{font-size: 10px;}
                                                 </style>
                                         <thead>
-                                            <tr>
+                                            <tr class="info">
                                                 <th data-field="state" data-checkbox="true"></th>
-                                                <th data-field="job_id">Job Id</th>
+                                                <th data-field="job_id">JOB Id</th>
+                                                <th data-field="job_type">Charge Type</th>
+                                                <th data-field="job_paid">Paid By</th>
+                                                <th data-field="job_date">Date Paid</th>
+                                                <th data-field="job_refund">Refundable AS</th>
                                                 <th data-field="total_cost">Total cost (₦)</th>
                                                 <th>Action</th>
                                             </tr>
@@ -47,13 +51,14 @@
 
                                             <tr class="info">
                                                 <td></td>
-                                                <td>{{fin_obj.job_finance}}</td>
-                                                <td>{{fin_obj.job_finance.totalcostofjob|default_if_none:"0.0"}}</td>
-
+                                                <td>{{fin_obj.job_finance.job_id}}</td>
+                                                <td>{{fin_obj.charge_type}}</td>
+                                                <td>{{fin_obj.paid_by}}</td>
+                                                <td>{{fin_obj.date_paid}}</td>
+                                                <td>{{fin_obj.refundablle_as}}</td>
+                                                <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>
                                                 <td class="datatable-ct">
-                                                    <a title="view finance item" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
-                                                    <a title="edit finance item" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
-                                                    <a title="delete finance item" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:fin_info_view' fin_obj.pk %}"><i class="fa fa-trash"></i></a>
+                                                    <a title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
 

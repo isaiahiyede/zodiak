@@ -36,8 +36,13 @@ def getMessageCount(request):
 
 
 @register.filter
-def get_fields(obj):
-    return [(field.name, field.value_to_string(obj)) for field in obj._meta.fields]
+def getValue(obj):
+    if obj == None or obj == False:
+    	return 'N'
+    elif obj == True:
+    	return 'Y'
+    else:
+    	return obj
 	
 
     

@@ -21,9 +21,7 @@
 <li>{{job.job_id}}</li>
 </ul>
 
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}">{{ message }}</div>
-{% endfor %}
+
 <div id="myTabContent" class="tab-content custom-product-edit">
 <div class="product-tab-list tab-pane fade active in" id="reviews">
 <div class="row">
@@ -39,6 +37,11 @@
                         <div class="basic-login-inner inline-basic-form">
                             <form action="{% url 'zodiakApp:job_edit' job.pk %}" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
+
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                {% endfor %}
+                                
                                 <div class="panel panel-default">
                                 <div class="panel-heading accordion-head">
                                     <h6 class="panel-title">

@@ -16,6 +16,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="{% static 'zodiakApp/img/favicon.ico' %}">
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/accordions.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/font-awesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.carousel.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.theme.css' %}">
@@ -41,7 +42,6 @@
 <link rel="stylesheet" href="{% static 'zodiakApp/css/dropzone/dropzone.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/style.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/responsive.css' %}">
-<link rel="stylesheet" href="{% static 'css/accordions.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/editor/x-editor-style.css' %}">
 <script src="{% static 'zodiakApp/js/jquery.min.js' %}"></script>
 <script src="{% static 'zodiakApp/js/vendor/modernizr-2.8.3.min.js' %}"></script>
@@ -233,21 +233,21 @@
                                             <span class="mini-sub-pro">All Reports</span>
                                         </a>
                                     </li>
-                            </ul>
-                        </li>
-                        {% endif %}
-
-                        {% if request.user.is_staff %}
-                        <li>
-                            <a class="has-arrow" href="/" aria-expanded="false"><span class="educate-icon educate-library icon-wrap"></span><span class="mini-click-non">Book Keeping</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-
                                     <li>
-                                        <a title="" href="{% url 'zodiakApp:financerecords'%}">
-                                            <span class="mini-sub-pro">Financials</span>
+                                        <a title="" href="{% url 'zodiakApp:reporting' %}">
+                                            <span class="mini-sub-pro">Documentation</span>
                                         </a>
                                     </li>
-
+                                    <li>
+                                        <a title="" href="{% url 'zodiakApp:financerecords'%}">
+                                            <span class="mini-sub-pro">Payment Status</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a title="" href="{% url 'zodiakApp:reporting' %}">
+                                            <span class="mini-sub-pro">Job Status</span>
+                                        </a>
+                                    </li>
                             </ul>
                         </li>
                         {% endif %}

@@ -2,32 +2,22 @@
 {% extends 'zodiakApp/adminHome.html' %}
 {% load staticfiles %}
 
-{% block morecss %}
-<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
-{% endblock morecss %}
+
 
 {% block contents %}
 <div class="data-table-area mg-b-15">
     <div class="container-fluid">
-                <div class="row">
+        <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1><span class="table-project-n"></span>Finance Records</h1>
+                                    <h1><span class="table-project-n"></span>Payment Status</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-<!--                                     <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                                            <option value="">Select action...</option>
-                                            <option value="1">Approve</option>
-                                            <option value="2">Approve All</option>
-                                            <option value="3">Approve Selected</option>
-                                        </select>
-                                    </div> -->
+
                                     <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                         data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                                 <style>
@@ -40,8 +30,10 @@
                                                 <th data-field="job_type">Charge Type</th>
                                                 <th data-field="job_paid">Paid By</th>
                                                 <th data-field="job_date">Date Paid</th>
+                                                <th data-field="job_received">Received</th>
                                                 <th data-field="job_refund">Refundable AS</th>
                                                 <th data-field="total_cost">Total cost (₦)</th>
+                                                <th data-field="job_comment">Comment</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -55,9 +47,12 @@
                                                 <td>{{fin_obj.charge_type}}</td>
                                                 <td>{{fin_obj.paid_by}}</td>
                                                 <td>{{fin_obj.date_paid}}</td>
+                                                <td>{{fin_obj.received}}</td>
                                                 <td>{{fin_obj.refundablle_as}}</td>
                                                 <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>
+                                                <td>{{fin_obj.comments}}</td>
                                                 <td class="datatable-ct">
+                                                    <a title="edit finance item" href="{% url 'zodiakApp:new_fin_info_edit' fin_obj.pk %}"><i class="fa fa-pencil"></i></a>
                                                     <a title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
@@ -69,28 +64,94 @@
                             </div>
                         </div>
                     </div>
-                </div>
+        </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="sparkline10-list mt-b-30">
+                                        <div class="sparkline10-hd">
+
+                                        </div>
+                                        <div class="sparkline10-graph">
+                                            <div class="basic-login-form-ad">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="basic-login-inner inline-basic-form">
+                                                            <form action="{% url 'zodiakApp:new_financials' %}" method="post" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+
+                                                                <div class="form-group-inner">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2">Select Job<span style="color:red;">*</span></label>
+                                                                        </div>
+                                                                        
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                            <div class="chosen-select-single">
+                                                                                <select required style="font-size:10px; height: 28px;" class="form-control" id="job_finance" name="job_finance" data-placeholder="Select customer..." class="chosen-select" tabindex="-1">
+                                                                                            <option value="">Select</option>
+                                                                                            {% for job in jobs %}
+                                                                                               <option value="{{job.job_id}}">
+                                                                                                {{job.job_id}}</option>
+                                                                                            {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="form-group-inner">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2">Select Charge Type<span style="color:red;">*</span></label>
+                                                                        </div>
+                                                                        
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                            <div class="chosen-select-single">
+                                                                                <select data-placeholder="Choose Charge Type..." id="charge_type" name="charge_type" class="chosen-select" multiple="" tabindex="-1" required>
+                                                                                <option value="Duty">Duty</option>
+                                                                                <option value="Terminal Charge">Terminal Charge</option>
+                                                                                <option value="Shipping Line Charge">Shipping Line Charge</option>
+                                                                                <option value="SON Charge">SON Charge</option>
+                                                                                <option value="Airline Charge">Airline Charge</option>
+                                                                                <option value="Quarantine Charge">Quarantine Charge</option>
+                                                                                <option value="NDLEA Charge">NDLEA Charge</option>
+                                                                                <option value="NAFDAC Charge">NAFDAC Charge</option>
+                                                                                <option value="FAAN">FAAN</option>
+                                                                                <option value="Handling Charge">Handling Charge</option>
+                                                                                <option value="Insurance Charge">Insurance Charge</option>                 
+                                                                                <option value="VAT Charge">VAT Charge</option>
+                                                                                <option value="Demurrage Charge">Demurrage Charge</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="form-group-inner">
+                                                                 <div class="row">
+                                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                                        <div class="login-horizental">
+                                                                            <button class="btn btn-sm btn-primary login-submit-cs pull-right" type="submit">Save</button>
+                                                                        </div>
+                                                                    </div>
+                                                                 </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+        </div>
 	</div>
 </div>
 {% endblock contents %}
 
-{% block specialscripts %}
-
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
-
-<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
-
-{% endblock specialscripts %}

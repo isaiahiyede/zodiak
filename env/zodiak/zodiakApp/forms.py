@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 
 from zodiakApp.models import Job, UserAccount, Documents, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
-attr3 = {'style': 'border-color: green;', 'required': 'required'}
-attr4 = {'style': 'border-color: green;'}
+attr3 = {'style': 'border-color: grey;','required':'required;'}
 
 
 class DateInput(forms.DateInput):
@@ -55,8 +54,26 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'amount','paid_by','date_paid','refundablle_as','charge_type',
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments',
             )
+
+
+class FinancialsForm(forms.ModelForm):
+    amount = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
+    received = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
+    charge_type = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
+    refundablle_as = forms.DateTimeField(widget=forms.DateInput())
+    date_paid = forms.DateTimeField(widget=forms.DateInput())
+    paid_by = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
+    comments = forms.CharField(max_length=30,widget=forms.Textarea(attrs=attr3))
+
+    class Meta:
+        model = Finances
+        fields = (
+
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments',
+            )
+
 
 
 class JobForm(forms.ModelForm):

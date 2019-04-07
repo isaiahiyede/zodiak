@@ -866,6 +866,7 @@ def financerecords(request):
     fin_objs = Finances.objects.filter(deleted=False)
     context['mode_of_batch'] = context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
+    context['jobs'] = Job.objects.filter(deleted=False)
     context['fin_objs'] = fin_objs
     response = response = render(request, 'zodiakApp/viewfinances.html', context)
     return response
@@ -928,6 +929,66 @@ def fin_info_delete(request,pk):
     fin_obj.save()
     response = redirect(request.META['HTTP_REFERER'])
     return response
+
+
+@login_required
+def new_financials(request):
+    context = {}
+    print(request.POST)
+    if request.method == "POST":
+        type_of_charge = request.POST.getlist('charge_type')
+        job_finance = request.POST.get('job_finance')
+        try:
+            job_obj = Job.objects.get(job_id=job_finance)
+        except:
+            job_obj = Job.objects.get(pk=job_finance)
+
+        for i in type_of_charge:
+            val = type_of_charge.index(i)
+            finance_obj = Finances.objects.create(
+                job_finance=job_obj,
+                charge_type=i,
+                )
+            finance_obj.save()
+
+        messages.success(request, 'Job payments sucessfully updated')
+        response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        messages.success(request, 'Oops Something went wrong')
+        response = redirect(request.META['HTTP_REFERER'])
+        return response
+
+
+@login_required
+def new_fin_info_edit(request,pk):
+    context = {}
+    fin_obj = Finances.objects.get(pk=pk, deleted=False)
+    print(request.POST)
+    if request.method == "POST":
+        form = FinancialsForm(request.POST,instance=fin_obj)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            job_obj = Job.objects.get(job_id=fin_obj.job_finance)
+            form2.save()
+            job_obj.job_cost = job_obj.totalcostofjob()
+            job_obj.save()
+            messages.warning(request, 'Payments was successfully edited')
+            response = redirect(reverse('zodiakApp:financerecords'))
+        else:
+            print(form.errors)
+            messages.warning(request, 'Payments was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['fin_obj'] = fin_obj
+        context['form'] = FinancialsForm(instance=fin_obj)
+        context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        response = render(request, 'zodiakApp/editpayment.html', context)
+
+        return response
+
 
 
 @login_required

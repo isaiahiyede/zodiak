@@ -55,6 +55,9 @@ urlpatterns = [
     url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
     url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
     url(r'^fin_info_delete/(?P<pk>.+)/$', views.fin_info_delete, name="fin_info_delete"),
+    url(r'^newFinance/$', views.new_financials, name="new_financials"),
+    url(r'^newFinedit/(?P<pk>.+)/$', views.new_fin_info_edit, name="new_fin_info_edit"),
+
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),

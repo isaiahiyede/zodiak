@@ -52,6 +52,13 @@ urlpatterns = [
 
     url(r'^jobfinancials/(?P<job_obj>.+)/$', views.financials, name="financials"),
     url(r'^financeRecords/$', views.financerecords, name="financerecords"),
+    
+    url(r'^statrecords/$', views.statrecords, name="statrecords"),
+    url(r'^statedit/(?P<pk>.+)/$', views.new_stat_info_edit, name="new_stat_info_edit"),
+    url(r'^statdelete/(?P<pk>.+)/$', views.stat_info_delete, name="stat_info_delete"),
+    
+    url(r'^newStat/$', views.new_stat, name="new_stat"),
+
     url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
     url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
     url(r'^fin_info_delete/(?P<pk>.+)/$', views.fin_info_delete, name="fin_info_delete"),

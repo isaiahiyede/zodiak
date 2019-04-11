@@ -12,7 +12,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1><span class="table-project-n"></span>Payment Status</h1>
+                                    <h1><span class="table-project-n"></span>Job Status</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -25,33 +25,26 @@
                                             <tr class="info">
                                                 <th data-field="state" data-checkbox="true"></th>
                                                 <th data-field="job_id">JOB Id</th>
-                                                <th data-field="job_type">Charge Type</th>
-                                                <th data-field="job_paid">Paid By</th>
-                                                <th data-field="job_date">Date Paid</th>
-                                                <th data-field="job_received">Received/Sent</th>
-                                                <th data-field="job_refund">Refundable</th>
-                                                <th data-field="total_cost">Total cost (₦)</th>
+                                                <th data-field="job_type">Status Type</th>
+                                                <th data-field="job_date">Date</th>
                                                 <th data-field="job_comment">Comment</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            {% for fin_obj in fin_objs %}
+                                            {% for stat_obj in stat_objs %}
 
                                             <tr class="info">
                                                 <td></td>
-                                                <td>{{fin_obj.job_finance.job_id}}</td>
-                                                <td>{{fin_obj.charge_type}}</td>
-                                                <td>{{fin_obj.paid_by}}</td>
-                                                <td>{{fin_obj.date_paid}}</td>
-                                                <td>{{fin_obj.received}}</td>
-                                                <td>{{fin_obj.refundablle_as}}</td>
-                                                <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>
-                                                <td>{{fin_obj.comments}}</td>
+                                                <td>{{stat_obj.job_stat.job_id}}</td>
+                                                <td>{{stat_obj.stat_type}}</td>
+                                                <td>{{stat_obj.stat_date}}</td>
+                                                <td>{{stat_obj.stat_comment}}</td>
+
                                                 <td class="datatable-ct">
-                                                    <a style="cursor:pointer !important;" title="edit finance item" href="{% url 'zodiakApp:new_fin_info_edit' fin_obj.pk %}"><i class="fa fa-pencil"></i></a>
-                                                    <a style="cursor:pointer !important;" title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                                    <a style="cursor:pointer !important;" title="edit finance item" href="{% url 'zodiakApp:new_stat_info_edit' stat_obj.pk %}"><i class="fa fa-pencil"></i></a>
+                                                    <a style="cursor:pointer !important;" title="delete finance item" href="{% url 'zodiakApp:stat_info_delete' stat_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
 
@@ -75,7 +68,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                         <div class="basic-login-inner inline-basic-form">
-                                                            <form action="{% url 'zodiakApp:new_financials' %}" method="post" enctype="multipart/form-data">
+                                                            <form action="{% url 'zodiakApp:new_stat' %}" method="post" enctype="multipart/form-data">
                                                                 {% csrf_token %}
 
                                                                 <div class="form-group-inner">
@@ -103,25 +96,22 @@
                                                                 <div class="form-group-inner">
                                                                     <div class="row">
                                                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                            <label class="login2">Select Charge Type<span style="color:red;">*</span></label>
+                                                                            <label class="login2">Select Status Type<span style="color:red;">*</span></label>
                                                                         </div>
                                                                         
                                                                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                                             <div class="chosen-select-single">
-                                                                                <select data-placeholder="Choose Charge Type..." id="charge_type" name="charge_type" class="chosen-select" multiple="" tabindex="-1" required>
-                                                                                <option value="Duty">Duty</option>
-                                                                                <option value="Terminal Charge">Terminal Charge</option>
-                                                                                <option value="Shipping Line Charge">Shipping Line Charge</option>
-                                                                                <option value="SON Charge">SON Charge</option>
-                                                                                <option value="Airline Charge">Airline Charge</option>
-                                                                                <option value="Quarantine Charge">Quarantine Charge</option>
-                                                                                <option value="NDLEA Charge">NDLEA Charge</option>
-                                                                                <option value="NAFDAC Charge">NAFDAC Charge</option>
-                                                                                <option value="FAAN">FAAN</option>
-                                                                                <option value="Handling Charge">Handling Charge</option>
-                                                                                <option value="Insurance Charge">Insurance Charge</option>                 
-                                                                                <option value="VAT Charge">VAT Charge</option>
-                                                                                <option value="Demurrage Charge">Demurrage Charge</option>
+                                                                                <select data-placeholder="Choose Charge Type..." id="stat_type" name="stat_type" class="chosen-select" multiple="" tabindex="-1" required>
+                                                                                <option value="Job Commissioned">Job Commissioned</option>
+                                                                                <option value="Vessel Arrival">Vessel Arrival</option>
+                                                                                <option value="Assesment Generated">Assesment Generated</option>
+                                                                                <option value="Examination">Examination</option>
+                                                                                <option value="Short landed">Short landed</option>
+                                                                                <option value="Cleared">Cleared</option>
+                                                                                <option value="Loaded">Loaded</option>
+                                                                                <option value="Delivered">Delivered</option>
+                                                                                <option value="Perfected">Perfected</option>
+                                                                                <option value="Challenge">Challenge</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>

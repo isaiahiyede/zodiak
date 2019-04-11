@@ -23,19 +23,19 @@
                                                 <div class="row">
                                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                         <div class="devit-card-custom">
-                                        <form action="{% url 'zodiakApp:new_fin_info_edit' fin_obj.pk %}" method="post" enctype="multipart/form-data">
+                                                            <form action="{% url 'zodiakApp:new_stat_info_edit' stat_obj.pk %}" method="post" enctype="multipart/form-data">
                                             {% csrf_token %}
 
-                                            <input type="hidden" name="job_finance" value="fin_obj.job_finance">
+                                            <input type="hidden" name="job_finance" value="stat_obj.job_stat">
 
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Charge Type</label>
+                                                        <label class="login2 pull-right pull-right-pro">Status Type</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input class="form-control" value="{{fin_obj.charge_type}}" type="text" 
-                                                        name="charge_type" readonly>
+                                                        <input class="form-control" value="{{stat_obj.stat_type}}" type="text" 
+                                                        name="stat_type" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -44,55 +44,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Amount</label>
+                                                        <label class="login2 pull-right pull-right-pro">Date</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input required class="form-control" value="{{fin_obj.amount}}" type="number" name="amount" min="1" step="any">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Paid By</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <select name="paid_by" required class="form-control"> 
-                                                                <option value="{{fin_obj.paid_by}}">{{fin_obj.paid_by}}</option>
-                                                                <option value="Client">Client</option>
-                                                                <option value="Agent">Agent</option>
-                                                                <option value="Others">Others</option>
-                                                            </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Received</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                            <select name="received" required class="form-control"> 
-                                                            <option value="{{fin_obj.received}}">{{fin_obj.received}}</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Date Paid</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{fin_obj.date_paid}}" type="text" name="date_paid">
+                                                        <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{stat_obj.stat_date}}" type="text" name="stat_date">
                                                         <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
                                                     </div>
                                                 </div>
@@ -102,28 +57,10 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Refundable</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                            <select name="refundablle_as" required class="form-control"> 
-                                                                <option value="{{fin_obj.refundablle_as}}">{{fin_obj.refundablle_as}}</option>
-                                                                <option value="Yes">Yes</option>
-                                                                <option value="No">No</option>
-                                                            </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         <label class="login2 pull-right pull-right-pro">Comments</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <textarea required class="form-control" name="comments">{{fin_obj.comments}}</textarea>
+                                                        <textarea required class="form-control" name="stat_comment">{{stat_obj.stat_comment}}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,15 +78,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </form>
+                                                            </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
                     </div>
                 </div>

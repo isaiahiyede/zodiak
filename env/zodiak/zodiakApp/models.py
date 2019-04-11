@@ -381,7 +381,7 @@ class Finances(models.Model):
     amount = models.FloatField(default=0.0, null=True, blank=True)
     paid_by = models.CharField(max_length=50, null=True, blank=True)
     received = models.CharField(max_length=50, null=True, blank=True)
-    date_paid = models.DateTimeField(null=True, blank=True)
+    date_paid = models.CharField(max_length=50, null=True, blank=True)
     refundablle_as = models.CharField(max_length=50, null=True, blank=True)
     comments = models.TextField(null=True,blank=True)
     deleted = models.BooleanField(default=False)
@@ -398,6 +398,24 @@ class Finances(models.Model):
 
     class Meta:
         verbose_name_plural = 'Finances'
+        ordering = ['-created_on']
+        
+    def __str__(self):
+        return '%s' %(self.job_finance)
+
+
+
+class StatusRec(models.Model):
+    job_stat = models.ForeignKey(Job,null=True,blank=True)
+    stat_type = models.CharField(max_length=50, null=True, blank=True)
+    stat_date = models.CharField(max_length=50, null=True, blank=True)
+    stat_comment = models.TextField(null=True,blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    class Meta:
+        verbose_name_plural = 'StatusRec'
         ordering = ['-created_on']
         
     def __str__(self):

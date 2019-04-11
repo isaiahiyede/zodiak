@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django import forms
 from django.contrib.auth.models import User
 
-from zodiakApp.models import Job, UserAccount, Documents, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, UserAccount, Documents, StatusRec, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: grey;','required':'required;'}
 
@@ -49,6 +49,15 @@ class QuotationForm(forms.ModelForm):
         fields = ('user_acct','item','quantity','price_per_item','total_cost','notes_on_job')
 
 
+class StatusRecForm(forms.ModelForm):
+    class Meta:
+        model = StatusRec
+        fields = (
+
+            'stat_type','stat_date','stat_comment',
+            )
+
+
 class FinancialsForm(forms.ModelForm):
     class Meta:
         model = Finances
@@ -59,13 +68,13 @@ class FinancialsForm(forms.ModelForm):
 
 
 class FinancialsForm(forms.ModelForm):
-    amount = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
-    received = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
-    charge_type = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
-    refundablle_as = forms.DateTimeField(widget=forms.DateInput())
-    date_paid = forms.DateTimeField(widget=forms.DateInput())
+    amount = forms.FloatField(required=True, max_value=9999999999, min_value=0, widget=forms.NumberInput(attrs={'step': "0.01"})) 
+    received = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
+    charge_type = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'style': 'border-color: grey;','required':'required','readonly':'readonly'}))
+    refundablle_as = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
+    date_paid = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     paid_by = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
-    comments = forms.CharField(max_length=30,widget=forms.Textarea(attrs=attr3))
+    comments = forms.CharField(max_length=255,widget=forms.Textarea(attrs=attr3))
 
     class Meta:
         model = Finances

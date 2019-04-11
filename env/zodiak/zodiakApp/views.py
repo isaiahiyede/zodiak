@@ -14,8 +14,8 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string
-from zodiakApp.forms import UserForm, ContainerTypesForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, Batch, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
+from zodiakApp.forms import UserForm, ContainerTypesForm, StatusRecForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.models import Job, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -387,8 +387,6 @@ def editbatch(request):
         context['minibatch_obj'] = minibatch_obj
         response = render(request,template_name,context)
         return response
-
-
 
 
 @login_required
@@ -858,6 +856,75 @@ def job_invoice_page(request, pk):
     context['pkg'] = pkg
     return render(request, template, context)
 
+
+@login_required
+def statrecords(request):
+    context={}
+    stat_objs = StatusRec.objects.filter(deleted=False)
+    context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    context['jobs'] = Job.objects.filter(deleted=False)
+    context['stat_objs'] = stat_objs
+    response = response = render(request, 'zodiakApp/viewstatrecs.html', context)
+    return response
+
+
+@login_required
+def new_stat_info_edit(request,pk):
+    context = {}
+    stat_obj = StatusRec.objects.get(pk=pk, deleted=False)
+    print(request.POST)
+    if request.method == "POST":
+        form = StatusRecForm(request.POST,instance=stat_obj)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            job_obj = Job.objects.get(job_id=stat_obj.job_stat)
+            form2.save()
+            job_obj.save()
+            messages.warning(request, 'Payments was successfully edited')
+            response = redirect(reverse('zodiakApp:statrecords'))
+        else:
+            print(form.errors)
+            messages.warning(request, 'Payments was not successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['stat_obj'] = stat_obj
+        context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        response = render(request, 'zodiakApp/editstat.html', context)
+
+        return response
+
+
+@login_required
+def new_stat(request):
+    context = {}
+    print(request.POST)
+    if request.method == "POST":
+        type_of_stat = request.POST.getlist('stat_type')
+        job_stat = request.POST.get('job_finance')
+        try:
+            job_obj = Job.objects.get(job_id=job_stat)
+        except:
+            job_obj = Job.objects.get(pk=job_stat)
+
+        for i in type_of_stat:
+            val = type_of_stat.index(i)
+            stat_obj = StatusRec.objects.create(
+                job_stat=job_obj,
+                stat_type=i,
+                )
+            stat_obj.save()
+
+        messages.success(request, 'Job payments sucessfully updated')
+        response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        messages.success(request, 'Oops Something went wrong')
+        response = redirect(request.META['HTTP_REFERER'])
+        return response
+
 """" financial """
 
 @login_required
@@ -904,6 +971,7 @@ def fin_info_edit(request,pk):
             context['statuses'] = getStatus()
             context['job_type'] = jobtype
             context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=jobtype)
+
             response = render(request, 'zodiakApp/process.html', context)
         else:
             print(form.errors)
@@ -927,6 +995,15 @@ def fin_info_delete(request,pk):
     fin_obj = Finances.objects.get(pk=pk, deleted=False)
     fin_obj.deleted = True
     fin_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
+@login_required
+def stat_info_delete(request,pk):
+    stat_obj = StatusRec.objects.get(pk=pk, deleted=False)
+    stat_obj.deleted = True
+    stat_obj.save()
     response = redirect(request.META['HTTP_REFERER'])
     return response
 

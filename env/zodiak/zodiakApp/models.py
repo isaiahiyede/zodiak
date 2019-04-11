@@ -380,8 +380,10 @@ class Finances(models.Model):
     charge_type = models.CharField(max_length=50, null=True, blank=True)
     amount = models.FloatField(default=0.0, null=True, blank=True)
     paid_by = models.CharField(max_length=50, null=True, blank=True)
-    date_paid = models.DateField(null=True, blank=True)
+    received = models.CharField(max_length=50, null=True, blank=True)
+    date_paid = models.DateTimeField(null=True, blank=True)
     refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    comments = models.TextField(null=True,blank=True)
     deleted = models.BooleanField(default=False)
     created_on = models.DateTimeField(default=timezone.now)
 
@@ -400,6 +402,8 @@ class Finances(models.Model):
         
     def __str__(self):
         return '%s' %(self.job_finance)
+
+
 
 
 class MiniBatches(models.Model):

@@ -1,0 +1,168 @@
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+{% endblock morecss %}
+
+{% block contents %}
+<div class="single-pro-review-area mt-t-30 mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-payment-inner-st">
+                            <ul id="myTabedu1" class="tab-review-design">
+                                <li class="active"><a href="#reviews">Update Payment Record</a></li>
+                            </ul>
+
+                            <div id="myTabContent" class="tab-content custom-product-edit">
+                                
+                                <div class="product-tab-list tab-pane fade active in" id="reviews">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <div class="devit-card-custom">
+                                        <form action="{% url 'zodiakApp:new_fin_info_edit' fin_obj.pk %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+
+                                            <input type="hidden" name="job_finance" value="fin_obj.job_finance">
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Charge Type</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.charge_type}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Amount</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.amount}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Paid By</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.paid_by}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Received</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.received}}
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Date Paid</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.date_paid}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Refundable</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.refundablle_as}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">Comments</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        {{form.comments}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group-inner">
+                                                <div class="login-btn-inner">
+                                                    <div class="row">
+                                                        <div class="col-lg-3"></div>
+                                                        <div class="col-lg-9">
+                                                            <div class="login-horizental cancel-wp pull-left form-bc-ele">
+                                                                <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+{% endblock contents %}
+
+{% block specialscripts %}
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
+<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
+
+<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
+<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+{% endblock specialscripts %}
+

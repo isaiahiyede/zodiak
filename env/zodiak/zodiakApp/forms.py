@@ -180,7 +180,7 @@ class ContainerTypesForm(forms.ModelForm):
 class DocumentsForm(forms.ModelForm):
     class Meta:
         model = Documents
-        fields = ('name_of_doc','doc_obj','job_obj_doc',)
+        fields = ('name_of_doc','doc_obj','doc_recieved','doc_date',)
 
 
 

@@ -512,8 +512,12 @@ class Documents(models.Model):
     job_obj_doc = models.ForeignKey(Job,null=True,blank=True)
     name_of_doc = models.CharField(max_length=100,null=True, blank=True)
     doc_obj = models.FileField(upload_to="item_photo", null=True, blank=True)
+    doc_recieved = models.CharField(max_length=100,null=True, blank=True)
+    doc_date = models.CharField(max_length=100,null=True, blank=True)
+    doc_action = models.CharField(max_length=100,null=True, blank=True)
     created_on = models.DateTimeField(default=timezone.now)
     deleted = models.BooleanField(default=False)
+
 
     class Meta:
         verbose_name_plural = 'Documents'

@@ -33,6 +33,7 @@ class UserAccount(models.Model):
     country = models.CharField(max_length=20,null=True,blank=True)
     state = models.CharField(max_length=20,null=True,blank=True)
     website = models.CharField(max_length=50,null=True,blank=True)
+    cust_type = models.CharField(max_length=50,null=True,blank=True)
     acc_owner = models.CharField(max_length=50,null=True,blank=True)
 
     class Meta:
@@ -289,6 +290,10 @@ class Job(PackageDimension):
     deleted = models.BooleanField(default=False)
 
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Job._meta.fields]
+
+
     def jobtotalgrossweight(self):
         total = self.minibatches_set.filter(deleted=False).aggregate(Sum('gross_wgh'))['gross_wgh__sum']
         if total == 0.0:
@@ -375,8 +380,10 @@ class Finances(models.Model):
     charge_type = models.CharField(max_length=50, null=True, blank=True)
     amount = models.FloatField(default=0.0, null=True, blank=True)
     paid_by = models.CharField(max_length=50, null=True, blank=True)
-    date_paid = models.DateField(null=True, blank=True)
+    received = models.CharField(max_length=50, null=True, blank=True)
+    date_paid = models.CharField(max_length=50, null=True, blank=True)
     refundablle_as = models.CharField(max_length=50, null=True, blank=True)
+    comments = models.TextField(null=True,blank=True)
     deleted = models.BooleanField(default=False)
     created_on = models.DateTimeField(default=timezone.now)
 
@@ -395,6 +402,26 @@ class Finances(models.Model):
         
     def __str__(self):
         return '%s' %(self.job_finance)
+
+
+
+class StatusRec(models.Model):
+    job_stat = models.ForeignKey(Job,null=True,blank=True)
+    stat_type = models.CharField(max_length=50, null=True, blank=True)
+    stat_date = models.CharField(max_length=50, null=True, blank=True)
+    stat_comment = models.TextField(null=True,blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    class Meta:
+        verbose_name_plural = 'StatusRec'
+        ordering = ['-created_on']
+        
+    def __str__(self):
+        return '%s' %(self.job_finance)
+
+
 
 
 class MiniBatches(models.Model):
@@ -485,8 +512,12 @@ class Documents(models.Model):
     job_obj_doc = models.ForeignKey(Job,null=True,blank=True)
     name_of_doc = models.CharField(max_length=100,null=True, blank=True)
     doc_obj = models.FileField(upload_to="item_photo", null=True, blank=True)
+    doc_recieved = models.CharField(max_length=100,null=True, blank=True)
+    doc_date = models.CharField(max_length=100,null=True, blank=True)
+    doc_action = models.CharField(max_length=100,null=True, blank=True)
     created_on = models.DateTimeField(default=timezone.now)
     deleted = models.BooleanField(default=False)
+
 
     class Meta:
         verbose_name_plural = 'Documents'

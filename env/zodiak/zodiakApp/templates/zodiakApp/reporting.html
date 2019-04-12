@@ -1,6 +1,8 @@
 
 {% extends 'zodiakApp/adminHome.html' %}
 {% load staticfiles %}
+{% load custom_filters %}
+
 
 {% block morecss %}
 <link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
@@ -36,215 +38,220 @@
         </div>
     </div>
 </div>
-        <div class="data-table-area mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="sparkline13-list">
-                            <div class="sparkline13-hd">
-                                <div class="main-sparkline13-hd">
-                                </div>
-                            </div>
-                            <div class="sparkline13-graph">
-                                <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                                            <option value="">Select...</option>
-                                            <option value="">Export Basic</option>
-                                            <option value="all">Export All</option>
-                                            <option value="selected">Export Selected</option>
-                                        </select>
-                                    </div>
-                                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" class="stripe row-border order-column" style="width:100%"
-                                        data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
-    
 
-                                        <thead>
-                                            <tr>
-                                                <th data-field="state" data-checkbox="true"></th>
-                                                <th>job id</th>
-                                                <th>ref number</th>
-                                                <th>company name</th>
-                                                <th>customer type</th> 
-                                                <th>shippers name</th>
-                                                <th>shippers email</th>
-                                                <th>shippers number</th>
-                                                <th>shippers country</th>
-                                                <th>shippers address</th>
-                                                <th>consignees name</th>
-                                                <th>consignees number</th>
-                                                <th>consignee email</th>
-                                                <th>consignee country</th>
-                                                <th>consignees address</th>
-                                                <th>country of origin</th>
-                                                <th>country of arrival</th>
-                                                <th>port of destination</th>
-                                                <th>port of arrival</th>
-                                                <th>job vessel name</th>
-                                                <th>job awl bol number</th>
-                                                <th>job paar</th>
-                                                <th>paar date</th>
-                                                <th>insured</th>
-                                                <th>insurance date</th>
-                                                <th>packing list</th>
-                                                <th>packing list date</th>
-                                                <th>job son</th>
-                                                <th>son date</th>
-                                                <th>job ccro</th>
-                                                <th>ccro date</th>
-                                                <th>duty exemption</th>
-                                                <th>duty exemption date</th>
-                                                <th>batch type</th>
-                                                <th>job user acc</th>
-                                                <th>job start date</th>
-                                                <th>job end date</th>
-                                                <th>job date of arrival</th>
-                                                <th>job status</th>
-                                                <th>job type</th>
-                                                <th>job commented on</th>
-                                                <th>job created on
-                                                <th>job in transit</th>
-                                                <th>job arrived</th>
-                                                <th>job undergoing clearnace</th>
-                                                <th>job undergoing ammendment</th>
-                                                <th>job examined</th>
-                                                <th>job cleared</th>
-                                                <th>job completed</th>
-                                                <th>job invoiced</th>
-                                                <th>job paid for</th>
-                                                <th>job processing</th>
-                                                <th>job issue resolution</th>
-                                                <th>job details</th>
-                                                <th>job descript</th>
-                                                <th>job documentation</th>
-                                                <th>job finances</th>
-                                                <th>job arr stat</th>
-                                                <th>job paid</th>
-                                                <th>job cost</th>
-                                                <th>job amount paid</th>
-                                                <th>job amount balance</th>
-                                                <th>vat</th>
-                                                <th>demurrage</th>
-                                                <th>job new comment</th>
-                                                <th>demurrage grace period</th> 
-                                                <th>demurrage start date</th>
-                                                <th>demurrage end date</th>
-                                                <th>number of pieces to ship</th>
-                                                <th>gross weight</th>
-                                                <th>box weight Actual</th>    
-                                                <th>nature of goods</th>
-                                                <th>quantity of goods</th>
-                                                <th>airline tracking number</th> 
-                                                <th>place of execution</th>
-                                                <th>no of arrival batches</th> 
-                                                <th>handling info</th>
-                                                <th>job description</th> 
-                                                <th>job comment</th>
-                                                <th>note on the package</th>
-                                                <th>job route</th>
-                                                <th>job arrival status</th>
-                                                <th>job financial info</th>
-                                                <th>job arrival status mode</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for job in all_jobs %}
-                                            <tr>
-                                                <td></td>
-                                                <td>{{job.job_id|default_if_none:""}}</td>
-                                                <td>{{job.ref_number|default_if_none:""}}</td>
-                                                <td>{{job.company_name|default_if_none:""}}</td>
-                                                <td>{{job.customer_type|default_if_none:""}}</td> 
-                                                <td>{{job.shippers_name|default_if_none:""}}</td>
-                                                <td>{{job.shippers_email|default_if_none:""}}</td>
-                                                <td>{{job.shippers_number|default_if_none:""}}</td>
-                                                <td>{{job.shippers_country|default_if_none:""}}</td>
-                                                <td>{{job.shippers_address|default_if_none:""}}</td>
-                                                <td>{{job.consignees_name|default_if_none:""}}</td>
-                                                <td>{{job.consignees_number|default_if_none:""}}</td>
-                                                <td>{{job.consignee_email|default_if_none:""}}</td>
-                                                <td>{{job.consignee_country|default_if_none:""}}</td>
-                                                <td>{{job.consignees_address|default_if_none:""}}</td>
-                                                <td>{{job.country_of_origin|default_if_none:""}}</td>
-                                                <td>{{job.country_of_arrival|default_if_none:""}}</td>
-                                                <td>{{job.port_of_destination|default_if_none:""}}</td>
-                                                <td>{{job.port_of_arrival|default_if_none:""}}</td>
-                                                <td>{{job.job_vessel_name|default_if_none:""}}</td>
-                                                <td>{{job.job_awl_bol_number|default_if_none:""}}</td>
-                                                <td>{{job.job_paar|default_if_none:""}}</td>
-                                                <td>{{job.paar_date|default_if_none:""}}</td>
-                                                <td>{{job.insured|default_if_none:""}}</td>
-                                                <td>{{job.insurance_date|default_if_none:""}}</td>
-                                                <td>{{job.packing_list|default_if_none:""}}</td>
-                                                <td>{{job.packing_list_date|default_if_none:""}}</td>
-                                                <td>{{job.job_son|default_if_none:""}}</td>
-                                                <td>{{job.son_date|default_if_none:""}}</td>
-                                                <td>{{job.job_ccro|default_if_none:""}}</td>
-                                                <td>{{job.ccro_date|default_if_none:""}}</td>
-                                                <td>{{job.duty_exemption|default_if_none:""}}</td>
-                                                <td>{{job.duty_exemption_date|default_if_none:""}}</td>
-                                                <td>{{job.batch_type|default_if_none:""}}</td>
-                                                <td>{{job.job_user_acc|default_if_none:""}}</td>
-                                                <td>{{job.job_start_date|default_if_none:""}}</td>
-                                                <td>{{job.job_end_date|default_if_none:""}}</td>
-                                                <td>{{job.job_date_of_arrival|default_if_none:""}}</td>
-                                                <td>{{job.job_status|default_if_none:""}}</td>
-                                                <td>{{job.job_type|default_if_none:""}}</td>
-                                                <td>{{job.job_commented_on|default_if_none:""}}</td>
-                                                <td>{{job.job_created_on|default_if_none:""}}</td>
-                                                <td>{{job.job_in_transit|default_if_none:""}}</td>
-                                                <td>{{job.job_arrived|default_if_none:""}}</td>
-                                                <td>{{job.job_undergoing_clearnace|default_if_none:""}}</td>
-                                                <td>{{job.job_undergoing_ammendment|default_if_none:""}}</td>
-                                                <td>{{job.job_examined|default_if_none:""}}</td>
-                                                <td>{{job.job_cleared|default_if_none:""}}</td>
-                                                <td>{{job.job_completed|default_if_none:""}}</td>
-                                                <td>{{job.job_invoiced|default_if_none:""}}</td>
-                                                <td>{{job.job_paid_for|default_if_none:""}}</td>
-                                                <td>{{job.job_processing|default_if_none:""}}</td>
-                                                <td>{{job.job_issue_resolution|default_if_none:""}}</td>
-                                                <td>{{job.job_details|default_if_none:""}}</td>
-                                                <td>{{job.job_descript|default_if_none:""}}</td>
-                                                <td>{{job.job_documentation|default_if_none:""}}</td>
-                                                <td>{{job.job_finances|default_if_none:""}}</td>
-                                                <td>{{job.job_arr_stat|default_if_none:""}}</td>
-                                                <td>{{job.job_paid|default_if_none:""}}</td>
-                                                <td>{{job.job_cost|default_if_none:""}}</td>
-                                                <td>{{job.job_amount_paid|default_if_none:""}}</td>
-                                                <td>{{job.job_amount_balance|default_if_none:""}}</td>
-                                                <td>{{job.vat|default_if_none:""}}</td>
-                                                <td>{{job.demurrage|default_if_none:""}}</td>
-                                                <td>{{job.job_new_comment|default_if_none:""}}</td>
-                                                <td>{{job.demurrage_grace_period|default_if_none:""}}</td> 
-                                                <td>{{job.demurrage_start_date|default_if_none:""}}</td>
-                                                <td>{{job.demurrage_end_date|default_if_none:""}}</td>
-                                                <td>{{job.number_of_pieces_to_ship|default_if_none:""}}</td>
-                                                <td>{{job.gross_weight|default_if_none:""}}</td>
-                                                <td>{{job.box_weight_Actual|default_if_none:""}}</td>    
-                                                <td>{{job.nature_of_goods|default_if_none:""}}</td>
-                                                <td>{{job.quantity_of_goods|default_if_none:""}}</td>
-                                                <td>{{job.airline_tracking_number|default_if_none:""}}</td> 
-                                                <td>{{job.place_of_execution|default_if_none:""}}</td>
-                                                <td>{{job.no_of_arrival_batches|default_if_none:""}}</td> 
-                                                <td>{{job.handling_info|default_if_none:""}}</td>
-                                                <td>{{job.job_description|default_if_none:""}}</td> 
-                                                <td>{{job.job_comment|default_if_none:""}}</td>
-                                                <td>{{job.note_on_the_package|default_if_none:""}}</td>
-                                                <td>{{job.job_route|default_if_none:""}}</td>
-                                                <td>{{job.job_arrival_status|default_if_none:""}}</td>
-                                                <td>{{job.job_financial_info|default_if_none:""}}</td>
-                                                <td>{{job.job_arrival_status_mode|default_if_none:""}}</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+    <div class="data-table-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="sparkline13-list">
+                        <div class="sparkline13-hd">
+                            <div class="main-sparkline13-hd">
                             </div>
                         </div>
+                        <div class="sparkline13-graph">
+                            <div class="datatable-dashv1-list custom-datatable-overright">
+                                
+                                <div id="toolbar">
+                                    <select class="form-control dt-tb">
+                                        <option value="">Select...</option>
+                                        <option value="">Export Basic</option>
+                                        <option value="all">Export All</option>
+                                        <option value="selected">Export Selected</option>
+                                    </select>
+                                </div>
+
+                                <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" class="stripe row-border order-column" style="width:100%"
+                                    data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+
+                                    <thead>
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th>job id</th>
+                                            <th>ref number</th>
+                                            <th>Customer</th>
+                                            <th>company name</th>
+                                            <th>customer type</th> 
+                                            <th>shippers name</th>
+                                            <th>shippers email</th>
+                                            <th>shippers number</th>
+                                            <th>shippers country</th>
+                                            <th>shippers address</th>
+                                            <th>consignees number</th>
+                                            <th>consignee email</th>
+                                            <th>consignee country</th>
+                                            <th>consignees address</th>
+                                            <th>country of origin</th>
+                                            <th>country of arrival</th>
+                                            <th>port of destination</th>
+                                            <th>port of arrival</th>
+                                            <th>job vessel name</th>
+                                            <th>job awl bol number</th>
+                                            <th>job paar</th>
+                                            <th>paar date</th>
+                                            <th>insured</th>
+                                            <th>insurance date</th>
+                                            <th>packing list</th>
+                                            <th>packing list date</th>
+                                            <th>job son</th>
+                                            <th>son date</th>
+                                            <th>job ccro</th>
+                                            <th>ccro date</th>
+                                            <th>duty exemption</th>
+                                            <th>duty exemption date</th>
+                                            <th>batch type</th>
+                                            <th>job start date</th>
+                                            <th>job end date</th>
+                                            <th>job date of arrival</th>
+                                            <th>job status</th>
+                                            <th>job type</th>
+                                            <th>job commented on</th>
+                                            <th>job created on
+                                            <th>job in transit</th>
+                                            <th>job arrived</th>
+                                            <th>job undergoing clearnace</th>
+                                            <th>job undergoing ammendment</th>
+                                            <th>job examined</th>
+                                            <th>job cleared</th>
+                                            <th>job completed</th>
+                                            <th>job invoiced</th>
+                                            <th>job paid for</th>
+                                            <th>job processing</th>
+                                            <th>job issue resolution</th>
+                                            <th>job details</th>
+                                            <th>job descript</th>
+                                            <th>job documentation</th>
+                                            <th>job finances</th>
+                                            <th>job arr stat</th>
+                                            <th>job paid</th>
+                                            <th>job cost</th>
+                                            <th>job amount paid</th>
+                                            <th>job amount balance</th>
+                                            <th>vat</th>
+                                            <th>demurrage</th>
+                                            <th>job new comment</th>
+                                            <th>demurrage grace period</th> 
+                                            <th>demurrage start date</th>
+                                            <th>demurrage end date</th>
+                                            <th>number of pieces to ship</th>
+                                            <th>gross weight</th>
+                                            <th>box weight Actual</th>    
+                                            <th>nature of goods</th>
+                                            <th>quantity of goods</th>
+                                            <th>airline tracking number</th> 
+                                            <th>place of execution</th>
+                                            <th>no of arrival batches</th> 
+                                            <th>handling info</th>
+                                            <th>job description</th> 
+                                            <th>job comment</th>
+                                            <th>note on the package</th>
+                                            <th>job route</th>
+                                            <th>job arrival status</th>
+                                            <th>job financial info</th>
+                                            <th>job arrival status mode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for job in all_jobs %}
+                                        <tr>
+                                            <td></td>
+                                            <td>{{job.job_id|getValue}}</td>
+                                            <td>{{job.ref_number|getValue}}</td>
+                                            <td>{{job.job_user_acc|getValue}}</td>
+                                            <td>{{job.job_user_acc.comp_name|getValue}}</td>
+                                            <td>{{job.job_user_acc.cust_type|getValue}}</td> 
+                                            <td>{{job.shippers_name|getValue}}</td>
+                                            <td>{{job.shippers_email|getValue}}</td>
+                                            <td>{{job.shippers_number|getValue}}</td>
+                                            <td>{{job.shippers_country|getValue}}</td>
+                                            <td>{{job.shippers_address|getValue}}</td>
+                                            <td>{{job.job_user_acc.phone_number|getValue}}</td>
+                                            <td>{{job.job_user_acc.user.email|getValue}}</td>
+                                            <td>{{job.job_user_acc.country|getValue}}</td>
+                                            <td>{{job.job_user_acc.office_aadress|getValue}}</td>
+                                            <td>{{job.country_of_origin|getValue}}</td>
+                                            <td>{{job.country_of_arrival|getValue}}</td>
+                                            <td>{{job.port_of_destination|getValue}}</td>
+                                            <td>{{job.port_of_arrival|getValue}}</td>
+                                            <td>{{job.job_vessel_name|getValue}}</td>
+                                            <td>{{job.job_awl_bol_number|getValue}}</td>
+                                            <td>{{job.job_paar|getValue}}</td>
+                                            <td>{{job.paar_date|getValue}}</td>
+                                            <td>{{job.insured|getValue}}</td>
+                                            <td>{{job.insurance_date|getValue}}</td>
+                                            <td>{{job.packing_list|getValue}}</td>
+                                            <td>{{job.packing_list_date|getValue}}</td>
+                                            <td>{{job.job_son|getValue}}</td>
+                                            <td>{{job.son_date|getValue}}</td>
+                                            <td>{{job.job_ccro|getValue}}</td>
+                                            <td>{{job.ccro_date|getValue}}</td>
+                                            <td>{{job.duty_exemption|getValue}}</td>
+                                            <td>{{job.duty_exemption_date|getValue}}</td>
+                                            <td>{{job.batch_type|getValue}}</td>
+                                            <td>{{job.job_start_date|getValue}}</td>
+                                            <td>{{job.job_end_date|getValue}}</td>
+                                            <td>{{job.job_date_of_arrival|getValue}}</td>
+                                            <td>{{job.job_status|getValue}}</td>
+                                            <td>{{job.job_type|getValue}}</td>
+                                            <td>{{job.job_commented_on|getValue}}</td>
+                                            <td>{{job.job_created_on|getValue}}</td>
+                                            <td>{{job.job_in_transit|getValue}}</td>
+                                            <td>{{job.job_arrived|getValue}}</td>
+                                            <td>{{job.job_undergoing_clearnace|getValue}}</td>
+                                            <td>{{job.job_undergoing_ammendment|getValue}}</td>
+                                            <td>{{job.job_examined|getValue}}</td>
+                                            <td>{{job.job_cleared|getValue}}</td>
+                                            <td>{{job.job_completed|getValue}}</td>
+                                            <td>{{job.job_invoiced|getValue}}</td>
+                                            <td>{{job.job_paid_for|getValue}}</td>
+                                            <td>{{job.job_processing|getValue}}</td>
+                                            <td>{{job.job_issue_resolution|getValue}}</td>
+                                            <td>{{job.job_details|getValue}}</td>
+                                            <td>{{job.job_descript|getValue}}</td>
+                                            <td>{{job.job_documentation|getValue}}</td>
+                                            <td>{{job.job_finances|getValue}}</td>
+                                            <td>{{job.job_arr_stat|getValue}}</td>
+                                            <td>{{job.job_paid|getValue}}</td>
+                                            <td>{{job.job_cost|getValue}}</td>
+                                            <td>{{job.job_amount_paid|getValue}}</td>
+                                            <td>{{job.job_amount_balance|getValue}}</td>
+                                            <td>{{job.vat|getValue}}</td>
+                                            <td>{{job.demurrage|getValue}}</td>
+                                            <td>{{job.job_new_comment|getValue}}</td>
+                                            <td>{{job.demurrage_grace_period|getValue}}</td> 
+                                            <td>{{job.demurrage_start_date|getValue}}</td>
+                                            <td>{{job.demurrage_end_date|getValue}}</td>
+                                            <td>{{job.number_of_pieces_to_ship|getValue}}</td>
+                                            <td>{{job.gross_weight|getValue}}</td>
+                                            <td>{{job.box_weight_Actual|getValue}}</td>    
+                                            <td>{{job.nature_of_goods|getValue}}</td>
+                                            <td>{{job.quantity_of_goods|getValue}}</td>
+                                            <td>{{job.airline_tracking_number|getValue}}</td> 
+                                            <td>{{job.place_of_execution|getValue}}</td>
+                                            <td>{{job.no_of_arrival_batches|getValue}}</td> 
+                                            <td>{{job.handling_info|getValue}}</td>
+                                            <td>{{job.job_description|getValue}}</td> 
+                                            <td>{{job.job_comment|getValue}}</td>
+                                            <td>{{job.note_on_the_package|getValue}}</td>
+                                            <td>{{job.job_route|getValue}}</td>
+                                            <td>{{job.job_arrival_status|getValue}}</td>
+                                            <td>{{job.job_financial_info|getValue}}</td>
+                                            <td>{{job.job_arrival_status_mode|getValue}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    
+</div>
+</div>
 {% endblock contents %}
 
 {% block specialscripts %}

@@ -1,0 +1,164 @@
+
+{% extends 'zodiakApp/adminHome.html' %}
+{% load staticfiles %}
+
+
+
+{% block contents %}
+<div class="data-table-area mg-b-15">
+    <div class="container-fluid">
+        <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline13-list">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    <h1><span class="table-project-n"></span>Documentation</h1>
+                                </div>
+                            </div>
+                            <div class="sparkline13-graph">
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                    <table id="table" data-toggle="table"data-search="true" data-show-columns="true" data-key-events="true"  data-resizable="true" data-cookie="true"
+                                        data-cookie-id-table="saveId" data-show-export="true" data-toolbar="#toolbar">
+
+                                        <thead>
+                                            <tr class="info">
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="job_id">JOB Id</th>
+                                                <th data-field="job_type">Document Name</th>
+                                                <th data-field="job_doc">Documnent</th>
+                                                <th data-field="job_rec">Received</th>
+                                                <th data-field="job_act">Actionable As At Now</th>
+                                                <th data-field="job_date">Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+
+                                            {% for doc_obj in doc_objs %}
+
+                                            <tr class="info">
+                                                <td></td>
+                                                <td>{{doc_obj.job_obj_doc.job_id}}</td>
+                                                <td>{{doc_obj.name_of_doc}}</td>
+                                                {% if doc_obj.doc_obj %}
+                                                <td><a style="color: blue;" href="{{doc_obj.doc_obj.url}}">{{doc_obj.doc_obj}}</a></td>
+                                                {% else %}
+                                                <td>NILL</td>
+                                                {% endif %}
+                                                <td>{{doc_obj.doc_recieved}}</td>
+                                                <td>{{doc_obj.doc_action}}</td>
+                                                <td>{{doc_obj.doc_date}}</td>
+
+                                                <td class="datatable-ct">
+                                                    <a style="cursor:pointer !important;" title="edit doc item" href="{% url 'zodiakApp:new_doc_info_edit' doc_obj.pk %}"><i class="fa fa-pencil"></i></a>
+                                                    <a style="cursor:pointer !important;" title="delete finance item" href="{% url 'zodiakApp:delete_doc' doc_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="sparkline10-list mt-b-30">
+                                        <div class="sparkline10-hd">
+
+                                        </div>
+                                        <div class="sparkline10-graph">
+                                            <div class="basic-login-form-ad">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="basic-login-inner inline-basic-form">
+                                                            <form action="{% url 'zodiakApp:add_new_doc' %}" method="post" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+
+                                                                <div class="form-group-inner">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2">Select Job<span style="color:red;">*</span></label>
+                                                                        </div>
+
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                            <div class="chosen-select-single">
+                                                                                <select required style="font-size:10px; height: 28px;" class="form-control" id="job_finance" name="job_finance" data-placeholder="Select customer..." class="chosen-select" tabindex="-1">
+                                                                                            <option value="">Select</option>
+                                                                                            {% for job in jobs %}
+                                                                                               <option value="{{job.job_id}}">
+                                                                                                {{job.job_id}}</option>
+                                                                                            {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="form-group-inner">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                            <label class="login2">Select Document Type<span style="color:red;">*</span></label>
+                                                                        </div>
+
+                                                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                                            <div class="chosen-select-single">
+                                                                                <select data-placeholder="Choose Document Type..." id="document_type" name="document_type" class="chosen-select" multiple="" tabindex="-1" required>
+                                                                                <option value="Form M">Form M</option>
+                                                                                <option value="Comemercial Invoice">Comemercial Invoice</option>
+                                                                                <option value="Packing List">Packing List</option>
+                                                                                <option value="CCRO">CCRO</option>
+                                                                                <option value="SON">SON</option>
+                                                                                <option value="NAFDAC">NAFDAC</option>
+                                                                                <option value="PAAR">PAAR</option>
+                                                                                <option value="NDLEA">NDLEA</option>
+                                                                                <option value="Bill of lading">Bill of lading</option>
+                                                                                <option value="Cert Of Analysis">Cert Of Analysis</option>
+                                                                                <option value="Airway Bill">Airway Bill</option>
+                                                                                <option value="Duty Receipt">Duty Receipt</option>
+                                                                                <option value="Letter Of Authority">Letter Of Authority</option>
+                                                                                <option value="Handling Receipt">Handling Receipt</option>
+                                                                                <option value="Airline Receipt">Airline Receipt</option>
+                                                                                <option value="Shipping Line Receipt">Shipping Line Receipt</option>
+                                                                                <option value="Assessment">Assessment</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="form-group-inner">
+                                                                 <div class="row">
+                                                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                                            <div class="login-horizental">
+                                                                            <button class="btn btn-sm btn-primary login-submit-cs pull-right" type="submit">Save</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+
+                                                                    </div>
+                                                                 </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+        </div>
+	</div>
+</div>
+{% endblock contents %}
+

@@ -52,9 +52,23 @@ urlpatterns = [
 
     url(r'^jobfinancials/(?P<job_obj>.+)/$', views.financials, name="financials"),
     url(r'^financeRecords/$', views.financerecords, name="financerecords"),
+
+    url(r'^docrecords/$', views.docrecords, name="docrecords"),
+    url(r'^docedit/(?P<pk>.+)/$', views.new_doc_info_edit, name="new_doc_info_edit"),
+    url(r'^docs/$', views.add_new_doc, name="add_new_doc"),
+    
+    url(r'^statrecords/$', views.statrecords, name="statrecords"),
+    url(r'^statedit/(?P<pk>.+)/$', views.new_stat_info_edit, name="new_stat_info_edit"),
+    url(r'^statdelete/(?P<pk>.+)/$', views.stat_info_delete, name="stat_info_delete"),
+    
+    url(r'^newStat/$', views.new_stat, name="new_stat"),
+
     url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
     url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
     url(r'^fin_info_delete/(?P<pk>.+)/$', views.fin_info_delete, name="fin_info_delete"),
+    url(r'^newFinance/$', views.new_financials, name="new_financials"),
+    url(r'^newFinedit/(?P<pk>.+)/$', views.new_fin_info_edit, name="new_fin_info_edit"),
+
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),

@@ -73,9 +73,7 @@
     <![endif]-->
     {% block contents %}
     
-    {% for message in messages %}
-       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-    {% endfor %}
+
 
     <div class="error-pagewrap">
         <div class="error-page-int">
@@ -88,6 +86,11 @@
                     <div class="panel-body">
                         <form method="post" id="loginForm" action="{% url 'zodiakApp:login' %}" enctype="multipart/form-data">
                             {% csrf_token %}
+
+
+                                {% for message in messages %}
+                                   <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                {% endfor %}
 
                             <div class="form-group">
                                 <label class="control-label" for="username">Username</label>

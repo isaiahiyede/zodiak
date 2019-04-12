@@ -2,12 +2,9 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from zodiakApp.models import UserAccount, Job, Batch
 from django.contrib.auth.models import User
-# from export.models import *
 import datetime
-# import time
 from itertools import chain
 from operator import attrgetter
-# from datetime import datetime
 from datetime import date, time
 from django.utils import timezone
 
@@ -36,6 +33,16 @@ def getMessageCount(request):
 		return Job.objects.filter(job_new_comment=True,deleted=False).count()
 	else:
 		return Job.objects.filter(job_new_comment=False,deleted=False,job_user_acc=request.user.useraccount,job_commented_on=True).count()
+
+
+@register.filter
+def getValue(obj):
+    if obj == None or obj == False:
+    	return 'N'
+    elif obj == True:
+    	return 'Y'
+    else:
+    	return obj
 	
 
     

@@ -68,7 +68,7 @@ class FinancialsForm(forms.ModelForm):
 
 
 class FinancialsForm(forms.ModelForm):
-    amount = forms.FloatField(required=True, max_value=9999999999, min_value=0, widget=forms.NumberInput(attrs={'step': "0.01"})) 
+    amount = forms.FloatField(required=True, max_value=9999999999, min_value=0, widget=forms.NumberInput(attrs={'step': "0.01"}))
     received = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     charge_type = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'style': 'border-color: grey;','required':'required','readonly':'readonly'}))
     refundablle_as = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
@@ -94,8 +94,8 @@ class JobForm(forms.ModelForm):
             'job_paar','shippers_name','shippers_email','shippers_number','shippers_country',
             'shippers_address','consignees_name','consignees_number','consignee_email','consignee_country',
             'consignees_address','country_of_origin','country_of_arrival','port_of_destination','port_of_arrival',
-            'job_vessel_name','job_awl_bol_number','paar_date','insured', 'insurance_date','packing_list', 
-            'packing_list_date','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date', 
+            'job_vessel_name','job_awl_bol_number','paar_date','insured', 'insurance_date','packing_list',
+            'packing_list_date','job_son', 'son_date', 'job_ccro', 'ccro_date', 'duty_exemption', 'duty_exemption_date',
             'job_route','ref_number','customer_type','company_name',
 
             'job_start_date', 'job_end_date', 'job_date_of_arrival',
@@ -109,7 +109,7 @@ class JobForm(forms.ModelForm):
             'box_length','box_width','box_height','box_weight','box_weight_K',
 
             'job_cost',
-            'handling_info', 'number_of_pieces_to_ship','gross_weight',  'note_on_the_package', 'nature_of_goods', 
+            'handling_info', 'number_of_pieces_to_ship','gross_weight',  'note_on_the_package', 'nature_of_goods',
             'airline_tracking_number', 'place_of_execution', 'quantity_of_goods',
 
             )
@@ -121,7 +121,7 @@ class JobForm2(forms.ModelForm):
         model = Job
         fields = (
 
-            'job_paar','paar_date','insured', 'insurance_date','packing_list', 
+            'job_paar','paar_date','insured', 'insurance_date','packing_list',
             'packing_list_date','job_son', 'son_date', 'job_ccro', 'ccro_date','duty_exemption', 'duty_exemption_date',
             )
 
@@ -133,7 +133,7 @@ class JobForm4(forms.ModelForm):
         fields = (
 
             'handling_info','note_on_the_package', 'job_comment', 'job_description',
-            
+
             )
 
 
@@ -181,7 +181,5 @@ class DocumentsForm(forms.ModelForm):
     class Meta:
         model = Documents
         fields = ('name_of_doc','doc_obj','doc_recieved','doc_date',)
-
-
 
 

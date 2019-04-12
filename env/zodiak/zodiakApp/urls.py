@@ -35,13 +35,13 @@ urlpatterns = [
 
     url(r'^adduser/$', views.addUser, name="add_user"),
 
-    url(r'^addbatch/$', views.add_batch, name="add_batch"),  
+    url(r'^addbatch/$', views.add_batch, name="add_batch"),
     url(r'^viewbatches/$', views.viewbatches, name="viewbatches"),
     url(r'^batchedit/(?P<pk>.+)/$', views.batch_edit, name="batch_edit"),
     url(r'^batchprocess/(?P<pk>.+)/$', views.batch_process, name="batch_process"),
     url(r'^viewminibatches/(?P<pk>.+)/$', views.viewminibatches, name="viewminibatches"),
     url(r'^batchmanifest/(?P<pk>.+)/$', views.print_manifest, name="print_manifest"),
-    
+
     url(r'^batchdelete/(?P<pk>.+)/$', views.batch_delete, name="batch_delete"),
     url(r'^batch_info_view/(?P<pk>.+)/$', views.batch_info_view, name="batch_info_view"),
     url(r'^jobinvoice/(?P<pk>.+)/$', views.job_invoice_page, name="job_invoice_page"),
@@ -56,11 +56,11 @@ urlpatterns = [
     url(r'^docrecords/$', views.docrecords, name="docrecords"),
     url(r'^docedit/(?P<pk>.+)/$', views.new_doc_info_edit, name="new_doc_info_edit"),
     url(r'^docs/$', views.add_new_doc, name="add_new_doc"),
-    
+
     url(r'^statrecords/$', views.statrecords, name="statrecords"),
     url(r'^statedit/(?P<pk>.+)/$', views.new_stat_info_edit, name="new_stat_info_edit"),
     url(r'^statdelete/(?P<pk>.+)/$', views.stat_info_delete, name="stat_info_delete"),
-    
+
     url(r'^newStat/$', views.new_stat, name="new_stat"),
 
     url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),

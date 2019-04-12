@@ -34,6 +34,7 @@
                                                                             <label class="login2 pull-right pull-right-pro">Document Type</label>
                                                                         </div>
                                                                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
                                                                             <input class="form-control" value="{{doc_obj.name_of_doc}}" type="text"
                                                                             name="name_of_doc" readonly>
                                                                         </div>
@@ -47,10 +48,12 @@
                                                                             <label class="login2 pull-right pull-right-pro">Document</label>
                                                                         </div>
                                                                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
                                                                             <input style="font-size: 8px;" id="doc_obj" name="doc_obj" type="file" class="form-control" />
                                                                             {% if doc_obj.doc_obj %}
                                                                             <h6><a style="color: blue;" href="{{doc_obj.doc_obj.url}}">{{doc_obj.doc_obj}}</a></h6>
                                                                             {% endif %}
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -62,7 +65,9 @@
                                                                             <label class="login2 pull-right pull-right-pro">Received</label>
                                                                         </div>
                                                                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
                                                                                 <select style="font-size:10px; height: 28px;" name="doc_recieved" required class="form-control">
+
                                                                                 <option value="{{doc_obj.doc_recieved}}">{{doc_obj.doc_recieved}}</option>
                                                                                 <option value="Yes">Yes</option>
                                                                                 <option value="No">No</option>

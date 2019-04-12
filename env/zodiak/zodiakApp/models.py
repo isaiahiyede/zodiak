@@ -10,7 +10,7 @@ from django.template.defaultfilters import slugify
 import math
 
 # Create your models here.
-        
+
 class UserAccount(models.Model):
     """ user details """
     user = models.OneToOneField(User, unique=True, null=True, blank=True)
@@ -39,7 +39,7 @@ class UserAccount(models.Model):
     class Meta:
         verbose_name_plural = 'User Accounts'
         ordering = ['-created_on']
-        
+
     def __str__(self):
         return '%s' %(self.user.username)
 
@@ -58,7 +58,7 @@ class PrimaryContact(models.Model):
     class Meta:
         verbose_name_plural = 'Primary Contact'
         ordering = ['-user_acc']
-        
+
     def __str__(self):
         return '%s' %(self.user_acc)
 
@@ -77,7 +77,7 @@ class SecondaryContact(models.Model):
     class Meta:
         verbose_name_plural = 'Secondary Contact'
         ordering = ['-sec_user_acc']
-        
+
     def __str__(self):
         return '%s' %(self.sec_user_acc)
 
@@ -95,7 +95,7 @@ class Quotation(models.Model):
     class Meta:
         verbose_name_plural = 'Quotation'
         ordering = ['-user_acct']
-        
+
     def __str__(self):
         return '%s' %(self.user_acc)
 
@@ -107,7 +107,7 @@ class Status(models.Model):
     class Meta:
         verbose_name_plural = 'Statuses'
         ordering = ['-name']
-        
+
     def __str__(self):
         return '%s' %(self.name)
 
@@ -118,7 +118,7 @@ class JobModes(models.Model):
     class Meta:
         verbose_name_plural = 'Job Modes'
         ordering = ['-name']
-        
+
     def __str__(self):
         return '%s' %(self.name)
 
@@ -193,10 +193,10 @@ class Batch(models.Model):
 
 
 class Job(PackageDimension):
-    job_paar = models.BooleanField(default=False) 
+    job_paar = models.BooleanField(default=False)
     ref_number = models.CharField(max_length=50, null=True, blank=True)
     company_name = models.CharField(max_length=50, null=True, blank=True)
-    customer_type = models.CharField(max_length=50, null=True, blank=True) 
+    customer_type = models.CharField(max_length=50, null=True, blank=True)
     shippers_name = models.CharField(max_length=50, null=True, blank=True)
     shippers_email = models.CharField(max_length=50, null=True, blank=True)
     shippers_number = models.CharField(max_length=50, null=True, blank=True)
@@ -269,13 +269,13 @@ class Job(PackageDimension):
 
     number_of_pieces_to_ship = models.IntegerField(null=True, blank=True)
     gross_weight = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
-    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)    
+    box_weight_Actual = models.DecimalField(max_digits=15, decimal_places=1, default=0.0, null=True, blank=True)
     nature_of_goods = models.CharField(max_length=200, null=True, blank=True)
     quantity_of_goods = models.CharField(max_length=200, null=True, blank=True)
     airline_tracking_number = models.CharField(max_length=100,null=True, blank=True)
-    
+
     place_of_execution = models.CharField(max_length=100, null=True, blank=True)
-    no_of_arrival_batches = models.IntegerField(default=0, null=True, blank=True)  
+    no_of_arrival_batches = models.IntegerField(default=0, null=True, blank=True)
 
     handling_info = models.TextField(max_length=100, null=True, blank=True)
     job_description = models.TextField(null=True,blank=True)
@@ -371,7 +371,7 @@ class Job(PackageDimension):
         verbose_name_plural = 'Jobs'
         ordering = ['-job_created_on']
 
-        
+
     def __str__(self):
         return '%s' %(self.job_id)
 
@@ -389,7 +389,7 @@ class Finances(models.Model):
 
 
     def jobtotalCost(self):
-        
+
         total = self.amount
         if total == None or total == 0:
             return 0
@@ -399,7 +399,7 @@ class Finances(models.Model):
     class Meta:
         verbose_name_plural = 'Finances'
         ordering = ['-created_on']
-        
+
     def __str__(self):
         return '%s' %(self.job_finance)
 
@@ -417,7 +417,7 @@ class StatusRec(models.Model):
     class Meta:
         verbose_name_plural = 'StatusRec'
         ordering = ['-created_on']
-        
+
     def __str__(self):
         return '%s' %(self.job_finance)
 
@@ -448,7 +448,7 @@ class MiniBatches(models.Model):
     class Meta:
         verbose_name_plural = 'Mini Batches'
         ordering = ['-batch_created_on']
-        
+
     def __str__unicode__(self):
         return '%s' %(self.mini_batch_id)
 
@@ -468,7 +468,7 @@ class RelationshipManager(models.Model):
     class Meta:
         verbose_name_plural = 'Relationship Managers'
         ordering = ['-rm_created_on']
-        
+
     def __str__(self):
         return '%s' %(self.rm_client)
 
@@ -485,7 +485,7 @@ class OfficeUseOnly(models.Model):
     class Meta:
         verbose_name_plural = 'Office Use only'
         ordering = ['-created_on']
-        
+
     def __str__(self):
         return '%s' %(self.rm_client_obj.user)
 
@@ -503,7 +503,7 @@ class ContainerTypes(models.Model):
     class Meta:
         verbose_name_plural = 'Types of Containers'
         ordering = ['-created_on']
-        
+
     def __str__(self):
         return '%s' %(self.job_obj_cont)
 
@@ -522,7 +522,7 @@ class Documents(models.Model):
     class Meta:
         verbose_name_plural = 'Documents'
         ordering = ['-created_on']
-        
+
     def __str__(self):
         return '%s' %(self.job_obj_doc)
 
@@ -538,7 +538,7 @@ class Comments(models.Model):
     class Meta:
         verbose_name_plural = 'Comments'
         ordering = ['-msg_created_on']
-        
+
     def __str__(self):
         return '%s - %s' %(self.job_message.job_id)
 
@@ -582,6 +582,4 @@ class DockReceipt(models.Model):
     placed_location                                 = models.CharField(max_length = 100,null=True, blank=True)
     receiving_clerk_name                            = models.CharField(max_length = 100,null=True, blank=True)
     date_from_receiving_clerk                       = models.CharField(max_length = 100,null=True, blank=True)
-
-
 

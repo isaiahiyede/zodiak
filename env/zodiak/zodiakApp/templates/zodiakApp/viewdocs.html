@@ -3,7 +3,6 @@
 {% load staticfiles %}
 
 
-
 {% block contents %}
 <div class="data-table-area mg-b-15">
     <div class="container-fluid">
@@ -43,11 +42,13 @@
                                                 <td></td>
                                                 <td>{{doc_obj.job_obj_doc.job_id}}</td>
                                                 <td>{{doc_obj.name_of_doc}}</td>
+
                                                 {% if doc_obj.doc_obj %}
                                                 <td><a style="color: blue;" href="{{doc_obj.doc_obj.url}}">{{doc_obj.doc_obj}}</a></td>
                                                 {% else %}
                                                 <td>NILL</td>
                                                 {% endif %}
+
                                                 <td>{{doc_obj.doc_recieved}}</td>
                                                 <td>{{doc_obj.doc_action}}</td>
                                                 <td>{{doc_obj.doc_date}}</td>
@@ -86,6 +87,7 @@
                                                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                             <label class="login2">Select Job<span style="color:red;">*</span></label>
                                                                         </div>
+                                                                        
 
                                                                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                                             <div class="chosen-select-single">

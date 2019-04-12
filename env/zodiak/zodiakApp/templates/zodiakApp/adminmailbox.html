@@ -31,12 +31,12 @@
                         <li class="active">
                             <a href="#">
                                 {% if request.user.is_staff %}
-									<span class="pull-right">{{newmailsCountAdmin}}</span>
+                                    <span class="pull-right">{{newmailsCountAdmin}}</span>
                                 {% else %}
                                     <span class="pull-right">{{newmailsCountUser}}</span>
                                 {% endif %}
-									<i class="fa fa-envelope"></i> Inbox
-								</a>
+                                    <i class="fa fa-envelope"></i> Inbox
+                                </a>
                         </li>
 
                 </div>
@@ -49,37 +49,32 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                     
+                        {% if request.user.is_staff %}
+                            {% for mail in newmails %}
+                            <div class="row col-md-12 col-md-12 col-sm-12 col-xs-12">
+                                <div {% if mail.getlastcomments.commented_by = "admin" %} style="background-color:#d9edf7; cursor:pointer !important;" {% else %} style="background-color:#ccc; cursor:pointer !important;" {% endif %} class="job_comment"  job_pk={{mail.pk}}>
+                                    <a style="font-size: 10px;">{{mail.job_id}}</a><br>
+                                    <a style="cursor: pointer !important; font-size: 10px;">{{mail.getlastcomments.msg}}</a>
+                                    <br>
+                                    <a style="cursor: pointer !important; font-size: 10px;">{{mail.getlastcomments.msg_created_on}}</a><br>
+                                    <a style="cursor: pointer !important; font-size: 10px;">{{mail.getlastcomments.commented_by}}</a>
+                                </div><hr>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            {% for mail in newmails %}
+                            <div class="row col-md-12 col-md-12 col-sm-12 col-xs-12">
+                                <div {% if mail.getlastcomments.commented_by = "admin" %} style="background-color:#d9edf7; cursor:pointer !important;" {% else %} style="background-color:#ccc; cursor:pointer !important;" {% endif %} class="job_comment"  job_pk={{mail.pk}}>
+                                    <a style="font-size: 10px;">{{mail.job_id}}</a><br>
+                                    <a style="cursor: pointer !important; font-size: 10px;">{{mail.getlastcomments.msg}}</a><br>
+                                    <a style="cursor: pointer !important; font-size: 10px;">{{mail.getlastcomments.msg_created_on}}</a><br>
+                                    <a style="cursor: pointer !important; font-size: 10px;">{{mail.getlastcomments.commented_by}}</a><br>
+                                </div><hr>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            {% if request.user.is_staff %}
-                            <tbody>
-                                {% for mail in newmails %}
-                                <tr {% if not mail.getlastcomments.commented_by = "admin" %}style="font-weight:bold;"{% endif %}>
-                                    <td><a style="font-size: 10px;">{{mail.job_id}}</a></td>
-                                    <td><a style="font-size: 10px;">{{mail.getlastcomments.commented_by}}</a></td>
-                                    <td><a style="cursor: pointer !important; font-size: 10px;" class="job_comment" job_pk={{mail.pk}}>{{mail.getlastcomments.msg}}</a></td>
-                                    <td style="font-size: 10px;" class="text-right mail-date">{{mail.getlastcomments.msg_created_on}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                            {% else %}
 
-                            <tbody style="font-size: 10px;">
-                                {% for mail in newmails %}
-                                <tr {% if mail.getlastcomments.commented_by = "admin" %}style="font-weight:bold;"{% endif %}>
-                                    <td><a style="font-size: 10px;">{{mail.job_id}}</a></td>
-                                    <td><a style="font-size: 10px;">{{mail.getlastcomments.commented_by}}</a></td>
-                                    <td><a style="cursor: pointer !important; font-size: 10px;" class="job_comment" job_pk={{mail.pk}}>{{mail.getlastcomments.msg}}</a></td>
-                                    <td style="font-size: 10px;" class="text-right mail-date">{{mail.getlastcomments.msg_created_on}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-
-                            {% endif %}
-                        </table>
-                    </div>
                 </div>
 
             </div>
@@ -107,7 +102,9 @@
 
                                     <hr>
 
-                                    <form action="" method="post" enctype="multipart/form-data">
+                                    <form action="" method="post" id="myform1" enctype="multipart/form-data">
+
+
                                         {% csrf_token %}
 
                                         <div class="form-group-inner example-6">

@@ -339,15 +339,13 @@ def job_edit(request,pk):
         form = JobForm(request.POST,request.FILES,instance=job_obj)
         if form.is_valid():
             form2 = form.save(commit=False)
-            batchNo = request.POST.get('batch_type')
-            if batchNo == 'None':
-                pass
-            else:
+            batchNo =request.POST.get('batch_type')
+            if batchNo:
                 try:
                     job_obj.batch_type = Batch.objects.get(pk=batchNo)
                 except:
                     job_obj.batch_type = Batch.objects.get(batch_id=batchNo)
-            job_obj.save()
+                job_obj.save()
             form2.save()
             messages.success(request, 'Job was successfully edited')
             response = redirect(request.META['HTTP_REFERER'])
@@ -999,10 +997,16 @@ def register(request):
         rp = request.POST
         print(rp)
 
+        if rp.get('cust_type') == "corporate" and rp.get('comp_name') == "":
+            context['form'] = request.POST
+            context['message'] = "For corporate accounts, please provide your company name"
+            response = render(request, 'zodiakApp/newreg.html', context)
+            return response
+
         form = UserForm(request.POST)
         form2 = UserAccountForm(request.POST)
         form3 = PrimaryContactForm(request.POST)
-
+        form4 = SecondaryContactForm(request.POST)
 
         if request.POST.get('bot_catcher') != "":
             context['message'] = "iRobot detected...."
@@ -1042,6 +1046,7 @@ def register(request):
                 user_acc_form2.staff_account = False
                 user_acc_form2.save()
                 user_primary_contact_form = PrimaryContactForm(request.POST)
+                user_secondary_contact_form = SecondaryContactForm(request.POST)
 
                 print(user_acc_form.errors)
 
@@ -1055,7 +1060,6 @@ def register(request):
                     form = UserForm(request.POST)
                     form2 = UserAccountForm(request.POST)
                     form3 = PrimaryContactForm(request.POST)
-                    form4 = SecondaryContactForm(request.POST)
                     context['form'] = request.POST
                     context['message'] = "Incorrect values submitted...Except for office address and type of business, all others fields should not have spaces in between them"
                     response = render(request, 'zodiakApp/newreg.html', context)
@@ -1079,9 +1083,10 @@ def register(request):
 
                 else:
                     context['form'] = request.POST
-                    context['message'] = "Incorrect values submitted...Except for office address and type of business, all others fields should not have spaces in between them"
+                    context['message'] = "Incorrect values submitted...Except for office address, type of business and company name, all others fields should not have spaces in between them"
                     response = render(request, 'zodiakApp/newreg.html', context)
                     return response
+
 
                 user_login = authenticate(username=user.username, password=password)
 
@@ -1652,7 +1657,6 @@ def mails(request):
     return render(request, template_name, context)
 
 
-
 @login_required
 def newmail(request):
     context = {}
@@ -1685,8 +1689,6 @@ def adminPage(request):
 @login_required
 def addDoc(request, job_obj):
     context = {}
-    print(request.POST)
-    print(request.FILES)
 
     if request.method == "POST":
 
@@ -1723,7 +1725,7 @@ def addDoc(request, job_obj):
 
 
 @login_required
-def delete_doc(request,pk):
+def delete_doc(request, pk):
     doc_obj = Documents.objects.get(pk=pk, deleted=False)
     doc_obj.deleted = True
     doc_obj.save()

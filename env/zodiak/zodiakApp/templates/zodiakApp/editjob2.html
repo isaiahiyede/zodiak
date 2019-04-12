@@ -709,10 +709,7 @@
                                                                             <div class="form-select-list">
                                                                                 <select required style="font-size: 10px; height: 28px;" class="form-control" id="job_user_acc" name="job_user_acc" data-placeholder="Select customer..." class="chosen-select" tabindex="-1">
                                                                                             <option value="{{job.job_user_acc}}">{{job.job_user_acc}}</option>
-                                                                                            {% for name in names %}
-                                                                                               <option value="{{name.pk}}">
-                                                                                                {{name.user.username}}</option>
-                                                                                            {% endfor %}
+
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
@@ -1802,6 +1799,7 @@ $('body').on('click','.cont_obj', function(e){
         }
      })
 });
+
 
 
 </script>

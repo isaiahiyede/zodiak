@@ -20,7 +20,6 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name','last_name')
 
 
-
 class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
@@ -58,6 +57,7 @@ class FinancialsForm(forms.ModelForm):
 
             'amount','paid_by','date_paid','refundablle_as','charge_type',
             )
+
 
 class JobForm(forms.ModelForm):
 
@@ -100,7 +100,6 @@ class JobForm2(forms.ModelForm):
             )
 
 
-
 class JobForm4(forms.ModelForm):
 
     class Meta:
@@ -116,7 +115,7 @@ class UserAccountForm(forms.ModelForm):
     class Meta:
         model = UserAccount
         fields = ('user', 'phone_number', 'user_passport', 'user_cac','type_of_business','acc_owner',
-            'user_other_means_of_id','country','state','website','office_aadress')
+            'user_other_means_of_id','country','state','website','office_aadress','comp_name',)
 
 
 class PrimaryContactForm(forms.ModelForm):

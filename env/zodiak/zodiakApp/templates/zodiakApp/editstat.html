@@ -8,87 +8,87 @@
 
 {% block contents %}
 <div class="single-pro-review-area mt-t-30 mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-payment-inner-st">
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-payment-inner-st">
 
 
-                            <div id="myTabContent" class="tab-content custom-product-edit">
-                                
-                                <div class="product-tab-list tab-pane fade active in" id="reviews">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                        <div class="devit-card-custom">
-                                                            <form action="{% url 'zodiakApp:new_stat_info_edit' stat_obj.pk %}" method="post" enctype="multipart/form-data">
-                                            {% csrf_token %}
+                        <div id="myTabContent" class="tab-content custom-product-edit">
+                            
+                            <div class="product-tab-list tab-pane fade active in" id="reviews">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="review-content-section">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <div class="devit-card-custom">
+                                                        <form action="{% url 'zodiakApp:new_stat_info_edit' stat_obj.pk %}" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
 
-                                            <input type="hidden" name="job_finance" value="stat_obj.job_stat">
+                                        <input type="hidden" name="job_finance" value="stat_obj.job_stat">
 
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Status Type</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input class="form-control" value="{{stat_obj.stat_type}}" type="text" 
-                                                        name="stat_type" readonly>
-                                                    </div>
+                                        <div class="form-group-inner">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <label class="login2 pull-right pull-right-pro">Status Type</label>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                    <input class="form-control" value="{{stat_obj.stat_type}}" type="text" 
+                                                    name="stat_type" readonly>
                                                 </div>
                                             </div>
+                                        </div>
 
 
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Date</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{stat_obj.stat_date}}" type="text" name="stat_date">
-                                                        <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
-                                                    </div>
+                                        <div class="form-group-inner">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <label class="login2 pull-right pull-right-pro">Date</label>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                    <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{stat_obj.stat_date}}" type="text" name="stat_date">
+                                                    <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
                                                 </div>
                                             </div>
+                                        </div>
 
 
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Comments</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <textarea required class="form-control" name="stat_comment">{{stat_obj.stat_comment}}</textarea>
-                                                    </div>
+                                        <div class="form-group-inner">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <label class="login2 pull-right pull-right-pro">Comments</label>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                    <textarea required class="form-control" name="stat_comment">{{stat_obj.stat_comment}}</textarea>
                                                 </div>
                                             </div>
+                                        </div>
 
 
-                                            <div class="form-group-inner">
-                                                <div class="login-btn-inner">
-                                                    <div class="row">
-                                                        <div class="col-lg-3"></div>
-                                                        <div class="col-lg-9">
-                                                            <div class="login-horizental cancel-wp pull-left form-bc-ele">
-                                                                <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Submit</button>
-                                                            </div>
+                                        <div class="form-group-inner">
+                                            <div class="login-btn-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3"></div>
+                                                    <div class="col-lg-9">
+                                                        <div class="login-horizental cancel-wp pull-left form-bc-ele">
+                                                            <button class="btn btn-sm btn-primary login-submit-cs" type="submit">Submit</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                                            </form>
-                                                    </div>
+                                        </div>
+                                                        </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                    </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

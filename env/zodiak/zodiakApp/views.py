@@ -15,7 +15,7 @@ from django.db.models import Count
 from django import template
 import random, datetime, string
 from zodiakApp.forms import UserForm, DocumentsForm, ContainerTypesForm, StatusRecForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
+from zodiakApp.models import Job, Shippers, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -246,6 +246,16 @@ def get_user_details(request):
 
 
 @login_required
+def get_shippers_details(request):
+    context = {}
+    template_name = 'zodiakApp/shippersDetails.html'
+    sh_obj = Shippers.objects.get(shippers_name=request.GET.get('shp_obj'))
+    context['sh_objs'] = Shippers.objects.all()
+    context['sh_obj'] = sh_obj
+    return render(request,template_name,context)
+
+
+@login_required
 def add_job(request,jobtype):
     context = {}
     print(request.POST)
@@ -274,8 +284,9 @@ def add_job(request,jobtype):
                     response = redirect(request.META['HTTP_REFERER'])
                     return response
             try:
-                job_status = Status.objects.get(name=request.POST.get('job_status'))
-                form2.job_status = job_status.name
+                # job_status = Status.objects.get(name=request.POST.get('job_status'))
+                # form2.job_status = job_status.name
+                form2.job_status = request.POST.get('job_status')
             except:
                 print(form.errors)
                 messages.warning(request, 'Job was not successfully created..Please select a Job Status')
@@ -287,10 +298,10 @@ def add_job(request,jobtype):
                 messages.warning(request, 'Job was not successfully created..Please select a Job Mode')
                 response = redirect(request.META['HTTP_REFERER'])
                 return response
-            batch_obj = request.POST.get('batch_type')
-            if batch_obj:
-                batch =  Batch.objects.get(batch_id=batch_obj)
-                form2.batch_type = batch
+            # batch_obj = request.POST.get('batch_type')
+            # if batch_obj:
+            #     batch =  Batch.objects.get(batch_id=batch_obj)
+            #     form2.batch_type = batch
             form2.job_id = randomNumber(5,request.POST.get('job_route'),request.POST.get('job_type'),request.POST.get('ref_number'),name)
             form2.save()
             print(form2.job_id)
@@ -299,7 +310,10 @@ def add_job(request,jobtype):
         else:
             print(form.errors)
             messages.warning(request, 'Job was not successfully created')
-            response = redirect(request.META['HTTP_REFERER'])
+            context['failed'] = 'failed'
+            form = JobForm(request.POST)
+            context['form'] = form
+            response = render(request, 'zodiakApp/createjob.html', context)
         return response
     else:
         context['form'] = JobForm()
@@ -307,6 +321,7 @@ def add_job(request,jobtype):
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
         context['job_type'] = jobtype
+        context['sh_objs'] = Shippers.objects.all()
         context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=jobtype)
         response = render(request, 'zodiakApp/createjob.html', context)
         return response
@@ -361,6 +376,12 @@ def job_edit(request,pk):
         context['names'] = UserAccount.objects.filter(deleted=False,staff_account=False)
         context['jobmodes'] = getJobModes()
         context['statuses'] = getStatus()
+        fin_objs = Finances.objects.filter(deleted=False,job_finance=job_obj)
+        doc_objs = Documents.objects.filter(deleted=False,job_obj_doc=job_obj)
+        stat_objs = StatusRec.objects.filter(deleted=False,job_stat=job_obj) 
+        context['fin_objs'] = fin_objs
+        context['doc_objs'] = doc_objs
+        context['stat_objs'] = stat_objs
         context['batches'] = Batch.objects.filter(deleted=False,mode_of_batch=job_obj.job_type)
         response = render(request, 'zodiakApp/editjob2.html', context)
         return response
@@ -388,6 +409,26 @@ def editbatch(request):
         context['minibatch_obj'] = minibatch_obj
         response = render(request,template_name,context)
         return response
+
+
+@login_required
+def editOBJ(request):
+    identifier = request.POST.get('obj_type')
+    obj_id = request.POST.get('obj_id')
+    if identifier == 'stat':
+        stat_obj = StatusRec.objects.get(pk=obj_id)
+        context['stat_obj'] = stat_obj
+        template_name = 
+    elif identifier == 'doc':
+        doc_obj = Documents.objects.get(pk=obj_id)
+        context['doc_obj'] = doc_obj
+        template_name =
+    elif identifier == 'payment':
+        fin_obj = Finances.objects.get(pk=obj_id)
+        context['fin_obj'] = fin_obj
+        template_name =
+    response = render(request,template_name,context)
+    return response
 
 
 @login_required
@@ -899,6 +940,19 @@ def new_stat_info_edit(request,pk):
 
 
 @login_required
+def get_del_item(request,pk,identifier):
+    if identifier == 'mini':
+        del_obj = MiniBatches.objects.get(pk=pk,deleted=False)
+        del_obj.deleted = True
+        del_obj.save()
+    else:
+        del_obj = ContainerTypes.objects.get(pk=pk,deleted=False)
+        del_obj.deleted = True
+        del_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+@login_required
 def new_stat(request):
     context = {}
     print(request.POST)
@@ -912,10 +966,13 @@ def new_stat(request):
 
         for i in type_of_stat:
             val = type_of_stat.index(i)
-            stat_obj = StatusRec.objects.create(
-                job_stat=job_obj,
-                stat_type=i,
-                )
+            if StatusRec.objects.filter(deleted=False,stat_type=i).exists():
+                continue
+            else:
+                stat_obj = StatusRec.objects.create(
+                    job_stat=job_obj,
+                    stat_type=i,
+                    )
             stat_obj.save()
 
         messages.success(request, 'Job payments sucessfully updated')
@@ -1025,10 +1082,13 @@ def new_financials(request):
 
         for i in type_of_charge:
             val = type_of_charge.index(i)
-            finance_obj = Finances.objects.create(
-                job_finance=job_obj,
-                charge_type=i,
-                )
+            if Finances.objects.filter(deleted=False,charge_type=i).exists():
+                continue
+            else:
+                finance_obj = Finances.objects.create(
+                    job_finance=job_obj,
+                    charge_type=i,
+                    )
             finance_obj.save()
 
         messages.success(request, 'Job payments sucessfully updated')
@@ -1870,11 +1930,16 @@ def addDoc(request, job_obj):
 
         for i in document_type:
             val = document_type.index(i)
-            doc_obj = Documents.objects.create(
-                job_obj_doc=job_obj,
-                name_of_doc=i,
-                doc_obj=file_obj[val],
-                )
+            print(i)
+            if Documents.objects.get(job_obj_doc=job_obj,name_of_doc=i).exists():
+                print(True)
+                continue
+            else:
+                doc_obj = Documents.objects.create(
+                    job_obj_doc=job_obj,
+                    name_of_doc=i,
+                    doc_obj=file_obj[val],
+                    )
             doc_obj.save()
 
         messages.success(request, 'Job documents were sucessfully updated')
@@ -1945,13 +2010,16 @@ def add_new_doc(request):
         except:
             job_obj = Job.objects.get(pk=job_finance)
 
-
         for i in document_type:
+            print(i)
             val = document_type.index(i)
-            doc_obj = Documents.objects.create(
-                job_obj_doc=job_obj,
-                name_of_doc=i,
-                )
+            if Documents.objects.filter(deleted=False,job_obj_doc=job_obj,name_of_doc=i).exists():
+                continue
+            else:
+                doc_obj = Documents.objects.create(
+                    job_obj_doc=job_obj,
+                    name_of_doc=i,
+                    )
             doc_obj.save()
 
         messages.success(request, 'Job documents were sucessfully updated')

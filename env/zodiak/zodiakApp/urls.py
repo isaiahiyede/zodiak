@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^reporting/$', views.reporting, name="reporting"),
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
+    url(r'^eidtOBJ/$', views.editOBJ, name="editOBJ"),
     url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),
     url(r'^addjob/(?P<jobtype>.+)$', views.add_job, name="add_job"),
     url(r'^addjob4/(?P<jobtype>.+)$', views.add_job4, name="add_job4"),
@@ -42,6 +43,7 @@ urlpatterns = [
     url(r'^viewminibatches/(?P<pk>.+)/$', views.viewminibatches, name="viewminibatches"),
     url(r'^batchmanifest/(?P<pk>.+)/$', views.print_manifest, name="print_manifest"),
 
+    url(r'^getDel/(?P<pk>.+)/(?P<identifier>.+)/$', views.get_del_item, name="get_del_item"),
     url(r'^batchdelete/(?P<pk>.+)/$', views.batch_delete, name="batch_delete"),
     url(r'^batch_info_view/(?P<pk>.+)/$', views.batch_info_view, name="batch_info_view"),
     url(r'^jobinvoice/(?P<pk>.+)/$', views.job_invoice_page, name="job_invoice_page"),
@@ -100,6 +102,8 @@ urlpatterns = [
     # url(r'^confirm-order/$',views.get_confirmation_order, name = "get_confirmation_order"),
     url(r'^getjob/$',views.get_job, name = "get_job"),
     url(r'^getUserDetails/$',views.get_user_details, name = "get_user_details"),
+    url(r'^getShippersDetails/$',views.get_shippers_details, name = "get_shippers_details"),
+
     url(r'^selectedjobs/$',views.get_jobs_selected, name = "get_jobs_selected"),
     # url(r'^customer-list/$',views.all_customers, name = "all_customers"),
     # url(r'^customer-payment-list/$',views.customer_payments, name = "all_customers_payments"),

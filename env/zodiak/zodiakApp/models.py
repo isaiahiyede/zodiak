@@ -197,20 +197,20 @@ class Job(PackageDimension):
     ref_number = models.CharField(max_length=50, null=True, blank=True)
     company_name = models.CharField(max_length=50, null=True, blank=True)
     customer_type = models.CharField(max_length=50, null=True, blank=True)
-    shippers_name = models.CharField(max_length=50, null=True, blank=True)
-    shippers_email = models.CharField(max_length=50, null=True, blank=True)
-    shippers_number = models.CharField(max_length=50, null=True, blank=True)
-    shippers_country = models.CharField(max_length=50, null=True, blank=True)
-    shippers_address = models.CharField(max_length=50, null=True, blank=True)
-    consignees_name = models.CharField(max_length=50, null=True, blank=True)
-    consignees_number = models.CharField(max_length=50, null=True, blank=True)
-    consignee_email = models.CharField(max_length=50, null=True, blank=True)
-    consignee_country = models.CharField(max_length=50, null=True, blank=True)
-    consignees_address = models.CharField(max_length=50, null=True, blank=True)
-    country_of_origin = models.CharField(max_length=50, null=True, blank=True)
-    country_of_arrival = models.CharField(max_length=50, null=True, blank=True)
-    port_of_destination = models.CharField(max_length=50, null=True, blank=True)
-    port_of_arrival = models.CharField(max_length=50, null=True, blank=True)
+    shippers_name = models.CharField(max_length=150, null=True, blank=True)
+    shippers_email = models.CharField(max_length=150, null=True, blank=True)
+    shippers_number = models.CharField(max_length=150, null=True, blank=True)
+    shippers_country = models.CharField(max_length=150, null=True, blank=True)
+    shippers_address = models.CharField(max_length=150, null=True, blank=True)
+    consignees_name = models.CharField(max_length=150, null=True, blank=True)
+    consignees_number = models.CharField(max_length=150, null=True, blank=True)
+    consignee_email = models.CharField(max_length=150, null=True, blank=True)
+    consignee_country = models.CharField(max_length=150, null=True, blank=True)
+    consignees_address = models.CharField(max_length=150, null=True, blank=True)
+    country_of_origin = models.CharField(max_length=150, null=True, blank=True)
+    country_of_arrival = models.CharField(max_length=150, null=True, blank=True)
+    port_of_destination = models.CharField(max_length=150, null=True, blank=True)
+    port_of_arrival = models.CharField(max_length=150, null=True, blank=True)
     job_vessel_name = models.CharField(max_length=50, null=True, blank=True)
     job_awl_bol_number = models.CharField(max_length=50, null=True, blank=True)
     paar_date = models.DateField(null=True, blank=True)
@@ -233,7 +233,6 @@ class Job(PackageDimension):
     job_status = models.CharField(max_length=50, null=True, blank=True)
     job_id = models.CharField(max_length=50,null=True,blank=True)
     job_type = models.CharField(max_length=20,null=True,blank=True)
-    job_commented_on = models.BooleanField(default=False)
 
     job_created_on = models.DateTimeField(default=timezone.now)
 
@@ -262,6 +261,7 @@ class Job(PackageDimension):
     vat = models.BooleanField(default=False)
     demurrage = models.BooleanField(default=False)
     job_new_comment = models.BooleanField(default=False)
+    job_commented_on = models.BooleanField(default=False)
 
     demurrage_grace_period = models.IntegerField(default=7, null=True, blank=True)
     demurrage_start_date = models.DateField(null=True, blank=True)
@@ -302,6 +302,39 @@ class Job(PackageDimension):
             total = total
         return total
 
+    def getTotalCBM(self):
+        sum_of_cbm = 0.0
+        cbm_obj = self.minibatches_set.filter(deleted=False)
+        for i in cbm_obj:
+            sum_of_cbm += i.floatCBM()
+        return sum_of_cbm
+
+    def getCONT(self):
+        sum_of_cont = 0.0
+        cont_obj = self.containertypes_set.filter(deleted=False)
+        for i in cont_obj:
+            sum_of_cont += i.contCount()
+        return sum_of_cont
+
+
+    def getPKGS(self):
+        total = self.minibatches_set.filter(deleted=False).aggregate(Sum('no_of_packages'))['no_of_packages__sum']
+        if total == 0.0:
+            total = 0.0
+        else:
+            total = total
+        return total
+
+    def getDESC(self):
+        descriptions = ""
+        all_desc = self.minibatches_set.filter(deleted=False)
+        if all_desc != "":
+            for desc in all_desc:
+                descriptions += desc.job_description + ','
+        else:
+            descriptions = "Nil"
+        return descriptions.rstrip(',')
+
 
     def jobtotalnetweight(self):
         total = self.minibatches_set.filter(deleted=False).aggregate(Sum('net_wgh'))['net_wgh__sum']
@@ -323,6 +356,9 @@ class Job(PackageDimension):
 
     def getminibatchesCount(self):
         return self.minibatches_set.filter(deleted=False).count()
+
+    def getShortCode(self):
+        return self.ref_number + '/' + self.job_route.upper()[0:3]
 
 
     def getcommentsCount(self):
@@ -419,9 +455,23 @@ class StatusRec(models.Model):
         ordering = ['-created_on']
 
     def __str__(self):
-        return '%s' %(self.job_finance)
+        return '%s' %(self.job_stat)
 
 
+class Shippers(models.Model):
+    shippers_name = models.CharField(max_length=150, null=True, blank=True)
+    shippers_email = models.CharField(max_length=150, null=True, blank=True)
+    shippers_number = models.CharField(max_length=150, null=True, blank=True)
+    shippers_country = models.CharField(max_length=150, null=True, blank=True)
+    shippers_address = models.CharField(max_length=150, null=True, blank=True)
+    created_on = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name_plural = 'Shippers'
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return '%s' %(self.shippers_name)
 
 
 class MiniBatches(models.Model):
@@ -430,7 +480,7 @@ class MiniBatches(models.Model):
     job_description = models.CharField(max_length=255, null=True, blank=True)
     carrier_name = models.CharField(max_length=50, null=True, blank=True)
     mini_batch_id = models.CharField(max_length=50,null=True, blank=True)
-    cbm = models.CharField(max_length=50,null=True, blank=True)
+    cbm = models.FloatField(null=True, blank=True)
     gross_wgh = models.FloatField(default=0.0, null=True, blank=True)
     net_wgh = models.FloatField(default=0.0, null=True, blank=True)
     exp_date_of_arrival = models.DateField(null=True, blank=True)
@@ -444,6 +494,14 @@ class MiniBatches(models.Model):
                 'carrier_name': self.carrier_name, 'job_description':self.job_description,
                 'gross_wgh':self.gross_wgh, 'net_wgh': self.net_wgh,
                 }
+
+    def item_desc(self):
+        return self.job_description
+                
+
+    def floatCBM(self):
+        return float(self.cbm)
+
 
     class Meta:
         verbose_name_plural = 'Mini Batches'
@@ -500,6 +558,9 @@ class ContainerTypes(models.Model):
     def item_info(self):
         return {'NAOC': self.name_of_container, 'NUOC': self.number_of_container}
 
+    def contCount(self):
+        return int(self.number_of_container)
+
     class Meta:
         verbose_name_plural = 'Types of Containers'
         ordering = ['-created_on']
@@ -540,7 +601,7 @@ class Comments(models.Model):
         ordering = ['-msg_created_on']
 
     def __str__(self):
-        return '%s - %s' %(self.job_message.job_id)
+        return '%s' %(self.job_message.job_id)
 
 
 class DockReceipt(models.Model):

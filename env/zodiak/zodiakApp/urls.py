@@ -17,6 +17,7 @@ urlpatterns = [
 
     url(r'^viewjobs/(?P<jobtype>.+)$', views.view_jobs, name="view_jobs"),
     url(r'^eidtOBJ/$', views.editOBJ, name="editOBJ"),
+    url(r'^newFilter/$', views.new_filter, name="new_filter"),
     url(r'^myjobs/(?P<jobtype>.+)$', views.view_user_jobs, name="view_user_jobs"),
     url(r'^addjob/(?P<jobtype>.+)$', views.add_job, name="add_job"),
     url(r'^addjob4/(?P<jobtype>.+)$', views.add_job4, name="add_job4"),

@@ -13,7 +13,7 @@ from django.template.context import RequestContext
 from django.template import Context
 from django.db.models import Count
 from django import template
-import random, datetime, string
+import random, datetime, string, calendar
 from zodiakApp.forms import UserForm, DocumentsForm, ContainerTypesForm, StatusRecForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
 from zodiakApp.models import Job, Shippers, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
@@ -413,22 +413,52 @@ def editbatch(request):
 
 @login_required
 def editOBJ(request):
-    identifier = request.POST.get('obj_type')
-    obj_id = request.POST.get('obj_id')
+    identifier = request.GET.get('obj_type')
+    obj_id = request.GET.get('obj_id')
+    context = {}
     if identifier == 'stat':
+        print('this is stat')
         stat_obj = StatusRec.objects.get(pk=obj_id)
         context['stat_obj'] = stat_obj
-        template_name = 
+        template_name = 'zodiakApp/statDesc.html'
     elif identifier == 'doc':
+        print('this is doc')
         doc_obj = Documents.objects.get(pk=obj_id)
         context['doc_obj'] = doc_obj
-        template_name =
+        template_name = 'zodiakApp/docDesc.html'
     elif identifier == 'payment':
+        print('this is pay')
         fin_obj = Finances.objects.get(pk=obj_id)
         context['fin_obj'] = fin_obj
-        template_name =
+        template_name = 'zodiakApp/payDesc.html'
     response = render(request,template_name,context)
     return response
+
+
+@login_required
+def new_filter(request):
+    rp = request.POST
+    print(rp)
+    job_user = rp.get('job_user')
+    job_mode = rp.get('job_mode')
+    job_stat = rp.get('job_status')
+    user=User.objects.get(username=job_user)
+    context = {}
+    context['names'] = UserAccount.objects.filter(deleted=False,staff_account=False)
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    template_name = 'zodiakApp/adminHome.html'
+    if job_mode == 'All' and job_stat == 'All':
+        all_jobs = Job.objects.filter(job_user_acc=user.useraccount,deleted=False)
+    elif job_mode == 'All' and job_stat != 'All':
+        all_jobs = Job.objects.filter(job_user_acc=user.useraccount,job_status=job_stat,deleted=False)
+    elif job_mode != 'All' and job_stat == 'All':
+        all_jobs = Job.objects.filter(job_user_acc=user.useraccount,job_type=job_mode,deleted=False)
+    else:
+        all_jobs = Job.objects.filter(job_user_acc=user.useraccount,job_type=job_mode,job_status=job_stat,deleted=False)  
+    context['all_jobs'] = all_jobs
+    return render(request, template_name, context)
+
 
 
 @login_required
@@ -922,9 +952,10 @@ def new_stat_info_edit(request,pk):
             form2 = form.save(commit=False)
             job_obj = Job.objects.get(job_id=stat_obj.job_stat)
             form2.save()
+            job_obj.job_status = stat_obj.stat_type
             job_obj.save()
-            messages.warning(request, 'Status was successfully edited')
-            response = redirect(reverse('zodiakApp:statrecords'))
+            messages.success(request, 'Status was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
             messages.warning(request, 'Status was not successfully edited')
@@ -951,6 +982,7 @@ def get_del_item(request,pk,identifier):
         del_obj.save()
     response = redirect(request.META['HTTP_REFERER'])
     return response
+
 
 @login_required
 def new_stat(request):
@@ -1100,6 +1132,12 @@ def new_financials(request):
         return response
 
 
+def findDay(date):
+    day_of_week = datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
+    return calendar.day_name[day_of_week]
+
+
+
 @login_required
 def new_fin_info_edit(request,pk):
     context = {}
@@ -1113,8 +1151,8 @@ def new_fin_info_edit(request,pk):
             form2.save()
             job_obj.job_cost = job_obj.totalcostofjob()
             job_obj.save()
-            messages.warning(request, 'Payments was successfully edited')
-            response = redirect(reverse('zodiakApp:financerecords'))
+            messages.success(request, 'Payments was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
             messages.warning(request, 'Payments was not successfully edited')
@@ -1968,6 +2006,7 @@ def delete_doc(request, pk):
 @login_required
 def new_doc_info_edit(request,pk):
     context = {}
+    d_of_wk = {'Monday':''}
     doc_obj = Documents.objects.get(pk=pk, deleted=False)
     print(request.POST)
     if request.method == "POST":
@@ -1975,10 +2014,28 @@ def new_doc_info_edit(request,pk):
         if form.is_valid():
             form2 = form.save(commit=False)
             job_obj = Job.objects.get(job_id=doc_obj.job_obj_doc)
+            day_of_week = findDay(request.POST.get('doc_date'))
+            print(day_of_week)
+            if day_of_week == "Saturday":
+                new_date = datetime.timedelta(days=2)
+                doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%Y-%m-%d') + new_date).date()
+                doc_obj.doc_time = '00:00'
+            elif day_of_week == "Sunday":
+                new_date = datetime.timedelta(days=1)
+                doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%Y-%m-%d') + new_date).date()
+                doc_obj.doc_time = '00:00'
+            else:
+                if request.POST.get('doc_time') >= '17:00':
+                    new_date = datetime.timedelta(days=1)
+                    doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%Y-%m-%d') + new_date).date()
+                    doc_obj.doc_time = '00:00'
+                else:
+                    doc_obj.doc_action = request.POST.get('doc_date')                     
+
             form2.save()
             job_obj.save()
-            messages.warning(request, 'Document was successfully edited')
-            response = redirect(reverse('zodiakApp:docrecords'))
+            messages.success(request, 'Document was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
         else:
             print(form.errors)
             messages.warning(request, 'Document was not successfully edited')

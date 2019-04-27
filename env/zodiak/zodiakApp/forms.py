@@ -54,7 +54,7 @@ class StatusRecForm(forms.ModelForm):
         model = StatusRec
         fields = (
 
-            'stat_type','stat_date','stat_comment',
+            'stat_type','stat_date','stat_comment','stat_time',
             )
 
 
@@ -63,7 +63,7 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments',
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid',
             )
 
 
@@ -73,6 +73,7 @@ class FinancialsForm(forms.ModelForm):
     charge_type = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'style': 'border-color: grey;','required':'required','readonly':'readonly'}))
     refundablle_as = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     date_paid = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
+    time_paid = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     paid_by = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
     comments = forms.CharField(max_length=255,widget=forms.Textarea(attrs=attr3))
 
@@ -80,7 +81,7 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments',
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid',
             )
 
 
@@ -180,6 +181,6 @@ class ContainerTypesForm(forms.ModelForm):
 class DocumentsForm(forms.ModelForm):
     class Meta:
         model = Documents
-        fields = ('name_of_doc','doc_obj','doc_recieved','doc_date',)
+        fields = ('name_of_doc','doc_obj','doc_recieved','doc_date','doc_time',)
 
 

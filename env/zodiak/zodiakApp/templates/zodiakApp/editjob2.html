@@ -963,14 +963,14 @@
                                                                 <div class="row">
                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                <div class="data-table-area mg-b-15">
+                                                                        <div class="data-table-area mg-b-15">
                                                                         <div class="container-fluid">
                                                                             <div class="row">
                                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                     <div class="sparkline13-list">
 
                                                                                     <div class="sparkline13-graph">
-                                                                                        <div class="datatable-dashv1-list                   custom-datatable-overright">
+                                                                                        <div class="datatable-dashv1-list custom-datatable-overright">
 
                                                                                              <table id="table" data-toggle="table"data-search="true" data-show-columns="true" data-key-events="true" data-resizable="true" data-cookie="true"
                                                                                                 data-cookie-id-table="saveId" data-show-export="true" data-toolbar="#toolbar">
@@ -1063,7 +1063,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="sparkline13-graph">
-                                                                                <div class="datatable-dashv1-list                   custom-datatable-overright">
+                                                                                <div class="datatable-dashv1-list custom-datatable-overright">
                                                                                     <table id="table" data-toggle="table"data-search="true" data-show-columns="true" data-key-events="true" data-resizable="true" data-cookie="true"
                                                                                     data-cookie-id-table="saveId" data-show-export="true" data-toolbar="#toolbar">
                                                                                         <thead>
@@ -1073,8 +1073,9 @@
                                                                                             <th data-field="job_type">Document Name</th>
                                                                                             <th data-field="job_doc">Document</th>
                                                                                             <th data-field="job_rec">Received</th>
-                                                                                            <th data-field="job_act">Actionable As At Now</th>
+                                                                                            <th data-field="job_act">Actionable</th>
                                                                                             <th data-field="job_date">Date</th>
+                                                                                            <th data-field="job_time">Time</th>
                                                                                             <th>Action</th>
                                                                                             </tr>
                                                                                         </thead>
@@ -1094,7 +1095,7 @@
                                                                                             <td>{{doc_obj.doc_recieved}}</td>
                                                                                             <td>{{doc_obj.doc_action}}</td>
                                                                                             <td>{{doc_obj.doc_date}}</td>
-
+                                                                                            <td>{{doc_obj.doc_time}}</td>
                                                                                             <td class="datatable-ct">
 
                                                                                                 <a title="edit doc item">
@@ -1144,27 +1145,27 @@
                                                                                         </div>
 
                                                                                         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                                            <div class="chosen-select-single">
-                                                                                <select data-placeholder="Choose Document Type..." id="document_type" name="document_type" class="chosen-select" multiple="" tabindex="-1" required>
-                                                                                <option value="Form M">Form M</option>
-                                                                                <option value="Comemercial Invoice">Commercial Invoice</option>
-                                                                                <option value="Packing List">Packing List</option>
-                                                                                <option value="CCRO">CCRO</option>
-                                                                                <option value="SON">SON</option>
-                                                                                <option value="NAFDAC">NAFDAC</option>
-                                                                                <option value="PAAR">PAAR</option>
-                                                                                <option value="NDLEA">NDLEA</option>
-                                                                                <option value="Bill of lading">Bill of lading</option>
-                                                                                <option value="Cert Of Analysis">Cert Of Analysis</option>
-                                                                                <option value="Airway Bill">Airway Bill</option>
-                                                                                <option value="Duty Receipt">Duty Receipt</option>
-                                                                                <option value="Letter Of Authority">Letter Of Authority</option>
-                                                                                <option value="Handling Receipt">Handling Receipt</option>
-                                                                                <option value="Airline Receipt">Airline Receipt</option>
-                                                                                <option value="Shipping Line Receipt">Shipping Line Receipt</option>
-                                                                                <option value="Assessment">Assessment</option>
-                                                                                </select>
-                                                                            </div>
+                                                                                            <div class="chosen-select-single">
+                                                                                                <select data-placeholder="Choose Document Type..." id="document_type" name="document_type" class="chosen-select" multiple="" tabindex="-1" required>
+                                                                                                <option value="Form M">Form M</option>
+                                                                                                <option value="Comemercial Invoice">Commercial Invoice</option>
+                                                                                                <option value="Packing List">Packing List</option>
+                                                                                                <option value="CCRO">CCRO</option>
+                                                                                                <option value="SON">SON</option>
+                                                                                                <option value="NAFDAC">NAFDAC</option>
+                                                                                                <option value="PAAR">PAAR</option>
+                                                                                                <option value="NDLEA">NDLEA</option>
+                                                                                                <option value="Bill of lading">Bill of lading</option>
+                                                                                                <option value="Cert Of Analysis">Cert Of Analysis</option>
+                                                                                                <option value="Airway Bill">Airway Bill</option>
+                                                                                                <option value="Duty Receipt">Duty Receipt</option>
+                                                                                                <option value="Letter Of Authority">Letter Of Authority</option>
+                                                                                                <option value="Handling Receipt">Handling Receipt</option>
+                                                                                                <option value="Airline Receipt">Airline Receipt</option>
+                                                                                                <option value="Shipping Line Receipt">Shipping Line Receipt</option>
+                                                                                                <option value="Assessment">Assessment</option>
+                                                                                                </select>
+                                                                                            </div>      
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1223,6 +1224,7 @@
                                                                                                 <th data-field="job_id">JOB Id</th>
                                                                                                 <th data-field="job_type">Status Type</th>
                                                                                                 <th data-field="job_date">Date</th>
+                                                                                                <th data-field="job_time">Time</th>
                                                                                                 <th data-field="job_comment">Comment</th>
                                                                                                 <th>Action</th>
                                                                                             </tr>
@@ -1236,6 +1238,7 @@
                                                                                                 <td>{{stat_obj.job_stat.job_id}}</td>
                                                                                                 <td>{{stat_obj.stat_type}}</td>
                                                                                                 <td>{{stat_obj.stat_date}}</td>
+                                                                                                <td>{{stat_obj.stat_time}}</td>
                                                                                                 <td>{{stat_obj.stat_comment}}</td>
 
                                                                                                 <td class="datatable-ct">
@@ -1363,6 +1366,7 @@
                                                                             <th data-field="job_type">Charge Type</th>
                                                                             <th data-field="job_paid">Paid By</th>
                                                                             <th data-field="job_date">Date Paid</th>
+                                                                            <th data-field="job_time">Time Paid</th>
                                                                             <th data-field="job_received">Received/Sent</th>
                                                                             <th data-field="job_refund">Refundable</th>
                                                                             <th data-field="total_cost">Total cost (₦)</th>
@@ -1380,6 +1384,7 @@
                                                                                 <td>{{fin_obj.charge_type}}</td>
                                                                                 <td>{{fin_obj.paid_by}}</td>
                                                                                 <td>{{fin_obj.date_paid}}</td>
+                                                                                <td>{{fin_obj.time_paid}}</td>
                                                                                 <td>{{fin_obj.received}}</td>
                                                                                 <td>{{fin_obj.refundablle_as}}</td>
                                                                                 <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>
@@ -1622,7 +1627,6 @@ $('body').on('click','.cont_obj', function(e){
 $('body').on('click','.pay_obj', function(e){
     var obj_id = $(this).attr('obj_pk')
     var obj_type = $(this).attr('obj_type')
-    alert(obj_type,obj_id)
     $.ajax({
         data: {'obj_id':obj_id,'obj_type':obj_type},
         type: 'GET',
@@ -1645,7 +1649,6 @@ $('body').on('click','.pay_obj', function(e){
 $('body').on('click','.doc_obj', function(e){
     var obj_id = $(this).attr('obj_pk')
     var obj_type = $(this).attr('obj_type')
-    alert(obj_type,obj_id)
     $.ajax({
         data: {'obj_id':obj_id,'obj_type':obj_type},
         type: 'GET',
@@ -1668,7 +1671,6 @@ $('body').on('click','.doc_obj', function(e){
 $('body').on('click','.stat_obj', function(e){
     var obj_id = $(this).attr('obj_pk')
     var obj_type = $(this).attr('obj_type')
-    alert(obj_type,obj_id)
     $.ajax({
         data: {'obj_id':obj_id,'obj_type':obj_type},
         type: 'GET',

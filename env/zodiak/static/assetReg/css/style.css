@@ -3497,7 +3497,7 @@ td.text-right.mail-date {
     margin-bottom: 4px;
 }
 .panel-body a {
-    font-size: 14px;
+    font-size: 10px;
     color: #303030;
     margin-top: 15px;
 }
@@ -3878,7 +3878,7 @@ div#sparklinehome canvas {
     width: 100% !important;
 }
 .header-top-area {
-    background: lightseagreen;
+    background: #006DF0;
 }
 .sidebar-nav .metismenu{
 	background: #fff;

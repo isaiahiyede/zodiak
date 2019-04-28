@@ -395,12 +395,19 @@ class Job(PackageDimension):
         return self.minibatches_set.filter(deleted=False)
 
 
+    def getstatusrec(self):
+        return self.statusrec_set.filter(deleted=False)
+
+
     def getcontainertypes(self):
         return self.containertypes_set.filter(deleted=False)
 
 
     def getfinances(self):
         return self.finances_set.filter(deleted=False)
+
+    def getdocuments(self):
+        return self.documents_set.filter(deleted=False)
 
 
     class Meta:

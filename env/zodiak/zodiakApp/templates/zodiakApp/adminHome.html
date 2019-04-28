@@ -368,6 +368,7 @@
                                                                         <i style="cursor:pointer !important; color:green;" class="fa fa-comment job_comments" job_pk={{job.pk}}></i>&nbsp;
                                                                     {% endif %}
                                                                 {% endif %}
+                                                                <a title="report" href="{% url 'zodiakApp:job_invoice_page' job.pk %}"><i class="fa fa-file-o"></i></a>&nbsp;
                                                             </td>
                                                          </tr>
                                                         {% endfor %}

@@ -1,0 +1,178 @@
+
+{% load staticfiles %}
+{% load custom_filters %}
+
+
+<html>
+<body>
+    <head>
+        <!-- <link href="{% static 'sokohali/css/package_invoice.css' %}" rel="stylesheet"> -->
+    </head>
+
+<div style="font-size: 14px;">
+    <strong>
+        Report for Job ID: {{ pkg.job_id }} <br/>
+    </strong>
+    </div>
+
+
+    <div>
+        <strong>General Deatils</strong>
+    </div>
+
+    <table style="min-width: 100%;max-width: 100%;border-collapse: collapse;border: 2px solid black;padding:5px;">
+        <tr>
+            <td style="font-weight: bold;border: 1px solid black;">Client</td>
+            <td style="font-weight: bold;border: 1px solid black;">Origin</td>
+            <td style="font-weight: bold;border: 1px solid black;">Destination</td>
+            <td style="font-weight: bold;border: 1px solid black;">Mode</td>
+            <td style="font-weight: bold;border: 1px solid black;">Route</td>
+            <td style="font-weight: bold;border: 1px solid black;">Batches</td>
+
+        </tr>
+
+        <tr>
+            <td style="border: 1px solid black; padding: 5px 10px;">{{pkg.job_user_acc}}</td>
+            <td style="border: 1px solid black; padding: 5px 10px;">{{pkg.shippers_country}}</td>
+            <td style="border: 1px solid black; padding: 5px 10px;">{{pkg.consignee_country}}</td>
+            <td style="border: 1px solid black; padding: 5px 10px;">{{pkg.job_type}}</td>
+            <td style="border: 1px solid black; padding: 5px 10px;">{{pkg.job_route}}</td>
+            <td style="border: 1px solid black; padding: 5px 10px;">{{pkg.getminibatchesCount|default_if_none:"0"}}</td>
+
+        </tr>
+
+    </table>
+    <hr>
+
+    <div>
+        <strong>Documentation</strong>
+    </div>
+   
+    <table style="min-width: 100%;max-width: 100%;border-collapse: collapse;border: 2px solid black;padding:5px;">
+        <tr>
+            <td style="font-weight: bold;border: 1px solid black;">Document Name</td>
+            <td style="font-weight: bold;border: 1px solid black;">Document</td>
+            <td style="font-weight: bold;border: 1px solid black;">Received</td>
+            <td style="font-weight: bold;border: 1px solid black;">Date</td>
+            <td style="font-weight: bold;border: 1px solid black;">Time</td>
+            <td style="font-weight: bold;border: 1px solid black;">Actionable</td>
+
+
+        </tr>
+            {% for item in pkg.getdocuments %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.name_of_doc}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.doc_obj}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.doc_recieved}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.doc_date}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.doc_time}}&nbsp;{% getAMPM request item.doc_time %}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.doc_action}}</td>
+                </tr>
+            {% endfor %}
+    </table>
+    <hr>
+
+    <div>
+        <strong>Cargo Details</strong>
+    </div>
+
+    <table style="min-width: 100%;max-width: 100%;border-collapse: collapse;border: 2px solid black;padding:5px;">
+        <tr>
+            <td style="font-weight: bold;border: 1px solid black;">Carrier Name</td>
+            <td style="font-weight: bold;border: 1px solid black;">No. of Packages</td>
+            <td style="font-weight: bold;border: 1px solid black;">CBM</td>
+            <td style="font-weight: bold;border: 1px solid black;">Gross Weight</td>
+            <td style="font-weight: bold;border: 1px solid black;">Actual Weight</td>
+            <td style="font-weight: bold;border: 1px solid black;">Description</td>
+
+        </tr>
+            {% for item in pkg.getminibatches %}
+                {% if not item.deleted %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.carrier_name}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.no_of_packages}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.cbm}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.gross_wgh}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.net_wgh}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.job_description}}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+    </table>
+    <hr>
+
+    <div>
+        <strong>Container Details</strong>
+    </div>
+    <table style="min-width: 100%;max-width: 100%;border-collapse: collapse;border: 2px solid black;padding:5px;">
+        <tr>
+            <td style="font-weight: bold;border: 1px solid black;">Type of Container</td>
+            <td style="font-weight: bold;border: 1px solid black;">No. of Containers</td>
+
+        </tr>
+            {% for item in pkg.getcontainertypes %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.name_of_container}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.number_of_container}}</td>
+                </tr>
+            {% endfor %}
+    </table>
+    <hr>
+
+    <div>
+        <strong>Arrival Status</strong>
+    </div>
+
+    <table style="min-width: 100%;max-width: 100%;border-collapse: collapse;border: 2px solid black;padding:5px;">
+        <tr>
+            <td style="font-weight: bold;border: 1px solid black;">Status Type</td>
+            <td style="font-weight: bold;border: 1px solid black;">Date</td>
+            <td style="font-weight: bold;border: 1px solid black;">Time</td>
+            <td style="font-weight: bold;border: 1px solid black;">Comment</td>
+
+            {% for item in pkg.getstatusrec %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.stat_type}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.stat_date}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.stat_time}}&nbsp;{% getAMPM request item.stat_time %}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.stat_comment}}</td>
+                </tr>
+            {% endfor %}
+    </table>
+    <hr>
+
+    <div>
+        <strong>Payment Details</strong>
+    </div>
+
+    <table style="min-width: 100%;max-width: 100%;border-collapse: collapse;border: 2px solid black;padding:5px;">
+        <tr>
+            <td style="font-weight: bold;border: 1px solid black;">Charge Type</td>
+            <td style="font-weight: bold;border: 1px solid black;">Paid By</td>
+            <td style="font-weight: bold;border: 1px solid black;">Date Paid</td>
+            <td style="font-weight: bold;border: 1px solid black;">Time Paid</td>
+            <td style="font-weight: bold;border: 1px solid black;">Received/Sent</td>
+            <td style="font-weight: bold;border: 1px solid black;">Refundable</td>
+            <td style="font-weight: bold;border: 1px solid black;">Total cost (₦)</td>
+            <td style="font-weight: bold;border: 1px solid black;">Comment</td>
+
+        </tr>
+            {% for item in pkg.getfinances %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.charge_type}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.paid_by}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.date_paid}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.time_paid}}&nbsp;{% getAMPM request item.time_paid %}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.received}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.refundablle_as}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.amount|default_if_none:"0.0"}}</td>
+                    <td style="border: 1px solid black; padding: 5px 10px;">{{item.comments}}</td>
+                </tr>
+            {% endfor %}
+    </table> 
+    </p>
+
+
+
+</body>
+</html>

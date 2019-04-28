@@ -28,6 +28,19 @@ def getBatchCount(request):
 
 
 @register.simple_tag
+def getAMPM(request, val):
+	try:
+		if val <= '11:59':
+			return 'AM'
+		elif val > '11:59':
+			return 'PM'
+		else:
+			return None
+	except:
+		return ''
+
+
+@register.simple_tag
 def getMessageCount(request):
 	if request.user.is_staff:
 		return Job.objects.filter(job_new_comment=True,deleted=False).count()

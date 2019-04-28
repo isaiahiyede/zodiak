@@ -922,7 +922,8 @@ def viewminibatches(request,pk):
 
 @login_required
 def job_invoice_page(request, pk):
-    template = "zodiakApp/job_invoice_email_template.html"
+    # template = "zodiakApp/job_invoice_email_template.html"
+    template = "zodiakApp/report.html"
     context = {}
     pkg = get_object_or_404(Job, pk=pk)
     context['pkg'] = pkg

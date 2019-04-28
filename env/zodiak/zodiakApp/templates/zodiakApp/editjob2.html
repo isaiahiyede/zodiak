@@ -1,6 +1,8 @@
 
 {% extends 'zodiakApp/adminHome.html' %}
 {% load staticfiles %}
+{% load custom_filters %}
+
 
 {% block morecss %}
 <link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
@@ -1095,7 +1097,7 @@
                                                                                             <td>{{doc_obj.doc_recieved}}</td>
                                                                                             <td>{{doc_obj.doc_action}}</td>
                                                                                             <td>{{doc_obj.doc_date}}</td>
-                                                                                            <td>{{doc_obj.doc_time}}</td>
+                                                                                            <td>{{doc_obj.doc_time}}&nbsp;{% getAMPM request doc_obj.doc_time %}</td>
                                                                                             <td class="datatable-ct">
 
                                                                                                 <a title="edit doc item">
@@ -1238,7 +1240,7 @@
                                                                                                 <td>{{stat_obj.job_stat.job_id}}</td>
                                                                                                 <td>{{stat_obj.stat_type}}</td>
                                                                                                 <td>{{stat_obj.stat_date}}</td>
-                                                                                                <td>{{stat_obj.stat_time}}</td>
+                                                                                                <td>{{stat_obj.stat_time}}&nbsp;{% getAMPM request stat_obj.stat_time %}</td>
                                                                                                 <td>{{stat_obj.stat_comment}}</td>
 
                                                                                                 <td class="datatable-ct">
@@ -1384,7 +1386,7 @@
                                                                                 <td>{{fin_obj.charge_type}}</td>
                                                                                 <td>{{fin_obj.paid_by}}</td>
                                                                                 <td>{{fin_obj.date_paid}}</td>
-                                                                                <td>{{fin_obj.time_paid}}</td>
+                                                                                <td>{{fin_obj.time_paid}}&nbsp;{% getAMPM request fin_obj.time_paid %}</td>
                                                                                 <td>{{fin_obj.received}}</td>
                                                                                 <td>{{fin_obj.refundablle_as}}</td>
                                                                                 <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>

@@ -74,20 +74,23 @@
                             <ul class="submenu-angle" aria-expanded="false">
                                     <li  style="background:#d3d3d3;">
                                         <a>
-                                            <span class="mini-sub-pro">Create Job</span>
+                                            <span class="mini-sub-pro">Activities</span>
                                         </a>
 
                                     </li>
                                 {% for jobmode in jobmodes %}
                                     <li>
                                         <a title="add {{jobmode.name}}" href="{% url 'zodiakApp:add_job' jobmode.name %}">
-                                            <span class="mini-sub-pro">{{jobmode.name}}</span>
+                                            <span class="mini-sub-pro">Create {{jobmode.name}}</span>
                                         </a>
 
                                     </li>
                                 {% endfor %}
+                                <li><a title="Alerts" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">Clients</span></a></li>
+                                <li><a title="Alerts" href="{% url 'zodiakApp:viewshippers' %}"><span class="mini-sub-pro">Shippers</span></a></li>
                              </ul>
                         </li>
+
 
 
                     </ul>

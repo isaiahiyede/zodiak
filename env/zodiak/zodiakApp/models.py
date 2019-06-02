@@ -474,6 +474,7 @@ class Shippers(models.Model):
     shippers_country = models.CharField(max_length=150, null=True, blank=True)
     shippers_address = models.CharField(max_length=150, null=True, blank=True)
     created_on = models.DateTimeField(default=timezone.now)
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Shippers'

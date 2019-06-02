@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^myprofile/(?P<username>.+)/$', views.user_view_home, name="user_view_home"),
     url(r'^userdelete/(?P<pk>.+)/$', views.user_delete, name="user_delete"),
     url(r'^viewusers/$', views.viewusers, name="viewusers"),
-
+    url(r'^viewshippers/$', views.viewshippers, name="viewshippers"),
     url(r'^adduser/$', views.addUser, name="add_user"),
 
     url(r'^addbatch/$', views.add_batch, name="add_batch"),
@@ -59,7 +59,9 @@ urlpatterns = [
     url(r'^docrecords/$', views.docrecords, name="docrecords"),
     url(r'^docedit/(?P<pk>.+)/$', views.new_doc_info_edit, name="new_doc_info_edit"),
     url(r'^docs/$', views.add_new_doc, name="add_new_doc"),
-
+    url(r'^shipperAdd/$', views.add_new_shipper, name="add_new_shipper"),
+    url(r'^shipperEdit/$', views.editshipper, name="editshipper"),
+    url(r'^userAdd/$', views.add_new_user, name="add_new_user"),
     url(r'^statrecords/$', views.statrecords, name="statrecords"),
     url(r'^statedit/(?P<pk>.+)/$', views.new_stat_info_edit, name="new_stat_info_edit"),
     url(r'^statdelete/(?P<pk>.+)/$', views.stat_info_delete, name="stat_info_delete"),
@@ -80,7 +82,7 @@ urlpatterns = [
 
     url(r'^jobdocs/(?P<job_obj>.+)/$', views.addDoc, name="addDoc"),
     url(r'^delete_doc/(?P<pk>.+)/$', views.delete_doc, name="delete_doc"),
-
+    url(r'^delete_shipper/(?P<pk>.+)/$', views.delete_shipper, name="delete_shipper"),
     url(r'^processjob/(?P<job_obj>.+)$',views.process_job, name = "process_job"),
 
     url(r'^addrm/$',views.add_rm, name = "add_rm"),

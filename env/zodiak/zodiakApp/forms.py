@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django import forms
 from django.contrib.auth.models import User
 
-from zodiakApp.models import Job, UserAccount, Documents, StatusRec, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import Job, Shippers, UserAccount, Documents, StatusRec, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: grey;','required':'required;'}
 
@@ -17,6 +17,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'first_name','last_name')
+
+
+class ShippersForm(forms.ModelForm):
+    class Meta:
+        model = Shippers
+        fields = ('shippers_name', 'shippers_email', 'shippers_number', 'shippers_address','shippers_country')
 
 
 class CommentsForm(forms.ModelForm):

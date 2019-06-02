@@ -14,7 +14,7 @@ from django.template import Context
 from django.db.models import Count
 from django import template
 import random, datetime, string, calendar
-from zodiakApp.forms import UserForm, DocumentsForm, ContainerTypesForm, StatusRecForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
+from zodiakApp.forms import UserForm, ShippersForm, DocumentsForm, ContainerTypesForm, StatusRecForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
 from zodiakApp.models import Job, Shippers, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
@@ -250,7 +250,7 @@ def get_shippers_details(request):
     context = {}
     template_name = 'zodiakApp/shippersDetails.html'
     sh_obj = Shippers.objects.get(shippers_name=request.GET.get('shp_obj'))
-    context['sh_objs'] = Shippers.objects.all()
+    context['sh_objs'] = Shippers.objects.filter(deleted=False)
     context['sh_obj'] = sh_obj
     return render(request,template_name,context)
 
@@ -1296,7 +1296,6 @@ def register(request):
                 user_primary_contact_form = PrimaryContactForm(request.POST)
                 user_secondary_contact_form = SecondaryContactForm(request.POST)
 
-                print(user_acc_form.errors)
 
                 if user_acc_form.is_valid():
                     user_acc_form2 = user_acc_form.save(commit=False)
@@ -1368,6 +1367,91 @@ def register(request):
 
 
 @login_required
+def add_new_user(request):
+    context = {}
+    useraccounts = UserAccount.objects.filter(deleted=False)
+    context['users'] = useraccounts
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    if request.method == "POST":
+
+        rp = request.POST
+        print(rp)
+
+        form = UserForm(request.POST)
+        form2 = UserAccountForm(request.POST)
+
+        if User.objects.filter(username=rp.get('username')).exists() or User.objects.filter(
+                email=rp.get('email')).exists():
+            context['form'] = request.POST
+            context['message'] = """Combination of Username and email already exists. Please enter a
+                                      different username and/or email"""
+            response = render(request, 'zodiakApp/viewusers.html', context)
+            return response
+        else:
+            if form.is_valid():
+                user = form.save(commit=False)
+                password = rp.get('password')
+                password1 = rp.get('password2')
+                if password != password1:
+                    context['form'] = request.POST
+                    context['message'] = "Password mismatch. Try again"
+                    response = render(request, 'zodiakApp/viewusers.html', context)
+                    return response
+                if len(password) <= 6:
+                    context['form'] = request.POST
+                    context['message'] = "Password must be at least 8 characters long"
+                    response = render(request, 'zodiakApp/viewusers.html', context)
+                    return response
+
+                user.set_password(user.password)
+                user.date_joined = timezone.now().date()
+                user.save()
+
+                user_acc_form = UserAccountForm(request.POST)
+                user_acc_form2 = user_acc_form.save(commit=False)
+                user_acc_form2.staff_account = False
+                try:
+                    user_acc_form2.cust_type = request.POST.get('cust_type')
+                except:
+                    pass
+                try:
+                    user_acc_form2.comp_name = request.POST.get('comp_name')
+                except:
+                    pass
+                user_acc_form2.save()
+
+                if user_acc_form.is_valid():
+                    user_acc_form2 = user_acc_form.save(commit=False)
+                    user_acc_form2.user = user
+                    user_acc_form2.acc_owner = user.username
+                    user_acc_form2.save()
+
+                else:
+                    form = UserForm(request.POST)
+                    form2 = UserAccountForm(request.POST)
+                    context['form'] = request.POST
+                    context['message'] = "Incorrect values submitted...Except for office address and type of business, all others fields should not have spaces in between them"
+                    response = render(request, 'zodiakApp/viewusers.html', context)
+                    return response
+
+                context['success_message'] = "User Successfully Added"
+                response = render(request, 'zodiakApp/viewusers.html', context)
+                return response
+
+            else:
+                print(form.errors)
+                context['form'] = request.POST
+                context['message'] = "Please check and make sure all fields are properly filled"
+                response = render(request, 'zodiakApp/viewusers.html', context)
+                return response
+    else:
+        context = {}
+        response = render(request, 'zodiakApp/viewusers.html', context)
+        return response
+
+
+@login_required
 def addUser(request):
     context = {}
     context['jobmodes'] = getJobModes()
@@ -1418,6 +1502,46 @@ def viewusers(request):
     context['statuses'] = getStatus()
     response = render(request,template_name,context)
     return response
+
+
+@login_required
+def viewshippers(request):
+    context = {}
+    template_name = 'zodiakApp/viewshippers.html'
+    shippers = Shippers.objects.filter(deleted=False)
+    context['shippers'] = shippers
+    context['jobmodes'] = getJobModes()
+    context['statuses'] = getStatus()
+    response = render(request,template_name,context)
+    return response
+
+
+@login_required
+def editshipper(request):
+    context = {}
+    print(request.POST)
+    if request.method == "POST":
+        pk = request.POST.get('shipper_id')
+        shipper = Shippers.objects.get(pk=pk, deleted=False)
+        form = ShippersForm(request.POST,instance=shipper)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Shipper was successfully edited')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Shipper was not successfully edited, Please make sure all fileds are filled correctly')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        pk = request.GET.get('shipper_id')
+        shipper = Shippers.objects.get(pk=pk, deleted=False)
+        context['shipper'] = shipper
+        context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        response = render(request, 'zodiakApp/editshipper.html', context)
+
+        return response
 
 
 """ quotaion starts """
@@ -2004,6 +2128,16 @@ def delete_doc(request, pk):
     return response
 
 
+
+@login_required
+def delete_shipper(request, pk):
+    shipper_obj = Shippers.objects.get(pk=pk, deleted=False)
+    shipper_obj.deleted = True
+    shipper_obj.save()
+    response = redirect(request.META['HTTP_REFERER'])
+    return response
+
+
 @login_required
 def new_doc_info_edit(request,pk):
     context = {}
@@ -2050,6 +2184,23 @@ def new_doc_info_edit(request,pk):
         response = render(request, 'zodiakApp/editdoc.html', context)
 
         return response
+
+
+@login_required
+def add_new_shipper(request):
+    context = {}
+    print(request.POST)
+    shipper_obj = ShippersForm(request.POST)
+    if shipper_obj.is_valid():
+        shipper_obj.save()
+        messages.success(request, 'Shipper was sucessfully added')
+        response = redirect(request.META['HTTP_REFERER'])
+    else:
+        print(shipper_obj.errors)
+        messages.success(request, 'Shipper was not sucessfully added..Please make sure all fields are filled correctly')
+        response = redirect(request.META['HTTP_REFERER'])
+    return response
+
 
 
 @login_required

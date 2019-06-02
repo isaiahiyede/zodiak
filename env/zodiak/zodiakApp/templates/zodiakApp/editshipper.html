@@ -1,310 +1,70 @@
-
-{% extends 'zodiakApp/adminHome.html' %}
-{% load staticfiles %}
-
-{% block morecss %}
-<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
-{% endblock morecss %}
-
-{% block contents %}
-<div class="data-table-area mg-b-15">
-    <div class="container-fluid">
-        {% if message %}
-           <div class="alert alert-warning">{{ message }}</div>
-        {% elif success_message %}
-            <div class="alert alert-success">{{ success_message }}</div>
-        {% endif %}
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="sparkline13-list">
-                    <div class="sparkline13-hd">
-                        <div class="main-sparkline13-hd">
-                            <h1>All <span class="table-project-n"></span>Users</h1>
-                        </div>
-                    </div>
-                    <div class="sparkline13-graph">
-                        <div class="datatable-dashv1-list custom-datatable-overright">
-                           <!--  <div id="toolbar">
-                                <select class="form-control dt-tb">
-                                    <option value="">Approve</option>
-                                    <option value="all">Approve All</option>
-                                    <option value="selected">Approve Selected</option>
-                                </select>
-                            </div> -->
-                            <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="" data-resizable="true" data-cookie="true"
-                                data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="" data-toolbar="#toolbar">
-                                        <style>
-                                            th,td{font-size: 10px;}
-                                        </style>
-                                <thead>
-                                    <tr>
-                                        <th data-field="state" data-checkbox="true"></th>
-                                        <th data-field="username">Username</th>
-                                        <th data-field="email">Email</th>
-                                        <th data-field="firstname">First/Company Name</th>
-                                        <th data-field="number">Phone Number</th>
-                                        <th data-field="type">Client Type</th>
-                                        <th data-field="tob">Business Type</th>
-                                        <th data-field="address">Office Address</th>
-                                        <th data-field="country">Country</th>
-                                        <th data-field="state_">State</th>
-                                        <th data-field="website">Website</th>
-                                        <th data-field="profile">Profile Updated</th>
-                                        <th data-field="inputter">Inputter</th>
-                                        <th data-field="reporter">Reporter</th>
-                                        <th data-field="authorizer">Authorizer</th>
-                                        <th data-field="admin">Admin</th>
-                                        <th data-field="action">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for user in users %}
-                                    <tr class="info">
-                                        <td></td>
-                                        <td>{{user.user.username}}</td>
-                                        <td>{{user.user.email}}</td>
-                                        <td>{{user.user.first_name}}</td>
-                                        <td>{{user.phone_number}}</td>
-                                        <td>{{user.cust_type}}</td>
-                                        <td>{{user.type_of_business}}</td>
-                                        <td>{{user.office_aadress}}</td>
-                                        <td>{{user.country}}</td>
-                                        <td>{{user.state}}</td>
-                                        <td>{{user.website}}</td>
-                                        {% if user.profile_updated %}
-                                        <td>
-                                            <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
-                                        </td>
-                                        {% else %}
-                                        <td>
-                                            <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
-                                        </td>
-                                        {% endif %}
-
-
-                                        {% if user.inputter %}
-                                        <td>
-                                            <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
-                                        </td>
-                                        {% else %}
-                                        <td>
-                                            <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
-                                        </td>
-                                        {% endif %}
-
-
-                                        {% if user.reporter %}
-                                        <td>
-                                            <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
-                                        </td>
-                                        {% else %}
-                                        <td>
-                                            <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
-                                        </td>
-                                        {% endif %}
-
-
-                                        {% if user.authorizer %}
-                                        <td>
-                                            <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
-                                        </td>
-                                        {% else %}
-                                        <td>
-                                            <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
-                                        </td>
-                                        {% endif %}
-
-
-                                        {% if user.administrator %}
-                                        <td>
-                                            <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
-                                        </td>
-                                        {% else %}
-                                        <td>
-                                            <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
-                                        </td>
-                                        {% endif %}
-
-
-                                        <td class="datatable-ct">
-                                            <a title="view user" href="{% url 'zodiakApp:user_view' user.pk %}"><i class="fa fa-eye"></i></a>&nbsp;
-                                            <a title="edit user" href ="{% url 'zodiakApp:user_edit' user.pk %}"><i class="fa fa-pencil"></i></a>&nbsp;
-                                            <a title="delete user" onclick="return confirm('Are you sure you want to delete this item?');" href="{% url 'zodiakApp:user_delete' user.pk %}"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<div id="PrimaryModalalertShipper" class="modal modal-edu-general fullwidth-popup-InformationproModal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-close-area modal-close-df">
+                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
             </div>
-        </div>
+            <div class="modal-body">
+                <div class="sparkline12-graph">
+                    <div class="basic-login-form-ad">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="all-form-element-inner">
 
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="sparkline10-list mt-b-30">
-                    <div class="sparkline10-hd">
-                    </div>
-                    <div class="sparkline10-graph">
-                        <div class="basic-login-form-ad">
-                            <div class="row">
-                                {% if message %}
-                                   <div class="alert alert-warning">{{ message }}</div>
-                                {% endif %}
-                                <form action="{% url 'zodiakApp:add_new_user' %}" method="post" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="basic-login-inner inline-basic-form">
+                                <form action="{% url 'zodiakApp:editshipper' %}" method="post" id="my_batch" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                                    <div class="row">
+
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+
+                                            <input type="hidden" name="shipper_id" value="{{shipper.pk}}">
 
                                             <div class="form-group-inner">
                                                 <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Client Type</label>
-                                                    </div>
                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Name</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        <input type="text" value="{{shipper.shippers_name}}" id="shippers_name" required name="shippers_name" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Email</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        <input type="text" value="{{shipper.shippers_email}}" id="shippers_email" required name="shippers_email" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Contact Number</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        <input type="text" value="{{shipper.shippers_number}}" id="shippers_number" required name="shippers_number" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Country</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                                         <div class="form-select-list">
-                                                            <select style="font-size: 10px; height: 28px; " class="form-control" required id="cust_type" name="cust_type" data-placeholder="Choose a Customer Type..." class="chosen-select" tabindex="-1">
-                                                                {% if message %}
-                                                                <option value="{{form.cust_type}}" selected="{{form.cust_type}}">{{form.cust_type}}</option>
-                                                                {% else %}
-                                                                <option value="none" selected="" disabled="">Select</option>
-                                                                {% endif %}          
-                                                                <option value="corporate">Corporate</option>
-                                                                <option value="private">Private</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner company hidden">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Company Name <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <input style="font-size:10px;" style="" id="comp_name" name="comp_name"{% if message %}value="{{form.comp_name}}"{% endif %} type="text" class="form-control"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">First/Company Name <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <input style="font-size:10px;" style="" id="first_name" name="first_name" {% if message %}value="{{form.first_name}}"{% endif %}    type="text" value="" class="form-control" required/>
-                                                     
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Last/Admin Name <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <input style="font-size:10px;" {% if message %}value="{{form.last_name}}"{% endif %} style="" id="last_name" name="last_name" type="text" class="form-control" required/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Username <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <input style="font-size:10px;" {% if message %}value="{{form.username}}"{% endif %} style="" id="" name="username" type="text" class="form-control" required/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Email <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <input style="font-size:10px;" {% if message %}value="{{form.email}}"{% endif %} style="" id="email" name="email" type="text" class="form-control" required placeholder="hint: praise@gmail.com"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Telephone <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <input style="font-size:10px;" {% if message %}value="{{form.phone_number}}"{% endif %} style="" id="phone_number" name="phone_number" type="number" min="1" class="form-control" required/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2">Type of Business <span style="color:red;">*</span></label>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                        <textarea style="font-size:10px;" name="type_of_business" class="form-control" required id="type_of_business" placeholder="Type of Business">{% if message %}{{form.type_of_business}}{% endif %}</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="basic-login-inner inline-basic-form">
-
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                    <label class="login2">Password <span style="color:red;">*</span></label>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                    <input style="font-size:10px;" style="" id="password" name="password" type="password" class="form-control" required placeholder="Above eight characters Long"/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                    <label class="login2">Confirm Pwd <span style="color:red;">*</span></label>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                    <input style="font-size:10px;" style="" id="password2" name="password2" type="password" class="form-control" required/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                    <label class="login2">Country <span style="color:red;">*</span></label>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                    <div class="form-select-list">
-                                                        <select style="font-size: 10px; height: 28px; " class="form-control" required id="" name="country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-                                                            {% if message %}
-                                                            <option value="{{form.country}}">{{form.country}}</option>
-                                                            {% else %}
-                                                            <option value="">Select</option>
-                                                            {% endif %}
+                                                            <select style="font-size: 10px; height: 28px;" class="form-control" id="shippers_country" name="shippers_country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
+                                                            <option value="{{shipper.shippers_country}}">{{shipper.shippers_country}}</option>
                                                             <option value="United States">United States</option>
                                                             <option value="United Kingdom">United Kingdom</option>
                                                             <option value="Afghanistan">Afghanistan</option>
@@ -556,94 +316,46 @@
                                                             <option value="Yemen">Yemen</option>
                                                             <option value="Zambia">Zambia</option>
                                                             <option value="Zimbabwe">Zimbabwe</option>
-                                                        </select>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                    <label class="login2">State <span style="color:red;">*</span></label>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                    <input style="font-size:10px;" {% if message %}value="{{form.state}}"{% endif %} style="" type="text" id="state" name="state" type="text" class="form-control"/required>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                    <label class="login2">Website <span style="color:red;">*</span></label>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                    <input style="font-size:10px;" {% if message %}value="{{form.website}}"{% endif %} style="" type="text" id="website" name="website" type="text" class="form-control"/required>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                    <label class="login2">Office Address <span style="color:red;">*</span></label>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                                    <textarea style="font-size:10px;" name="office_aadress" class="form-control" required id="office_aadress" placeholder="Office Address">{% if message %}{{form.office_aadress}}{% endif %}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group-inner">
-                                            <div class="row">
-                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                                    <div class="login-horizental">
-                                                        <button class="btn btn-sm btn-primary login-submit-cs pull-right" type="submit">Save</button>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <label class="login2">Address</label>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                                        <textarea id="shippers_address" required name="shippers_address" class="form-control">
+                                                            {{shipper.shippers_address}}
+                                                        </textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                                </div>
                                             </div>
-                                        </div>
 
                                         </div>
                                     </div>
 
+                                    <br>
+
+                                    <div class="row submititem">
+                                        <div class="col-lg-12">
+                                            <div class="payment-adress">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light pull-right">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </form>
+
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>  
-{% endblock contents %}
-
-{% block specialscripts %}
-
-
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
-<!--  editable JS
-    ============================================ -->
-<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
-
-
-{% endblock specialscripts %}
+</div>

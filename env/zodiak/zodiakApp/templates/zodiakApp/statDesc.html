@@ -48,9 +48,15 @@
                                                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                     <div class="date-picker-inner">
                                                         <div class="form-group data-custon-pick" id="data_1">
-                                                            <div class="input-group date">
-                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i>Date</span>
-                                                                <input required style="font-size:10px;" type="date" value="{{stat_obj.stat_date}}" name="stat_date" id="stat_date" class="form-control" value="">
+                                                            <div class="input-group date" data-provide="datepicker">
+                                                                
+                                                                <input required style="font-size:10px;" type="text" value="{{stat_obj.stat_date}}" name="stat_date" id="stat_date" class="form-control" value="">
+
+                                                              <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                              </div>
+
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

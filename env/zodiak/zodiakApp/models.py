@@ -429,6 +429,7 @@ class Finances(models.Model):
     refundablle_as = models.CharField(max_length=50, null=True, blank=True)
     comments = models.TextField(null=True,blank=True)
     deleted = models.BooleanField(default=False)
+    validity_period = models.PositiveIntegerField(null=True,blank=True)
     created_on = models.DateTimeField(default=timezone.now)
 
 
@@ -442,7 +443,7 @@ class Finances(models.Model):
 
     class Meta:
         verbose_name_plural = 'Finances'
-        ordering = ['-created_on']
+        ordering = ['charge_type']
 
     def __str__(self):
         return '%s' %(self.job_finance)

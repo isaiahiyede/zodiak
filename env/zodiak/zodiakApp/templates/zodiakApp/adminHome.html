@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="{% static 'zodiakApp/css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/accordions.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'zodiakApp/dist/bootstrap-clockpicker.min.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.carousel.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.theme.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/owl.transitions.css' %}">
@@ -88,6 +89,8 @@
                                 {% endfor %}
                                 <li><a title="Alerts" href="{% url 'zodiakApp:viewusers' %}"><span class="mini-sub-pro">Clients</span></a></li>
                                 <li><a title="Alerts" href="{% url 'zodiakApp:viewshippers' %}"><span class="mini-sub-pro">Shippers</span></a></li>
+                                <li><a title="Alerts" href="/"><span class="mini-sub-pro">Documents</span></a></li>
+                                <li><a title="Alerts" href="/"><span class="mini-sub-pro">Payments</span></a></li>
                              </ul>
                         </li>
 
@@ -696,6 +699,11 @@ $('body').on('click','.job_desc', function(e){
     <script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
     <script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
     <script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
+    <script src="{% static 'zodiakApp/dist/bootstrap-clockpicker.min.js' %}"></script>
+
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker();
+    </script>
 
     {% endblock specialscripts %}
 

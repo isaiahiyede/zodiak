@@ -69,12 +69,13 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid',
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid','validity_period',
             )
 
 
 class FinancialsForm(forms.ModelForm):
     amount = forms.FloatField(required=True, max_value=9999999999, min_value=0, widget=forms.NumberInput(attrs={'step': "0.01"}))
+    validity_period = forms.IntegerField(required=True, min_value=0, widget=forms.NumberInput(attrs={'step': "1"}))
     received = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     charge_type = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'style': 'border-color: grey;','required':'required','readonly':'readonly'}))
     refundablle_as = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))

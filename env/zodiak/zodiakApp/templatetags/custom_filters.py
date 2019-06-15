@@ -27,6 +27,12 @@ def getBatchCount(request):
 	return Batch.objects.filter(deleted=False).count()
 
 
+
+@register.simple_tag
+def sliceImageName(val):
+	return str(val[18:])
+
+
 @register.simple_tag
 def getAMPM(request, val):
 	try:

@@ -7,6 +7,7 @@
 {% block morecss %}
 <link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
 <link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
+
 {% endblock morecss %}
 
 {% block contents %}
@@ -1071,7 +1072,6 @@
                                                                                         <thead>
                                                                                             <tr class="info">
                                                                                             <th data-field="state" data-checkbox="true"></th>
-                                                                                            <th data-field="job_id">JOB Id</th>
                                                                                             <th data-field="job_type">Document Name</th>
                                                                                             <th data-field="job_doc">Document</th>
                                                                                             <th data-field="job_rec">Received</th>
@@ -1085,11 +1085,10 @@
                                                                                             {% for doc_obj in doc_objs %}
                                                                                             <tr class="info">
                                                                                             <td></td>
-                                                                                            <td>{{doc_obj.job_obj_doc.job_id}}</td>
                                                                                             <td>{{doc_obj.name_of_doc}}</td>
 
                                                                                             {% if doc_obj.doc_obj %}
-                                                                                            <td><a style="color: blue;" href="{{doc_obj.doc_obj.url}}">{{doc_obj.doc_obj}}</a></td>
+                                                                                            <td><a style="color: blue;" href="{{doc_obj.doc_obj.url}}">{% sliceImageName doc_obj.doc_obj.url %}</a></td>
                                                                                             {% else %}
                                                                                             <td>NILL</td>
                                                                                             {% endif %}
@@ -1152,7 +1151,7 @@
                                                                                                 <option value="Form M">Form M</option>
                                                                                                 <option value="Comemercial Invoice">Commercial Invoice</option>
                                                                                                 <option value="Packing List">Packing List</option>
-                                                                                                <option value="CCRO">CCRO</option>
+                                                                                                <option value="CCVO">CCVO</option>
                                                                                                 <option value="SON">SON</option>
                                                                                                 <option value="NAFDAC">NAFDAC</option>
                                                                                                 <option value="PAAR">PAAR</option>
@@ -1202,7 +1201,7 @@
                                                     <div class="panel-heading accordion-head">
                                                         <h4 class="panel-title">
                                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                                     Arrival Status</a>
+                                                     Cargo Status</a>
                                                         </h4>
                                                     </div>
                                                     <div id="collapse4" class="panel-collapse panel-ic collapse in">
@@ -1223,7 +1222,6 @@
                                                                                         <thead>
                                                                                             <tr class="info">
                                                                                                 <th data-field="state" data-checkbox="true"></th>
-                                                                                                <th data-field="job_id">JOB Id</th>
                                                                                                 <th data-field="job_type">Status Type</th>
                                                                                                 <th data-field="job_date">Date</th>
                                                                                                 <th data-field="job_time">Time</th>
@@ -1237,7 +1235,6 @@
 
                                                                                             <tr class="info">
                                                                                                 <td></td>
-                                                                                                <td>{{stat_obj.job_stat.job_id}}</td>
                                                                                                 <td>{{stat_obj.stat_type}}</td>
                                                                                                 <td>{{stat_obj.stat_date}}</td>
                                                                                                 <td>{{stat_obj.stat_time}}&nbsp;{% getAMPM request stat_obj.stat_time %}</td>
@@ -1364,7 +1361,6 @@
                                                                     <thead>
                                                                         <tr class="info">
                                                                             <th data-field="state" data-checkbox="true"></th>
-                                                                            <th data-field="job_id">JOB Id</th>
                                                                             <th data-field="job_type">Charge Type</th>
                                                                             <th data-field="job_paid">Paid By</th>
                                                                             <th data-field="job_date">Date Paid</th>
@@ -1382,7 +1378,6 @@
 
                                                                             <tr class="info">
                                                                                 <td></td>
-                                                                                <td>{{fin_obj.job_finance.job_id}}</td>
                                                                                 <td>{{fin_obj.charge_type}}</td>
                                                                                 <td>{{fin_obj.paid_by}}</td>
                                                                                 <td>{{fin_obj.date_paid}}</td>
@@ -1524,9 +1519,12 @@
 <script>
 
 
+
+
 $('body').on('click','.btn-copy',function(){
   $(this).parents('.example-1').append($(this).parent().clone());
 });
+
 
 
 $('body').on('click','.btn-copy-minus-1',function(e){

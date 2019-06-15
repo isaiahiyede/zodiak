@@ -999,7 +999,7 @@ def new_stat(request):
 
         for i in type_of_stat:
             val = type_of_stat.index(i)
-            if StatusRec.objects.filter(deleted=False,stat_type=i).exists():
+            if StatusRec.objects.filter(deleted=False,stat_type=i,job_stat=job_obj).exists():
                 continue
             else:
                 stat_obj = StatusRec.objects.create(
@@ -1115,13 +1115,10 @@ def new_financials(request):
 
         for i in type_of_charge:
             val = type_of_charge.index(i)
-            if Finances.objects.filter(deleted=False,charge_type=i).exists():
-                continue
-            else:
-                finance_obj = Finances.objects.create(
-                    job_finance=job_obj,
-                    charge_type=i,
-                    )
+            finance_obj = Finances.objects.create(
+                job_finance=job_obj,
+                charge_type=i,
+                )
             finance_obj.save()
 
         messages.success(request, 'Job payments sucessfully updated')
@@ -1134,7 +1131,7 @@ def new_financials(request):
 
 
 def findDay(date):
-    day_of_week = datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
+    day_of_week = datetime.datetime.strptime(date, '%m/%d/%Y').weekday()
     return calendar.day_name[day_of_week]
 
 
@@ -2094,7 +2091,7 @@ def addDoc(request, job_obj):
         for i in document_type:
             val = document_type.index(i)
             print(i)
-            if Documents.objects.get(job_obj_doc=job_obj,name_of_doc=i).exists():
+            if Documents.objects.get(job_obj_doc=job_obj,name_of_doc=i,).exists():
                 print(True)
                 continue
             else:

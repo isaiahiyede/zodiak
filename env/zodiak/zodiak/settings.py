@@ -76,14 +76,21 @@ WSGI_APPLICATION = 'zodiak.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 LOGIN_REDIRECT_URL = '/accounts/login/'
+
+# Qwerty@123456$
+
+# pythonanywhere access
+# Username: gengumel
+# Password: Iwork4myself197$
+# phillip@123456
 
 
 # DATABASES = {

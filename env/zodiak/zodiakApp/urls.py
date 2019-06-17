@@ -65,15 +65,15 @@ urlpatterns = [
     url(r'^statrecords/$', views.statrecords, name="statrecords"),
     url(r'^statedit/(?P<pk>.+)/$', views.new_stat_info_edit, name="new_stat_info_edit"),
     url(r'^statdelete/(?P<pk>.+)/$', views.stat_info_delete, name="stat_info_delete"),
-
+    url(r'^newType/$', views.new_type, name="new_type"),
     url(r'^newStat/$', views.new_stat, name="new_stat"),
 
     url(r'^fin_info_view/(?P<pk>.+)/$', views.fin_info_view, name="fin_info_view"),
     url(r'^fin_info_edit/(?P<pk>.+)/$', views.fin_info_edit, name="fin_info_edit"),
     url(r'^fin_info_delete/(?P<pk>.+)/$', views.fin_info_delete, name="fin_info_delete"),
     url(r'^newFinance/$', views.new_financials, name="new_financials"),
-    url(r'^newFinedit/(?P<pk>.+)/$', views.new_fin_info_edit, name="new_fin_info_edit"),
-
+    url(r'^newFinEdit/(?P<pk>.+)/$', views.new_fin_info_edit, name="new_fin_info_edit"),
+    url(r'^newFinAdd/(?P<job_id>.+)/$', views.new_fin_info_add, name="new_fin_info_add"),
 
     url(r'^edit-access$', views.user_access, name="user_access"),
     url(r'^mailbox/$',views.mails, name = "mails"),

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from zodiakApp.models import UserAccount, Shippers, Documents, ContainerTypes, MiniBatches, Finances, Status, Job, Comments, Batch, RelationshipManager, JobModes, PrimaryContact, SecondaryContact, OfficeUseOnly, Batch
+from zodiakApp.models import newDoc, newStat, newPay, UserAccount, Shippers, Documents, ContainerTypes, MiniBatches, Finances, Status, Job, Comments, Batch, RelationshipManager, JobModes, PrimaryContact, SecondaryContact, OfficeUseOnly, Batch
 
 
 
@@ -61,6 +61,15 @@ class BatchAdmin(admin.ModelAdmin):
 class MiniBatchesAdmin(admin.ModelAdmin):
     list_display = ('mini_batch_id',)
 
+class newPayAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+class newStatAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+class newDocAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
 
 admin.site.register(Finances, FinancesAdmin)
 admin.site.register(Shippers, ShippersAdmin)
@@ -77,5 +86,8 @@ admin.site.register(JobModes, JobModesAdmin)
 admin.site.register(Comments, CommentsAdmin)
 admin.site.register(OfficeUseOnly, OfficeUseOnlyAdmin)
 admin.site.register(RelationshipManager, RelationshipManagerAdmin)
+admin.site.register(newPay, newPayAdmin)
+admin.site.register(newStat, newStatAdmin)
+admin.site.register(newDoc, newDocAdmin)
 
 

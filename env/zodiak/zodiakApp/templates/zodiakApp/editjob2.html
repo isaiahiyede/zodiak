@@ -12,6 +12,7 @@
 
 {% block contents %}
 
+
 <div class="single-pro-review-area mt-t-30 mg-b-15">
     <div class="container-fluid">
         <div class="row">
@@ -1148,23 +1149,9 @@
                                                                                         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                                                                                             <div class="chosen-select-single">
                                                                                                 <select data-placeholder="Choose Document Type..." id="document_type" name="document_type" class="chosen-select" multiple="" tabindex="-1" required>
-                                                                                                <option value="Form M">Form M</option>
-                                                                                                <option value="Comemercial Invoice">Commercial Invoice</option>
-                                                                                                <option value="Packing List">Packing List</option>
-                                                                                                <option value="CCVO">CCVO</option>
-                                                                                                <option value="SON">SON</option>
-                                                                                                <option value="NAFDAC">NAFDAC</option>
-                                                                                                <option value="PAAR">PAAR</option>
-                                                                                                <option value="NDLEA">NDLEA</option>
-                                                                                                <option value="Bill of lading">Bill of lading</option>
-                                                                                                <option value="Cert Of Analysis">Cert Of Analysis</option>
-                                                                                                <option value="Airway Bill">Airway Bill</option>
-                                                                                                <option value="Duty Receipt">Duty Receipt</option>
-                                                                                                <option value="Letter Of Authority">Letter Of Authority</option>
-                                                                                                <option value="Handling Receipt">Handling Receipt</option>
-                                                                                                <option value="Airline Receipt">Airline Receipt</option>
-                                                                                                <option value="Shipping Line Receipt">Shipping Line Receipt</option>
-                                                                                                <option value="Assessment">Assessment</option>
+                                                                                                {% for newDoc in newDocs %}
+                                                                                                <option value="{{newDoc.name}}">{{newDoc.name}}</option>
+                                                                                                {% endfor %}
                                                                                                 </select>
                                                                                             </div>      
                                                                                         </div>
@@ -1186,6 +1173,22 @@
                                                                             </form>
                                                                         </div>
                                                                     </div>
+
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="basic-login-inner inline-basic-form">
+
+
+                                                                    <div class="form-group-inner">
+                                                                        <div class="row">
+
+                                                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
+                                                                                <i class="type_to fa fa-plus" type_to="doc" style="color:green;cursor: pointer;">&nbsp;Add Document Type</i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                            </div>
+                                                        </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1293,16 +1296,9 @@
                                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                                                                         <div class="chosen-select-single">
                                                                             <select data-placeholder="Choose Charge Type..." id="stat_type" name="stat_type" class="chosen-select" multiple="" tabindex="-1" required>
-                                                                            <option value="Job Commissioned">Job Commissioned</option>
-                                                                            <option value="Vessel Arrival">Vessel Arrival</option>
-                                                                            <option value="Assesment Generated">Assesment Generated</option>
-                                                                            <option value="Examination">Examination</option>
-                                                                            <option value="Short landed">Short landed</option>
-                                                                            <option value="Cleared">Cleared</option>
-                                                                            <option value="Loaded">Loaded</option>
-                                                                            <option value="Delivered">Delivered</option>
-                                                                            <option value="Perfected">Perfected</option>
-                                                                            <option value="Challenge">Challenge</option>
+                                                                                {% for newStat in newStats %}
+                                                                                <option value="{{newStat.name}}">{{newStat.name}}</option>
+                                                                                {% endfor %}
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1324,6 +1320,23 @@
                                                             </div>
 
                                                         </form>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="basic-login-inner inline-basic-form">
+
+
+                                                            <div class="form-group-inner">
+                                                                <div class="row">
+
+                                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
+                                                                        <i class="fa fa-plus type_to" type_to="stat" style="color:green; cursor: pointer;">&nbsp;Add Status Type</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -1366,6 +1379,9 @@
                                                                             <th data-field="job_date">Date Paid</th>
                                                                             <th data-field="job_time">Time Paid</th>
                                                                             <th data-field="job_received">Received/Sent</th>
+                                                                            <th data-field="job_valid">Valid Till</th>
+                                                                            
+                                                                            <th data-field="job_rec">Receipt</th>
                                                                             <th data-field="job_refund">Refundable</th>
                                                                             <th data-field="total_cost">Total cost (₦)</th>
                                                                             <th data-field="job_comment">Comment</th>
@@ -1383,14 +1399,35 @@
                                                                                 <td>{{fin_obj.date_paid}}</td>
                                                                                 <td>{{fin_obj.time_paid}}&nbsp;{% getAMPM request fin_obj.time_paid %}</td>
                                                                                 <td>{{fin_obj.received}}</td>
+                                                                                <td>{{fin_obj.validity_period}}</td>
+
+                                                                                {% if fin_obj.invoice %}
+                                                                                <td><a style="color: blue;" href="{{fin_obj.invoice.url}}">{% sliceImageName fin_obj.invoice.url %}</a></td>
+                                                                                {% else %}
+                                                                                <td>NILL</td>
+                                                                                {% endif %}
+                                                                                
+
                                                                                 <td>{{fin_obj.refundablle_as}}</td>
                                                                                 <td>{{fin_obj.amount|default_if_none:"0.0"}}</td>
                                                                                 <td>{{fin_obj.comments}}</td>
+
                                                                                 <td class="datatable-ct">
+                                                                                    
+                                                                                    {% if fin_obj.validity_period > todaysDate %}
                                                                                     <a title="edit pay item">
-                                                                                    <i style="cursor:pointer !important;" class="fa fa-pencil pay_obj" obj_pk={{fin_obj.pk}} obj_type="payment"></i></a>&nbsp;
-                                                                                    <a style="cursor:pointer !important;" title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                                                                    <i style="cursor:pointer !important;" class="fa fa-pencil pay_obj"  c_type="{{fin_obj.charge_type}}" obj_pk={{fin_obj.pk}} obj_type="payment"></i></a>&nbsp;
+                                                                                    <a style="cursor:pointer !important;" title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>&nbsp;
+                                                                                    {% elif not validity_period %}
+                                                                                    <a title="edit pay item">
+                                                                                    <i style="cursor:pointer !important;" class="fa fa-pencil pay_obj"  c_type="{{fin_obj.charge_type}}" obj_pk={{fin_obj.pk}} obj_type="payment"></i></a>&nbsp;
+                                                                                    <a style="cursor:pointer !important;" title="delete finance item" href="{% url 'zodiakApp:fin_info_delete' fin_obj.pk %}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>&nbsp;
+                                                                                    {% endif %}
+
+                                                                                    <a title="Add Pay Item">
+                                                                                    <i style="cursor:pointer !important;" class="fa fa-plus pay_obj" c_type="{{fin_obj.charge_type}}"    obj_pk={{fin_obj.job_finance.job_id}}           obj_type="payment"></i></a>
                                                                                 </td>
+
                                                                             </tr>
 
                                                                             {% endfor %}
@@ -1439,19 +1476,9 @@
                                                                             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                                                                                 <div class="chosen-select-single">
                                                                                     <select data-placeholder="Choose Charge Type..." id="charge_type" name="charge_type" class="chosen-select" multiple="" tabindex="-1" required>
-                                                                                    <option value="Duty">Duty</option>
-                                                                                    <option value="Terminal Charge">Terminal Charge</option>
-                                                                                    <option value="Shipping Line Charge">Shipping Line Charge</option>
-                                                                                    <option value="SON Charge">SON Charge</option>
-                                                                                    <option value="Airline Charge">Airline Charge</option>
-                                                                                    <option value="Quarantine Charge">Quarantine Charge</option>
-                                                                                    <option value="NDLEA Charge">NDLEA Charge</option>
-                                                                                    <option value="NAFDAC Charge">NAFDAC Charge</option>
-                                                                                    <option value="FAAN">FAAN</option>
-                                                                                    <option value="Handling Charge">Handling Charge</option>
-                                                                                    <option value="Insurance Charge">Insurance Charge</option>                 
-                                                                                    <option value="VAT Charge">VAT Charge</option>
-                                                                                    <option value="Demurrage Charge">Demurrage Charge</option>
+                                                                                        {% for newPay in newPays %}
+                                                                                        <option value="{{newPay.name}}">{{newPay.name}}</option>
+                                                                                        {% endfor %}
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -1473,6 +1500,22 @@
                                                                     </div>
 
                                                                 </form>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="basic-login-inner inline-basic-form">
+
+
+                                                                    <div class="form-group-inner">
+                                                                        <div class="row">
+
+                                                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
+                                                                                <i class="fa fa-plus type_to" type_to="pay" style="color:green; cursor: pointer;">&nbsp;Add Charge Type</i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
                                                             </div>
                                                         </div>
                                                                     </div>
@@ -1513,6 +1556,9 @@
 </div>
 
 <div id="PrimaryModalalertStatus" class="modal modal-edu-general fullwidth-popup-InformationproModal fade" role="dialog">
+</div>
+
+<div id="PrimaryModalType" class="modal modal-edu-general fullwidth-popup-InformationproModal fade" role="dialog">
 </div>
 
 
@@ -1603,6 +1649,27 @@ $('body').on('click','.mini_obj', function(e){
 });
 
 
+$('body').on('click','.type_to', function(e){
+    var type_to = $(this).attr('type_to')
+    $.ajax({
+        data: {'type_to':type_to},
+        type: 'GET',
+        url: "{% url 'zodiakApp:new_type' %}",
+
+        success:function(data){
+           $('#PrimaryModalType').replaceWith(data);
+           $('#PrimaryModalType').modal('handleUpdate').modal('show');
+           console.log('working');
+
+        },
+
+        error:function(data){
+           console.log('not working');
+        }
+     })
+});
+
+
 $('body').on('click','.cont_obj', function(e){
     var cont_id = $(this).attr('cont_pk')
     $.ajax({
@@ -1627,8 +1694,9 @@ $('body').on('click','.cont_obj', function(e){
 $('body').on('click','.pay_obj', function(e){
     var obj_id = $(this).attr('obj_pk')
     var obj_type = $(this).attr('obj_type')
+    var c_type = $(this).attr('c_type')
     $.ajax({
-        data: {'obj_id':obj_id,'obj_type':obj_type},
+        data: {'obj_id':obj_id,'obj_type':obj_type,'c_type':c_type},
         type: 'GET',
         url: "{% url 'zodiakApp:editOBJ' %}",
 

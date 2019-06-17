@@ -1,16 +1,14 @@
-{% extends 'zodiakApp/adminHome.html' %}
-{% load staticfiles %}
-
-{% block morecss %}
-<link rel="stylesheet" href="{% static 'zodiakApp/css/modals.css' %}">
-<link rel="stylesheet" href="{% static 'zodiakApp/css/form/all-type-forms.css' %}">
-{% endblock morecss %}
-
-{% block contents %}
-<div class="single-pro-review-area mt-t-30 mg-b-15">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div id="PrimaryModalalertPayment" class="modal modal-edu-general fullwidth-popup-InformationproModal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-close-area modal-close-df">
+                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <div class="single-pro-review-area mt-t-30 mg-b-15">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="product-payment-inner-st">
 
 
@@ -21,9 +19,9 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="review-content-section">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                 <div class="devit-card-custom">
-                                <form action="{% url 'zodiakApp:new_fin_info_edit' fin_obj.pk %}" method="post" enctype="multipart/form-data">
+                                                    <form action="{% url 'zodiakApp:new_fin_info_add' job_id %}" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
 
                                     <input type="hidden" name="job_finance" value="fin_obj.job_finance">
@@ -34,8 +32,8 @@
                                                 <label class="login2 pull-right pull-right-pro">Charge Type</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                <input class="form-control" value="{{fin_obj.charge_type}}" type="text"
-                                                name="charge_type" readonly>
+                                                <input class="form-control" value="{{charge_type}}" type="text"
+                                                name="charge_type" readonly="">
                                             </div>
                                         </div>
                                     </div>
@@ -51,6 +49,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 
 
                                     <div class="form-group-inner">
@@ -85,15 +84,24 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group-inner">
                                         <div class="row">
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <label class="login2 pull-right pull-right-pro">Date Paid</label>
                                             </div>
+
                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{fin_obj.date_paid}}" type="text" name="date_paid">
-                                                <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
+                                                <div class="date-picker-inner">
+                                                    <div class="form-group data-custon-pick" id="data_1">
+                                                        <div class="input-group date" data-provide="datepicker">
+                                                            <input required style="font-size:10px;" type="text" value="{{fin_obj.date_paid}}" name="date_paid" id="date_paid" class="form-control" value="">
+
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                            </div>                                                          
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -101,11 +109,40 @@
                                     <div class="form-group-inner">
                                         <div class="row">
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                <label class="login2 pull-right pull-right-pro">Date Paid</label>
+                                                <label class="login2 pull-right pull-right-pro">Valid Till</label>
                                             </div>
+
                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{fin_obj.date_paid}}" type="text" name="date_paid">
-                                                <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
+                                                <div class="date-picker-inner">
+                                                    <div class="form-group data-custon-pick" id="data_1">
+                                                        <div class="input-group date" data-provide="datepicker">
+                                                            <input required style="font-size:10px;" type="text" value="{{fin_obj.validity_period}}" name="validity_period" id="validity_period" class="form-control" value="">
+
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                            </div>                                                          
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group-inner">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <label class="login2 pull-right pull-right-pro">Time Paid</label>
+                                            </div>
+
+                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                <div class="date-picker-inner">
+                                                    <div class="form-group data-custon-pick" id="data_1">
+                                                        <div class="input-group date">
+                                                            <input required style="font-size:10px;" type="time" value="{{fin_obj.time_paid}}" name="time_paid" id="time_paid" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -122,6 +159,22 @@
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                     </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-inner">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <label class="login2 pull-right pull-right-pro">Receipt</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+                                                <input style="font-size: 8px;" id="invoice" name="invoice" type="file" class="form-control" />
+                                                {% if fin_obj.invoice %}
+                                                <h6><a style="color: blue;" href="{{fin_obj.invoice.url}}">{{fin_obj.invoice}}</a></h6>
+                                                {% endif %}
+
                                             </div>
                                         </div>
                                     </div>
@@ -151,8 +204,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                </form>
+                                                </form>
                                         </div>
                                     </div>
                                 </div>
@@ -160,31 +212,13 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock contents %}
-
-{% block specialscripts %}
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/tableExport.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/data-table-active.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-resizable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/colResizable-1.5.source.js' %}"></script>
-<script src="{% static 'zodiakApp/js/data-table/bootstrap-table-export.js' %}"></script>
-
-<script src="{% static 'zodiakApp/js/editable/jquery.mockjax.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/mock-active.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/select2.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/moment.min.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/bootstrap-datetimepicker.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/bootstrap-editable.js' %}"></script>
-<script src="{% static 'zodiakApp/js/editable/xediable-active.js' %}"></script>
-{% endblock specialscripts %}
-

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django import forms
 from django.contrib.auth.models import User
 
-from zodiakApp.models import Job, Shippers, UserAccount, Documents, StatusRec, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
+from zodiakApp.models import newDoc, newPay, newStat, Job, Shippers, UserAccount, Documents, StatusRec, Comments, ContainerTypes, Finances, MiniBatches, Batch, PrimaryContact, RelationshipManager, Quotation, SecondaryContact, OfficeUseOnly,Batch
 
 attr3 = {'style': 'border-color: grey;','required':'required;'}
 
@@ -12,6 +12,21 @@ attr3 = {'style': 'border-color: grey;','required':'required;'}
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
+class newPayForm(forms.ModelForm):
+    class Meta:
+        model = newPay
+        fields = ('name',)
+
+class newStatForm(forms.ModelForm):
+    class Meta:
+        model = newStat
+        fields = ('name',)
+
+class newDocForm(forms.ModelForm):
+    class Meta:
+        model = newDoc
+        fields = ('name',)
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -69,7 +84,7 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid',
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid','validity_period','invoice',
             )
 
 
@@ -79,6 +94,7 @@ class FinancialsForm(forms.ModelForm):
     charge_type = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'style': 'border-color: grey;','required':'required','readonly':'readonly'}))
     refundablle_as = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     date_paid = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
+    validity_period = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     time_paid = forms.CharField(max_length=150,widget=forms.TextInput(attrs=attr3))
     paid_by = forms.CharField(max_length=30,widget=forms.TextInput(attrs=attr3))
     comments = forms.CharField(max_length=255,widget=forms.Textarea(attrs=attr3))
@@ -87,7 +103,7 @@ class FinancialsForm(forms.ModelForm):
         model = Finances
         fields = (
 
-            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid',
+            'amount','paid_by','date_paid','refundablle_as','charge_type','received','comments','time_paid','validity_period','invoice',
             )
 
 

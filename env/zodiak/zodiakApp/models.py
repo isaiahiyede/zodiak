@@ -305,8 +305,11 @@ class Job(PackageDimension):
     def getTotalCBM(self):
         sum_of_cbm = 0.0
         cbm_obj = self.minibatches_set.filter(deleted=False)
-        for i in cbm_obj:
-            sum_of_cbm += i.floatCBM()
+        try:
+            for i in cbm_obj:
+                sum_of_cbm += i.floatCBM()
+        except:
+            sum_of_cbm = sum_of_cbm
         return sum_of_cbm
 
     def getCONT(self):
@@ -328,10 +331,13 @@ class Job(PackageDimension):
     def getDESC(self):
         descriptions = ""
         all_desc = self.minibatches_set.filter(deleted=False)
-        if all_desc != "":
-            for desc in all_desc:
-                descriptions += desc.job_description + ','
-        else:
+        try:
+            if all_desc != "":
+                for desc in all_desc:
+                    descriptions += desc.job_description + ','
+            else:
+                descriptions = "Nil"
+        except:
             descriptions = "Nil"
         return descriptions.rstrip(',')
 
@@ -429,7 +435,9 @@ class Finances(models.Model):
     refundablle_as = models.CharField(max_length=50, null=True, blank=True)
     comments = models.TextField(null=True,blank=True)
     deleted = models.BooleanField(default=False)
+    validity_period = models.CharField(max_length=50, null=True, blank=True)
     created_on = models.DateTimeField(default=timezone.now)
+    invoice = models.FileField(upload_to="item_photo", null=True, blank=True)
 
 
     def jobtotalCost(self):
@@ -442,7 +450,7 @@ class Finances(models.Model):
 
     class Meta:
         verbose_name_plural = 'Finances'
-        ordering = ['-created_on']
+        ordering = ['charge_type']
 
     def __str__(self):
         return '%s' %(self.job_finance)
@@ -465,6 +473,49 @@ class StatusRec(models.Model):
 
     def __str__(self):
         return '%s' %(self.job_stat)
+
+
+
+class newDoc(models.Model):
+    name = models.CharField(max_length=50, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    class Meta:
+        verbose_name_plural = 'DocType'
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return '%s' %(self.name)
+
+
+class newStat(models.Model):
+    name = models.CharField(max_length=50, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    class Meta:
+        verbose_name_plural = 'StatType'
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return '%s' %(self.name)
+
+
+class newPay(models.Model):
+    name = models.CharField(max_length=50, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+
+
+    class Meta:
+        verbose_name_plural = 'PayType'
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return '%s' %(self.name)
 
 
 class Shippers(models.Model):

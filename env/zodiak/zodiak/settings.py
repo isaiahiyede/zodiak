@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nmso-o2j6x4=w^sypv35=h6@5=npn5v18wz2_q*lcu0pn$2p^*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['isaiahiyede.pythonanywhere.com']
 
@@ -89,7 +89,7 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'isaiahiyede$ebele',
+        'NAME': 'isaiahiyede$ebeleNew',
         'USER': 'isaiahiyede',
         'PASSWORD': 'ogheneyole@@101',
         'HOST': 'isaiahiyede.mysql.pythonanywhere-services.com',

@@ -15,7 +15,7 @@ from django.db.models import Count
 from django import template
 import random, datetime, string, calendar
 from zodiakApp.forms import UserForm, ShippersForm, DocumentsForm, ContainerTypesForm, StatusRecForm, MiniBatchesForm, BatchProcessForm, FinancialsForm, JobForm, JobForm2, JobForm4, BatchForm, UserAccountForm, PrimaryContactForm, RelationshipManagerForm, QuotationForm, SecondaryContactForm,OfficeUseOnlyForm
-from zodiakApp.models import Job, Shippers, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
+from zodiakApp.models import newPay, newStat, newDoc,Job, Shippers, Batch, StatusRec, Documents, ContainerTypes, Comments, MiniBatches, Finances, UserAccount, PrimaryContact, Status, RelationshipManager, JobModes, Quotation, SecondaryContact, OfficeUseOnly
 from django.core.urlresolvers import reverse
 import json
 from django.conf import settings
@@ -24,6 +24,7 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q, Sum
 import csv
+import json
 
 
 def user_login(request):
@@ -208,6 +209,8 @@ def getJobModes():
 def add_job4(request,jobtype):
     context = {}
     print(request.POST)
+    shpps = [shipper.shippers_name for shipper in Shippers.objects.filter(deleted=False) ]
+    context['shippers'] = shpps
     job_obj = Job.objects.get(job_id=request.POST.get('job_obj'))
     form = JobForm4(request.POST,instance=job_obj)
     if form.is_valid():
@@ -259,9 +262,23 @@ def get_shippers_details(request):
 def add_job(request,jobtype):
     context = {}
     print(request.POST)
+    shpps = [shipper.shippers_name for shipper in Shippers.objects.filter(deleted=False) ]
+    context['shippers'] =json.dumps(shpps)
     if request.method == "POST":
         form = JobForm(request.POST)
         if form.is_valid():
+            get_shipper = request.POST.get('shippers_name')
+            if Shippers.objects.filter(shippers_name=get_shipper).exists():
+                pass
+            else:
+                shp_obj = Shippers.objects.create(
+                    shippers_name = request.POST.get('shippers_name'),
+                    shippers_email = request.POST.get('shippers_email'),
+                    shippers_number = request.POST.get('shippers_number'),
+                    shippers_country = request.POST.get('shippers_country'),
+                    shippers_address = request.POST.get('shippers_address')
+                    )
+
             form2 = form.save(commit=False)
             if request.user.is_staff:
                 try:
@@ -340,9 +357,17 @@ def clientpage(request):
     return response
 
 
+
+def todayDate():
+    today = datetime.datetime.today()
+    return datetime.datetime.strftime(today,'%m/%d/%Y')
+
+
 @login_required
 def job_edit(request,pk):
     context={}
+    shpps = [shipper.shippers_name for shipper in Shippers.objects.filter(deleted=False) ]
+    context['shippers'] = shpps
     job_obj = Job.objects.get(pk=pk, deleted=False)
     if request.method == "POST":
         print(request.POST)
@@ -371,6 +396,10 @@ def job_edit(request,pk):
             response = redirect(request.META['HTTP_REFERER'])
         return response
     else:
+        context['newStats'] = newStat.objects.filter(deleted=False)
+        context['newDocs'] = newDoc.objects.filter(deleted=False)
+        context['newPays'] = newPay.objects.filter(deleted=False)
+        context['todaysDate'] = todayDate()
         context['job'] = job_obj
         context['job_docs'] = Documents.objects.filter(job_obj_doc=job_obj,deleted=False)
         context['names'] = UserAccount.objects.filter(deleted=False,staff_account=False)
@@ -378,7 +407,7 @@ def job_edit(request,pk):
         context['statuses'] = getStatus()
         fin_objs = Finances.objects.filter(deleted=False,job_finance=job_obj)
         doc_objs = Documents.objects.filter(deleted=False,job_obj_doc=job_obj)
-        stat_objs = StatusRec.objects.filter(deleted=False,job_stat=job_obj) 
+        stat_objs = StatusRec.objects.filter(deleted=False,job_stat=job_obj)
         context['fin_objs'] = fin_objs
         context['doc_objs'] = doc_objs
         context['stat_objs'] = stat_objs
@@ -412,9 +441,63 @@ def editbatch(request):
 
 
 @login_required
+def new_type(request):
+    get_type = request.GET.get('type_to')
+    template_name = 'zodiakApp/typeToAdd.html'
+    context = {}
+    if request.method ==  'GET':
+        if get_type == 'stat':
+            context['type_to_add'] = 'stat'
+        elif get_type == 'doc':
+            context['type_to_add'] = 'doc'
+        else:
+            context['type_to_add'] = 'pay'
+        response = render(request,template_name,context)
+        return response
+    else:
+        print(request.POST)
+        if request.POST.get('type_to_add') == 'stat':
+            type_of_stat = request.POST.get('typeHere').split(',')
+            for i in type_of_stat:
+                if newStat.objects.filter(deleted=False,name=i).exists():
+                    continue
+                else:
+                    stat_obj = newStat.objects.create(
+                        name=i,
+                        )
+                stat_obj.save()
+        elif request.POST.get('type_to_add') == 'doc':
+            type_of_doc = request.POST.get('typeHere').split(',')
+            for i in type_of_doc:
+                if newDoc.objects.filter(deleted=False,name=i).exists():
+                    continue
+                else:
+                    doc_obj = newDoc.objects.create(
+                        name=i,
+                        )
+                doc_obj.save()
+        else:
+            type_of_pay = request.POST.get('typeHere').split(',')
+            for i in type_of_pay:
+                print(i)
+                if newPay.objects.filter(deleted=False,name=i).exists():
+                    continue
+                else:
+                    pay_obj = newPay.objects.create(
+                        name=i,
+                        )
+                pay_obj.save()
+
+        messages.success(request,'successfully')
+        response = redirect(request.META['HTTP_REFERER'])
+        return response
+
+
+@login_required
 def editOBJ(request):
     identifier = request.GET.get('obj_type')
     obj_id = request.GET.get('obj_id')
+    c_type = request.GET.get('c_type')
     context = {}
     if identifier == 'stat':
         print('this is stat')
@@ -428,9 +511,15 @@ def editOBJ(request):
         template_name = 'zodiakApp/docDesc.html'
     elif identifier == 'payment':
         print('this is pay')
-        fin_obj = Finances.objects.get(pk=obj_id)
-        context['fin_obj'] = fin_obj
-        template_name = 'zodiakApp/payDesc.html'
+        try:
+            fin_obj = Finances.objects.get(pk=obj_id)
+            context['fin_obj'] = fin_obj
+            template_name = 'zodiakApp/payDesc.html'
+        except:
+            job_id = obj_id
+            context['job_id'] = job_id
+            context['charge_type'] = c_type
+            template_name = 'zodiakApp/payDesc2.html'
     response = render(request,template_name,context)
     return response
 
@@ -455,7 +544,7 @@ def new_filter(request):
     elif job_mode != 'All' and job_stat == 'All':
         all_jobs = Job.objects.filter(job_user_acc=user.useraccount,job_type=job_mode,deleted=False)
     else:
-        all_jobs = Job.objects.filter(job_user_acc=user.useraccount,job_type=job_mode,job_status=job_stat,deleted=False)  
+        all_jobs = Job.objects.filter(job_user_acc=user.useraccount,job_type=job_mode,job_status=job_stat,deleted=False)
     context['all_jobs'] = all_jobs
     return render(request, template_name, context)
 
@@ -999,7 +1088,7 @@ def new_stat(request):
 
         for i in type_of_stat:
             val = type_of_stat.index(i)
-            if StatusRec.objects.filter(deleted=False,stat_type=i).exists():
+            if StatusRec.objects.filter(deleted=False,stat_type=i,job_stat=job_obj).exists():
                 continue
             else:
                 stat_obj = StatusRec.objects.create(
@@ -1049,7 +1138,7 @@ def fin_info_edit(request,pk):
     fin_obj = Finances.objects.get(pk=pk, deleted=False)
     print(request.POST)
     if request.method == "POST":
-        form = FinancialsForm(request.POST,instance=fin_obj)
+        form = FinancialsForm(request.POST,request.FILES,instance=fin_obj)
         if form.is_valid():
             form2 = form.save(commit=False)
             job_obj = Job.objects.get(job_id=fin_obj.job_finance)
@@ -1115,13 +1204,10 @@ def new_financials(request):
 
         for i in type_of_charge:
             val = type_of_charge.index(i)
-            if Finances.objects.filter(deleted=False,charge_type=i).exists():
-                continue
-            else:
-                finance_obj = Finances.objects.create(
-                    job_finance=job_obj,
-                    charge_type=i,
-                    )
+            finance_obj = Finances.objects.create(
+                job_finance=job_obj,
+                charge_type=i,
+                )
             finance_obj.save()
 
         messages.success(request, 'Job payments sucessfully updated')
@@ -1134,7 +1220,7 @@ def new_financials(request):
 
 
 def findDay(date):
-    day_of_week = datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
+    day_of_week = datetime.datetime.strptime(date, '%m/%d/%Y').weekday()
     return calendar.day_name[day_of_week]
 
 
@@ -1145,7 +1231,7 @@ def new_fin_info_edit(request,pk):
     fin_obj = Finances.objects.get(pk=pk, deleted=False)
     print(request.POST)
     if request.method == "POST":
-        form = FinancialsForm(request.POST,instance=fin_obj)
+        form = FinancialsForm(request.POST,request.FILES,instance=fin_obj)
         if form.is_valid():
             form2 = form.save(commit=False)
             job_obj = Job.objects.get(job_id=fin_obj.job_finance)
@@ -1167,6 +1253,37 @@ def new_fin_info_edit(request,pk):
         response = render(request, 'zodiakApp/editpayment.html', context)
 
         return response
+
+
+@login_required
+def new_fin_info_add(request,job_id):
+    context = {}
+    print(request.POST)
+    if request.method == "POST":
+        form = FinancialsForm(request.POST,request.FILES)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            job_obj = Job.objects.get(job_id=job_id)
+            form2.job_finance = job_obj
+            form2.save()
+            job_obj.job_cost = job_obj.totalcostofjob()
+            job_obj.save()
+            messages.success(request, 'Payments was successfully added')
+            response = redirect(request.META['HTTP_REFERER'])
+        else:
+            print(form.errors)
+            messages.warning(request, 'Payments was not successfully added')
+            response = redirect(request.META['HTTP_REFERER'])
+        return response
+    else:
+        context['fin_obj'] = fin_obj
+        context['form'] = FinancialsForm(instance=fin_obj)
+        context['mode_of_batch'] = context['jobmodes'] = getJobModes()
+        context['statuses'] = getStatus()
+        response = render(request, 'zodiakApp/editpayment.html', context)
+
+        return response
+
 
 
 @login_required
@@ -2094,7 +2211,7 @@ def addDoc(request, job_obj):
         for i in document_type:
             val = document_type.index(i)
             print(i)
-            if Documents.objects.get(job_obj_doc=job_obj,name_of_doc=i).exists():
+            if Documents.objects.get(job_obj_doc=job_obj,name_of_doc=i,).exists():
                 print(True)
                 continue
             else:
@@ -2153,19 +2270,19 @@ def new_doc_info_edit(request,pk):
             print(day_of_week)
             if day_of_week == "Saturday":
                 new_date = datetime.timedelta(days=2)
-                doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%Y-%m-%d') + new_date).date()
+                doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%m/%d/%Y') + new_date).date()
                 doc_obj.doc_time = '00:00'
             elif day_of_week == "Sunday":
                 new_date = datetime.timedelta(days=1)
-                doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%Y-%m-%d') + new_date).date()
+                doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%m/%d/%Y') + new_date).date()
                 doc_obj.doc_time = '00:00'
             else:
                 if request.POST.get('doc_time') >= '17:00':
                     new_date = datetime.timedelta(days=1)
-                    doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%Y-%m-%d') + new_date).date()
+                    doc_obj.doc_action = (datetime.datetime.strptime(request.POST.get('doc_date'),'%m/%d/%Y') + new_date).date()
                     doc_obj.doc_time = '00:00'
                 else:
-                    doc_obj.doc_action = request.POST.get('doc_date')                     
+                    doc_obj.doc_action = request.POST.get('doc_date')
 
             form2.save()
             job_obj.save()

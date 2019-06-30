@@ -28,17 +28,24 @@ def getBatchCount(request):
 
 
 @register.simple_tag
-def getAMPM(request, val):
-	try:
-		if val <= '11:59':
-			return 'AM'
-		elif val > '11:59':
-			return 'PM'
-		else:
-			return None
-	except:
-		return ''
+def sliceImageName(val):
+	return str(val[18:])
 
+
+@register.simple_tag
+def getAMPM(request, val):
+	if val == None:
+		return ''
+	else:
+		try:
+			if val <= '11:59':
+				return 'AM'
+			elif val > '11:59':
+				return 'PM'
+			else:
+				return None
+		except:
+			return ''
 
 @register.simple_tag
 def getMessageCount(request):
@@ -56,7 +63,7 @@ def getValue(obj):
     	return 'Y'
     else:
     	return obj
-	
 
-    
+
+
 

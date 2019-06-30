@@ -5,18 +5,9 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
             <label class="login2">Shippers Name<span style="color:red;">*</span></label>
         </div>
-         
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            <div class="form-select-list">
-                <select required style="font-size:10px; height: 28px;" class="form-control" id="shippers_name" name="shippers_name" data-placeholder="Select shipper..." class="chosen-select" tabindex="-1">
-                    <option value="{{sh_obj.shippers_name}}">{{sh_obj.shippers_name}}</option>
-                    {% for sh_name in sh_objs %}
-                       <option value="{{sh_name.shippers_name}}">
-                        {{sh_name.shippers_name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
+            <input required style="font-size:10px;" id="shippers_name" value="{{sh_obj.shippers_name}}" name="shippers_name" class="form-control" />
+        </div> 
     </div>
 </div>
 

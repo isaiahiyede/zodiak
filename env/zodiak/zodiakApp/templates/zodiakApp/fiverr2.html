@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Fiverr2</title>
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+
+  <style type="text/css">
+  	
+  	.sidebar-items{
+  		padding-top: 0.2em;
+  		padding-bottom: 0.2em
+  	}  
+	@media (max-width: 768px) {
+	  .innersidebar{	  	
+	  	min-width: 40%
+	  }
+	  .innermainbar{
+	  	width: 60%
+	  }
+}
+.innersidebar{
+	  	width: 25%
+	  }
+	  .innermainbar{
+	  	width: 75%;	  	
+	  }
+
+  </style>
+
+
+  
+
+</head>
+
+<body style="font-size: 0.8em">
+	
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Menu </div>
+      <div class="list-group list-group-flush">
+        <a href="fiverr3.html" class="list-group-item list-group-item-action bg-light sidebar-items">Overview</a>
+        <a href="index.html" class="list-group-item list-group-item-action bg-light sidebar-items">General</a>
+        <a href="fiverr5.html" class="list-group-item list-group-item-action bg-light sidebar-items">Orders</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Partners</a>
+        <a href="fiverr6.html" class="list-group-item list-group-item-action bg-light sidebar-items">Packages</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Routing</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Payables</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Recievables</a>
+        <a href="fiverr7.html" class="list-group-item list-group-item-action bg-light sidebar-items">Docs Out</a>
+        <a href="fiverr8.html" class="list-group-item list-group-item-action bg-light sidebar-items">Docs In</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Connected Entries</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Communication</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Audit</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light sidebar-items">Events</a>
+        <a href="fiverr1.html" class="list-group-item list-group-item-action bg-light sidebar-items">Operations</a>
+        <a href="fiverr2.html" class="list-group-item list-group-item-action bg-primary text-white sidebar-items" style="background: linear-gradient(to top, #0000cc 0%, #0066ff 100%);">Shipments</a>
+        <a href="fiverr9.html" class="list-group-item list-group-item-action bg-light sidebar-items">Login Form</a>
+      </div>
+    </div>
+    
+    <div id="page-content-wrapper">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-2">
+        <button class="btn py-0" id="menu-toggle" style="color: white; background: linear-gradient(to top, #0000ff 0%, #3399ff 100%);">Shipments</button>
+        <button class="btn ml-2 py-0" id="menu-toggle" style="color: white; background: linear-gradient(to top, #888888 0%, #cccccc 100%);">Shared Manifests</button>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>        
+      </nav>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom py-0">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <a class="nav-link text-success" href="#"><span class="oi oi-cloudy"></span></a>
+        <div class="input-group" style="max-width: 20em">
+		  <input type="text" class="form-control" placeholder="Search Partners/ports/ref.#" aria-label="Amount (to the nearest dollar)">
+		  <div class="input-group-append">
+		    <!-- <span class="oi oi-magnifying-glass mt-2" style="background: #d1d1d1"></span> -->
+		    <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>		    
+		  </div>
+		</div>
+
+		<div class="btn-toolbar ml-auto" role="toolbar" aria-label="Toolbar with button groups">
+		  <label class="mx-1 mt-2">Filters: </label>
+		  <div class="btn-group mr-2" role="group" aria-label="First group">
+		    <button type="button" class="btn btn-primary">All</button>
+		    <button type="button" class="btn btn-secondary"><span class="oi oi-flash"></span></button>
+		    <button type="button" class="btn btn-secondary"><span class="oi oi-beaker"></span></button>
+		    <button type="button" class="btn btn-secondary"><span class="oi oi-puzzle-piece"></span></button>
+		  </div>
+		  <div class="btn-group mr-2" role="group" aria-label="Second group">
+		    <button type="button" class="btn btn-primary"><span class="oi oi-external-link"></span></button>
+		    <button type="button" class="btn btn-secondary"><span class="oi oi-external-link"></span></button>
+		    <button type="button" class="btn btn-secondary"><span class="oi oi-reload"></span></button>
+		  </div>
+
+		</div>
+        </div>
+      </nav>
+
+      <div class="container-fluid mt-2">
+      	<div class="d-flex">
+      		<div class="innersidebar" style="">
+      		<nav class="nav navbar navbar-expand-lg navbar-light bg-light py-1" style="background: linear-gradient(to top, #efefef 0%, #dfdfdf 100%);">
+      			<h6>Shipment Queries</h6>
+        	</nav>
+        	<h6>Operational Open</h6>
+        	<ul class="list-group">
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Shipments
+			    <span class="badge badge-primary badge-pill">14</span>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Masters
+			    <span class="badge badge-primary badge-pill">2</span>
+			  </li>			  
+			</ul>
+			<h6>Accounting Open</h6>
+        	<ul class="list-group">
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Open Recievable-Shipments
+			    <span class="badge badge-primary badge-pill">14</span>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Open Payables-Masters
+			    <span class="badge badge-primary badge-pill">2</span>
+			  </li>			  
+			</ul>
+			<h6>Others</h6>
+        	<ul class="list-group">
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    All follow Ups
+			    <span class="badge badge-primary badge-pill">14</span>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    All Shipments
+			    <span class="badge badge-primary badge-pill">2</span>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    All Masters
+			    <span class="badge badge-primary badge-pill">2</span>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Credit Limit Blocked Shipments
+			    <span class="badge badge-primary badge-pill">2</span>
+			  </li>			  
+			</ul>
+      	</div>
+        
+      	<div class="mx-1 innermainbar" style="">
+      		<nav class="nav navbar navbar-expand-lg navbar-light bg-light py-1" style="background: linear-gradient(to top, #efefef 0%, #dfdfdf 100%);">
+      			<h6>Three Recent Shipments</h6>
+        	</nav>
+
+	<nav class="navbar navbar-expand-lg border-top mt-0 py-1 pt-0">                       
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">Order </h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0 border-right" ><h6 style="font-size: 0.72rem">Decision Nigeria Ltd </h6> 
+			</div>		
+		</div>
+
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>		
+		</div>	      	
+                               
+      </nav>
+
+      <nav class="navbar navbar-expand-lg border-bottom mt-0 py-0 pt-0 pb-1">                       
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem">Today</h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">Z22 > 2CC</h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">FLC Direct</h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0 border-right" ><h6 style="font-size: 0.8rem">011002</h6> 
+			</div>		
+		</div>
+
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>		
+		</div>	      	
+                               
+      </nav>
+
+
+
+      <nav class="navbar navbar-expand-lg mt-0 py-1 pt-0">                       
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">Order </h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0 border-right" ><h6 style="font-size: 0.72rem">Decision Nigeria Ltd </h6> 
+			</div>		
+		</div>
+
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>		
+		</div>	      	
+                               
+      </nav>
+
+      <nav class="navbar navbar-expand-lg border-bottom mt-0 py-0 pt-0 pb-1">                       
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem">Today</h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">Z22 > 2CC</h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">FLC Direct</h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0 border-right" ><h6 style="font-size: 0.8rem">011002</h6> 
+			</div>		
+		</div>
+
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>		
+		</div>	      	
+                               
+      </nav>
+
+
+      <nav class="navbar navbar-expand-lg mt-0 py-1 pt-0">                       
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">Order </h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0 border-right" ><h6 style="font-size: 0.72rem">Decision Nigeria Ltd </h6> 
+			</div>		
+		</div>
+
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>		
+		</div>	      	
+                               
+      </nav>
+
+      <nav class="navbar navbar-expand-lg border-bottom mt-0 py-0 pt-0 pb-1">                       
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem">Today</h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">Z22 > 2CC</h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem">FLC Direct</h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0 border-right" ><h6 style="font-size: 0.8rem">011002</h6> 
+			</div>		
+		</div>
+
+		<div class="navbar-collapse" id="innermainbar_col1" style="max-width: 50%">		
+			<div class="col-sm col-md-2 py-0 my-0" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-3 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>
+			<div class="col-sm col-md-4 py-0 my-0" ><h6 style="font-size: 0.8rem"></h6> 
+			</div>		
+		</div>	      	
+                               
+      </nav>
+
+
+
+
+      
+			<nav class="nav navbar navbar-expand-lg navbar-light bg-light py-1 mt-5" style="background: linear-gradient(to top, #efefef 0%, #dfdfdf 100%);">
+      			<h6>Departures and Arrivals</h6>
+        	</nav>
+			
+				<div class="d-flex navbar-collapse mt-2 pt-2 pb-0" id="innermainbar_col1" style="background: linear-gradient(to bottom, #fcfcfc 0%, #f7f7f7 100%);">		
+					<div class="col-sm col-md-auto py-0 my-0 text-primary" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+					</div>
+					<div class="col-sm col-md-auto py-0 my-0 border-right text-primary" ><h6 style="font-size: 0.8rem"><span class="oi oi-lock-unlocked"></span></h6> 
+					</div>
+					<div class="col-sm col-md-auto py-0 my-0 border-right text-primary" ><h6 style="font-size: 0.8rem">Flight/Voyage/Trucker</h6> 
+					</div>
+					<div class="col-sm col-md-auto py-0 my-0 text-center text-primary" ><h6 style="font-size: 0.8rem;">Last 7 days</h6><p style="color: #717171">Expected Actual</p> 
+					</div>
+					<div class="col-sm col-md-auto py-0 my-0 text-center text-primary"><h6 style="font-size: 0.8rem;">Today</h6><p style="color: #717171">Expected Actual</p> 
+					</div>
+					<div class="col-sm col-md-auto py-0 my-0 text-center text-primary"><h6 style="font-size: 0.8rem;">Tomorrow</h6><p style="color: #717171">Expected</p> 
+					</div>
+					<div class="col-sm col-md-auto py-0 my-0 text-center text-primary"><h6 style="font-size: 0.8rem;">Next 7 days</h6><p style="color: #717171">Expected</p> 
+					</div>
+				</div>
+				<div class="text-center mt-5 text-secondary">
+					<p>No Departures and Arrivals</p>
+				</div>
+
+      	</div>
+
+        </div> 
+
+        
+
+      </div>
+
+
+
+        
+        </div>     
+      </div>
+
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+    $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+  </script>
+
+</body>
+
+</html>

@@ -2175,7 +2175,7 @@ def adminPage(request):
     context['names'] = UserAccount.objects.filter(deleted=False,staff_account=False)
     context['jobmodes'] = getJobModes()
     context['statuses'] = getStatus()
-    template_name = 'zodiakApp/adminHome.html'
+    template_name = 'zodiakApp/fiverr1.html'
     context['all_jobs'] = Job.objects.filter(deleted=False)
     return render(request, template_name, context)
 

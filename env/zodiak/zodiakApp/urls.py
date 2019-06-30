@@ -131,3 +131,4 @@ urlpatterns = [
     # url(r'^confirm_paypal_payment/$', views.confirm_paypal_payment, name="confirm_paypal_payment"),
 
 ]
+

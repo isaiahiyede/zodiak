@@ -51,6 +51,7 @@
                                     </div>
 
 
+
                                     <div class="form-group-inner">
                                         <div class="row">
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -98,6 +99,7 @@
                                                             <div class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-th"></span>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,7 +121,9 @@
 
                                                             <div class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-th"></span>
+
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -159,6 +163,22 @@
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                     </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-inner">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <label class="login2 pull-right pull-right-pro">Receipt</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+                                                <input style="font-size: 8px;" id="invoice" name="invoice" type="file" class="form-control" />
+                                                {% if fin_obj.invoice %}
+                                                <h6><a style="color: blue;" href="{{fin_obj.invoice.url}}">{{fin_obj.invoice}}</a></h6>
+                                                {% endif %}
+
                                             </div>
                                         </div>
                                     </div>

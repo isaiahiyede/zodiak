@@ -91,19 +91,9 @@
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <label class="login2 pull-right pull-right-pro">Date Paid</label>
                                             </div>
-
                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                <div class="date-picker-inner">
-                                                    <div class="form-group data-custon-pick" id="data_1">
-                                                        <div class="input-group date" data-provide="datepicker">
-                                                            <input required style="font-size:10px;" type="text" value="{{fin_obj.date_paid}}" name="date_paid" id="date_paid" class="form-control" value="">
-
-                                                            <div class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-th"></span>
-                                                            </div>                                                          
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{fin_obj.date_paid}}" type="text" name="date_paid">
+                                                <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -111,57 +101,11 @@
                                     <div class="form-group-inner">
                                         <div class="row">
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                <label class="login2 pull-right pull-right-pro">Valid Till</label>
-                                            </div>
-
-                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                <div class="date-picker-inner">
-                                                    <div class="form-group data-custon-pick" id="data_1">
-                                                        <div class="input-group date" data-provide="datepicker">
-                                                            <input required style="font-size:10px;" type="text" value="{{fin_obj.validity_period}}" name="validity_period" id="validity_period" class="form-control" value="">
-
-                                                            <div class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-th"></span>
-                                                            </div>                                                          
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group-inner">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                <label class="login2 pull-right pull-right-pro">Time Paid</label>
-                                            </div>
-
-                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                <div class="date-picker-inner">
-                                                    <div class="form-group data-custon-pick" id="data_1">
-                                                        <div class="input-group date">
-                                                            <input required style="font-size:10px;" type="time" value="{{fin_obj.time_paid}}" name="time_paid" id="time_paid" class="form-control" value="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group-inner">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                <label class="login2 pull-right pull-right-pro">Receipt</label>
+                                                <label class="login2 pull-right pull-right-pro">Date Paid</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-
-                                                <input style="font-size: 8px;" id="invoice" name="invoice" type="file" class="form-control" />
-                                                {% if fin_obj.invoice %}
-                                                <h6><a style="color: blue;" href="{{fin_obj.invoice.url}}">{{fin_obj.invoice}}</a></h6>
-                                                {% endif %}
-
+                                                <input placeholder="dd/mm/yyyy 12:00 PM" required class="form-control" value="{{fin_obj.date_paid}}" type="text" name="date_paid">
+                                                <h6 style="color: grey;">HINT: dd/mm/yyyy 12:00 PM</h6>
                                             </div>
                                         </div>
                                     </div>

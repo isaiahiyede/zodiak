@@ -305,11 +305,8 @@ class Job(PackageDimension):
     def getTotalCBM(self):
         sum_of_cbm = 0.0
         cbm_obj = self.minibatches_set.filter(deleted=False)
-        try:
-            for i in cbm_obj:
-                sum_of_cbm += i.floatCBM()
-        except:
-            sum_of_cbm = sum_of_cbm
+        for i in cbm_obj:
+            sum_of_cbm += i.floatCBM()
         return sum_of_cbm
 
     def getCONT(self):
@@ -331,13 +328,10 @@ class Job(PackageDimension):
     def getDESC(self):
         descriptions = ""
         all_desc = self.minibatches_set.filter(deleted=False)
-        try:
-            if all_desc != "":
-                for desc in all_desc:
-                    descriptions += desc.job_description + ','
-            else:
-                descriptions = "Nil"
-        except:
+        if all_desc != "":
+            for desc in all_desc:
+                descriptions += desc.job_description + ','
+        else:
             descriptions = "Nil"
         return descriptions.rstrip(',')
 
@@ -558,7 +552,7 @@ class MiniBatches(models.Model):
 
     def item_desc(self):
         return self.job_description
-                
+
 
     def floatCBM(self):
         return float(self.cbm)
@@ -705,4 +699,5 @@ class DockReceipt(models.Model):
     placed_location                                 = models.CharField(max_length = 100,null=True, blank=True)
     receiving_clerk_name                            = models.CharField(max_length = 100,null=True, blank=True)
     date_from_receiving_clerk                       = models.CharField(max_length = 100,null=True, blank=True)
+
 

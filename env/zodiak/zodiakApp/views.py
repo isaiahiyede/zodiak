@@ -1,4 +1,3 @@
-
 from __future__ import unicode_literals
 from django.template.loader import render_to_string, get_template
 from django.shortcuts import render_to_response, render, redirect, get_object_or_404
@@ -442,7 +441,7 @@ def editbatch(request):
 
 @login_required
 def new_type(request):
-    get_type = request.GET.get('type_to')
+    get_type = request.GET.get('new_type')
     template_name = 'zodiakApp/typeToAdd.html'
     context = {}
     if request.method ==  'GET':
